@@ -20,6 +20,13 @@ export function AuthProvider({ children }) {
       } catch {
         localStorage.removeItem('auth_user');
       }
+      
+      // Silent background refresh to get latest dynamic properties (quota, subscription)
+      authApi.user().then((res) => {
+        const authUser = res.user || res.data || res;
+        localStorage.setItem('auth_user', JSON.stringify(authUser));
+        setUser(authUser);
+      }).catch(() => {});
     }
     setLoading(false);
   }, []);

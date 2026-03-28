@@ -1,6 +1,6 @@
 'use client';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
 function getToken() {
   if (typeof window !== 'undefined') {
@@ -64,7 +64,7 @@ export const dashboard = {
 
 // ── Profile ──
 export const profile = {
-  get: () => request('/profile'),
+  get: () => request('/user'),
   update: (data) => request('/profile', { method: 'PUT', body: JSON.stringify(data) }),
 };
 
@@ -72,8 +72,19 @@ export const profile = {
 export const invitations = {
   list: (page = 1) => request(`/invitations?page=${page}`),
   get: (id) => request(`/invitations/${id}`),
-  create: (data) => request('/invitations', { method: 'POST', body: JSON.stringify(data) }),
-  update: (id, data) => request(`/invitations/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  create: (data) => {
+    if (data instanceof FormData) {
+      return request('/invitations', { method: 'POST', body: data });
+    }
+    return request('/invitations', { method: 'POST', body: JSON.stringify(data) });
+  },
+  update: (id, data) => {
+    if (data instanceof FormData) {
+      if (!data.has('_method')) data.append('_method', 'PUT');
+      return request(`/invitations/${id}`, { method: 'POST', body: data });
+    }
+    return request(`/invitations/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+  },
   delete: (id) => request(`/invitations/${id}`, { method: 'DELETE' }),
   publish: (id) => request(`/invitations/${id}/publish`, { method: 'POST' }),
   unpublish: (id) => request(`/invitations/${id}/unpublish`, { method: 'POST' }),
@@ -85,8 +96,8 @@ export const guests = {
   list: (invitationId, page = 1) => request(`/invitations/${invitationId}/guests?page=${page}`),
   get: (invitationId, guestId) => request(`/invitations/${invitationId}/guests/${guestId}`),
   create: (invitationId, data) => request(`/invitations/${invitationId}/guests`, { method: 'POST', body: JSON.stringify(data) }),
-  update: (invitationId, guestId, data) => request(`/invitations/${invitationId}/guests/${guestId}`, { method: 'PUT', body: JSON.stringify(data) }),
-  delete: (invitationId, guestId) => request(`/invitations/${invitationId}/guests/${guestId}`, { method: 'DELETE' }),
+  update: (invitationId, guestId, data) => request(`/guests/${guestId}`, { method: 'PUT', body: JSON.stringify(data) }),
+  delete: (invitationId, guestId) => request(`/guests/${guestId}`, { method: 'DELETE' }),
   import: (invitationId, formData) => request(`/invitations/${invitationId}/guests/import`, { method: 'POST', body: formData }),
   export: (invitationId) => request(`/invitations/${invitationId}/guests/export`),
   whatsappLink: (guestId) => request(`/guests/${guestId}/whatsapp-link`),
@@ -98,24 +109,24 @@ export const guests = {
 export const events = {
   list: (invitationId) => request(`/invitations/${invitationId}/events`),
   create: (invitationId, data) => request(`/invitations/${invitationId}/events`, { method: 'POST', body: JSON.stringify(data) }),
-  update: (invitationId, eventId, data) => request(`/invitations/${invitationId}/events/${eventId}`, { method: 'PUT', body: JSON.stringify(data) }),
-  delete: (invitationId, eventId) => request(`/invitations/${invitationId}/events/${eventId}`, { method: 'DELETE' }),
+  update: (invitationId, eventId, data) => request(`/events/${eventId}`, { method: 'PUT', body: JSON.stringify(data) }),
+  delete: (invitationId, eventId) => request(`/events/${eventId}`, { method: 'DELETE' }),
 };
 
 // ── Love Stories ──
 export const loveStories = {
   list: (invitationId) => request(`/invitations/${invitationId}/love-stories`),
   create: (invitationId, data) => request(`/invitations/${invitationId}/love-stories`, { method: 'POST', body: JSON.stringify(data) }),
-  update: (invitationId, storyId, data) => request(`/invitations/${invitationId}/love-stories/${storyId}`, { method: 'PUT', body: JSON.stringify(data) }),
-  delete: (invitationId, storyId) => request(`/invitations/${invitationId}/love-stories/${storyId}`, { method: 'DELETE' }),
+  update: (invitationId, storyId, data) => request(`/love-stories/${storyId}`, { method: 'PUT', body: JSON.stringify(data) }),
+  delete: (invitationId, storyId) => request(`/love-stories/${storyId}`, { method: 'DELETE' }),
 };
 
 // ── Gift Accounts ──
 export const giftAccounts = {
   list: (invitationId) => request(`/invitations/${invitationId}/gift-accounts`),
   create: (invitationId, data) => request(`/invitations/${invitationId}/gift-accounts`, { method: 'POST', body: JSON.stringify(data) }),
-  update: (invitationId, accountId, data) => request(`/invitations/${invitationId}/gift-accounts/${accountId}`, { method: 'PUT', body: JSON.stringify(data) }),
-  delete: (invitationId, accountId) => request(`/invitations/${invitationId}/gift-accounts/${accountId}`, { method: 'DELETE' }),
+  update: (invitationId, accountId, data) => request(`/gift-accounts/${accountId}`, { method: 'PUT', body: JSON.stringify(data) }),
+  delete: (invitationId, accountId) => request(`/gift-accounts/${accountId}`, { method: 'DELETE' }),
 };
 
 // ── Gallery ──
@@ -137,15 +148,34 @@ export const themes = {
   get: (id) => request(`/themes/${id}`),
 };
 
+// ── User Active Theme ──
+export const userThemes = {
+  current: () => request('/user-themes/current'),
+  set: (themeId) => request('/user-themes', { method: 'POST', body: JSON.stringify({ theme_id: themeId }) }),
+};
+
 // ── Subscriptions / Packages ──
 export const packages = {
   list: () => request('/packages'),
 };
 
-// ── Payments ──
+// ── Subscriptions (user's active subscriptions) ──
+export const subscriptions = {
+  list: () => request('/subscriptions'),
+  current: () => request('/subscriptions/current'),
+};
+
+// ── Check-in ──
+export const checkin = {
+  scan: (token) => request(`/checkin/${token}`, { method: 'POST' }),
+};
+
 export const payments = {
   create: (data) => request('/payment/create', { method: 'POST', body: JSON.stringify(data) }),
   history: () => request('/payment/history'),
+  get: (id) => request(`/payment/${id}`),
+  charge: (id, data) => request(`/payment/${id}/charge`, { method: 'POST', body: JSON.stringify(data) }),
+  checkStatus: (orderId) => request(`/payment/${orderId}/status`),
 };
 
 // ── Guestbook / Wishes ──
@@ -158,4 +188,24 @@ export const guestbook = {
 export const rsvp = {
   list: (invitationId) => request(`/invitations/${invitationId}/rsvp`),
   stats: (invitationId) => request(`/invitations/${invitationId}/rsvp/stats`),
+};
+
+// ── Landing Page Content ──
+export const testimonials = {
+  list: () => request('/testimonials')
+};
+export const faqs = {
+  list: () => request('/faqs')
+};
+
+// ── Public Invitation ──
+export const publicInvitation = {
+  get: (slug, token = '') => {
+    let url = `/public-invitation/${slug}`;
+    if (token) url += `?to=${encodeURIComponent(token)}`;
+    return request(url);
+  },
+  preview: (slug) => {
+    return request(`/public-invitation/preview/${slug}`);
+  }
 };

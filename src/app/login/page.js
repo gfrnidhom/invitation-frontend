@@ -1,13 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { Heart, Loader2 } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 
 export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,7 +20,8 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await login(form.email, form.password);
-      router.push('/dashboard');
+      const redirectTo = searchParams.get('redirect') || '/app/dashboard';
+      router.push(redirectTo);
     } catch (err) {
       setError(err.message || 'Email atau password salah');
     } finally {
@@ -44,14 +47,15 @@ export default function LoginPage() {
         boxShadow: '0 25px 60px rgba(0,0,0,0.15)',
         animation: 'scale-in 0.3s ease-out',
       }}>
-        {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
           <div style={{
             width: '60px', height: '60px', borderRadius: '16px',
             background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 16px', fontSize: '28px',
-          }}>💍</div>
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+            marginBottom: '16px',
+          }}>
+            <Heart size={28} color="white" fill="white" />
+          </div>
           <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '26px', fontWeight: '700', color: '#1e293b', margin: 0 }}>
             Selamat Datang
           </h1>
@@ -60,7 +64,6 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Error */}
         {error && (
           <div style={{
             padding: '12px 16px', borderRadius: '12px', background: '#fef2f2',
@@ -71,46 +74,27 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Form */}
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '20px' }}>
             <label className="label">Email</label>
-            <input
-              className="input"
-              type="email"
-              placeholder="nama@email.com"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              required
-            />
+            <input className="input" type="email" placeholder="nama@email.com"
+              value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
           </div>
           <div style={{ marginBottom: '28px' }}>
             <label className="label">Password</label>
-            <input
-              className="input"
-              type="password"
-              placeholder="••••••••"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              required
-            />
+            <input className="input" type="password" placeholder="••••••••"
+              value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
           </div>
-          <button
-            className="btn btn-primary btn-lg"
-            type="submit"
-            disabled={loading}
-            style={{ width: '100%', fontSize: '15px' }}
-          >
+          <button className="btn btn-primary btn-lg" type="submit" disabled={loading} style={{ width: '100%', fontSize: '15px' }}>
             {loading ? (
               <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span className="spinner" style={{ width: '18px', height: '18px', borderWidth: '2px' }} />
+                <Loader2 size={18} className="animate-spin" style={{ animation: 'spin 0.7s linear infinite' }} />
                 Masuk...
               </span>
             ) : 'Masuk'}
           </button>
         </form>
 
-        {/* Footer */}
         <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px', color: '#64748b' }}>
           Belum punya akun?{' '}
           <Link href="/register" style={{ color: 'var(--color-primary-600)', fontWeight: '600', textDecoration: 'none' }}>

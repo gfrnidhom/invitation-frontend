@@ -1,0 +1,120 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useParams, useSearchParams } from 'next/navigation';
+import { publicInvitation } from '@/lib/api';
+import Head from 'next/head';
+
+// We will import themes dynamically or statically here soon
+import ModernMinimalist from '@/components/themes/ModernMinimalist';
+import ElegantWhite from '@/components/themes/ElegantWhite';
+import FloralDream from '@/components/themes/FloralDream';
+import ClassicJavanese from '@/components/themes/ClassicJavanese';
+import RusticGarden from '@/components/themes/RusticGarden';
+import RoyalGold from '@/components/themes/RoyalGold';
+import BirthdayBash from '@/components/themes/BirthdayBash';
+import TropicalParadise from '@/components/themes/TropicalParadise';
+import ModernRomance from '@/components/themes/ModernRomance';
+import EksklusifModern from '@/components/themes/EksklusifModern';
+import AureliaLuxe from '@/components/themes/AureliaLuxe';
+
+export default function PublicInvitationViewer() {
+  const { slug } = useParams();
+  const searchParams = useSearchParams();
+  const token = searchParams.get('to') || '';
+
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    publicInvitation.get(slug, token)
+      .then(res => {
+        if (res.success && res.data) {
+          setData(res.data);
+        } else {
+          setError(true);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [slug, token]);
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f8fafc' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+          <p className="text-slate-500 font-medium">Membuka Undangan...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fef2f2' }}>
+        <div style={{ textAlign: 'center', padding: '40px', background: '#fff', borderRadius: '24px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.05)' }}>
+          <div style={{ width: '64px', height: '64px', background: '#fee2e2', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+            <span style={{ fontSize: '24px' }}>💔</span>
+          </div>
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">Undangan Tidak Ditemukan</h1>
+          <p className="text-slate-500">Tautan yang Anda tuju mungkin sudah kadaluarsa atau tidak valid.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Inject Meta Data to Document Head dynamically
+  const invitation = data.invitation;
+  const themeSlug = invitation?.theme?.slug || 'modern-minimalist';
+
+  // THEME SWITCHER
+  const renderTheme = () => {
+    switch (themeSlug) {
+      case 'modern-minimalist':
+        return <ModernMinimalist payload={data} />;
+      case 'elegant-white':
+        return <ElegantWhite payload={data} />;
+      case 'floral-dream':
+        return <FloralDream payload={data} />;
+      case 'classic-javanese':
+        return <ClassicJavanese payload={data} />;
+      case 'rustic-garden':
+        return <RusticGarden payload={data} />;
+      case 'royal-gold':
+        return <RoyalGold payload={data} />;
+      case 'birthday-bash':
+        return <BirthdayBash payload={data} />;
+      case 'tropical-paradise':
+        return <TropicalParadise payload={data} />;
+      case 'modern-romance':
+        return <ModernRomance payload={data} />;
+      case 'eksklusif-modern':
+        return <EksklusifModern payload={data} />;
+      case 'aurelia-luxe':
+        return <AureliaLuxe payload={data} />;
+      // Future themes will be added here!
+      default:
+        // Fallback or elegantly handle unsupported themes
+        return <ModernMinimalist payload={data} />; 
+    }
+  };
+
+  return (
+    <>
+      <title>{`${invitation.groom_name} & ${invitation.bride_name} | Wedding Invitation`}</title>
+      <meta name="description" content={invitation.description || 'Anda diundang ke acara pernikahan kami!'} />
+      {/* 
+        NOTE: For true OpenGraph preview features in WhatsApp, Next.js 'generateMetadata' is needed. 
+        Because this is a strictly Client Component for now, we set basic head.
+      */}
+      {renderTheme()}
+    </>
+  );
+}

@@ -16,8 +16,12 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
+        <script
+          src="https://app.sandbox.midtrans.com/snap/snap.js"
+          data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
+        />
       </head>
-      <body>
+      <body>  
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
