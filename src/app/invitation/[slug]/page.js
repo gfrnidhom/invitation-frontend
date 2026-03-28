@@ -72,6 +72,16 @@ export default function PublicInvitationViewer() {
 
   // Inject Meta Data to Document Head dynamically
   const invitation = data.invitation;
+
+  // Normalize photo fields: backend returns arrays (JSON cast), but themes expect strings
+  if (invitation) {
+    ['cover_photo', 'bride_photo', 'groom_photo'].forEach(field => {
+      if (Array.isArray(invitation[field])) {
+        invitation[field] = invitation[field][0] || null;
+      }
+    });
+  }
+
   const themeSlug = invitation?.theme?.slug || 'modern-minimalist';
 
   // THEME SWITCHER

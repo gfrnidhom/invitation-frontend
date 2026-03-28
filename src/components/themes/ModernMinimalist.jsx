@@ -125,7 +125,7 @@ export default function ModernMinimalist({ payload }) {
                 {/* Photo Side */}
                 {invitation?.cover_photo && (
                     <div className="w-full md:w-1/2 h-[50dvh] md:h-[100dvh] relative overflow-hidden">
-                        <img src={invitation.cover_photo.startsWith('http') ? invitation.cover_photo : `${storageUrl}/${invitation.cover_photo}`} alt="Cover" className="w-full h-full object-cover" />
+                        <img src={(() => { const cp = Array.isArray(invitation.cover_photo) ? invitation.cover_photo[0] : invitation.cover_photo; return cp?.startsWith?.('http') ? cp : `${storageUrl}/${cp}`; })()} alt="Cover" className="w-full h-full object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent to-white/20"></div>
                     </div>
                 )}
