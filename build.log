@@ -1,0 +1,37 @@
+
+> frontend-user@0.1.0 build
+> next build
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/mghofarunnindhom/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Users/mghofarunnindhom/Documents/FullstackDeveloper/2026/2026_Invitation Online/frontend-user/package-lock.json
+
+▲ Next.js 16.2.1 (Turbopack)
+- Environments: .env.local
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.0s
+  Running TypeScript ...
+  Finished TypeScript in 78ms ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/13) ...
+  Generating static pages using 7 workers (3/13) 
+  Generating static pages using 7 workers (6/13) 
+⨯ useSearchParams() should be wrapped in a suspense boundary at page "/login". Read more: https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+    at S (/Users/mghofarunnindhom/Documents/FullstackDeveloper/2026/2026_Invitation Online/frontend-user/.next/server/chunks/ssr/0o6f_next_0y2941a._.js:2:2692)
+    at r (/Users/mghofarunnindhom/Documents/FullstackDeveloper/2026/2026_Invitation Online/frontend-user/.next/server/chunks/ssr/0o6f_next_0y2941a._.js:4:6757)
+    at /Users/mghofarunnindhom/Documents/FullstackDeveloper/2026/2026_Invitation Online/frontend-user/.next/server/chunks/ssr/Documents_FullstackDeveloper_2026_2026_Invitation Online_frontend-user_0mn0sux._.js:1:4306
+    at an (/Users/mghofarunnindhom/Documents/FullstackDeveloper/2026/2026_Invitation Online/frontend-user/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:84267)
+    at ai (/Users/mghofarunnindhom/Documents/FullstackDeveloper/2026/2026_Invitation Online/frontend-user/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:86086)
+    at al (/Users/mghofarunnindhom/Documents/FullstackDeveloper/2026/2026_Invitation Online/frontend-user/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:107860)
+    at ao (/Users/mghofarunnindhom/Documents/FullstackDeveloper/2026/2026_Invitation Online/frontend-user/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:105275)
+    at aa (/Users/mghofarunnindhom/Documents/FullstackDeveloper/2026/2026_Invitation Online/frontend-user/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:84619)
+    at ai (/Users/mghofarunnindhom/Documents/FullstackDeveloper/2026/2026_Invitation Online/frontend-user/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:86135)
+    at ai (/Users/mghofarunnindhom/Documents/FullstackDeveloper/2026/2026_Invitation Online/frontend-user/node_modules/next/dist/compiled/next-server/app-page-turbo.runtime.prod.js:2:104615)
+Error occurred prerendering page "/login". Read more: https://nextjs.org/docs/messages/prerender-error
+Export encountered an error on /login/page: /login, exiting the build.
+⨯ Next.js build worker exited with code: 1 and signal: null

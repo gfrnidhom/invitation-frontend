@@ -83,12 +83,12 @@ export default function BirthdayBash({ payload }) {
 
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-        {invitation.cover_photo && (
+        {invitation.cover_photo && (() => { const cp = Array.isArray(invitation.cover_photo) ? invitation.cover_photo[0] : invitation.cover_photo; return cp ? (
           <div className="absolute inset-0 z-0">
-            <img src={`${STORAGE_URL}/${invitation.cover_photo}`} alt="Cover" className="w-full h-full object-cover" />
+            <img src={cp.startsWith?.('http') ? cp : `${STORAGE_URL}/${cp}`} alt="Cover" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/50 to-white/80"></div>
           </div>
-        )}
+        ) : null; })()}
 
         {/* Confetti dots */}
         <div className="confetti bg-[#e879f9] left-[10%] z-0" style={{ animationDuration: '4s', animationDelay: '0s' }}></div>

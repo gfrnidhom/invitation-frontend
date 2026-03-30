@@ -1,233 +1,504 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Cormorant_Upright, Lora, Great_Vibes } from 'next/font/google';
-
-import CoverOverlay from './partials/CoverOverlay';
-import CoupleProfile from './partials/CoupleProfile';
-import LoveStory from './partials/LoveStory';
-import Events from './partials/Events';
-import Gallery from './partials/Gallery';
-import GiftAccounts from './partials/GiftAccounts';
-import Guestbook from './partials/Guestbook';
+import { Playfair_Display, Inter } from 'next/font/google';
+import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 
-const cormorant = Cormorant_Upright({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
-const lora = Lora({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
-const vibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
+// Google Fonts for Modern Minimalist Look
+const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
+const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500'] });
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
 export default function AureliaLuxe({ payload }) {
-  const { invitation, guest, guestName } = payload;
-  const [isOpen, setIsOpen] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(null);
+    const { invitation, guest, guestName } = payload;
+    const [isOpen, setIsOpen] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const audioRef = useRef(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const reveals = document.querySelectorAll('.reveal');
-      for (let i = 0; i < reveals.length; i++) {
-        const windowHeight = window.innerHeight;
-        const elementTop = reveals[i].getBoundingClientRect().top;
-        const elementVisible = 50;
-        if (elementTop < windowHeight - elementVisible) {
-          reveals[i].classList.add('active');
-        }
-      }
+    // Form Guestbook state
+    const [guestNameInput, setGuestNameInput] = useState(guestName || '');
+    const [wishInput, setWishInput] = useState('');
+    const [wishes, setWishes] = useState([]);
+    const [submitting, setSubmitting] = useState(false);
+
+    useEffect(() => {
+        // Fetch wishes (demo or api hook)
+        // In actual implementation it might use SWR or custom fetch
+        // For visual sake, we render an empty array or handle it if passed via payload.
+    }, []);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 50;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Get primary photo helper
+    const getPhoto = (p) => {
+        if (!p) return null;
+        let photo = Array.isArray(p) ? p[0] : p;
+        if (typeof photo === 'object' && photo.photo) photo = photo.photo;
+        if (!photo.startsWith('http')) photo = `${STORAGE_URL}/${photo}`;
+        return photo;
     };
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
-  const handleOpenInvitation = () => {
-    setIsOpen(true);
-    if (audioRef.current) {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(e => console.log('Audio play failed', e));
-    }
-  };
+    const handleOpenInvitation = () => {
+        setIsOpen(true);
+        if (audioRef.current) {
+            audioRef.current.play().then(() => setIsPlaying(true)).catch(e => console.log('Audio play failed', e));
+        }
+        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+    };
 
-  const toggleAudio = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        audioRef.current.play();
-        setIsPlaying(true);
-      }
-    }
-  };
+    const toggleAudio = () => {
+        if (audioRef.current) {
+            if (isPlaying) {
+                audioRef.current.pause();
+                setIsPlaying(false);
+            } else {
+                audioRef.current.play();
+                setIsPlaying(true);
+            }
+        }
+    };
 
-  return (
-    <div className={`min-h-screen bg-white text-[#2a2a2a] ${lora.className} overflow-x-hidden aurelia-luxe-theme`}>
-      <style dangerouslySetInnerHTML={{ __html: `
-        .aurelia-luxe-theme .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.5, 0, 0, 1); }
-        .aurelia-luxe-theme .reveal.active { opacity: 1; transform: translateY(0); }
-        .glass-burgundy { background: rgba(99, 37, 41, 0.95); backdrop-filter: blur(10px); }
-        .text-gold { color: #A99D87; }
-        .bg-gold { background-color: #A99D87; }
-        .border-gold { border-color: #A99D87; }
-        .bg-burgundy { background-color: #632529; }
-        .text-burgundy { color: #632529; }
-        
-        .ornament-top { position: absolute; top: 0; left: 0; width: 100%; height: 150px; background: url('${STORAGE_URL}/themes/aurelia-luxe/floral-top.png') top center no-repeat; background-size: cover; opacity: 0.8; z-index: 1; pointer-events: none;}
-        .ornament-bottom { position: absolute; bottom: 0; left: 0; width: 100%; height: 150px; background: url('${STORAGE_URL}/themes/aurelia-luxe/floral-bottom.png') bottom center no-repeat; background-size: cover; opacity: 0.8; z-index: 1; pointer-events: none;}
-      `}} />
+    // Date formatting helpers
+    const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();
+    const dayName = eventDate.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
+    const monthName = eventDate.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+    const dateNum = eventDate.toLocaleDateString('en-US', { day: '2-digit' });
+    const yearNum = eventDate.toLocaleDateString('en-US', { year: '2-digit' });
+    
+    const photos = invitation?.photos || [];
+    const coverPhoto = getPhoto(invitation?.cover_photo) || getPhoto(photos[0]);
+    const groomPhoto = getPhoto(invitation?.groom_photo);
+    const bridePhoto = getPhoto(invitation?.bride_photo);
 
-      <CoverOverlay 
-        invitation={invitation} 
-        guestName={guestName} 
-        onOpen={handleOpenInvitation}
-        isOpen={isOpen}
-      >
-        <div className="text-center z-10 px-6 max-w-2xl mx-auto w-full relative">
-          <p className={`${cormorant.className} text-xl tracking-[0.3em] uppercase text-white/80 mb-6 drop-shadow-md`}>The Wedding Of</p>
-          <h1 className={`${vibes.className} text-6xl md:text-8xl text-white mb-6 drop-shadow-lg`}>
-            {invitation.groom_name} & {invitation.bride_name}
-          </h1>
-          <div className="h-px w-24 bg-[#A99D87] mx-auto mb-6"></div>
-          <p className={`${lora.className} text-sm tracking-widest uppercase text-[#A99D87] drop-shadow-md`}>
-            {new Date(invitation.event_date).toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}
-          </p>
-          
-          {guestName && (
-            <div className="mt-16 pt-8 border-t border-white/20">
-              <p className="text-xs uppercase tracking-widest text-[#A99D87] mb-2 drop-shadow-sm">Kepada Yth.</p>
-              <p className={`${cormorant.className} text-2xl text-white font-medium drop-shadow-md`}>{guestName}</p>
-            </div>
-          )}
+    return (
+        <div className={`min-h-screen bg-white text-gray-900 ${inter.className} overflow-x-hidden relative modern-monochrome`}>
+            {/* Global Styles */}
+            <style dangerouslySetInnerHTML={{
+                __html: `
+        .modern-monochrome .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .modern-monochrome .reveal.active { opacity: 1; transform: translateY(0); }
+        .arch-frame { border-radius: 15rem 15rem 0 0; }
+        .text-outline { -webkit-text-stroke: 1px rgba(0,0,0,0.1); color: transparent; }
+        .masonry { column-count: 2; column-gap: 1rem; }
+        @media (min-width: 768px) { .masonry { column-count: 3; } }
+        .masonry-item { break-inside: avoid; margin-bottom: 1rem; }
+        `}} />
+
+            {/* Audio Toggle */}
+            {invitation?.music_url && (
+                <div className="fixed bottom-6 right-6 z-[100]">
+                    <audio ref={audioRef} src={invitation.music_url.startsWith('http') ? invitation.music_url : `${STORAGE_URL}/${invitation.music_url}`} loop />
+                    <button onClick={toggleAudio} className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-gray-800 transition-colors">
+                        {isPlaying ? (
+                            <svg className="w-4 h-4 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" /></svg>
+                        ) : (
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        )}
+                    </button>
+                </div>
+            )}
+
+            {/* HEADER HERO (Full Screen height minus a bit if scrolled) */}
+            <section className="relative min-h-screen flex flex-col pt-12 px-6 md:px-20 max-w-7xl mx-auto items-center justify-center overflow-hidden">
+                {/* Minimalist Top Nav (Optional visual element) */}
+                <div className="absolute top-8 left-0 w-full flex justify-center gap-10 text-[10px] tracking-[0.2em] font-medium text-gray-500 uppercase z-20">
+                    <span>Wedding</span>
+                    <span>Invitation</span>
+                </div>
+
+                <div className="flex flex-col-reverse md:flex-row items-center w-full gap-12 mt-10 md:mt-0 relative z-10">
+                    {/* Left Typography */}
+                    <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left z-10">
+                        <div className="mb-8">
+                            <svg className="w-10 h-10 mx-auto md:mx-0 text-gray-800 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path strokeWidth="1" d="M12 21.5c-4.5 0-8.5-3.5-8.5-8 0-5.5 8.5-12 8.5-12s8.5 6.5 8.5 12c0 4.5-4 8-8.5 8z" /><circle cx="12" cy="11" r="3" strokeWidth="1" /></svg>
+                            <p className="text-[9px] tracking-[0.3em] font-semibold text-gray-400 uppercase">Wedding Invitation</p>
+                        </div>
+
+                        <h1 className={`${playfair.className} text-6xl md:text-8xl lg:text-[110px] font-bold leading-[0.9] text-gray-900 mb-8`}>
+                            {invitation?.groom_name} <br />
+                            <span className="text-gray-400 font-normal italic pr-4">& </span> 
+                            {invitation?.bride_name}
+                        </h1>
+
+                        <div className="flex flex-col justify-start mb-12">
+                            <p className="text-[10px] uppercase font-bold tracking-widest text-gray-400 mb-1">Request The Honor</p>
+                            <p className="text-sm font-medium text-gray-900 tracking-wider">SAVE THE DATE</p>
+                        </div>
+                        
+                        {guestName && (
+                            <p className="text-xs text-gray-500 uppercase tracking-widest mb-4 border-b border-gray-300 pb-2 inline-block">Untuk: <span className="text-gray-900 font-bold">{guestName}</span></p>
+                        )}
+
+                        <button onClick={handleOpenInvitation} className="mt-4 px-10 py-3 border border-gray-300 text-[10px] uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-all bg-white shadow-sm">
+                            Open Invitation
+                        </button>
+                    </div>
+
+                    {/* Right Arch Image */}
+                    <div className="w-full md:w-1/2 relative flex justify-center md:justify-end">
+                        {/* Background Giant Text */}
+                        <div className={`${playfair.className} absolute right-0 top-1/2 -translate-y-1/2 text-[18vh] md:text-[25vh] leading-[0.7] text-outline font-bold text-right opacity-30 select-none z-0`} style={{ writingMode: 'vertical-rl' }}>
+                            {dateNum}<br/>{yearNum}
+                        </div>
+
+                        {coverPhoto ? (
+                            <div className="relative z-10 w-64 h-[28rem] md:w-80 md:h-[36rem] arch-frame overflow-hidden border border-gray-100 shadow-xl bg-gray-100 mix-blend-multiply filter grayscale contrast-125">
+                                <img src={coverPhoto} alt="Cover" className="w-full h-full object-cover origin-top" />
+                            </div>
+                        ) : (
+                            <div className="relative z-10 w-64 h-[28rem] md:w-80 md:h-[36rem] arch-frame border border-gray-200 bg-gray-50 flex items-center justify-center">
+                                <span className="text-gray-300">No Photo</span>
+                            </div>
+                        )}
+                        
+                        {/* Botanical line art overlay (Optional) */}
+                        <div className="absolute inset-0 z-20 opacity-20 pointer-events-none mix-blend-darken bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')]" />
+                    </div>
+                </div>
+            </section>
+
+            {/* MAIN CONTENT (Revealed by Scroll after click) */}
+            <main className={`bg-gray-50 transition-all duration-[1500ms] ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-32 pointer-events-none'}`}>
+                
+                {/* 2. BRIDE & GROOM SECTION (Two Circles) */}
+                <section className="py-24 bg-white relative reveal">
+                    <div className="max-w-4xl mx-auto px-6 flex flex-col items-center">
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 w-full">
+                            
+                            {/* Bride */}
+                            <div className="flex flex-col items-center flex-1">
+                                <h3 className={`${playfair.className} text-3xl md:text-4xl text-gray-900 mb-6 font-bold`}>{invitation?.bride_name}</h3>
+                                <div className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden filter grayscale contrast-125 bg-gray-100 shadow-md">
+                                    {bridePhoto ? <img src={bridePhoto} className="w-full h-full object-cover" alt="Bride" /> : <div className="w-full h-full bg-gray-200" />}
+                                </div>
+                                <div className="flex gap-1 mt-6">
+                                    {[1,2,3,4,5].map(i => <div key={i} className="w-2 h-2 rounded-full border border-gray-400"></div>)}
+                                </div>
+                            </div>
+
+                            {/* Center Ampersand */}
+                            <div className={`${playfair.className} text-6xl md:text-8xl text-gray-900 font-bold opacity-80 shrink-0 my-8 md:my-0`}>
+                                &
+                            </div>
+
+                            {/* Groom */}
+                            <div className="flex flex-col items-center flex-1">
+                                <div className="flex gap-1 mb-6">
+                                    {[1,2,3,4,5].map(i => <div key={i} className="w-2 h-2 rounded-full border border-gray-400"></div>)}
+                                </div>
+                                <div className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden filter grayscale contrast-125 bg-gray-100 shadow-md">
+                                    {groomPhoto ? <img src={groomPhoto} className="w-full h-full object-cover" alt="Groom" /> : <div className="w-full h-full bg-gray-200" />}
+                                </div>
+                                <h3 className={`${playfair.className} text-3xl md:text-4xl text-gray-900 mt-6 font-bold`}>{invitation?.groom_name}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 3. WEDDING DAY TIMELINE */}
+                <section className="py-24 bg-gray-50 text-center px-6 reveal">
+                    <div className="max-w-2xl mx-auto">
+                        <svg className="w-8 h-8 mx-auto text-gray-800 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        
+                        <h2 className={`${playfair.className} text-5xl md:text-6xl text-gray-900 mb-10 font-bold`}>Wedding Day</h2>
+                        
+                        {/* Calendar Ribbon */}
+                        <div className="flex justify-center gap-6 md:gap-12 mb-10 text-gray-900 uppercase font-bold tracking-widest text-[11px] md:text-sm border-y border-gray-300 py-6 w-full max-w-sm mx-auto">
+                            <span>{monthName}</span>
+                            <span>{dayName}</span>
+                            <span>{dateNum}</span>
+                            <span>20{yearNum}</span>
+                        </div>
+
+                        {/* Divider Ornaments */}
+                        <div className="flex items-center justify-center gap-4 text-gray-300 mb-16">
+                            <div className="h-px w-16 bg-gray-300"></div>
+                            <span>♦</span>
+                            <div className="h-px w-16 bg-gray-300"></div>
+                        </div>
+
+                        {/* Events Box */}
+                        <div className="grid gap-16">
+                            {invitation?.events && invitation.events.length > 0 ? (
+                                [...invitation.events].sort((a,b) => a.sort_order - b.sort_order).map((event, index, arr) => (
+                                    <div key={event.id || index} className={`flex flex-col md:flex-row items-center md:items-start justify-between text-center md:text-left gap-6 ${index !== arr.length - 1 ? 'border-b border-gray-200 pb-12' : 'pb-4'}`}>
+                                        <div className="md:w-1/4">
+                                            <p className="text-[10px] text-gray-400 font-bold tracking-[0.2em] mb-2 uppercase">Time</p>
+                                            <p className={`${playfair.className} text-xl md:text-3xl text-gray-900 font-bold`}>{event.time_start?.substring(0, 5) || 'TBA'} {event.time_start && !event.time_start.includes('WIB') && 'WIB'}</p>
+                                            {event.time_end && <p className="text-[11px] text-gray-500 mt-1">to {event.time_end.substring(0, 5)} WIB</p>}
+                                        </div>
+                                        <div className="md:w-1/2 flex flex-col items-center">
+                                            <p className="text-xl md:text-2xl font-bold tracking-widest text-gray-900 uppercase mb-4">{event.name}</p>
+                                            <p className="text-xs text-gray-600 font-medium uppercase tracking-widest mb-1">
+                                                {event.date ? new Date(event.date).toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'}) : ''}
+                                            </p>
+                                            <p className="text-[11px] text-gray-400 capitalize max-w-[200px] text-center">{event.location}</p>
+                                        </div>
+                                        <div className="md:w-1/4 flex flex-col items-center md:items-end md:justify-center h-full pt-4">
+                                           {event.latitude && event.longitude ? (
+                                               <a href={`https://maps.google.com/?q=${event.latitude},${event.longitude}`} target="_blank" rel="noreferrer" className="w-full text-center px-4 py-2 border border-gray-300 text-[9px] uppercase tracking-widest font-bold text-gray-600 hover:bg-black hover:text-white transition-colors bg-white">
+                                                   Google Maps
+                                               </a>
+                                           ) : (
+                                               <span className="w-full text-center px-4 py-2 border border-dashed border-gray-300 text-[9px] uppercase tracking-widest font-bold text-gray-400">
+                                                   Lokasi Tertutup
+                                               </span>
+                                           )}
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="text-center text-xs text-gray-400">Belum ada agenda acara yang ditambahkan.</div>
+                            )}
+                        </div>
+                    </div>
+                </section>
+
+                {/* 4. VIDEO EMBED / STREAMING */}
+                {invitation?.background_video_url && (
+                    <section className="bg-gray-100 py-12 px-6 reveal">
+                        <div className="max-w-4xl mx-auto text-center">
+                            <div className="mb-10">
+                                <h3 className={`${playfair.className} text-2xl md:text-3xl text-gray-900 font-bold mb-3`}>Live Streaming</h3>
+                                <p className="text-xs text-gray-500 uppercase tracking-wider mb-6">Join through the live broadcasting community</p>
+                                <button className="px-6 py-2 border border-gray-300 text-[10px] uppercase font-bold text-gray-700 bg-white hover:bg-black hover:text-white transition-colors">WATCH LIVE STREAMING</button>
+                            </div>
+
+                            <div className="w-full relative pt-[56.25%] bg-black filter grayscale hover:grayscale-0 transition-all duration-700 cursor-pointer">
+                                {invitation.background_video_url.includes('youtube.com') || invitation.background_video_url.includes('youtu.be') ? (
+                                    <iframe 
+                                    className="absolute inset-0 w-full h-full"
+                                    src={
+                                        invitation.background_video_url.includes('watch?v=') 
+                                        ? invitation.background_video_url.replace('watch?v=', 'embed/').split('&')[0] 
+                                        : invitation.background_video_url.replace('youtu.be/', 'www.youtube.com/embed/').split('?')[0]
+                                    } 
+                                    title="Video Moments" 
+                                    frameBorder="0" 
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowFullScreen>
+                                    </iframe>
+                                ) : (
+                                    <video controls className="absolute inset-0 w-full h-full object-cover" src={invitation.background_video_url.startsWith('http') ? invitation.background_video_url : `${STORAGE_URL}/${invitation.background_video_url}`} />
+                                )}
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                {/* 5. OUR MOMENTS (GRID GALLERY) */}
+                <section className="bg-[#333333] pt-24 pb-32 px-6 relative reveal">
+                    <div className="max-w-5xl mx-auto text-center">
+                        <p className="text-[10px] text-gray-400 uppercase tracking-[0.3em] font-bold mb-4">Gallery</p>
+                        <h2 className={`${playfair.className} text-5xl md:text-6xl text-white font-bold mb-16`}>Our Moments</h2>
+                        
+                        <div className="masonry">
+                            {photos.slice(0, 6).map((photo, i) => (
+                                <div key={i} className="masonry-item mb-4 overflow-hidden relative group">
+                                    <img 
+                                        src={getPhoto(photo)} 
+                                        alt={`Moment ${i+1}`} 
+                                        className="w-full h-auto object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                                </div>
+                            ))}
+                            {/* Fallbacks if empty gallery */}
+                            {photos.length === 0 && [1,2,3,4].map(i => (
+                                <div key={i} className="masonry-item bg-gray-700 w-full aspect-[3/4] mb-4 flex items-center justify-center border border-gray-600">
+                                   <span className="text-gray-500 text-xs">Photo Placeholder</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* 6. QUOTE CARD (OVERLAPPING BG) */}
+                <section className="relative h-40 bg-gray-50 flex items-center justify-center reveal">
+                    {/* The dark bg from above continues half-way */}
+                    <div className="absolute top-0 left-0 w-full h-1/2 bg-[#333333]" />
+                    
+                    <div className="relative z-10 bg-white/95 backdrop-blur-sm px-10 py-12 md:py-16 md:px-20 max-w-3xl w-11/12 mx-auto text-center shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-gray-100">
+                        <p className={`${playfair.className} text-xl md:text-3xl text-gray-900 font-bold italic leading-relaxed`}>
+                            "{invitation?.description || 'A happy marriage is a long conversation which always seems too short.'}"
+                        </p>
+                    </div>
+                </section>
+
+                {/* 7. OUR LOVE STORY */}
+                <section className="py-24 bg-gray-50 px-6 reveal">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="text-center mb-20">
+                            <p className="text-[10px] text-gray-400 uppercase tracking-[0.3em] font-bold mb-4">Journey</p>
+                            <h2 className={`${playfair.className} text-4xl md:text-5xl text-gray-900 font-bold mb-6`}>Our Love Story</h2>
+                            <div className="w-16 h-px bg-gray-400 mx-auto"></div>
+                        </div>
+
+                        {/* Zig Zag Layout Placeholder or real data */}
+                        {(invitation?.love_stories || invitation?.loveStories)?.length > 0 ? (
+                           [...(invitation.love_stories || invitation.loveStories)].sort((a,b) => a.sort_order - b.sort_order).map((story, i) => (
+                               <div key={story.id || i} className={`flex flex-col md:flex-row items-center gap-10 mb-20 ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}>
+                                   <div className="w-full md:w-1/2 bg-white p-10 md:p-16 border border-gray-100 relative shadow-sm">
+                                       <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-3">
+                                           {story.date ? new Date(story.date).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }).toUpperCase() : 'MEMORIES'}
+                                       </p>
+                                       <h3 className={`${playfair.className} text-xl md:text-2xl font-bold text-gray-900 mb-6`}>{story.title}</h3>
+                                       <p className="text-xs text-gray-500 leading-loose text-justify">{story.description}</p>
+                                   </div>
+                                   <div className="w-full md:w-1/2">
+                                       {story.photo ? (
+                                           <img src={getPhoto(story.photo)} alt={story.title} className="w-full h-80 object-cover filter grayscale contrast-125 hover:grayscale-0 transition-all duration-700" />
+                                       ) : (
+                                           <div className="w-full h-80 bg-gray-200 border border-gray-300" />
+                                       )}
+                                   </div>
+                               </div>
+                           ))
+                        ) : (
+                            <div className="flex flex-col md:flex-row items-center gap-10 mb-20">
+                                <div className="w-full md:w-1/2 bg-white p-10 md:p-16 border border-gray-100 shadow-sm">
+                                    <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-3">MARCH 2021</p>
+                                    <h3 className={`${playfair.className} text-2xl font-bold text-gray-900 mb-6`}>Until We Meet</h3>
+                                    <p className="text-xs text-gray-500 leading-loose text-justify">It was a casual evening when our eyes first locked across a crowded room. Little did we know that simple moment would spark a lifelong journey of love, laughter, and endless conversations.</p>
+                                </div>
+                                <div className="w-full md:w-1/2">
+                                    {getPhoto(photos[1]) ? (
+                                        <img src={getPhoto(photos[1])} className="w-full h-80 object-cover filter grayscale contrast-125" alt="Story placeholder"/>
+                                    ) : (
+                                        <div className="w-full h-80 bg-gray-200 border border-gray-300" />
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </section>
+
+                {/* 8. RSVP / GUESTBOOK FORM OVERLAY */}
+                <section className="py-24 px-6 relative flex items-center justify-center reveal overflow-hidden">
+                    {/* Background Image Half/Half effect */}
+                    <div className="absolute inset-0 z-0 flex">
+                        <div className="w-1/3 md:w-1/2 h-full bg-cover bg-center filter grayscale opacity-40 bg-[url('https://images.unsplash.com/photo-1542037104856-11f2d65cd0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80')]"></div>
+                        <div className="w-2/3 md:w-1/2 h-full bg-white"></div>
+                    </div>
+
+                    <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col md:flex-row bg-[#6B7280]/95 backdrop-blur-md rounded-tr-3xl rounded-bl-3xl shadow-2xl overflow-hidden p-10 md:p-14 text-white">
+                        <div className="w-full md:w-1/3 mb-10 md:mb-0">
+                           <h2 className={`${playfair.className} text-4xl md:text-5xl font-bold mb-2`}>RSVP</h2>
+                           <p className="text-xs uppercase tracking-widest text-white/70 mb-6">Or Send A Wish</p>
+                           <p className="text-[10px] text-white/50 border-t border-white/20 pt-4 max-w-[200px] leading-relaxed">Please let us know if you could make it, or feel free to leave a heartfelt message here.</p>
+                        </div>
+                        <div className="w-full md:w-2/3 flex flex-col gap-6">
+                           <div className="flex flex-col md:flex-row gap-6">
+                               <div className="flex-1">
+                                   <label className="block text-[9px] uppercase tracking-widest font-bold mb-2 text-white/70">Your Name</label>
+                                   <input type="text" className="w-full bg-white/10 border-b border-white/30 px-0 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-white transition-colors" placeholder="Full Name..." value={guestNameInput} onChange={(e) => setGuestNameInput(e.target.value)}/>
+                               </div>
+                           </div>
+                           <div>
+                               <label className="block text-[9px] uppercase tracking-widest font-bold mb-2 text-white/70">Your Wish / Message</label>
+                               <textarea className="w-full bg-white/10 border-b border-white/30 px-0 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-white transition-colors h-24 resize-none" placeholder="Write something beautiful..." value={wishInput} onChange={(e) => setWishInput(e.target.value)}></textarea>
+                           </div>
+                           <button className="self-end px-12 py-3 bg-white text-[#6B7280] text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-black hover:text-white transition-colors">
+                               SEND MESSAGE
+                           </button>
+                        </div>
+                    </div>
+                </section>
+
+                {/* QR CHECKIN */}
+                <QrCheckin 
+                  guest={guest} 
+                  sectionBg="bg-white" 
+                  titleFont={playfair.className}
+                  textColor="text-gray-900"
+                  borderStyle="border-gray-200"
+                />
+
+                {/* 9. SEND YOUR GIFT */}
+                <section className="py-24 bg-white text-center px-6 reveal">
+                    <div className="max-w-4xl mx-auto">
+                        <svg className="w-10 h-10 mx-auto text-gray-800 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
+                        <h2 className={`${playfair.className} text-4xl md:text-5xl text-gray-900 font-bold mb-16`}>Send Your Gift</h2>
+
+                        <div className="grid md:grid-cols-3 justify-center gap-8">
+                            {invitation?.gift_accounts && invitation.gift_accounts.length > 0 ? (
+                                invitation.gift_accounts.map((acc, i) => (
+                                    <div key={acc.id || i} className="border border-gray-100 p-8 flex flex-col items-center shadow-sm relative group bg-white hover:-translate-y-1 transition-transform">
+                                        <h4 className="text-sm font-bold text-gray-800 tracking-widest uppercase mb-2">{acc.bank_name}</h4>
+                                        <p className="text-[10px] text-gray-500 mb-6 uppercase tracking-wider">A.N. {acc.account_holder}</p>
+                                        <p className={`${playfair.className} text-xl text-gray-900 font-bold mb-6`}>{acc.account_number}</p>
+                                        <button 
+                                            onClick={() => {
+                                                navigator.clipboard.writeText(acc.account_number);
+                                                toast.success('Nomor rekening disalin!');
+                                            }}
+                                            className="px-6 py-2 border border-gray-300 text-[9px] font-bold uppercase tracking-widest text-gray-600 hover:bg-black hover:text-white transition-colors"
+                                        >
+                                            COPY NUMBER
+                                        </button>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="col-span-3 text-center text-xs text-gray-400 py-10">Belum ada informasi rekening hadiah yang ditambahkan.</div>
+                            )}
+
+                            {/* Optional Shipping Address if provided */}
+                            {(invitation?.groom_address || invitation?.bride_address) && (
+                              <div className="border border-gray-100 p-8 flex flex-col items-center shadow-sm justify-center bg-gray-50 mt-4 md:mt-0 col-span-full md:col-span-1">
+                                   <p className="text-xs text-gray-500 mb-2 uppercase tracking-widest font-bold">Kirim Kado Fisik</p>
+                                   <p className="text-[10px] text-gray-600 text-center leading-relaxed">
+                                     {invitation.bride_address || invitation.groom_address}
+                                   </p>
+                              </div>
+                            )}
+                        </div>
+
+                    </div>
+                    {/* Bottom Ornaments */}
+                    <div className="w-full max-w-sm mx-auto mt-20 pt-10 border-t border-gray-200 opacity-60">
+                        <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800&q=80" alt="Gifts pattern" className="w-full h-24 object-cover filter grayscale" />
+                    </div>
+                </section>
+
+                {/* 10. FOOTER */}
+                <footer className="bg-gray-100 py-20 px-6 text-center reveal">
+                    <p className="text-[9px] uppercase tracking-widest text-gray-400 font-bold mb-12">Thank you for joining our special day</p>
+                    
+                    <div className={`${playfair.className} text-6xl md:text-8xl text-gray-300 font-bold italic mb-6 leading-none tracking-tight`}>
+                       {invitation?.groom_name?.charAt(0) || 'B'}{invitation?.bride_name?.charAt(0) || 'M'}
+                    </div>
+                    
+                    <p className="text-[10px] uppercase font-bold tracking-[0.4em] text-gray-500 mb-8">{invitation?.groom_name} &amp; {invitation?.bride_name}</p>
+
+                    <div className="flex items-center justify-center gap-4 text-gray-300 mb-16">
+                           <span>♦</span>
+                           <div className="h-px w-24 bg-gray-300"></div>
+                           <span>♦</span>
+                    </div>
+
+                    <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                        AureliaLuxe Monokrom Edition
+                    </div>
+                </footer>
+
+            </main>
         </div>
-      </CoverOverlay>
-
-      {invitation?.background_video_url && (
-        <video 
-          className="fixed inset-0 w-full h-full object-cover z-0 pointer-events-none opacity-50 mix-blend-overlay"
-          src={invitation.background_video_url} 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-        />
-      )}
-
-      {invitation?.music_url && (
-        <audio ref={audioRef} src={invitation.music_url.startsWith('http') ? invitation.music_url : `${STORAGE_URL}/${invitation.music_url}`} loop />
-      )}
-
-      {/* Audio Toggle */}
-      {invitation?.music_url && (
-        <button 
-          onClick={toggleAudio}
-          className="fixed bottom-6 right-6 w-12 h-12 glass-burgundy rounded-full flex items-center justify-center text-[#A99D87] z-50 shadow-2xl border border-[#A99D87]/30 hover:scale-110 transition-transform"
-        >
-          {isPlaying ? (
-             <svg className="w-5 h-5 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-          ) : (
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clipRule="evenodd"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
-          )}
-        </button>
-      )}
-
-      <main className={`transition-opacity duration-1000 ${isOpen ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-        
-        {/* Intro */}
-        <section className="py-24 px-6 relative bg-[#fdfbf7]">
-          <div className="max-w-3xl mx-auto text-center reveal">
-            <h2 className={`${vibes.className} text-5xl md:text-6xl text-burgundy mb-8`}>The Journey of Two Souls in Love</h2>
-            <p className="text-sm leading-loose text-gray-600 mb-8 max-w-xl mx-auto">
-              "{invitation.description}"
-            </p>
-            <div className="h-px w-20 bg-gold mx-auto"></div>
-          </div>
-        </section>
-
-        {/* Profile */}
-        <CoupleProfile 
-           invitation={invitation} 
-           sectionBg="bg-white" 
-           titleFont={cormorant.className} 
-           accentText="text-burgundy" 
-           accentBg="bg-burgundy" 
-           particleColor="bg-gold"
-        />
-
-        {/* Love Story */}
-        <LoveStory 
-          invitation={invitation} 
-          sectionBg="bg-[#fdfbf7]" 
-          accentText="text-burgundy" 
-          accentBg="bg-gold" 
-          lineBg="bg-[#e8e4db]"
-          dotBg="bg-burgundy"
-          cardBg="bg-white border border-[#A99D87]/20 shadow-sm"
-        />
-
-        {/* Events */}
-        <Events 
-          invitation={invitation} 
-          sectionBg="bg-white" 
-          accentText="text-burgundy" 
-          accentBg="bg-burgundy text-white" 
-          cardBg="bg-[#fdfbf7] border border-[#A99D87]/30" 
-          iconBg="bg-gold/10 text-gold" 
-          btnBorder="border-gold text-burgundy hover:bg-gold hover:text-white"
-          btnHoverBg="bg-gold"
-        />
-
-        {/* Gallery */}
-        <Gallery 
-          invitation={invitation} 
-          sectionBg="bg-[#632529]" 
-          titleFont={cormorant.className} 
-          titleSize="text-5xl md:text-6xl"
-          accentText="text-[#A99D87]" 
-          borderColor="border-[#A99D87]/30"
-          imgClasses="rounded-lg shadow-xl"
-        />
-
-        {/* Gifts */}
-        <GiftAccounts 
-          invitation={invitation} 
-          sectionBg="bg-[#fdfbf7]" 
-          accentText="text-burgundy" 
-          accentBg="bg-gold" 
-          cardBg="bg-white border border-[#A99D87]/30 shadow-sm rounded-xl"
-          iconBg="bg-burgundy/5 text-burgundy" 
-          btnBorder="border-burgundy text-burgundy" 
-          btnHoverBg="bg-burgundy text-white hover:text-white"
-        />
-
-        {/* QrCheckin */}
-        <QrCheckin 
-          guest={guest} 
-          sectionBg='bg-white' 
-          titleFont={cormorant.className}
-          textColor='text-burgundy'
-          borderStyle='border-gold/30'
-        />
-
-        {/* Guestbook */}
-        <Guestbook 
-          invitation={invitation} 
-          guestName={guestName} 
-          guestToken={guest?.token} 
-        />
-
-        {/* Footer */}
-        <footer className="bg-burgundy py-16 px-6 text-center text-[#A99D87]">
-          <h2 className={`${vibes.className} text-5xl mb-6 text-white`}>
-            {invitation.groom_name} & {invitation.bride_name}
-          </h2>
-          <p className="text-xs tracking-widest uppercase mb-8 text-white/50">
-            {new Date(invitation.event_date).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}
-          </p>
-          <div className="h-px w-24 bg-gold mx-auto mb-8 opacity-50"></div>
-          <p className="text-[10px] uppercase tracking-widest opacity-60 text-white">&copy; 2026 Ulemanti Premium. All rights reserved.</p>
-        </footer>
-
-      </main>
-    </div>
-  );
+    );
 }

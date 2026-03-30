@@ -6,6 +6,7 @@ import { Plus, Pencil, Users, BarChart3, Send, Trash2, Heart, Mail, Share2, Mess
 import toast from 'react-hot-toast';
 import { invitations } from '@/lib/api';
 import { confirmAction } from '@/lib/toast-confirm';
+import { getInvitationUrl } from '@/lib/constants';
 
 export default function InvitationsPage() {
   const [data, setData] = useState([]);
@@ -39,7 +40,7 @@ export default function InvitationsPage() {
   };
 
   const handleShare = async (slug) => {
-    const url = `${window.location.origin}/invitation/${slug}`;
+    const url = getInvitationUrl(slug);
     try {
       await navigator.clipboard.writeText(url);
       toast.success('Link undangan berhasil disalin!');
@@ -94,7 +95,7 @@ export default function InvitationsPage() {
                   {inv.theme_name || 'Tema belum dipilih'} • {inv.wedding_date || 'Tanggal belum diatur'}
                 </p>
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  <a href={`/invitation/${inv.slug}`} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm" style={{ background: '#f8fafc', color: '#334155', border: '1px solid #cbd5e1' }}>
+                  <a href={getInvitationUrl(inv.slug)} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm" style={{ background: '#f8fafc', color: '#334155', border: '1px solid #cbd5e1' }}>
                     <Eye size={14} /> Lihat Website
                   </a>
                   <button className="btn btn-primary btn-sm" onClick={() => handleShare(inv.slug)}>

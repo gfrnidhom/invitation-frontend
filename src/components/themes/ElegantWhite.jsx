@@ -87,14 +87,14 @@ export default function ElegantWhite({ payload }) {
 
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-        {invitation.cover_photo ? (
+        {(() => { const cp = invitation.cover_photo ? (Array.isArray(invitation.cover_photo) ? invitation.cover_photo[0] : invitation.cover_photo) : null; return cp ? (
           <div className="absolute inset-0">
-            <img src={`${STORAGE_URL}/${invitation.cover_photo}`} alt="Cover" className="w-full h-full object-cover" />
+            <img src={cp.startsWith?.('http') ? cp : `${STORAGE_URL}/${cp}`} alt="Cover" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/40 to-white/80"></div>
           </div>
         ) : (
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMzAgMEwzMCA2ME0wIDMwTDYwIDMwIiBzdHJva2U9IiNlOGQ1YjciIHN0cm9rZS13aWR0aD0iMC4zIiBmaWxsPSJub25lIi8+PC9zdmc+')] opacity-20"></div>
-        )}
+        ); })()}
 
         <div className="relative z-10">
           {guestName && (

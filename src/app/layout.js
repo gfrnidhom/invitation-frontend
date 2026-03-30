@@ -1,5 +1,6 @@
 import './globals.css';
 import { AuthProvider } from '@/lib/auth-context';
+import { APP_CONFIG } from '@/lib/constants';
 
 export const metadata = {
   title: 'Wedding Invitation Manager',
@@ -18,7 +19,7 @@ export default function RootLayout({ children }) {
         />
         <script
           src="https://app.sandbox.midtrans.com/snap/snap.js"
-          data-client-key={process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY}
+          data-client-key={APP_CONFIG.MIDTRANS_CLIENT_KEY}
         />
       </head>
       <body>  

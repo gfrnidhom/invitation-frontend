@@ -94,12 +94,12 @@ export default function EksklusifModern({ payload }) {
 
       {/* Hero Section */}
       <section id="home" className="min-h-[100svh] flex flex-col justify-center items-center relative px-6 text-center py-20">
-        {invitation.cover_photo && (
+        {invitation.cover_photo && (() => { const cp = Array.isArray(invitation.cover_photo) ? invitation.cover_photo[0] : invitation.cover_photo; return cp ? (
           <div className="absolute inset-0 z-0 opacity-30">
-            <img src={`${STORAGE_URL}/${invitation.cover_photo}`} alt="Cover" className="w-full h-full object-cover" />
+            <img src={cp.startsWith?.('http') ? cp : `${STORAGE_URL}/${cp}`} alt="Cover" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent"></div>
           </div>
-        )}
+        ) : null; })()}
 
         <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center">
           {guestName && (

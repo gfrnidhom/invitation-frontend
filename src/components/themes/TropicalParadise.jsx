@@ -31,6 +31,13 @@ const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:800
 export default function TropicalParadise({ payload }) {
   const { invitation, guest, guestName } = payload;
 
+  // Extract first cover photo safely (cover_photo can be array or string)
+  const coverPhotoUrl = (() => {
+    const cp = invitation?.cover_photo ? (Array.isArray(invitation.cover_photo) ? invitation.cover_photo[0] : invitation.cover_photo) : null;
+    if (!cp) return null;
+    return cp.startsWith?.('http') ? cp : `${STORAGE_URL}/${cp}`;
+  })();
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -79,9 +86,9 @@ export default function TropicalParadise({ payload }) {
 
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-        {invitation.cover_photo ? (
+        {coverPhotoUrl ? (
           <div className="absolute inset-0 z-0">
-            <img src={`${STORAGE_URL}/${invitation.cover_photo}`} alt="Cover" className="w-full h-full object-cover" />
+            <img src={coverPhotoUrl} alt="Cover" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-b from-[#115e59]/40 via-[#115e59]/30 to-[#fffbf0]/90"></div>
           </div>
         ) : (
@@ -94,28 +101,28 @@ export default function TropicalParadise({ payload }) {
         <div className="relative z-10 w-full flex flex-col items-center justify-center reveal">
           {guestName && (
             <>
-              <p className={`font-sans text-sm uppercase tracking-widest ${invitation.cover_photo ? 'text-white/80' : 'text-[#0d9488]'} mb-2`}>Aloha,</p>
-              <p className={`${displayFont.className} text-xl font-semibold ${invitation.cover_photo ? 'text-white' : 'text-[#0f766e]'} mb-10`}>{guestName}</p>
+              <p className={`font-sans text-sm uppercase tracking-widest ${coverPhotoUrl ? 'text-white/80' : 'text-[#0d9488]'} mb-2`}>Aloha,</p>
+              <p className={`${displayFont.className} text-xl font-semibold ${coverPhotoUrl ? 'text-white' : 'text-[#0f766e]'} mb-10`}>{guestName}</p>
             </>
           )}
 
-          <p className={`text-xs tracking-[0.4em] uppercase ${invitation.cover_photo ? 'text-white/60' : 'text-[#2dd4bf]'} mb-6`}>You Are Invited To</p>
+          <p className={`text-xs tracking-[0.4em] uppercase ${coverPhotoUrl ? 'text-white/60' : 'text-[#2dd4bf]'} mb-6`}>You Are Invited To</p>
 
-          <h1 className={`${displayFont.className} text-6xl md:text-8xl font-bold ${invitation.cover_photo ? 'text-white drop-shadow-lg' : 'text-[#0f766e]'} leading-tight tracking-tight`}>
+          <h1 className={`${displayFont.className} text-6xl md:text-8xl font-bold ${coverPhotoUrl ? 'text-white drop-shadow-lg' : 'text-[#0f766e]'} leading-tight tracking-tight`}>
             {invitation.groom_name}
           </h1>
           
           <div className="my-5 flex items-center justify-center gap-4">
             <div className="w-14 h-0.5 bg-gradient-to-r from-[#2dd4bf] to-[#fb7185] rounded-full"></div>
-            <span className={`${displayFont.className} text-xl ${invitation.cover_photo ? 'text-[#fecdd3]' : 'text-[#fb7185]'}`}>&</span>
+            <span className={`${displayFont.className} text-xl ${coverPhotoUrl ? 'text-[#fecdd3]' : 'text-[#fb7185]'}`}>&</span>
             <div className="w-14 h-0.5 bg-gradient-to-l from-[#2dd4bf] to-[#fb7185] rounded-full"></div>
           </div>
           
-          <h1 className={`${displayFont.className} text-6xl md:text-8xl font-bold ${invitation.cover_photo ? 'text-white drop-shadow-lg' : 'text-[#0f766e]'} leading-tight tracking-tight`}>
+          <h1 className={`${displayFont.className} text-6xl md:text-8xl font-bold ${coverPhotoUrl ? 'text-white drop-shadow-lg' : 'text-[#0f766e]'} leading-tight tracking-tight`}>
             {invitation.bride_name}
           </h1>
 
-          <p className={`mt-10 text-sm ${invitation.cover_photo ? 'text-white/70' : 'text-gray-400'}`}>
+          <p className={`mt-10 text-sm ${coverPhotoUrl ? 'text-white/70' : 'text-gray-400'}`}>
             {new Date(invitation.event_date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
           </p>
         </div>

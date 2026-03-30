@@ -347,7 +347,7 @@ function CoupleTab({ invitation, onSave, saving }) {
 
 function EventsTab({ invitationId }) {
   const [items, setItems] = useState([]); const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({ name: '', date: '', time: '', location: '', address: '', maps_url: '' }); 
+  const [form, setForm] = useState({ name: '', date: '', time_start: '', time_end: '', location: '', latitude: '', longitude: '', sort_order: '' }); 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
@@ -355,23 +355,33 @@ function EventsTab({ invitationId }) {
   
   const handleSave = async () => { 
     try { 
+      // Format time safely and omit empty strings for nullable numbers
+      const payload = { ...form };
+      if (payload.time_start) payload.time_start = payload.time_start.substring(0, 5);
+      if (payload.time_end) payload.time_end = payload.time_end.substring(0, 5);
+      if (payload.sort_order === '' || payload.sort_order === null) payload.sort_order = 0;
+      if (payload.latitude === '') payload.latitude = null;
+      if (payload.longitude === '') payload.longitude = null;
+
       if (editingId) {
-        const res = await eventsApi.update(invitationId, editingId, form);
+        const res = await eventsApi.update(invitationId, editingId, payload);
         setItems(prev => prev.map(item => item.id === editingId ? (res.data || res) : item));
         toast.success('Acara diperbarui');
       } else {
-        const res = await eventsApi.create(invitationId, form); 
+        const res = await eventsApi.create(invitationId, payload); 
         setItems(prev => [...prev, res.data || res]); 
         toast.success('Acara ditambahkan');
       }
-      setForm({ name: '', date: '', time: '', location: '', address: '', maps_url: '' }); 
+      setForm({ name: '', date: '', time_start: '', time_end: '', location: '', latitude: '', longitude: '', sort_order: '' }); 
       setShowForm(false); 
       setEditingId(null);
-    } catch { toast.error('Gagal menyimpan acara'); } 
+    } catch (err) { 
+      toast.error(err?.message || err?.error || 'Gagal menyimpan acara'); 
+    } 
   };
 
   const handleEdit = (event) => {
-    setForm({ name: event.name || '', date: event.date || '', time: event.time || '', location: event.location || '', address: event.address || '', maps_url: event.maps_url || '' });
+    setForm({ name: event.name || '', date: event.date || '', time_start: event.time_start || '', time_end: event.time_end || '', location: event.location || '', latitude: event.latitude || '', longitude: event.longitude || '', sort_order: event.sort_order || '' });
     setEditingId(event.id);
     setShowForm(true);
   };
@@ -382,11 +392,11 @@ function EventsTab({ invitationId }) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '600', margin: 0 }}>Daftar Acara</h3>
-        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ name: '', date: '', time: '', location: '', address: '', maps_url: '' }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ name: '', date: '', time_start: '', time_end: '', location: '', latitude: '', longitude: '', sort_order: '' }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
       </div>
       {showForm && (
         <div style={{ display: 'grid', gap: '12px', marginBottom: '20px', padding: '20px', background: '#f8fafc', borderRadius: '12px' }}>
-          {[{ key: 'name', label: 'Nama Acara', placeholder: 'Akad Nikah' }, { key: 'date', label: 'Tanggal', type: 'date' }, { key: 'time', label: 'Waktu', placeholder: '08:00 - 10:00' }, { key: 'location', label: 'Tempat', placeholder: 'Masjid Al-Ikhlas' }, { key: 'address', label: 'Alamat', placeholder: 'Jl. Contoh No. 123' }, { key: 'maps_url', label: 'Google Maps URL', placeholder: 'https://maps.google.com/...' }].map((f) => (
+          {[{ key: 'name', label: 'Nama Acara', placeholder: 'Akad Nikah' }, { key: 'date', label: 'Tanggal', type: 'date' }, { key: 'time_start', label: 'Waktu Mulai', type: 'time' }, { key: 'time_end', label: 'Waktu Selesai (Opsional)', type: 'time' }, { key: 'location', label: 'Tempat/Lokasi', placeholder: 'Masjid Al-Ikhlas' }, { key: 'latitude', label: 'Latitude Peta', placeholder: '-6.200000' }, { key: 'longitude', label: 'Longitude Peta', placeholder: '106.816666' }, { key: 'sort_order', label: 'Urutan (Makin kecil makin awal)', type: 'number' }].map((f) => (
             <div key={f.key}><label className="label">{f.label}</label><input className="input" type={f.type || 'text'} placeholder={f.placeholder || ''} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} /></div>
           ))}
           <button className="btn btn-primary btn-sm" onClick={handleSave}><Save size={14} /> {editingId ? 'Update Acara' : 'Simpan Acara'}</button>
@@ -395,7 +405,7 @@ function EventsTab({ invitationId }) {
       {items.length === 0 ? <p style={{ color: '#94a3b8', textAlign: 'center', padding: '40px' }}>Belum ada acara ditambahkan</p> : (
         <div style={{ display: 'grid', gap: '12px' }}>{items.map((event) => (
           <div key={event.id} style={{ padding: '16px', background: '#f8fafc', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div><div style={{ fontWeight: '600', color: '#1e293b' }}>{event.name}</div><div style={{ fontSize: '13px', color: '#64748b' }}>{event.date} • {event.time} • {event.location}</div></div>
+            <div><div style={{ fontWeight: '600', color: '#1e293b' }}>{event.name}</div><div style={{ fontSize: '13px', color: '#64748b' }}>{event.date} • {event.time_start} {event.time_end ? `- ${event.time_end}` : ''} • {event.location}</div></div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button className="btn btn-ghost btn-sm" onClick={() => handleEdit(event)} style={{ color: '#3b82f6' }}>Edit</button>
               <button className="btn btn-ghost btn-sm" onClick={() => handleDelete(event.id)} style={{ color: 'var(--color-danger)' }}><Trash2 size={14} /></button>
@@ -435,7 +445,7 @@ function GalleryTab({ invitationId }) {
 
 function StoryTab({ invitationId }) {
   const [items, setItems] = useState([]); const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({ title: '', date: '', description: '' }); 
+  const [form, setForm] = useState({ title: '', date: '', description: '', sort_order: '', photo: null, photoFile: null }); 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
@@ -443,23 +453,37 @@ function StoryTab({ invitationId }) {
   
   const handleSave = async () => { 
     try { 
+      const fd = new FormData();
+      Object.keys(form).forEach(k => {
+        if (k === 'photoFile' && form[k]) {
+          fd.append('photo', form[k]);
+        } else if (k !== 'photo' && k !== 'photoFile' && form[k] !== null && form[k] !== undefined) {
+          if (k === 'date' && form[k] === '') return;
+          if (k === 'sort_order' && form[k] === '') {
+            fd.append(k, 0);
+          } else {
+            fd.append(k, form[k]);
+          }
+        }
+      });
+
       if (editingId) {
-        const res = await loveStories.update(invitationId, editingId, form);
+        const res = await loveStories.update(invitationId, editingId, fd);
         setItems(prev => prev.map(item => item.id === editingId ? (res.data || res) : item));
         toast.success('Cerita diperbarui');
       } else {
-        const res = await loveStories.create(invitationId, form); 
+        const res = await loveStories.create(invitationId, fd); 
         setItems(prev => [...prev, res.data || res]); 
         toast.success('Cerita ditambahkan');
       }
-      setForm({ title: '', date: '', description: '' }); 
+      setForm({ title: '', date: '', description: '', sort_order: '', photo: null, photoFile: null }); 
       setShowForm(false); 
       setEditingId(null);
     } catch { toast.error('Gagal menyimpan cerita'); } 
   };
 
   const handleEdit = (story) => {
-    setForm({ title: story.title || '', date: story.date || '', description: story.description || '' });
+    setForm({ title: story.title || '', date: story.date || '', description: story.description || '', sort_order: story.sort_order || '', photo: story.photo, photoFile: null });
     setEditingId(story.id);
     setShowForm(true);
   };
@@ -470,20 +494,33 @@ function StoryTab({ invitationId }) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '600', margin: 0 }}>Love Story</h3>
-        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ title: '', date: '', description: '' }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ title: '', date: '', description: '', sort_order: '', photo: null, photoFile: null }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
       </div>
       {showForm && (
         <div style={{ display: 'grid', gap: '12px', marginBottom: '20px', padding: '20px', background: '#f8fafc', borderRadius: '12px' }}>
           <div><label className="label">Judul</label><input className="input" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Pertama Bertemu" /></div>
           <div><label className="label">Tanggal</label><input className="input" type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} /></div>
+          <div><label className="label">Urutan</label><input className="input" type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: e.target.value })} placeholder="1" /></div>
           <div><label className="label">Deskripsi</label><textarea className="input" rows="3" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} style={{ resize: 'vertical' }} /></div>
-          <button className="btn btn-primary btn-sm" onClick={handleSave}><Save size={14} /> {editingId ? 'Update' : 'Simpan'}</button>
+          <div>
+            <label className="label">Foto Cerita</label>
+            <input type="file" className="input" accept="image/*" onChange={(e) => setForm({ ...form, photoFile: e.target.files[0] })} />
+            {form.photo && !form.photoFile && <div className="mt-2 text-xs text-blue-500">Gambar saat ini: {form.photo}</div>}
+          </div>
+          <button className="btn btn-primary btn-sm mt-2" onClick={handleSave}><Save size={14} /> {editingId ? 'Update' : 'Simpan'}</button>
         </div>
       )}
       {items.length === 0 ? <p style={{ color: '#94a3b8', textAlign: 'center', padding: '40px' }}>Belum ada love story</p> : (
         <div style={{ display: 'grid', gap: '12px' }}>{items.map((story) => (
           <div key={story.id} style={{ padding: '16px', background: '#f8fafc', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-            <div><div style={{ fontWeight: '600', color: '#1e293b' }}>{story.title}</div><div style={{ fontSize: '13px', color: '#64748b', marginTop: '2px' }}>{story.date}</div><div style={{ fontSize: '14px', color: '#475569', marginTop: '6px' }}>{story.description}</div></div>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              {story.photo && (
+                <div style={{ width: '40px', height: '40px', borderRadius: '8px', overflow: 'hidden', flexShrink: 0 }}>
+                  <img src={(story.photo).startsWith('http') ? story.photo : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${story.photo}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+              )}
+              <div><div style={{ fontWeight: '600', color: '#1e293b' }}>{story.title}</div><div style={{ fontSize: '13px', color: '#64748b', marginTop: '2px' }}>{story.date} {story.sort_order ? `(Urutan: ${story.sort_order})` : ''}</div><div style={{ fontSize: '14px', color: '#475569', marginTop: '6px' }}>{story.description}</div></div>
+            </div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button className="btn btn-ghost btn-sm" onClick={() => handleEdit(story)} style={{ color: '#3b82f6' }}>Edit</button>
               <button className="btn btn-ghost btn-sm" onClick={() => handleDelete(story.id)} style={{ color: 'var(--color-danger)' }}><Trash2 size={14} /></button>
@@ -497,7 +534,7 @@ function StoryTab({ invitationId }) {
 
 function GiftTab({ invitationId }) {
   const [items, setItems] = useState([]); const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({ bank_name: '', account_holder: '', account_number: '' }); 
+  const [form, setForm] = useState({ bank_name: '', account_holder: '', account_number: '', sort_order: '' }); 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
@@ -505,23 +542,28 @@ function GiftTab({ invitationId }) {
   
   const handleSave = async () => { 
     try { 
+      const payload = { ...form };
+      if (payload.sort_order === '' || payload.sort_order === null) payload.sort_order = 0;
+
       if (editingId) {
-        const res = await giftAccounts.update(invitationId, editingId, form);
+        const res = await giftAccounts.update(invitationId, editingId, payload);
         setItems(prev => prev.map(item => item.id === editingId ? (res.data || res) : item));
         toast.success('Rekening diperbarui');
       } else {
-        const res = await giftAccounts.create(invitationId, form); 
+        const res = await giftAccounts.create(invitationId, payload); 
         setItems(prev => [...prev, res.data || res]); 
         toast.success('Rekening ditambahkan');
       }
-      setForm({ bank_name: '', account_holder: '', account_number: '' }); 
+      setForm({ bank_name: '', account_holder: '', account_number: '', sort_order: '' }); 
       setShowForm(false); 
       setEditingId(null);
-    } catch { toast.error('Gagal menyimpan rekening'); } 
+    } catch (err) { 
+      toast.error(err?.message || err?.error || 'Gagal menyimpan rekening'); 
+    } 
   };
 
   const handleEdit = (acc) => {
-    setForm({ bank_name: acc.bank_name || '', account_holder: acc.account_holder || '', account_number: acc.account_number || '' });
+    setForm({ bank_name: acc.bank_name || '', account_holder: acc.account_holder || '', account_number: acc.account_number || '', sort_order: acc.sort_order || '' });
     setEditingId(acc.id);
     setShowForm(true);
   };
@@ -532,13 +574,14 @@ function GiftTab({ invitationId }) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '600', margin: 0 }}>Rekening Hadiah</h3>
-        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ bank_name: '', account_holder: '', account_number: '' }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ bank_name: '', account_holder: '', account_number: '', sort_order: '' }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
       </div>
       {showForm && (
         <div style={{ display: 'grid', gap: '12px', marginBottom: '20px', padding: '20px', background: '#f8fafc', borderRadius: '12px' }}>
-          <div><label className="label">Nama Bank</label><input className="input" value={form.bank_name} onChange={(e) => setForm({ ...form, bank_name: e.target.value })} placeholder="BCA" /></div>
+          <div><label className="label">Nama Bank / Wallet</label><input className="input" value={form.bank_name} onChange={(e) => setForm({ ...form, bank_name: e.target.value })} placeholder="BCA / DANA" /></div>
           <div><label className="label">Nama Pemilik</label><input className="input" value={form.account_holder} onChange={(e) => setForm({ ...form, account_holder: e.target.value })} /></div>
           <div><label className="label">Nomor Rekening</label><input className="input" value={form.account_number} onChange={(e) => setForm({ ...form, account_number: e.target.value })} /></div>
+          <div><label className="label">Urutan</label><input className="input" type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: e.target.value })} placeholder="1" /></div>
           <button className="btn btn-primary btn-sm" onClick={handleSave}><Save size={14} /> {editingId ? 'Update' : 'Simpan'}</button>
         </div>
       )}

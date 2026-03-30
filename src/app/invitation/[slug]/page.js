@@ -17,6 +17,18 @@ import TropicalParadise from '@/components/themes/TropicalParadise';
 import ModernRomance from '@/components/themes/ModernRomance';
 import EksklusifModern from '@/components/themes/EksklusifModern';
 import AureliaLuxe from '@/components/themes/AureliaLuxe';
+import BotanicalSage from '@/components/themes/BotanicalSage';
+import MinimalistBlack from '@/components/themes/MinimalistBlack';
+import MidnightGold from '@/components/themes/MidnightGold';
+import EarthyNature from '@/components/themes/EarthyNature';
+import FrostedElegance from '@/components/themes/FrostedElegance';
+import BlushRomantic from '@/components/themes/BlushRomantic';
+import MonoChrome from '@/components/themes/MonoChrome';
+import MonoChromeII from '@/components/themes/MonoChromeII';
+import MonoChromeIII from '@/components/themes/MonoChromeIII';
+import MonoChromeIV from '@/components/themes/MonoChromeIV';
+import MonoChromeV from '@/components/themes/MonoChromeV';
+import CinematicVow from '@/components/themes/CinematicVow';
 
 export default function PublicInvitationViewer() {
   const { slug } = useParams();
@@ -73,9 +85,11 @@ export default function PublicInvitationViewer() {
   // Inject Meta Data to Document Head dynamically
   const invitation = data.invitation;
 
-  // Normalize photo fields: backend returns arrays (JSON cast), but themes expect strings
+  // Normalize photo fields: backend returns arrays (JSON cast)
+  // bride_photo & groom_photo are single photos → flatten to string
+  // cover_photo is intentionally an array (slideshow/thumbnails) → keep as array
   if (invitation) {
-    ['cover_photo', 'bride_photo', 'groom_photo'].forEach(field => {
+    ['bride_photo', 'groom_photo'].forEach(field => {
       if (Array.isArray(invitation[field])) {
         invitation[field] = invitation[field][0] || null;
       }
@@ -109,6 +123,30 @@ export default function PublicInvitationViewer() {
         return <EksklusifModern payload={data} />;
       case 'aurelia-luxe':
         return <AureliaLuxe payload={data} />;
+      case 'botanical-sage':
+        return <BotanicalSage payload={data} />;
+      case 'minimalist-black':
+        return <MinimalistBlack payload={data} />;
+      case 'midnight-gold':
+        return <MidnightGold payload={data} />;
+      case 'earthy-nature':
+        return <EarthyNature payload={data} />;
+      case 'frosted-elegance':
+        return <FrostedElegance payload={data} />;
+      case 'blush-romantic':
+        return <BlushRomantic payload={data} />;
+      case 'monochrome':
+        return <MonoChrome payload={data} />;
+      case 'monochrome-ii':
+        return <MonoChromeII payload={data} />;
+      case 'monochrome-iii':
+        return <MonoChromeIII payload={data} />;
+      case 'monochrome-iv':
+        return <MonoChromeIV payload={data} />;
+      case 'monochrome-v':
+        return <MonoChromeV payload={data} />;
+      case 'cinematic-vow':
+        return <CinematicVow payload={data} />;
       // Future themes will be added here!
       default:
         // Fallback or elegantly handle unsupported themes

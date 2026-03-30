@@ -49,8 +49,10 @@ export default function Events({
 
                             <div className={`space-y-2 text-sm ${bodyText}`}>
                                 <p className="font-medium">{formatDate(event.date)}</p>
-                                {event.time_start && (
-                                    <p>{event.time_start}{event.time_end ? ` - ${event.time_end}` : ''} WIB</p>
+                                {(event.time_start || event.time) ? (
+                                    <p>{(event.time_start || event.time).substring(0, 5)}{event.time_end ? ` - ${event.time_end.substring(0, 5)}` : '- Selesai'} WIB</p>
+                                ) : (
+                                    <p>TBA</p>
                                 )}
                                 <p className="pt-1">{event.location}</p>
                             </div>

@@ -84,12 +84,12 @@ export default function RoyalGold({ payload }) {
 
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-        {invitation.cover_photo && (
+        {invitation.cover_photo && (() => { const cp = Array.isArray(invitation.cover_photo) ? invitation.cover_photo[0] : invitation.cover_photo; return cp ? (
           <div className="absolute inset-0 z-0">
-            <img src={`${STORAGE_URL}/${invitation.cover_photo}`} alt="Cover" className="w-full h-full object-cover" />
+            <img src={cp.startsWith?.('http') ? cp : `${STORAGE_URL}/${cp}`} alt="Cover" className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/70 via-[#0a0a0f]/50 to-[#0a0a0f]/80"></div>
           </div>
-        )}
+        ) : null; })()}
 
         {/* Gold corner ornaments */}
         <div className="absolute top-6 left-6 w-20 h-20 border-t border-l border-[#c9a84c]/30 z-10"></div>

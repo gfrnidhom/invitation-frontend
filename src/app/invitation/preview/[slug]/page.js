@@ -16,6 +16,18 @@ import TropicalParadise from '@/components/themes/TropicalParadise';
 import ModernRomance from '@/components/themes/ModernRomance';
 import EksklusifModern from '@/components/themes/EksklusifModern';
 import AureliaLuxe from '@/components/themes/AureliaLuxe';
+import BotanicalSage from '@/components/themes/BotanicalSage';
+import MinimalistBlack from '@/components/themes/MinimalistBlack';
+import MidnightGold from '@/components/themes/MidnightGold';
+import EarthyNature from '@/components/themes/EarthyNature';
+import FrostedElegance from '@/components/themes/FrostedElegance';
+import BlushRomantic from '@/components/themes/BlushRomantic';
+import MonoChrome from '@/components/themes/MonoChrome';
+import MonoChromeII from '@/components/themes/MonoChromeII';
+import MonoChromeIII from '@/components/themes/MonoChromeIII';
+import MonoChromeIV from '@/components/themes/MonoChromeIV';
+import MonoChromeV from '@/components/themes/MonoChromeV';
+import CinematicVow from '@/components/themes/CinematicVow';
 
 export default function ThemePreviewPage() {
   const { slug } = useParams();
@@ -64,7 +76,9 @@ export default function ThemePreviewPage() {
   }
 
   const invitation = data.invitation;
-  const themeSlug = invitation?.theme?.slug || slug;
+  // Memaksa menggunakan slug dari URL (nama tema yang ingin dipreview), 
+  // bukan tema bawaan (invitation.theme.slug) dari data dummy.
+  const themeSlug = slug;
 
   const renderTheme = () => {
     switch (themeSlug) {
@@ -90,6 +104,30 @@ export default function ThemePreviewPage() {
         return <EksklusifModern payload={data} />;
       case 'aurelia-luxe':
         return <AureliaLuxe payload={data} />;
+      case 'botanical-sage':
+        return <BotanicalSage payload={data} />;
+      case 'minimalist-black':
+        return <MinimalistBlack payload={data} />;
+      case 'midnight-gold':
+        return <MidnightGold payload={data} />;
+      case 'earthy-nature':
+        return <EarthyNature payload={data} />;
+      case 'frosted-elegance':
+        return <FrostedElegance payload={data} />;
+      case 'blush-romantic':
+        return <BlushRomantic payload={data} />;
+      case 'monochrome':
+        return <MonoChrome payload={data} />;
+      case 'monochrome-ii':
+        return <MonoChromeII payload={data} />;
+      case 'monochrome-iii':
+        return <MonoChromeIII payload={data} />;
+      case 'monochrome-iv':
+        return <MonoChromeIV payload={data} />;
+      case 'monochrome-v':
+        return <MonoChromeV payload={data} />;
+      case 'cinematic-vow':
+        return <CinematicVow payload={data} />;
       default:
         return (
           <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f8fafc', padding: '24px' }}>

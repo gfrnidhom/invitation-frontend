@@ -116,8 +116,17 @@ export const events = {
 // ── Love Stories ──
 export const loveStories = {
   list: (invitationId) => request(`/invitations/${invitationId}/love-stories`),
-  create: (invitationId, data) => request(`/invitations/${invitationId}/love-stories`, { method: 'POST', body: JSON.stringify(data) }),
-  update: (invitationId, storyId, data) => request(`/love-stories/${storyId}`, { method: 'PUT', body: JSON.stringify(data) }),
+  create: (invitationId, data) => {
+    if (data instanceof FormData) return request(`/invitations/${invitationId}/love-stories`, { method: 'POST', body: data });
+    return request(`/invitations/${invitationId}/love-stories`, { method: 'POST', body: JSON.stringify(data) });
+  },
+  update: (invitationId, storyId, data) => {
+    if (data instanceof FormData) {
+      if (!data.has('_method')) data.append('_method', 'PUT');
+      return request(`/love-stories/${storyId}`, { method: 'POST', body: data });
+    }
+    return request(`/love-stories/${storyId}`, { method: 'PUT', body: JSON.stringify(data) });
+  },
   delete: (invitationId, storyId) => request(`/love-stories/${storyId}`, { method: 'DELETE' }),
 };
 

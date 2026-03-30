@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Palette, Gem, Eye, Plus } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { themes, userThemes, subscriptions } from '@/lib/api';
+import { getInvitationUrl, getThemePreviewUrl, APP_CONFIG } from '@/lib/constants';
 
 export default function ThemesPage() {
   const [themeList, setThemeList] = useState([]);
@@ -60,7 +61,7 @@ export default function ThemesPage() {
             <div key={theme.id} className="card card-interactive" style={{ overflow: 'hidden', animation: `slide-up 0.4s ease-out ${i * 0.05}s both`, border: activeTheme == theme.id ? '2px solid var(--color-primary-500)' : 'none' }}>
               <div style={{ height: '200px', background: 'linear-gradient(135deg, #667eea, #764ba2)', position: 'relative', overflow: 'hidden' }}>
                 {theme.thumbnail ? (
-                  <img src={`${process.env.NEXT_PUBLIC_STORAGE_URL}/${theme.thumbnail}`} alt={theme.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }}
+                  <img src={theme.thumbnail.startsWith('http') ? theme.thumbnail : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${theme.thumbnail}`} alt={theme.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }}
                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
                 ) : (<div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Palette size={48} color="rgba(255,255,255,0.5)" /></div>)}
                 {theme.is_premium && (<div style={{ position: 'absolute', top: '12px', right: '12px' }}><span className="badge" style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: 'white', display: 'flex', alignItems: 'center', gap: '4px' }}><Gem size={12} /> Premium</span></div>)}
@@ -74,7 +75,7 @@ export default function ThemesPage() {
                     <div style={{ display: 'flex', flex: 1, gap: '8px' }}>
                       <button className="btn btn-primary btn-sm" style={{ flex: 1, opacity: 0.8 }} disabled>Sedang Aktif</button>
                       {invitationSlug && (
-                        <a href={`/invitation/${invitationSlug}`} target="_blank" rel="noreferrer" className="btn btn-primary btn-sm" style={{ padding: '0 12px' }} title="Preview Undangan Saya">
+                        <a href={getInvitationUrl(invitationSlug)} target="_blank" rel="noreferrer" className="btn btn-primary btn-sm" style={{ padding: '0 12px' }} title="Preview Undangan Saya">
                            <Eye size={14} />
                         </a>
                       )}
@@ -89,9 +90,9 @@ export default function ThemesPage() {
                     </button>
                   )}
                   {theme.preview_url ? (
-                    <a href={`/invitation/preview/${theme.slug}`} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm" style={{ border: '1px solid #e2e8f0' }} title="Preview Template"><Eye size={14} /></a>
+                    <a href={getThemePreviewUrl(theme.slug)} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm" style={{ border: '1px solid #e2e8f0' }} title="Preview Template"><Eye size={14} /></a>
                   ) : (
-                    <a href={`/invitation/preview/${theme.slug}`} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm" style={{ border: '1px solid #e2e8f0' }} title="Preview Template"><Eye size={14} /></a>
+                    <a href={getThemePreviewUrl(theme.slug)} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm" style={{ border: '1px solid #e2e8f0' }} title="Preview Template"><Eye size={14} /></a>
                   )}
                 </div>
               </div>

@@ -102,7 +102,7 @@ export default function ModernRomance({ payload }) {
       <section 
         id="home" 
         className="min-h-screen relative flex flex-col items-center justify-center text-center px-6 parallax"
-        style={{ backgroundImage: `url('${invitation.cover_photo ? `${STORAGE_URL}/${invitation.cover_photo}` : 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2669&auto=format&fit=crop'}')` }}
+        style={{ backgroundImage: `url('${(() => { const cp = invitation.cover_photo ? (Array.isArray(invitation.cover_photo) ? invitation.cover_photo[0] : invitation.cover_photo) : null; return cp ? (cp.startsWith?.('http') ? cp : `${STORAGE_URL}/${cp}`) : 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2669&auto=format&fit=crop'; })()}')` }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>
         

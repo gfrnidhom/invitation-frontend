@@ -87,16 +87,16 @@ export default function ClassicJavanese({ payload }) {
           <p className="text-xs tracking-[0.4em] uppercase text-[#c4913b] mb-6 reveal">Undangan Pernikahan</p>
 
           {/* Couple Photo */}
-          {invitation.cover_photo && (
+          {invitation.cover_photo && (() => { const cp = Array.isArray(invitation.cover_photo) ? invitation.cover_photo[0] : invitation.cover_photo; return cp ? (
             <div className="relative mb-8 reveal">
               <div className="w-52 h-52 md:w-64 md:h-64 rounded-2xl overflow-hidden border-4 border-[#f9ecd8] shadow-xl rotate-3">
-                <img src={`${STORAGE_URL}/${invitation.cover_photo}`} alt="Cover" className="w-full h-full object-cover -rotate-3 scale-110" />
+                <img src={cp.startsWith?.('http') ? cp : `${STORAGE_URL}/${cp}`} alt="Cover" className="w-full h-full object-cover -rotate-3 scale-110" />
               </div>
               <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-[#fdf8f0] border-2 border-[#f0d5a8] rounded-full flex items-center justify-center">
                 <svg className="w-5 h-5 text-[#c4913b]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
               </div>
             </div>
-          )}
+          ) : null; })()}
 
           <h1 className={`${displayFont.className} text-4xl md:text-6xl text-[#2d1810] leading-tight reveal`}>
             {invitation.groom_name}

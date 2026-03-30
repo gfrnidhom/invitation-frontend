@@ -89,11 +89,11 @@ export default function RusticGarden({ payload }) {
           )}
 
           {/* Couple Photo */}
-          {invitation.cover_photo && (
+          {invitation.cover_photo && (() => { const cp = Array.isArray(invitation.cover_photo) ? invitation.cover_photo[0] : invitation.cover_photo; return cp ? (
             <div className="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-white shadow-2xl mb-8 reveal">
-              <img src={`${STORAGE_URL}/${invitation.cover_photo}`} alt="Cover" className="w-full h-full object-cover" />
+              <img src={cp.startsWith?.('http') ? cp : `${STORAGE_URL}/${cp}`} alt="Cover" className="w-full h-full object-cover" />
             </div>
-          )}
+          ) : null; })()}
 
           <p className="text-xs tracking-[0.4em] uppercase text-[#c4a87c] mb-4 reveal">You Are Invited To</p>
           <p className="text-xs tracking-[0.3em] uppercase text-[#5e7a4c] mb-2 reveal">The Wedding Celebration Of</p>
