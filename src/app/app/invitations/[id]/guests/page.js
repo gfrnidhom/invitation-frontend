@@ -101,10 +101,10 @@ export default function GuestsPage({ params }) {
 
   const getInviteText = (guest) => {
     if (!invitation) return '';
-    const nameSlug = guest.name.trim().replace(/\\s+/g, '-');
+    const nameSlug = guest.name.trim().replace(/\s+/g, '-');
     const invLink = `${getInvitationUrl(invitation.slug)}?to=${encodeURIComponent(nameSlug)}`;
     
-    const template = invitation.whatsapp_template || `Halo [nama_tamu],\\n\\nKami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.\\n\\nSimpan tanggalnya dan jadilah bagian dari hari istimewa kami.\\n\\nLihat detail undangan di sini:\\n[link_undangan]\\n\\nAtas kehadiran & doanya, kami ucapkan terima kasih.`;
+    const template = invitation.whatsapp_template || `Halo [nama_tamu],\n\nKami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.\n\nSimpan tanggalnya dan jadilah bagian dari hari istimewa kami.\n\nLihat detail undangan di sini:\n[link_undangan]\n\nAtas kehadiran & doanya, kami ucapkan terima kasih.`;
     
     let ticketUrl = '';
     if (guest.qr_code && guest.token) {
