@@ -116,11 +116,11 @@ export default function GuestsPage({ params }) {
     }
 
     let text = template
-      .replace(/\\[nama_tamu\\]/g, guest.name)
-      .replace(/\\[link_undangan\\]/g, invLink);
+      .replace(/\[nama_tamu\]/g, guest.name)
+      .replace(/\[link_undangan\]/g, invLink);
       
     if (text.includes('[eticket]')) {
-      text = text.replace(/\\[eticket\\]/g, ticketUrl);
+      text = text.replace(/\[eticket\]/g, ticketUrl);
     } else {
       // Auto-append if [eticket] isn't used in the template but the guest has one
       if (guest.qr_code && guest.token) {
