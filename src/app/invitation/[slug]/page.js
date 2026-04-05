@@ -42,6 +42,40 @@ export default function PublicInvitationViewer() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  // ── Global Audio Context Unlocker (Mobile Fix) ──
+  useEffect(() => {
+    const unlockAudio = () => {
+      const audios = document.querySelectorAll('audio');
+      if (audios.length === 0) return;
+      
+      audios.forEach(audio => {
+        // Play and immediately pause/mute to satisfy browser gesture requirements
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            // If the audio shouldn't be playing yet, we just pause it.
+            // This "unblocks" the element for later .play() calls in themes.
+            if (audio.paused) audio.pause();
+          }).catch(() => {
+            // Ignore as this is just a warmup trigger
+          });
+        }
+      });
+      
+      // Cleanup: only need to run this once per page load
+      window.removeEventListener('click', unlockAudio, true);
+      window.removeEventListener('touchstart', unlockAudio, true);
+    };
+
+    window.addEventListener('click', unlockAudio, true);
+    window.addEventListener('touchstart', unlockAudio, true);
+
+    return () => {
+      window.removeEventListener('click', unlockAudio, true);
+      window.removeEventListener('touchstart', unlockAudio, true);
+    };
+  }, [data]); // Re-run if data/theme changes
+
   useEffect(() => {
     publicInvitation.get(slug, token)
       .then(res => {

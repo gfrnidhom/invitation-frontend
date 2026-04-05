@@ -11,7 +11,7 @@ const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '
 const greatVibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
 const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700', '900'] });
 
-const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
+const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://app.digitvitation.my.id/storage';
 
 export default function MidnightGold({ payload }) {
     const { invitation, guest, guestName } = payload;
@@ -81,7 +81,15 @@ export default function MidnightGold({ payload }) {
 
     const handleOpen = () => {
         setIsOpen(true);
-        if (audioRef.current) audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+        if (audioRef.current) {
+            // Force play on user interaction
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => setIsPlaying(true)).catch(() => {
+                    console.error("Audio playback triggered but blocked.");
+                });
+            }
+        }
     };
 
     const toggleAudio = () => {

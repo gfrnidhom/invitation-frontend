@@ -12,7 +12,7 @@ import Guestbook from './partials/Guestbook';
 import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 
-const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL;
+const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://app.digitvitation.my.id/storage';
 
 export default function ModernMinimalist({ payload }) {
     const { invitation, guestName, guest } = payload;
