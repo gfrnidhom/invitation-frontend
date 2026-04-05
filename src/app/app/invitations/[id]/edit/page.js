@@ -336,22 +336,28 @@ function SettingsTab({ invitation, onSave, saving }) {
     if (form.music_url) {
       if (form.music_url.includes('sndcdn.com')) return 'Link SoundCloud (Legacy)';
       const name = form.music_url.split('/').pop() || 'Existing Audio';
-      return decodeURIComponent(name);
+      try {
+        return decodeURIComponent(name);
+      } catch(e) {
+        return name;
+      }
     }
     return 'Belum ada musik terpilih';
   };
-
-
 
   const currentAudioSrc = form.music_file 
     ? URL.createObjectURL(form.music_file) 
     : getFullUrl(form.music_url);
 
   const filteredPresets = musicLibrary.presets?.filter(m => 
-    !librarySearch || m.title?.toLowerCase().includes(librarySearch.toLowerCase()) || m.category?.toLowerCase().includes(librarySearch.toLowerCase())
+    !librarySearch || 
+    (m.title?.toLowerCase() || '').includes(librarySearch.toLowerCase()) || 
+    (m.category?.toLowerCase() || '').includes(librarySearch.toLowerCase())
   ) || [];
+  
   const filteredUserMusic = musicLibrary.user_music?.filter(m => 
-    !librarySearch || m.title?.toLowerCase().includes(librarySearch.toLowerCase())
+    !librarySearch || 
+    (m.title?.toLowerCase() || '').includes(librarySearch.toLowerCase())
   ) || [];
 
   return (
