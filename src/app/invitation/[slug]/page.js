@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState, useRef } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import { publicInvitation } from '@/lib/api';
