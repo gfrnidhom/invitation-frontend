@@ -36,6 +36,8 @@ export function middleware(request) {
     'checkout',  // Halaman checkout/pembayaran
     'app',       // Halaman dashboard user
     'preview',   // Route internal Next.js (walaupun dicatch di atas, lebih aman dimasukkan)
+    'ticket',    // Route E-Ticket
+    'invitation',// Explicitly ignore invitation route if accessed raw
     'api',       // API route
     'static',    // Static files
     '_next',     // Next.js internal
