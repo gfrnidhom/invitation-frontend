@@ -23,19 +23,32 @@ export function middleware(request) {
     return NextResponse.rewrite(newUrl);
   }
 
-  // Jika user mengakses /app/slug, rewrite ke struktur internal /invitation/slug
-  // KECUALI untuk halaman bawaan dashboard aplikasi (seperti /app/dashboard)
-  if (url.pathname.startsWith('/app/')) {
-    const slug = url.pathname.replace('/app/', '');
-    const firstSegment = slug.split('/')[0];
-    const reservedDashboardRoutes = ['dashboard', 'gallery', 'invitations', 'profile', 'subscriptions', 'themes'];
-    
-    // Pastikan ini bukan halaman dashboard
-    if (!reservedDashboardRoutes.includes(firstSegment)) {
-      const newUrl = url.clone();
-      newUrl.pathname = `/invitation/${slug}`;
-      return NextResponse.rewrite(newUrl);
-    }
+  // Tangkap path dari URL
+  const pathParts = url.pathname.split('/');
+  const firstSegment = pathParts[1]; // segment pertama stelah `/`
+
+  // Daftar route/path utama aplikasi yang BUKAN merupakan slug undangan
+  // Tambahkan path folder apapun yang ada di dalam `src/app` ke array ini (selain 'invitation')
+  const reservedPaths = [
+    '',          // Halaman utama (root /)
+    'login',     // Halaman login
+    'register',  // Halaman register
+    'checkout',  // Halaman checkout/pembayaran
+    'app',       // Halaman dashboard user
+    'preview',   // Route internal Next.js (walaupun dicatch di atas, lebih aman dimasukkan)
+    'api',       // API route
+    'static',    // Static files
+    '_next',     // Next.js internal
+    'favicon.ico'
+  ];
+
+  // Jika URL bukan bagian dari sistem, kita anggap itu adalah slug undangan (misal: /jamal-ranti)
+  if (firstSegment && !reservedPaths.includes(firstSegment)) {
+    const newUrl = url.clone();
+    // Rewrite dari /slug ke /invitation/slug
+    // Contoh: /jamal-ranti menjadi /invitation/jamal-ranti
+    newUrl.pathname = `/invitation${url.pathname}`;
+    return NextResponse.rewrite(newUrl);
   }
 
   return NextResponse.next();
