@@ -31,7 +31,7 @@ export function middleware(request) {
       // Ada subdomain
       const subdomain = parts.slice(0, parts.length - domainParts).join('.');
       
-      // Skip subdomain www dan app
+      // Subdomain undangan (bukan www/app)
       if (subdomain !== 'www' && subdomain !== 'app') {
         const newUrl = url.clone();
         
@@ -43,14 +43,15 @@ export function middleware(request) {
         
         return NextResponse.rewrite(newUrl);
       }
-    } else {
-      // Main domain (tanpa subdomain) — handle /preview/
-      if (url.pathname.startsWith('/preview/')) {
-        const slug = url.pathname.replace('/preview/', '');
-        const newUrl = url.clone();
-        newUrl.pathname = `/invitation/preview/${slug}`;
-        return NextResponse.rewrite(newUrl);
-      }
+      // www/app → lanjut ke logic main domain di bawah
+    }
+
+    // Main domain (atau www/app subdomain) — handle /preview/
+    if (url.pathname.startsWith('/preview/')) {
+      const slug = url.pathname.replace('/preview/', '');
+      const newUrl = url.clone();
+      newUrl.pathname = `/invitation/preview/${slug}`;
+      return NextResponse.rewrite(newUrl);
     }
   }
 
