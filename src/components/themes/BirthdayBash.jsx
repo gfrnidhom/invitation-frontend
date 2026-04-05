@@ -28,7 +28,7 @@ const bodyFont = Nunito({
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
-export default function BirthdayBash({ payload }) {
+export default function BirthdayBash({ payload, audioController }) {
   const { invitation, guest, guestName } = payload;
   const [isOpened, setIsOpened] = useState(false);
 
@@ -65,7 +65,10 @@ export default function BirthdayBash({ payload }) {
       <CoverOverlay 
         invitation={invitation} 
         guestName={guestName} 
-        onOpen={() => setIsOpened(true)}
+        onOpen={() => {
+          setIsOpened(true);
+          audioController?.play();
+        }}
         overlayBg="bg-[#fdf4ff]" // party-50
         titleFont={displayFont.className}
         subtitleFont={bodyFont.className}
@@ -76,8 +79,7 @@ export default function BirthdayBash({ payload }) {
       {/* Music Player */}
       {invitation.music_url && (
         <MusicPlayer 
-          musicUrl={invitation.music_url} 
-          shouldPlay={isOpened}
+          audioController={audioController} 
           btnBg="bg-gradient-to-r from-[#d946ef] to-[#0ea5e9]" 
           btnColor="text-white" 
           btnBorder="border-none shadow-lg shadow-[#0ea5e9]/30" 

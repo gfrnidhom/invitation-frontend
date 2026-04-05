@@ -146,6 +146,13 @@ export const gallery = {
   reorder: (invitationId, data) => request(`/invitations/${invitationId}/gallery/reorder`, { method: 'POST', body: JSON.stringify(data) }),
 };
 
+// ── Music Library ──
+export const music = {
+  list: () => request('/music/my'),
+  upload: (formData) => request('/music', { method: 'POST', body: formData }),
+  delete: (id) => request(`/music/${id}`, { method: 'DELETE' }),
+};
+
 // ── Analytics ──
 export const analytics = {
   get: (invitationId) => request(`/invitations/${invitationId}/analytics`),

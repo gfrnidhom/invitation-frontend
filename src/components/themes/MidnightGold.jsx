@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
+import MusicPlayer from './partials/MusicPlayer';
 
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] });
 const greatVibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
@@ -82,9 +83,7 @@ export default function MidnightGold({ payload, audioController }) {
         if (audioController) audioController.play();
     };
 
-    const toggleAudio = () => {
-        if (audioController) audioController.toggle();
-    };
+
 
     const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
     const submitWish = async (e) => {
@@ -220,13 +219,7 @@ export default function MidnightGold({ payload, audioController }) {
                         </div>
 
                         {invitation?.music_url && (
-                            <button onClick={toggleAudio} className="absolute bottom-8 right-8 lg:bottom-1/2 lg:-right-6 lg:translate-y-1/2 z-50 w-12 h-12 rounded-full bg-[#0c1220] gold-border flex items-center justify-center hover:border-[#c9a84c]/60 transition-all shadow-2xl">
-                                {audioController?.isPlaying ? (
-                                    <svg className="w-5 h-5 music-spin-mg gold-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" /></svg>
-                                ) : (
-                                    <svg className="w-5 h-5 gold-text" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                )}
-                            </button>
+                            <MusicPlayer audioController={audioController} btnBg="bg-[#0c1220]" btnColor="gold-text" btnBorder="gold-border shadow-2xl" />
                         )}
                     </div>
 

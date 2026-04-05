@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, use, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Save, Plus, Trash2, Upload, X, FileText, Heart, Calendar, Image, BookHeart, Gift } from 'lucide-react';
+import { ArrowLeft, Save, Plus, Trash2, Upload, X, FileText, Heart, Calendar, Image, BookHeart, Gift, Music } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { confirmAction } from '@/lib/toast-confirm';
-import { invitations, events as eventsApi, loveStories, giftAccounts, gallery } from '@/lib/api';
+import { invitations, events as eventsApi, loveStories, giftAccounts, gallery, music as musicApi } from '@/lib/api';
 
 const tabs = [
   { id: 'detail', label: 'Detail', icon: FileText },
@@ -168,83 +168,355 @@ function DetailTab({ invitation, onSave, saving }) {
 }
 
 function SettingsTab({ invitation, onSave, saving }) {
-  const [form, setForm] = useState({ whatsapp_template: invitation?.whatsapp_template || '', music_url: invitation?.music_url || '' });
-  const [musicQuery, setMusicQuery] = useState('');
-  const [musicResults, setMusicResults] = useState([]);
-  const [searching, setSearching] = useState(false);
+  const [form, setForm] = useState({ 
+    whatsapp_template: invitation?.whatsapp_template || '', 
+    music_url: invitation?.music_url || '',
+    music_file: null,
+    selected_music_title: ''
+  });
+  
+  const [playing, setPlaying] = useState(false);
+  const [previewingId, setPreviewingId] = useState(null);
+  const audioPreviewRef = useRef(null);
+  const libraryAudioRef = useRef(null);
 
-  const [playingTrack, setPlayingTrack] = useState(null);
-  const [audioRef, setAudioRef] = useState(null);
+  // Music library state
+  const [musicLibrary, setMusicLibrary] = useState({ presets: [], user_music: [] });
+  const [loadingMusic, setLoadingMusic] = useState(false);
+  const [showLibrary, setShowLibrary] = useState(false);
+  const [libraryTab, setLibraryTab] = useState('presets');
+  const [librarySearch, setLibrarySearch] = useState('');
+  const [uploading, setUploading] = useState(false);
 
-  const searchMusic = async () => {
-    if (!musicQuery) return;
-    setSearching(true);
+  // Load music library
+  const loadMusicLibrary = async () => {
+    setLoadingMusic(true);
     try {
-      const res = await fetch(`/api/soundcloud?q=${encodeURIComponent(musicQuery)}`);
-      const data = await res.json();
-      setMusicResults(data.results || []);
-    } catch { toast.error('Gagal mencari lagu'); }
-    finally { setSearching(false); }
-  };
-
-  const togglePlay = (url) => {
-    if (playingTrack === url) {
-      audioRef?.pause();
-      setPlayingTrack(null);
-    } else {
-      if (audioRef) audioRef.pause();
-      const newAudio = new Audio(url);
-      newAudio.play();
-      newAudio.onended = () => setPlayingTrack(null);
-      setAudioRef(newAudio);
-      setPlayingTrack(url);
+      const res = await musicApi.list();
+      setMusicLibrary(res.data || { presets: [], user_music: [] });
+    } catch (err) {
+      console.error('Failed to load music library:', err);
+    } finally {
+      setLoadingMusic(false);
     }
   };
 
-  // Cleanup audio on unmount or tab switch
   useEffect(() => {
-    return () => { if (audioRef) audioRef.pause(); }
-  }, [audioRef]);
+    loadMusicLibrary();
+  }, []);
+
+  const getFullUrl = (url) => {
+    if (!url) return '';
+    if (url.startsWith('http')) return url;
+    const cleanPath = url.replace(/^\/storage\//, '').replace(/^\//, '');
+    return `${process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000/storage'}/${cleanPath}`;
+  };
+
+  // Sync audio reproduction with playing state
+  useEffect(() => {
+    if (!audioPreviewRef.current) return;
+    if (playing) {
+      const src = audioPreviewRef.current.src;
+      if (!src || src === window.location.href) {
+        setPlaying(false);
+        return;
+      }
+      try {
+        const playPromise = audioPreviewRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.warn("Audio preview failed asynchronously: " + err.message);
+            setPlaying(false);
+          });
+        }
+      } catch (err) {
+        console.warn("Audio preview failed synchronously: " + err.message);
+        setPlaying(false);
+      }
+    } else {
+      audioPreviewRef.current.pause();
+    }
+  }, [playing]);
+
+  // Stop audio when source changes
+  useEffect(() => {
+    setPlaying(false);
+    if (audioPreviewRef.current) {
+        audioPreviewRef.current.load();
+    }
+  }, [form.music_url, form.music_file]);
+
+  const handleSave = () => {
+    const fd = new FormData();
+    fd.append('whatsapp_template', form.whatsapp_template);
+    if (form.music_file) {
+      fd.append('music_url', form.music_file);
+    } else {
+      fd.append('music_url', form.music_url || '');
+    }
+    onSave(fd);
+  };
+
+  const removeMusic = () => {
+    setForm({ ...form, music_url: '', music_file: null, selected_music_title: '' });
+    setPlaying(false);
+  };
+
+  const selectFromLibrary = (item) => {
+    stopLibraryPreview();
+    setForm({ ...form, music_url: item.file_url, music_file: null, selected_music_title: item.title });
+    setShowLibrary(false);
+  };
+
+  const handleUploadToLibrary = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('title', file.name.replace(/\.[^/.]+$/, ''));
+      const res = await musicApi.upload(fd);
+      await loadMusicLibrary();
+      // Auto-select the uploaded music
+      if (res.data) {
+        setForm({ ...form, music_url: res.data.file_url, music_file: null, selected_music_title: res.data.title });
+      }
+      setShowLibrary(false);
+    } catch (err) {
+      console.error('Upload failed:', err);
+      alert(err?.message || 'Gagal upload musik');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleDeleteUserMusic = async (id) => {
+    if (!confirm('Hapus musik ini?')) return;
+    try {
+      await musicApi.delete(id);
+      await loadMusicLibrary();
+    } catch (err) {
+      console.error('Delete failed:', err);
+    }
+  };
+
+  // Library audio preview
+  const toggleLibraryPreview = (item) => {
+    if (previewingId === item.id) {
+      stopLibraryPreview();
+    } else {
+      setPreviewingId(item.id);
+      if (libraryAudioRef.current) {
+        libraryAudioRef.current.src = getFullUrl(item.file_url);
+        try {
+          const playPromise = libraryAudioRef.current.play();
+          if (playPromise !== undefined) {
+             playPromise.catch(() => { setPreviewingId(null); });
+          }
+        } catch (err) {
+          console.warn("Library audio play sync throw: " + err.message);
+          setPreviewingId(null);
+        }
+      }
+    }
+  };
+
+  const stopLibraryPreview = () => {
+    setPreviewingId(null);
+    if (libraryAudioRef.current) {
+      libraryAudioRef.current.pause();
+      libraryAudioRef.current.currentTime = 0;
+    }
+  };
+
+  const getMusicLabel = () => {
+    if (form.music_file) return form.music_file.name;
+    if (form.selected_music_title) return form.selected_music_title;
+    if (form.music_url) {
+      if (form.music_url.includes('sndcdn.com')) return 'Link SoundCloud (Legacy)';
+      const name = form.music_url.split('/').pop() || 'Existing Audio';
+      return decodeURIComponent(name);
+    }
+    return 'Belum ada musik terpilih';
+  };
+
+
+
+  const currentAudioSrc = form.music_file 
+    ? URL.createObjectURL(form.music_file) 
+    : getFullUrl(form.music_url);
+
+  const filteredPresets = musicLibrary.presets?.filter(m => 
+    !librarySearch || m.title?.toLowerCase().includes(librarySearch.toLowerCase()) || m.category?.toLowerCase().includes(librarySearch.toLowerCase())
+  ) || [];
+  const filteredUserMusic = musicLibrary.user_music?.filter(m => 
+    !librarySearch || m.title?.toLowerCase().includes(librarySearch.toLowerCase())
+  ) || [];
 
   return (
     <div style={{ display: 'grid', gap: '20px', maxWidth: '600px' }}>
       <div>
-        <label className="label">Background Music URL</label>
-        <input className="input mb-2" placeholder="https://contoh.com/lagu.mp3" value={form.music_url} onChange={(e) => setForm({ ...form, music_url: e.target.value })} />
-        <div style={{ marginTop: '8px', fontSize: '13px', color: '#64748b', marginBottom: '12px' }}>Masukkan URL MP3 secara manual, atau <strong>Cari Lagu via SoundCloud (Full Track)</strong> secara otomatis di bawah ini:</div>
-        
-        <div className="flex gap-2 mb-4">
-          <input className="input" placeholder="Cari judul lagu / artis..." value={musicQuery} onChange={(e) => setMusicQuery(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && searchMusic()} />
-          <button className="btn btn-secondary whitespace-nowrap" onClick={searchMusic} disabled={searching}>{searching ? 'Mencari...' : 'Cari Lagu'}</button>
-        </div>
-        
-        {musicResults.length > 0 && (
-          <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-2 mb-4">
-            <div className="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wide">Hasil Pencarian SoundCloud</div>
-            {musicResults.map((track) => (
-              <div key={track.id} className={`flex items-center justify-between bg-white p-2 rounded-lg border ${form.music_url === track.url ? 'border-brand-500 ring-1 ring-brand-500' : 'border-slate-100'} shadow-sm hover:border-brand-200 transition-colors`}>
-                <div className="flex items-center gap-3">
-                  <div className="relative group cursor-pointer" onClick={() => togglePlay(track.url)}>
-                    <img src={track.artwork || 'https://via.placeholder.com/60x60?text=No+Cover'} alt={track.title} className={`w-10 h-10 rounded-md object-cover transition-opacity ${playingTrack === track.url ? 'opacity-70' : ''}`} />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity rounded-md">
-                      {playingTrack === track.url ? (
-                        <div className="w-4 h-4 bg-white rounded-sm" />
-                      ) : (
-                        <div className="w-0 h-0 border-t-4 border-t-transparent border-l-6 border-l-white border-b-4 border-b-transparent ml-1" />
-                      )}
-                    </div>
-                  </div>
-                  <div className="cursor-pointer flex-1 min-w-0" onClick={() => { setForm({ ...form, music_url: track.url }); if (audioRef) audioRef.pause(); setPlayingTrack(null); }}>
-                    <div className="font-semibold text-sm text-slate-800 line-clamp-1">{track.title}</div>
-                    <div className="text-xs text-slate-500 line-clamp-1">{track.artist}</div>
-                  </div>
+        <label className="label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Music size={16} /> Background Music
+        </label>
+
+        {/* Current Music Display */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '16px', background: 'linear-gradient(135deg, #f8fafc, #eef2ff)', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: form.music_url || form.music_file ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : '#e0e7ff', color: form.music_url || form.music_file ? 'white' : '#4f46e5', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.3s', flexShrink: 0 }}>
+                    <Music size={22} />
                 </div>
-                <button className="btn btn-ghost btn-sm text-brand-600" onClick={() => { setForm({ ...form, music_url: track.url }); if (audioRef) audioRef.pause(); setPlayingTrack(null); }}>{form.music_url === track.url ? 'Terpilih' : 'Pilih'}</button>
-              </div>
-            ))}
-          </div>
-        )}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: '14px', fontWeight: '600', color: '#1e293b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {getMusicLabel()}
+                    </div>
+                    <div style={{ fontSize: '12px', color: '#64748b' }}>
+                      {form.music_url || form.music_file ? 'Musik aktif' : 'Pilih dari library atau upload sendiri'}
+                    </div>
+                </div>
+                {(form.music_url || form.music_file) && (
+                   <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
+                       <button type="button" onClick={() => setPlaying(!playing)} className={`btn btn-sm ${playing ? 'btn-danger' : 'btn-secondary'}`} style={{ minWidth: '56px', fontSize: '12px' }}>
+                           {playing ? '⏹ Stop' : '▶ Play'}
+                       </button>
+                       <button type="button" onClick={removeMusic} className="btn btn-sm btn-ghost" style={{ color: '#ef4444', padding: '6px' }}>
+                           <Trash2 size={14} />
+                       </button>
+                   </div>
+                )}
+            </div>
+
+            {/* Action Buttons */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+              <button type="button" onClick={() => { setShowLibrary(true); setLibrarySearch(''); }} className="btn btn-secondary" style={{ cursor: 'pointer', fontSize: '13px' }}>
+                <Music size={15} /> Pilih dari Library
+              </button>
+              <label className="btn btn-secondary" style={{ cursor: 'pointer', fontSize: '13px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                <Upload size={15} /> Upload File
+                <input type="file" accept="audio/*" onChange={(e) => { const file = e.target.files[0]; if (file) setForm({ ...form, music_file: file, selected_music_title: '' }); }} style={{ display: 'none' }} />
+              </label>
+            </div>
+        </div>
+
+        {/* Hidden audio for current music preview */}
+        <audio ref={audioPreviewRef} src={currentAudioSrc || undefined} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)} />
       </div>
+
+      {/* Music Library Modal */}
+      {showLibrary && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)' }} onClick={(e) => { if (e.target === e.currentTarget) { stopLibraryPreview(); setShowLibrary(false); } }}>
+          <div style={{ background: 'white', borderRadius: '20px', width: '100%', maxWidth: '520px', maxHeight: '80vh', display: 'flex', flexDirection: 'column', margin: '16px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}>
+            {/* Header */}
+            <div style={{ padding: '20px 24px 16px', borderBottom: '1px solid #f1f5f9' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#1e293b', margin: 0 }}>🎵 Music Library</h3>
+                <button onClick={() => { stopLibraryPreview(); setShowLibrary(false); }} style={{ background: '#f1f5f9', border: 'none', borderRadius: '10px', width: '32px', height: '32px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b' }}><X size={16} /></button>
+              </div>
+              {/* Search */}
+              <input type="text" placeholder="Cari musik..." value={librarySearch} onChange={(e) => setLibrarySearch(e.target.value)} style={{ width: '100%', padding: '10px 14px', borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: '14px', outline: 'none', background: '#f8fafc' }} />
+              {/* Tabs */}
+              <div style={{ display: 'flex', gap: '4px', marginTop: '12px', background: '#f1f5f9', borderRadius: '10px', padding: '3px' }}>
+                <button onClick={() => setLibraryTab('presets')} style={{ flex: 1, padding: '8px', borderRadius: '8px', border: 'none', fontSize: '13px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s', background: libraryTab === 'presets' ? 'white' : 'transparent', color: libraryTab === 'presets' ? '#4f46e5' : '#64748b', boxShadow: libraryTab === 'presets' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none' }}>
+                  ⭐ Preset ({filteredPresets.length})
+                </button>
+                <button onClick={() => setLibraryTab('user')} style={{ flex: 1, padding: '8px', borderRadius: '8px', border: 'none', fontSize: '13px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s', background: libraryTab === 'user' ? 'white' : 'transparent', color: libraryTab === 'user' ? '#4f46e5' : '#64748b', boxShadow: libraryTab === 'user' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none' }}>
+                  🎤 Musik Saya ({filteredUserMusic.length})
+                </button>
+              </div>
+            </div>
+
+            {/* Body */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '12px 24px 24px' }}>
+              {loadingMusic ? (
+                <div style={{ textAlign: 'center', padding: '40px', color: '#94a3b8' }}>
+                  <div className="spinner" style={{ margin: '0 auto 12px' }} />
+                  <p style={{ fontSize: '14px' }}>Memuat music library...</p>
+                </div>
+              ) : (
+                <>
+                  {libraryTab === 'presets' && (
+                    filteredPresets.length === 0 ? (
+                      <div style={{ textAlign: 'center', padding: '40px', color: '#94a3b8' }}>
+                        <p style={{ fontSize: '14px' }}>Belum ada musik preset</p>
+                      </div>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        {filteredPresets.map((item) => (
+                          <div key={item.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px', borderRadius: '12px', border: '1px solid #f1f5f9', background: form.music_url === item.file_url ? '#eef2ff' : '#fafafa', transition: 'all 0.2s', cursor: 'pointer' }} onClick={() => selectFromLibrary(item)}>
+                            <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: form.music_url === item.file_url ? '#6366f1' : '#e0e7ff', color: form.music_url === item.file_url ? 'white' : '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all 0.2s' }}>
+                              <Music size={18} />
+                            </div>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ fontSize: '13px', fontWeight: '600', color: '#1e293b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.title}</div>
+                              {item.category && <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '2px' }}>{item.category}</div>}
+                            </div>
+                            <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
+                              <button type="button" onClick={(e) => { e.stopPropagation(); toggleLibraryPreview(item); }} style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1px solid #e2e8f0', background: previewingId === item.id ? '#fee2e2' : 'white', color: previewingId === item.id ? '#ef4444' : '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '12px' }}>
+                                {previewingId === item.id ? '⏹' : '▶'}
+                              </button>
+                              {form.music_url === item.file_url && (
+                                <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#6366f1', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>✓</div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )
+                  )}
+                  {libraryTab === 'user' && (
+                    <>
+                      {/* Upload new button */}
+                      <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '14px', borderRadius: '12px', border: '2px dashed #cbd5e1', background: '#f8fafc', cursor: uploading ? 'wait' : 'pointer', color: '#64748b', fontSize: '13px', fontWeight: '600', marginBottom: '12px', transition: 'all 0.2s' }}>
+                        {uploading ? (
+                          <><div className="spinner" style={{ width: '16px', height: '16px' }} /> Mengupload...</>
+                        ) : (
+                          <><Upload size={16} /> Upload Musik Baru (MP3, maks 10MB)</>
+                        )}
+                        <input type="file" accept="audio/*" onChange={handleUploadToLibrary} style={{ display: 'none' }} disabled={uploading} />
+                      </label>
+                      {filteredUserMusic.length === 0 ? (
+                        <div style={{ textAlign: 'center', padding: '30px', color: '#94a3b8' }}>
+                          <p style={{ fontSize: '14px' }}>Belum ada musik yang diupload</p>
+                          <p style={{ fontSize: '12px', marginTop: '4px' }}>Upload musik pertama Anda di atas</p>
+                        </div>
+                      ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          {filteredUserMusic.map((item) => (
+                            <div key={item.id} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px', borderRadius: '12px', border: '1px solid #f1f5f9', background: form.music_url === item.file_url ? '#eef2ff' : '#fafafa', transition: 'all 0.2s', cursor: 'pointer' }} onClick={() => selectFromLibrary(item)}>
+                              <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: form.music_url === item.file_url ? '#f59e0b' : '#fef3c7', color: form.music_url === item.file_url ? 'white' : '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'all 0.2s' }}>
+                                <Music size={18} />
+                              </div>
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <div style={{ fontSize: '13px', fontWeight: '600', color: '#1e293b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.title}</div>
+                              </div>
+                              <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
+                                <button type="button" onClick={(e) => { e.stopPropagation(); toggleLibraryPreview(item); }} style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1px solid #e2e8f0', background: previewingId === item.id ? '#fee2e2' : 'white', color: previewingId === item.id ? '#ef4444' : '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '12px' }}>
+                                  {previewingId === item.id ? '⏹' : '▶'}
+                                </button>
+                                <button type="button" onClick={(e) => { e.stopPropagation(); handleDeleteUserMusic(item.id); }} style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1px solid #fecaca', background: '#fef2f2', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                                  <Trash2 size={13} />
+                                </button>
+                                {form.music_url === item.file_url && (
+                                  <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#6366f1', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>✓</div>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* Hidden audio for library preview */}
+            <audio ref={libraryAudioRef} onEnded={() => setPreviewingId(null)} />
+          </div>
+        </div>
+      )}
+
       <div>
         <label className="label">Template Pesan WhatsApp</label>
         <textarea className="input" rows="6" value={form.whatsapp_template} onChange={(e) => setForm({ ...form, whatsapp_template: e.target.value })} placeholder="Halo [nama_tamu], ini undangan pernikahan kami..." style={{ resize: 'vertical' }} />
@@ -254,7 +526,7 @@ function SettingsTab({ invitation, onSave, saving }) {
           <code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>[link_undangan]</code>
         </div>
       </div>
-      <button className="btn btn-primary" onClick={() => onSave(form)} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Pengaturan'}</button>
+      <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Pengaturan'}</button>
     </div>
   );
 }

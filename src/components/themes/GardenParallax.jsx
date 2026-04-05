@@ -5,6 +5,7 @@ import { Pinyon_Script, Cormorant_Garamond, Jost } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import Gallery from './partials/Gallery';
+import MusicPlayer from './partials/MusicPlayer';
 
 const pinyon = Pinyon_Script({ subsets: ['latin'], weight: ['400'] });
 const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
@@ -20,11 +21,9 @@ const ASSETS = {
     petal: '/themes/garden-parallax/petal.png'
 };
 
-export default function GardenParallax({ payload }) {
+export default function GardenParallax({ payload, audioController }) {
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
     const scrollContainerRef = useRef(null);
     const [scrollY, setScrollY] = useState(0);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -96,14 +95,10 @@ export default function GardenParallax({ payload }) {
 
     const handleOpen = () => {
         setIsOpen(true);
-        if (audioRef.current) audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+        audioController?.play();
     };
 
-    const toggleAudio = () => {
-        if (!audioRef.current) return;
-        if (isPlaying) { audioRef.current.pause(); setIsPlaying(false); }
-        else { audioRef.current.play(); setIsPlaying(true); }
-    };
+
 
     const submitWish = async (e) => {
         e.preventDefault();
@@ -160,20 +155,7 @@ export default function GardenParallax({ payload }) {
 
             {/* ─── MUSIC TOGGLE ─── */}
             {invitation?.music_url && (
-                <div className="fixed bottom-6 right-6 z-[100]">
-                    <audio ref={audioRef} src={invitation.music_url.startsWith('http') ? invitation.music_url : `${STORAGE_URL}/${invitation.music_url}`} loop />
-                    <button onClick={toggleAudio} className="w-12 h-12 rounded-full garden-glass flex items-center justify-center hover:bg-white transition-all shadow-xl">
-                        {isPlaying ? (
-                            <div className="flex gap-1 items-end h-3">
-                                <div className="w-1 bg-[#5d6d7e] animate-pulse h-2"></div>
-                                <div className="w-1 bg-[#5d6d7e] animate-pulse h-3"></div>
-                                <div className="w-1 bg-[#5d6d7e] animate-pulse h-1"></div>
-                            </div>
-                        ) : (
-                            <svg className="w-5 h-5 text-[#5d6d7e]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                        )}
-                    </button>
-                </div>
+                <MusicPlayer audioController={audioController} btnBg="garden-glass" btnColor="text-[#5d6d7e]" btnBorder="border-none shadow-xl" />
             )}
 
             {/* ══════════════════════ COVER SECTION ══════════════════════ */}

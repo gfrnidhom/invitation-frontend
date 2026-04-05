@@ -5,17 +5,16 @@ import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
+import MusicPlayer from './partials/MusicPlayer';
 const dmSerif = DM_Serif_Display({ subsets: ['latin'], weight: ['400'], style: ['normal','italic'] });
 const lora = Lora({ subsets: ['latin'], weight: ['400','500','600','700'], style: ['normal','italic'] });
 const dmSans = DM_Sans({ subsets: ['latin'], weight: ['200','300','400','500','600','700'] });
 const SU = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 const AU = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
-export default function MonoChromeIII({ payload }) {
+export default function MonoChromeIII({ payload, audioController }) {
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
     const rpRef = useRef(null);
     const [ni, setNi] = useState(guestName || '');
     const [mi, setMi] = useState('');
@@ -28,8 +27,8 @@ export default function MonoChromeIII({ payload }) {
     useEffect(() => { const h = () => { document.querySelectorAll('.m3-rv').forEach(el => { if(el.getBoundingClientRect().top < window.innerHeight-50) el.classList.add('active'); }); }; const p=rpRef.current; if(p) p.addEventListener('scroll',h); window.addEventListener('scroll',h); h(); return()=>{ if(p) p.removeEventListener('scroll',h); window.removeEventListener('scroll',h); }; }, [isOpen]);
 
     const gp = (p) => { if(!p) return null; let ph=p; if(typeof ph==='string'&&ph.startsWith('[')){ try{const x=JSON.parse(ph);if(Array.isArray(x)&&x.length>0)ph=x[0];}catch{} } if(Array.isArray(ph))ph=ph[0]; if(typeof ph==='object'&&ph!==null){if(ph.photo)ph=ph.photo;else if(ph.url)ph=ph.url;else return null;} if(typeof ph!=='string')return null; ph=ph.replace(/\\/g,'/'); if(!ph.startsWith('http')&&!ph.startsWith('/'))ph=`${SU}/${ph}`; return ph; };
-    const ho = () => { setIsOpen(true); if(audioRef.current) audioRef.current.play().then(()=>setIsPlaying(true)).catch(()=>{}); };
-    const ta = () => { if(!audioRef.current)return; if(isPlaying){audioRef.current.pause();setIsPlaying(false);}else{audioRef.current.play();setIsPlaying(true);} };
+    const ho = () => { setIsOpen(true); audioController?.play(); };
+
     const sw = async(e) => { e.preventDefault(); if(!ni.trim()||!mi.trim())return; setSub(true); try{ await fetch(`${AU}/invitations/${invitation.id}/guestbook`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:ni,message:mi})}); setWs([{name:ni,message:mi,created_at:new Date().toISOString()},...ws]); setMi(''); toast.success('Ucapan terkirim!'); }catch{toast.error('Gagal mengirim ucapan');}finally{setSub(false);} };
 
     const cp = (()=>{ const c=invitation?.cover_photo; if(!c)return null; return gp(Array.isArray(c)?c[0]:c); })();
@@ -48,7 +47,7 @@ export default function MonoChromeIII({ payload }) {
                 .sh::-webkit-scrollbar{display:none}.sh{-ms-overflow-style:none;scrollbar-width:none}
                 .arch3{border-radius:200px 200px 0 0;overflow:hidden}
             `}}/>
-            {invitation?.music_url&&<audio ref={audioRef} src={invitation.music_url.startsWith('http')?invitation.music_url:`${SU}/${invitation.music_url}`} loop/>}
+
 
             {/* COVER - Dark overlay on white */}
             <div className={`co3 ${isOpen?'open':''}`}>
@@ -84,7 +83,7 @@ export default function MonoChromeIII({ payload }) {
                             {invitation?.description&&<p className="text-sm text-white/30 leading-relaxed max-w-lg mb-10 font-light">"{invitation.description}"</p>}
                             {guestName&&<div className="mb-6"><p className="text-[9px] text-white/15 tracking-[.3em] uppercase mb-1">Dear</p><p className={`${lora.className} italic text-2xl text-white/60`}>{guestName}</p></div>}
                         </div>
-                        {invitation?.music_url&&<button onClick={ta} className="absolute bottom-8 right-8 lg:bottom-1/2 lg:-right-6 lg:translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white border border-[#1a1a1a]/10 flex items-center justify-center hover:bg-[#f5f5f5] transition-all shadow-2xl">{isPlaying?<svg className="w-5 h-5 ms3 text-[#1a1a1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>:<svg className="w-5 h-5 text-[#1a1a1a]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>}</button>}
+                        {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-white" btnColor="text-[#1a1a1a]" btnBorder="border-[#1a1a1a]/10 shadow-2xl" />}
                     </div>
 
                     {/* RIGHT - White panel */}

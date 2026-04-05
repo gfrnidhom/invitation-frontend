@@ -11,6 +11,7 @@ import GiftAccounts from './partials/GiftAccounts';
 import Guestbook from './partials/Guestbook';
 import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
+import MusicPlayer from './partials/MusicPlayer';
 
 const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://app.digitvitation.my.id/storage';
 
@@ -63,9 +64,7 @@ export default function ModernMinimalist({ payload, audioController }) {
         return () => elements.forEach(el => observer.unobserve(el));
     }, []);
 
-    const toggleMusic = () => {
-        if (audioController) audioController.toggle();
-    };
+
 
     const handleOpenInvitation = () => {
         if (audioController) audioController.play();
@@ -99,15 +98,7 @@ export default function ModernMinimalist({ payload, audioController }) {
 
             {/* Audio Toggle */}
             {invitation?.music_url && (
-                <>
-                    <button onClick={toggleMusic} className="fixed bottom-24 right-6 z-50 w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
-                        {audioController?.isPlaying ? (
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5"/></svg>
-                        ) : (
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"/></svg>
-                        )}
-                    </button>
-                </>
+                <MusicPlayer audioController={audioController} btnBg="bg-gray-900" btnColor="text-white" btnBorder="none shadow-2xl" />
             )}
 
             {/* Hero */}

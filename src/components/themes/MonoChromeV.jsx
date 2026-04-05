@@ -5,17 +5,16 @@ import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
+import MusicPlayer from './partials/MusicPlayer';
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400','500','600','700','800','900'] });
 const bodoni = Bodoni_Moda({ subsets: ['latin'], weight: ['400','500','600','700','800','900'], style: ['normal','italic'] });
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['200','300','400','500','600','700','800'] });
 const SU = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 const AU = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
-export default function MonoChromeV({ payload }) {
+export default function MonoChromeV({ payload, audioController }) {
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
     const rpRef = useRef(null);
     const [ni, setNi] = useState(guestName || '');
     const [mi, setMi] = useState('');
@@ -28,8 +27,8 @@ export default function MonoChromeV({ payload }) {
     useEffect(() => { const h = () => { document.querySelectorAll('.m5-rv').forEach(el => { if(el.getBoundingClientRect().top < window.innerHeight-50) el.classList.add('active'); }); }; const p=rpRef.current; if(p) p.addEventListener('scroll',h); window.addEventListener('scroll',h); h(); return()=>{ if(p) p.removeEventListener('scroll',h); window.removeEventListener('scroll',h); }; }, [isOpen]);
 
     const gp = (p) => { if(!p) return null; let ph=p; if(typeof ph==='string'&&ph.startsWith('[')){ try{const x=JSON.parse(ph);if(Array.isArray(x)&&x.length>0)ph=x[0];}catch{} } if(Array.isArray(ph))ph=ph[0]; if(typeof ph==='object'&&ph!==null){if(ph.photo)ph=ph.photo;else if(ph.url)ph=ph.url;else return null;} if(typeof ph!=='string')return null; ph=ph.replace(/\\/g,'/'); if(!ph.startsWith('http')&&!ph.startsWith('/'))ph=`${SU}/${ph}`; return ph; };
-    const ho = () => { setIsOpen(true); if(audioRef.current) audioRef.current.play().then(()=>setIsPlaying(true)).catch(()=>{}); };
-    const ta = () => { if(!audioRef.current)return; if(isPlaying){audioRef.current.pause();setIsPlaying(false);}else{audioRef.current.play();setIsPlaying(true);} };
+    const ho = () => { setIsOpen(true); audioController?.play(); };
+
     const sw = async(e) => { e.preventDefault(); if(!ni.trim()||!mi.trim())return; setSub(true); try{ await fetch(`${AU}/invitations/${invitation.id}/guestbook`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:ni,message:mi})}); setWs([{name:ni,message:mi,created_at:new Date().toISOString()},...ws]); setMi(''); toast.success('Ucapan terkirim!'); }catch{toast.error('Gagal mengirim ucapan');}finally{setSub(false);} };
     const cp = (()=>{ const c=invitation?.cover_photo; if(!c)return null; return gp(Array.isArray(c)?c[0]:c); })();
     const grP = gp(invitation?.groom_photo); const brP = gp(invitation?.bride_photo);
@@ -49,7 +48,7 @@ export default function MonoChromeV({ payload }) {
                 .oval-frame{border-radius:50%;overflow:hidden;aspect-ratio:3/4}
                 .stripe{background:repeating-linear-gradient(0deg,transparent,transparent 49%,rgba(209,209,214,.04) 49%,rgba(209,209,214,.04) 51%,transparent 51%,transparent 100%)}
             `}}/>
-            {invitation?.music_url&&<audio ref={audioRef} src={invitation.music_url.startsWith('http')?invitation.music_url:`${SU}/${invitation.music_url}`} loop/>}
+
 
             <div className={`co5 ${isOpen?'open':''}`}>
                 <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#0c0c0e]">
@@ -82,7 +81,7 @@ export default function MonoChromeV({ payload }) {
                             {invitation?.description&&<p className={`${montserrat.className} text-xs text-[#d1d1d6]/25 leading-relaxed max-w-lg mb-10 font-light`}>"{invitation.description}"</p>}
                             {guestName&&<div className="mb-6"><p className={`${montserrat.className} text-[8px] text-[#d1d1d6]/10 tracking-[.3em] uppercase mb-1 font-medium`}>Dear</p><p className={`${bodoni.className} italic text-2xl ch`}>{guestName}</p></div>}
                         </div>
-                        {invitation?.music_url&&<button onClick={ta} className="absolute bottom-8 right-8 lg:bottom-1/2 lg:-right-6 lg:translate-y-1/2 z-50 w-12 h-12 rounded-full bg-[#1c1c1e] border border-[#d1d1d6]/10 flex items-center justify-center hover:border-[#d1d1d6]/25 transition-all shadow-2xl">{isPlaying?<svg className="w-5 h-5 ms5 ch" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>:<svg className="w-5 h-5 ch" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>}</button>}
+                        {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-[#1c1c1e]" btnColor="ch" btnBorder="border-[#d1d1d6]/10 shadow-2xl" />}
                     </div>
 
                     <div ref={rpRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto sh bg-[#1c1c1e] stripe">

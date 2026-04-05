@@ -27,7 +27,7 @@ const bodyFont = Quicksand({
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
-export default function FloralDream({ payload }) {
+export default function FloralDream({ payload, audioController }) {
   const { invitation, guest, guestName } = payload;
   const [isOpened, setIsOpened] = useState(false);
 
@@ -61,7 +61,10 @@ export default function FloralDream({ payload }) {
       <CoverOverlay 
         invitation={invitation} 
         guestName={guestName} 
-        onOpen={() => setIsOpened(true)}
+        onOpen={() => {
+          setIsOpened(true);
+          audioController?.play();
+        }}
         overlayBg="bg-[#fef7f7]"
         titleFont={script.className}
         subtitleFont={bodyFont.className}
@@ -71,7 +74,7 @@ export default function FloralDream({ payload }) {
 
       {/* Music Player */}
       {invitation.music_url && (
-        <MusicPlayer musicUrl={invitation.music_url} shouldPlay={isOpened} btnBg="bg-[#f472b6]" btnColor="text-white" btnBorder="border-none shadow-lg shadow-[#f472b6]/30" />
+        <MusicPlayer audioController={audioController} btnBg="bg-[#f472b6]" btnColor="text-white" btnBorder="border-none shadow-lg shadow-[#f472b6]/30" />
       )}
 
       {/* Hero Section */}

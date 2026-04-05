@@ -28,7 +28,7 @@ const bodyFont = EB_Garamond({
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
-export default function RoyalGold({ payload }) {
+export default function RoyalGold({ payload, audioController }) {
   const { invitation, guest, guestName } = payload;
   const [isOpened, setIsOpened] = useState(false);
 
@@ -66,7 +66,10 @@ export default function RoyalGold({ payload }) {
       <CoverOverlay 
         invitation={invitation} 
         guestName={guestName} 
-        onOpen={() => setIsOpened(true)}
+        onOpen={() => {
+          setIsOpened(true);
+          audioController?.play();
+        }}
         overlayBg="bg-[#0a0a0f]" // royal-900
         titleFont={displayFont.className}
         subtitleFont={bodyFont.className}
@@ -77,8 +80,7 @@ export default function RoyalGold({ payload }) {
       {/* Music Player */}
       {invitation.music_url && (
         <MusicPlayer 
-          musicUrl={invitation.music_url} 
-          shouldPlay={isOpened}
+          audioController={audioController} 
           btnBg="bg-[#c9a84c]/20 backdrop-blur-sm" 
           btnColor="text-[#c9a84c]" 
           btnBorder="border border-[#c9a84c]/30" 

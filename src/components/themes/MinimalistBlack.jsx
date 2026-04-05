@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
+import MusicPlayer from './partials/MusicPlayer';
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] });
 const greatVibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
@@ -13,11 +14,9 @@ const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400', '500'
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
-export default function MinimalistBlack({ payload }) {
+export default function MinimalistBlack({ payload, audioController }) {
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
     const rightPanelRef = useRef(null);
 
     // Form state
@@ -83,14 +82,10 @@ export default function MinimalistBlack({ payload }) {
 
     const handleOpen = () => {
         setIsOpen(true);
-        if (audioRef.current) audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+        audioController?.play();
     };
 
-    const toggleAudio = () => {
-        if (!audioRef.current) return;
-        if (isPlaying) { audioRef.current.pause(); setIsPlaying(false); }
-        else { audioRef.current.play(); setIsPlaying(true); }
-    };
+
 
     const coverPhoto = (() => {
         const cp = invitation?.cover_photo;
@@ -129,10 +124,7 @@ export default function MinimalistBlack({ payload }) {
                 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
             `}} />
 
-            {/* ═══════ AUDIO ═══════ */}
-            {invitation?.music_url && (
-                <audio ref={audioRef} src={invitation.music_url.startsWith('http') ? invitation.music_url : `${STORAGE_URL}/${invitation.music_url}`} loop />
-            )}
+
 
             {/* ═══════ COVER OVERLAY (Pre-open) ═══════ */}
             <div className={`cover-overlay-mb ${isOpen ? 'open' : ''}`}>
@@ -203,13 +195,7 @@ export default function MinimalistBlack({ payload }) {
 
                         {/* Music toggle — centered between panels */}
                         {invitation?.music_url && (
-                            <button onClick={toggleAudio} className="absolute bottom-8 right-8 lg:bottom-1/2 lg:-right-6 lg:translate-y-1/2 z-50 w-12 h-12 rounded-full bg-[#0f0f0f] border border-white/20 flex items-center justify-center hover:border-white/50 transition-all shadow-2xl">
-                                {isPlaying ? (
-                                    <svg className="w-5 h-5 music-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" /></svg>
-                                ) : (
-                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                )}
-                            </button>
+                            <MusicPlayer audioController={audioController} btnBg="bg-[#0f0f0f]" btnColor="text-white/60" btnBorder="border-white/20 shadow-2xl" />
                         )}
                     </div>
 

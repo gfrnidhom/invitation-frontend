@@ -28,7 +28,7 @@ const bodyFont = Lora({
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
-export default function RusticGarden({ payload }) {
+export default function RusticGarden({ payload, audioController }) {
   const { invitation, guest, guestName } = payload;
   const [isOpened, setIsOpened] = useState(false);
 
@@ -61,7 +61,7 @@ export default function RusticGarden({ payload }) {
       <CoverOverlay 
         invitation={invitation} 
         guestName={guestName} 
-        onOpen={() => setIsOpened(true)}
+        onOpen={() => { setIsOpened(true); audioController?.play(); }}
         overlayBg="bg-[#f2f5f0]" // sage-50
         titleFont={displayFont.className}
         subtitleFont={bodyFont.className}
@@ -71,7 +71,7 @@ export default function RusticGarden({ payload }) {
 
       {/* Music Player */}
       {invitation.music_url && (
-        <MusicPlayer musicUrl={invitation.music_url} shouldPlay={isOpened} btnBg="bg-[#5e7a4c]" btnColor="text-white" btnBorder="border-none shadow-lg shadow-[#5e7a4c]/40" />
+        <MusicPlayer audioController={audioController} btnBg="bg-[#5e7a4c]" btnColor="text-white" btnBorder="border-none shadow-lg shadow-[#5e7a4c]/40" />
       )}
 
       {/* Hero Section */}

@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Palette, Rocket, AlertCircle } from 'lucide-react';
+import { Palette, Rocket, AlertCircle, Music } from 'lucide-react';
 import { themes, invitations, userThemes } from '@/lib/api';
 
 function CreateInvitationForm() {
@@ -10,10 +10,22 @@ function CreateInvitationForm() {
 
   const [themeId, setThemeId] = useState(null);
   const [themeDetail, setThemeDetail] = useState(null);
-  const [form, setForm] = useState({ title: '', bride_name: '', groom_name: '', event_date: '', location: '', bride_photo: null, groom_photo: null });
+  const [form, setForm] = useState({ 
+    title: '', 
+    bride_name: '', 
+    groom_name: '', 
+    event_date: '', 
+    location: '', 
+    bride_photo: null, 
+    groom_photo: null,
+    music_url: null 
+  });
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  
+  const [playing, setPlaying] = useState(false);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     userThemes.current().then((res) => {
@@ -30,6 +42,28 @@ function CreateInvitationForm() {
       setLoading(false);
     });
   }, [router]);
+
+  // Sync audio reproduction with playing state
+  useEffect(() => {
+    if (!audioRef.current) return;
+    
+    if (playing) {
+      audioRef.current.play().catch(err => {
+        console.error("Audio preview failed:", err);
+        setPlaying(false);
+      });
+    } else {
+      audioRef.current.pause();
+    }
+  }, [playing]);
+
+  // Stop audio when source changes
+  useEffect(() => {
+    setPlaying(false);
+    if (audioRef.current) {
+        audioRef.current.load();
+    }
+  }, [form.music_url]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -109,6 +143,26 @@ function CreateInvitationForm() {
                 <label className="label">Foto Mempelai Pria</label>
                 <input type="file" className="input" accept="image/*" onChange={(e) => setForm({ ...form, groom_photo: e.target.files[0] })} style={{ padding: '8px' }} />
               </div>
+            </div>
+            <div>
+              <label className="label">Musik Background (MP3)</label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <input type="file" className="input" accept="audio/*" onChange={(e) => setForm({ ...form, music_url: e.target.files[0] })} style={{ padding: '8px', flex: 1 }} />
+                {form.music_url && (
+                    <button 
+                      type="button" 
+                      onClick={() => setPlaying(!playing)} 
+                      className={`btn btn-sm ${playing ? 'btn-danger' : 'btn-secondary'}`}
+                      style={{ height: '42px', minWidth: '80px' }}
+                    >
+                      {playing ? 'Stop' : 'Putar'}
+                    </button>
+                )}
+              </div>
+              {form.music_url && (
+                  <audio ref={audioRef} src={URL.createObjectURL(form.music_url)} onEnded={() => setPlaying(false)} />
+              )}
+              <p style={{ fontSize: '11px', color: '#64748b', marginTop: '4px' }}>Upload file MP3 (Maks 10MB) untuk musik background otomatis.</p>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div><label className="label">Tanggal Pernikahan (Acara Utama)</label><input className="input" type="date" value={form.event_date} onChange={(e) => setForm({ ...form, event_date: e.target.value })} required /></div>

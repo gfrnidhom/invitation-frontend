@@ -27,7 +27,7 @@ const sans = Montserrat({
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
-export default function ElegantWhite({ payload }) {
+export default function ElegantWhite({ payload, audioController }) {
   const { invitation, guest, guestName } = payload;
   const [isOpened, setIsOpened] = useState(false);
 
@@ -74,7 +74,10 @@ export default function ElegantWhite({ payload }) {
       <CoverOverlay 
         invitation={invitation} 
         guestName={guestName} 
-        onOpen={() => setIsOpened(true)}
+        onOpen={() => {
+          setIsOpened(true);
+          audioController?.play();
+        }}
         overlayBg="bg-[#faf8f5]"
         titleFont={serif.className}
         subtitleFont={sans.className}
@@ -84,7 +87,7 @@ export default function ElegantWhite({ payload }) {
 
       {/* Music Player */}
       {invitation.music_url && (
-        <MusicPlayer musicUrl={invitation.music_url} shouldPlay={isOpened} btnBg="bg-white" btnColor="text-[#a0824a]" btnBorder="border border-[#e8d5b7]" />
+        <MusicPlayer audioController={audioController} btnBg="bg-white" btnColor="text-[#a0824a]" btnBorder="border border-[#e8d5b7]" />
       )}
 
       {/* Hero Section */}

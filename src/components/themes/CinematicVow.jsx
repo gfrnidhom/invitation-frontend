@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
+import MusicPlayer from './partials/MusicPlayer';
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400','500','600','700','800','900'] });
 const greatVibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
@@ -12,11 +13,9 @@ const montserrat = Montserrat({ subsets: ['latin'], weight: ['200','300','400','
 const SU = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 const AU = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
-export default function CinematicVow({ payload }) {
+export default function CinematicVow({ payload, audioController }) {
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
     const videoRef = useRef(null);
     const rightPanelRef = useRef(null);
     const [ni, setNi] = useState(guestName || '');
@@ -75,10 +74,10 @@ export default function CinematicVow({ payload }) {
 
     const ho = () => {
         setIsOpen(true);
-        if (audioRef.current) audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+        audioController?.play();
         if (videoRef.current) videoRef.current.play().catch(() => {});
     };
-    const ta = () => { if (!audioRef.current) return; if (isPlaying) { audioRef.current.pause(); setIsPlaying(false); } else { audioRef.current.play(); setIsPlaying(true); } };
+
     const sw = async (e) => {
         e.preventDefault(); if (!ni.trim() || !mi.trim()) return; setSub(true);
         try {
@@ -144,7 +143,7 @@ export default function CinematicVow({ payload }) {
                 .rp-content{position:relative;z-index:10}
             ` }} />
 
-            {invitation?.music_url && <audio ref={audioRef} src={invitation.music_url.startsWith('http') ? invitation.music_url : `${SU}/${invitation.music_url}`} loop />}
+
 
             {/* ═══════ COVER OVERLAY ═══════ */}
             <div className={`co-cv ${isOpen ? 'open' : ''}`}>
@@ -270,13 +269,7 @@ export default function CinematicVow({ payload }) {
 
                         {/* Music button */}
                         {invitation?.music_url && (
-                            <button onClick={ta} className="absolute bottom-8 right-8 lg:bottom-1/2 lg:-right-6 lg:translate-y-1/2 z-50 w-12 h-12 rounded-full bg-[#0a0a0f]/80 border border-white/10 flex items-center justify-center hover:border-white/25 transition-all shadow-2xl backdrop-blur-xl">
-                                {isPlaying ? (
-                                    <svg className="w-5 h-5 ms-cv text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" /></svg>
-                                ) : (
-                                    <svg className="w-5 h-5 text-white/60" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                                )}
-                            </button>
+                            <MusicPlayer audioController={audioController} btnBg="bg-[#0a0a0f]/80" btnColor="text-white/60" btnBorder="border-white/10 shadow-2xl backdrop-blur-xl" />
                         )}
                     </div>
 

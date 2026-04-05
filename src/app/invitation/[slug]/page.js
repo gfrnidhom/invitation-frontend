@@ -40,10 +40,6 @@ export default function PublicInvitationViewer() {
   const searchParams = useSearchParams();
   const token = searchParams.get('to') || '';
 
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  
   // ── Global Audio Engine ──
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -51,29 +47,14 @@ export default function PublicInvitationViewer() {
   const audioController = {
     isPlaying,
     play: () => {
-      if (!audioRef.current) {
-        toast.error("Sistem Audio belum siap (no ref)");
-        return;
-      }
-      
-      // Ensure audio is loaded and log URL for debugging
-      console.log("Playing URL:", finalMusicUrl);
-      if (finalMusicUrl) {
-          toast.info("Memutar: " + finalMusicUrl.substring(0, 40) + "...");
-      }
-      
-      audioRef.current.load();
+      if (!audioRef.current) return;
       
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
         playPromise
-          .then(() => {
-             setIsPlaying(true);
-             toast.success("Musik dimulai!");
-          })
+          .then(() => setIsPlaying(true))
           .catch((err) => {
             console.error("Playback failed:", err);
-            toast.error("Gagal putar musik: " + err.message);
           });
       }
     },
@@ -92,17 +73,17 @@ export default function PublicInvitationViewer() {
   useEffect(() => {
     const unlockAudio = () => {
       if (!audioRef.current) return;
-      
+
       // Trik "Warmup" untuk iOS
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
           if (!isPlaying) audioRef.current.pause();
         }).catch(() => {
-           // Silent catch for warmup
+          // Silent catch for warmup
         });
       }
-      
+
       window.removeEventListener('click', unlockAudio, true);
       window.removeEventListener('touchstart', unlockAudio, true);
     };
@@ -230,11 +211,11 @@ export default function PublicInvitationViewer() {
       case 'enchanted-garden':
         return <EnchantedGarden {...props} />;
       default:
-        return <ModernMinimalist {...props} />; 
+        return <ModernMinimalist {...props} />;
     }
   };
 
-  const finalMusicUrl = invitation?.music_url 
+  const finalMusicUrl = invitation?.music_url
     ? (invitation.music_url.startsWith('http') ? invitation.music_url : `${storageUrl}/${invitation.music_url}`)
     : null;
 
@@ -243,29 +224,16 @@ export default function PublicInvitationViewer() {
       <Head>
         <title>{`${invitation.groom_name} & ${invitation.bride_name} | Wedding Invitation`}</title>
       </Head>
-      
+
       {/* ── SINGLE GLOBAL AUDIO ELEMENT ── */}
       {finalMusicUrl && (
-        <audio 
-          ref={audioRef} 
-          src={finalMusicUrl} 
-          loop 
-          preload="auto" 
+        <audio
+          ref={audioRef}
+          src={finalMusicUrl}
+          loop
+          preload="auto"
         />
       )}
-
-      {/* ── DEBUG UI (Temporary) ── */}
-      <div className="fixed top-4 left-4 z-[9999] flex flex-col gap-2">
-          <button 
-            onClick={() => {
-                toast.info("Theme: " + themeSlug);
-                audioController.play();
-            }}
-            className="bg-black/50 text-white px-3 py-1 rounded text-[10px] backdrop-blur"
-          >
-            Debug Play
-          </button>
-      </div>
 
       {renderTheme()}
     </>

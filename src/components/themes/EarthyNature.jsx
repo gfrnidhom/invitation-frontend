@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
+import MusicPlayer from './partials/MusicPlayer';
 
 const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
 const sacramento = Sacramento({ subsets: ['latin'], weight: ['400'] });
@@ -13,11 +14,9 @@ const nunito = Nunito_Sans({ subsets: ['latin'], weight: ['300', '400', '600', '
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
-export default function EarthyNature({ payload }) {
+export default function EarthyNature({ payload, audioController }) {
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
     const rightPanelRef = useRef(null);
 
     const [nameInput, setNameInput] = useState(guestName || '');
@@ -58,8 +57,8 @@ export default function EarthyNature({ payload }) {
         return photo;
     };
 
-    const handleOpen = () => { setIsOpen(true); if (audioRef.current) audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {}); };
-    const toggleAudio = () => { if (!audioRef.current) return; if (isPlaying) { audioRef.current.pause(); setIsPlaying(false); } else { audioRef.current.play(); setIsPlaying(true); } };
+    const handleOpen = () => { setIsOpen(true); audioController?.play(); };
+
 
     const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
     const submitWish = async (e) => {
@@ -106,9 +105,7 @@ export default function EarthyNature({ payload }) {
                 .grain-overlay::after { content: ''; position: absolute; inset: 0; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 2; }
             `}} />
 
-            {invitation?.music_url && (
-                <audio ref={audioRef} src={invitation.music_url.startsWith('http') ? invitation.music_url : `${STORAGE_URL}/${invitation.music_url}`} loop />
-            )}
+
 
             {/* ═══════ COVER OVERLAY ═══════ */}
             <div className={`cover-overlay-en ${isOpen ? 'open' : ''}`}>
@@ -172,13 +169,7 @@ export default function EarthyNature({ payload }) {
                         </div>
 
                         {invitation?.music_url && (
-                            <button onClick={toggleAudio} className="absolute bottom-8 right-8 lg:bottom-1/2 lg:-right-6 lg:translate-y-1/2 z-50 w-12 h-12 rounded-full bg-[#3d2b1f] border border-[#8a9a5b]/30 flex items-center justify-center hover:border-[#8a9a5b]/60 transition-all shadow-2xl">
-                                {isPlaying ? (
-                                    <svg className="w-5 h-5 music-spin-en sage" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" /></svg>
-                                ) : (
-                                    <svg className="w-5 h-5 sage" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                )}
-                            </button>
+                            <MusicPlayer audioController={audioController} btnBg="bg-[#3d2b1f]" btnColor="sage" btnBorder="border-[#8a9a5b]/30 shadow-2xl" />
                         )}
                     </div>
 

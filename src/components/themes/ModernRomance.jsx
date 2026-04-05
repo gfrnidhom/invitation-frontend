@@ -34,7 +34,7 @@ const serifFont = Playfair_Display({
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
-export default function ModernRomance({ payload }) {
+export default function ModernRomance({ payload, audioController }) {
   const { invitation, guest, guestName } = payload;
   const [isOpened, setIsOpened] = useState(false);
 
@@ -82,7 +82,10 @@ export default function ModernRomance({ payload }) {
       <CoverOverlay 
         invitation={invitation} 
         guestName={guestName} 
-        onOpen={() => setIsOpened(true)}
+        onOpen={() => {
+          setIsOpened(true);
+          audioController?.play();
+        }}
         overlayBg="bg-[#fcfaf9]" // romance-50
         titleFont={serifFont.className}
         subtitleFont={sansFont.className}
@@ -93,8 +96,7 @@ export default function ModernRomance({ payload }) {
       {/* Music Player */}
       {invitation.music_url && (
         <MusicPlayer 
-          musicUrl={invitation.music_url} 
-          shouldPlay={isOpened}
+          audioController={audioController} 
           btnBg="glass-light backdrop-blur-md border border-[#e6dacd]" 
           btnColor="text-[#a3714b]" 
           btnBorder="" 

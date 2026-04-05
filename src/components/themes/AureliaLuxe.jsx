@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
+import MusicPlayer from './partials/MusicPlayer';
 
 // Google Fonts for Modern Minimalist Look
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
@@ -13,11 +14,9 @@ const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500'] });
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
-export default function AureliaLuxe({ payload }) {
+export default function AureliaLuxe({ payload, audioController }) {
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
 
     // Form Guestbook state
     const [guestNameInput, setGuestNameInput] = useState(guestName || '');
@@ -59,23 +58,11 @@ export default function AureliaLuxe({ payload }) {
 
     const handleOpenInvitation = () => {
         setIsOpen(true);
-        if (audioRef.current) {
-            audioRef.current.play().then(() => setIsPlaying(true)).catch(e => console.log('Audio play failed', e));
-        }
+        audioController?.play();
         window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
     };
 
-    const toggleAudio = () => {
-        if (audioRef.current) {
-            if (isPlaying) {
-                audioRef.current.pause();
-                setIsPlaying(false);
-            } else {
-                audioRef.current.play();
-                setIsPlaying(true);
-            }
-        }
-    };
+
 
     // Date formatting helpers
     const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();
@@ -105,16 +92,7 @@ export default function AureliaLuxe({ payload }) {
 
             {/* Audio Toggle */}
             {invitation?.music_url && (
-                <div className="fixed bottom-6 right-6 z-[100]">
-                    <audio ref={audioRef} src={invitation.music_url.startsWith('http') ? invitation.music_url : `${STORAGE_URL}/${invitation.music_url}`} loop />
-                    <button onClick={toggleAudio} className="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-gray-800 transition-colors">
-                        {isPlaying ? (
-                            <svg className="w-4 h-4 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" /></svg>
-                        ) : (
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        )}
-                    </button>
-                </div>
+                <MusicPlayer audioController={audioController} btnBg="bg-black" btnColor="text-white" btnBorder="border-none" />
             )}
 
             {/* HEADER HERO (Full Screen height minus a bit if scrolled) */}

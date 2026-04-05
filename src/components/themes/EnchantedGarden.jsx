@@ -5,6 +5,7 @@ import { Playfair_Display, Great_Vibes, Jost } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import Gallery from './partials/Gallery';
+import MusicPlayer from './partials/MusicPlayer';
 
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] });
 const greatVibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
@@ -19,11 +20,9 @@ const ASSETS = {
     divider: '/themes/enchanted-garden/divider.png',
 };
 
-export default function EnchantedGarden({ payload }) {
+export default function EnchantedGarden({ payload, audioController }) {
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
     const [scrollY, setScrollY] = useState(0);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -96,13 +95,9 @@ export default function EnchantedGarden({ payload }) {
 
     const handleOpen = () => {
         setIsOpen(true);
-        if (audioRef.current) audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+        audioController?.play();
     };
-    const toggleAudio = () => {
-        if (!audioRef.current) return;
-        if (isPlaying) { audioRef.current.pause(); setIsPlaying(false); }
-        else { audioRef.current.play(); setIsPlaying(true); }
-    };
+
 
     const submitWish = async (e) => {
         e.preventDefault();
@@ -189,21 +184,7 @@ export default function EnchantedGarden({ payload }) {
 
             {/* ═══ Music Toggle ═══ */}
             {invitation?.music_url && (
-                <div className="fixed bottom-6 right-6 z-[100]">
-                    <audio ref={audioRef} src={invitation.music_url.startsWith('http') ? invitation.music_url : `${STORAGE_URL}/${invitation.music_url}`} loop />
-                    <button onClick={toggleAudio} className="w-14 h-14 rounded-full eg-card flex items-center justify-center shadow-2xl hover:scale-105 transition-transform">
-                        {isPlaying ? (
-                            <div className="flex gap-[3px] items-end h-4">
-                                <div className="w-[3px] bg-[#C9A96E] animate-pulse rounded-full" style={{ height: '40%' }} />
-                                <div className="w-[3px] bg-[#C9A96E] animate-pulse rounded-full" style={{ height: '70%', animationDelay: '0.15s' }} />
-                                <div className="w-[3px] bg-[#C9A96E] animate-pulse rounded-full" style={{ height: '55%', animationDelay: '0.3s' }} />
-                                <div className="w-[3px] bg-[#C9A96E] animate-pulse rounded-full" style={{ height: '85%', animationDelay: '0.1s' }} />
-                            </div>
-                        ) : (
-                            <svg className="w-5 h-5 eg-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                        )}
-                    </button>
-                </div>
+                <MusicPlayer audioController={audioController} btnBg="eg-card" btnColor="eg-gold" btnBorder="border-none shadow-2xl" />
             )}
 
             {/* ═══════════════════ COVER ═══════════════════ */}

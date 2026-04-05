@@ -28,7 +28,7 @@ const bodyFont = Poppins({
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
-export default function TropicalParadise({ payload }) {
+export default function TropicalParadise({ payload, audioController }) {
   const { invitation, guest, guestName } = payload;
   const [isOpened, setIsOpened] = useState(false);
 
@@ -67,7 +67,10 @@ export default function TropicalParadise({ payload }) {
       <CoverOverlay 
         invitation={invitation} 
         guestName={guestName} 
-        onOpen={() => setIsOpened(true)}
+        onOpen={() => {
+          setIsOpened(true);
+          audioController?.play();
+        }}
         overlayBg="bg-[#fffbf0]" // sand-50
         titleFont={displayFont.className}
         subtitleFont={bodyFont.className}
@@ -79,8 +82,7 @@ export default function TropicalParadise({ payload }) {
       {/* Music Player */}
       {invitation.music_url && (
         <MusicPlayer 
-          musicUrl={invitation.music_url} 
-          shouldPlay={isOpened}
+          audioController={audioController} 
           btnBg="bg-[#14b8a6] shadow-lg shadow-[#14b8a6]/30" 
           btnColor="text-white" 
           btnBorder="border-none" 

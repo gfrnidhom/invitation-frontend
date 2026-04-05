@@ -5,6 +5,7 @@ import { Playfair_Display, Inter, Great_Vibes } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import Gallery from './partials/Gallery';
+import MusicPlayer from './partials/MusicPlayer';
 
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500'] });
@@ -67,11 +68,9 @@ const CornerOrnament = ({ className = '', position = 'top-left' }) => {
     );
 };
 
-export default function BotanicalSage({ payload }) {
+export default function BotanicalSage({ payload, audioController }) {
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
     const videoRef = useRef(null);
 
     const [guestNameInput, setGuestNameInput] = useState(guestName || '');
@@ -115,15 +114,11 @@ export default function BotanicalSage({ payload }) {
 
     const handleOpenInvitation = () => {
         setIsOpen(true);
-        if (audioRef.current) audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+        audioController?.play();
         setTimeout(() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' }), 100);
     };
 
-    const toggleAudio = () => {
-        if (!audioRef.current) return;
-        if (isPlaying) { audioRef.current.pause(); setIsPlaying(false); }
-        else { audioRef.current.play(); setIsPlaying(true); }
-    };
+
 
     const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();
     const photos = invitation?.gallery?.length > 0 ? invitation.gallery.map(g => g.photo) : (invitation?.photos || []);
@@ -189,16 +184,7 @@ export default function BotanicalSage({ payload }) {
 
             {/* ── MUSIC TOGGLE ── */}
             {invitation?.music_url && (
-                <div className="fixed bottom-6 right-6 z-[100]">
-                    <audio ref={audioRef} src={invitation.music_url.startsWith('http') ? invitation.music_url : `${STORAGE_URL}/${invitation.music_url}`} loop />
-                    <button onClick={toggleAudio} className="w-12 h-12 sage-btn rounded-full flex items-center justify-center">
-                        {isPlaying ? (
-                            <svg className="w-5 h-5 spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" /></svg>
-                        ) : (
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        )}
-                    </button>
-                </div>
+                <MusicPlayer audioController={audioController} btnBg="sage-btn" btnColor="text-white" btnBorder="border-none" />
             )}
 
             {/* ══════════════════════════════ 1. HERO SECTION ══════════════════════════════ */}
