@@ -40,6 +40,10 @@ export default function PublicInvitationViewer() {
   const searchParams = useSearchParams();
   const token = searchParams.get('to') || '';
 
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   // ── Global Audio Engine ──
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -215,9 +219,14 @@ export default function PublicInvitationViewer() {
     }
   };
 
-  const finalMusicUrl = invitation?.music_url
-    ? (invitation.music_url.startsWith('http') ? invitation.music_url : `${storageUrl}/${invitation.music_url}`)
-    : null;
+  const getCleanUrl = (url) => {
+    if (!url) return null;
+    if (url.startsWith('http')) return url;
+    const cleanPath = url.replace(/^\/storage\//, '').replace(/^\//, '');
+    return `${storageUrl}/${cleanPath}`;
+  };
+
+  const finalMusicUrl = getCleanUrl(invitation?.music_url);
 
   return (
     <>
