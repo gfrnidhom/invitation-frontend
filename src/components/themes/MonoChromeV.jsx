@@ -69,7 +69,7 @@ export default function MonoChromeV({ payload, audioController }) {
 
             <div className={`transition-opacity duration-1000 ${isOpen?'opacity-100':'opacity-0 pointer-events-none'}`}>
                 <div className="flex flex-col lg:flex-row min-h-screen">
-                    <div className="sl5 w-full lg:w-[55%] bg-[#1c1c1e] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
+                    <div className="sl5 w-full lg:w-[70%] bg-[#1c1c1e] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
                         {cp&&<img src={cp} alt="Hero" className="absolute inset-0 w-full h-full object-cover opacity-35 grayscale"/>}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c1e] via-[#1c1c1e]/55 to-transparent"/>
                         <div className="relative z-10">
@@ -84,42 +84,42 @@ export default function MonoChromeV({ payload, audioController }) {
                         {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-[#1c1c1e]" btnColor="ch" btnBorder="border-[#d1d1d6]/10 shadow-2xl" />}
                     </div>
 
-                    <div ref={rpRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto sh bg-[#1c1c1e] stripe">
-                        <section className="py-20 px-8 md:px-12 text-center m5-rv">
+                    <div ref={rpRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto sh bg-[#1c1c1e] stripe">
+                        <section className="py-20 px-8 text-center m5-rv">
                             <p className={`${montserrat.className} text-[8px] tracking-[.5em] uppercase ch mb-4 font-medium`}>Save The Date</p>
-                            <h2 className={`${bodoni.className} italic text-3xl md:text-4xl text-[#f2f2f7] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
+                            <h2 className={`${bodoni.className} italic text-3xl text-[#f2f2f7] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
                             <p className={`${montserrat.className} text-[9px] text-[#d1d1d6]/15 tracking-[.3em] uppercase mb-10 font-light`}>{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
-                            <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">{[{v:cd.d,l:'Hari'},{v:cd.h,l:'Jam'},{v:cd.m,l:'Menit'},{v:cd.s,l:'Detik'}].map((it,i)=>(<div key={i} className="m5c rounded-2xl py-4 px-2"><p className={`${bodoni.className} italic text-2xl md:text-3xl text-[#f2f2f7]`}>{it.v}</p><p className={`${montserrat.className} text-[8px] uppercase tracking-widest ch mt-1 font-medium`}>{it.l}</p></div>))}</div>
+                            <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">{[{v:cd.d,l:'Hari'},{v:cd.h,l:'Jam'},{v:cd.m,l:'Menit'},{v:cd.s,l:'Detik'}].map((it,i)=>(<div key={i} className="m5c rounded-2xl py-4 px-2"><p className={`${bodoni.className} italic text-2xl text-[#f2f2f7]`}>{it.v}</p><p className={`${montserrat.className} text-[8px] uppercase tracking-widest ch mt-1 font-medium`}>{it.l}</p></div>))}</div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20 m5-rv">
-                            <div className="m5cw rounded-3xl p-8 md:p-10 text-center">
+                        <section className="px-8 pb-20 m5-rv">
+                            <div className="m5cw rounded-3xl p-8 text-center">
                                 <p className={`${bodoni.className} italic text-sm leading-relaxed text-[#1c1c1e]/50 mb-4`}>{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
                                 <p className={`${cinzel.className} text-[9px] text-[#1c1c1e]/25 tracking-[.2em]`}>QS. Ar-Rum Ayat 21</p>
                             </div>
                         </section>
 
                         {/* Bride & Groom — Oval portrait frames */}
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 m5-rv"><h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-[#f2f2f7]`}>Bride & Groom</h2><p className={`${montserrat.className} text-[8px] text-[#d1d1d6]/12 tracking-[.3em] uppercase mt-2 font-medium`}>Assalamualaikum Wr. Wb.</p><p className={`${montserrat.className} text-[9px] text-[#d1d1d6]/20 mt-3 max-w-md mx-auto leading-relaxed font-light`}>Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 m5-rv"><h2 className={`${cinzel.className} text-xl tracking-[.15em] text-[#f2f2f7]`}>Bride & Groom</h2><p className={`${montserrat.className} text-[8px] text-[#d1d1d6]/12 tracking-[.3em] uppercase mt-2 font-medium`}>Assalamualaikum Wr. Wb.</p><p className={`${montserrat.className} text-[9px] text-[#d1d1d6]/20 mt-3 max-w-md mx-auto leading-relaxed font-light`}>Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
 
                             <div className="text-center mb-6 m5-rv" data-delay="1">
-                                {brP&&<div className="oval-frame w-40 md:w-48 mx-auto mb-6 border-2 border-[#d1d1d6]/10"><img src={brP} alt="Bride" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/></div>}
+                                {brP&&<div className="oval-frame w-40 mx-auto mb-6 border-2 border-[#d1d1d6]/10"><img src={brP} alt="Bride" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/></div>}
                                 <p className={`${bodoni.className} italic text-3xl text-[#d1d1d6]/60 mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
                                 <h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#f2f2f7] mb-3`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
                                 <p className={`${montserrat.className} text-[10px] text-[#d1d1d6]/20 font-light`}>Putri dari {invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p>
                             </div>
                             <div className="text-center my-5 m5-rv"><p className={`${cinzel.className} text-sm ch`}>✦ & ✦</p></div>
                             <div className="text-center m5-rv" data-delay="2">
-                                {grP&&<div className="oval-frame w-40 md:w-48 mx-auto mb-6 border-2 border-[#d1d1d6]/10"><img src={grP} alt="Groom" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/></div>}
+                                {grP&&<div className="oval-frame w-40 mx-auto mb-6 border-2 border-[#d1d1d6]/10"><img src={grP} alt="Groom" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/></div>}
                                 <p className={`${bodoni.className} italic text-3xl text-[#d1d1d6]/60 mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
                                 <h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#f2f2f7] mb-3`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
                                 <p className={`${montserrat.className} text-[10px] text-[#d1d1d6]/20 font-light`}>Putra dari {invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p>
                             </div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 m5-rv"><h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-[#f2f2f7]`}>Wedding Event</h2></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 m5-rv"><h2 className={`${cinzel.className} text-xl tracking-[.15em] text-[#f2f2f7]`}>Wedding Event</h2></div>
                             {invitation?.events&&invitation.events.length>0?[...invitation.events].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((ev,idx)=>(
                                 <div key={idx} className="m5cw rounded-3xl p-8 mb-6 text-center m5-rv" data-delay={`${idx+1}`}>
                                     <h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#1c1c1e] mb-4`}>{ev.name}</h3>
@@ -131,24 +131,24 @@ export default function MonoChromeV({ payload, audioController }) {
                             )):<div className="m5cw rounded-3xl p-10 text-center"><h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#1c1c1e] mb-2`}>Acara Pernikahan</h3></div>}
                         </section>
 
-                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 m5-rv"><h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-[#f2f2f7]`}>Our Love Story</h2></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="m5cw rounded-3xl p-8 text-center mb-6 m5-rv" data-delay={`${i+1}`}><h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#1c1c1e] mb-4`}>{s.title}</h3><p className={`${montserrat.className} text-sm text-[#1c1c1e]/50 leading-relaxed font-light`}>{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover grayscale"/></div>}</div>))}</section>}
+                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 pb-20"><div className="text-center mb-12 m5-rv"><h2 className={`${cinzel.className} text-xl tracking-[.15em] text-[#f2f2f7]`}>Our Love Story</h2></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="m5cw rounded-3xl p-8 text-center mb-6 m5-rv" data-delay={`${i+1}`}><h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#1c1c1e] mb-4`}>{s.title}</h3><p className={`${montserrat.className} text-sm text-[#1c1c1e]/50 leading-relaxed font-light`}>{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover grayscale"/></div>}</div>))}</section>}
 
                         <Gallery 
                             layout="abstract"
                             invitation={invitation}
                             sectionBg="bg-transparent"
                             titleFont={cinzel.className}
-                            titleSize="text-xl md:text-2xl tracking-[.15em]"
+                            titleSize="text-xl tracking-[.15em]"
                             accentText="text-[#f2f2f7]"
                             subtitleText="text-[#d1d1d6]"
                             borderColor="border-[#d1d1d6]/10"
                         />
 
-                        <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={cinzel.className} textColor="text-[#d1d1d6]" borderStyle="border-[#d1d1d6]/8"/></div>
+                        <div className="px-8"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={cinzel.className} textColor="text-[#d1d1d6]" borderStyle="border-[#d1d1d6]/8"/></div>
 
-                        <section className="px-8 md:px-12 pb-20 m5-rv">
-                            <div className="text-center mb-12"><h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-[#f2f2f7]`}>Wedding Wishes</h2></div>
-                            <div className="m5cw rounded-3xl p-8 md:p-10">
+                        <section className="px-8 pb-20 m5-rv">
+                            <div className="text-center mb-12"><h2 className={`${cinzel.className} text-xl tracking-[.15em] text-[#f2f2f7]`}>Wedding Wishes</h2></div>
+                            <div className="m5cw rounded-3xl p-8">
                                 <form onSubmit={sw} className="space-y-4">
                                     <div><label className={`${cinzel.className} block text-[8px] tracking-[.15em] text-[#1c1c1e]/25 mb-2`}>Nama</label><input type="text" value={ni} onChange={e=>setNi(e.target.value)} className={`${montserrat.className} w-full bg-white border border-[#1c1c1e]/8 rounded-xl px-5 py-3.5 text-sm text-[#1c1c1e] focus:outline-none focus:border-[#1c1c1e]/20 transition-colors`} placeholder="Nama Anda..."/></div>
                                     <div><label className={`${cinzel.className} block text-[8px] tracking-[.15em] text-[#1c1c1e]/25 mb-2`}>Ucapan</label><textarea value={mi} onChange={e=>setMi(e.target.value)} className={`${montserrat.className} w-full bg-white border border-[#1c1c1e]/8 rounded-xl px-5 py-3.5 text-sm text-[#1c1c1e] h-28 resize-none focus:outline-none focus:border-[#1c1c1e]/20 transition-colors`} placeholder="Tulis ucapan..."/></div>
@@ -158,9 +158,9 @@ export default function MonoChromeV({ payload, audioController }) {
                             </div>
                         </section>
 
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 md:px-12 pb-20 m5-rv"><div className="text-center mb-12"><h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-[#f2f2f7]`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="m5c rounded-2xl p-6 text-center m5-rv" data-delay={`${i+1}`}><p className={`${cinzel.className} text-sm tracking-[.15em] ch mb-1`}>{a.bank_name}</p><p className={`${montserrat.className} text-[9px] text-[#d1d1d6]/12 uppercase tracking-widest mb-3 font-light`}>A.N. {a.account_holder}</p><p className={`${bodoni.className} italic text-xl text-[#f2f2f7] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${cinzel.className} w-full border border-[#d1d1d6]/8 py-3 text-[9px] tracking-[.15em] ch hover:bg-[#f2f2f7] hover:text-[#1c1c1e] transition-all duration-500 rounded-xl`}>Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 m5-rv"><div className="text-center mb-12"><h2 className={`${cinzel.className} text-xl tracking-[.15em] text-[#f2f2f7]`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="m5c rounded-2xl p-6 text-center m5-rv" data-delay={`${i+1}`}><p className={`${cinzel.className} text-sm tracking-[.15em] ch mb-1`}>{a.bank_name}</p><p className={`${montserrat.className} text-[9px] text-[#d1d1d6]/12 uppercase tracking-widest mb-3 font-light`}>A.N. {a.account_holder}</p><p className={`${bodoni.className} italic text-xl text-[#f2f2f7] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${cinzel.className} w-full border border-[#d1d1d6]/8 py-3 text-[9px] tracking-[.15em] ch hover:bg-[#f2f2f7] hover:text-[#1c1c1e] transition-all duration-500 rounded-xl`}>Copy Number</button></div>))}</div></section>}
 
-                        <footer className="py-20 px-8 md:px-12 text-center border-t border-[#d1d1d6]/5 m5-rv">
+                        <footer className="py-20 px-8 text-center border-t border-[#d1d1d6]/5 m5-rv">
                             <p className={`${cinzel.className} text-[8px] tracking-[.4em] ch mb-8`}>Thank You</p>
                             <div className="w-24 h-24 rounded-full border border-[#d1d1d6]/8 mx-auto mb-8 flex items-center justify-center"><span className={`${bodoni.className} italic text-3xl text-[#d1d1d6]/25`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span></div>
                             <h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#f2f2f7] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>

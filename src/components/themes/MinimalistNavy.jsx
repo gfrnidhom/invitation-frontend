@@ -24,6 +24,7 @@ export default function MinimalistNavy({ payload, audioController }) {
 
     const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();
     const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const rightPanelRef = useRef(null);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -150,8 +151,8 @@ export default function MinimalistNavy({ payload, audioController }) {
 
                 /* Split layout */
                 @media (min-width: 1024px) {
-                    .mn-split-left { position: fixed; top: 0; left: 0; width: 50%; height: 100vh; z-index: 10; }
-                    .mn-split-right { margin-left: 50%; width: 50%; }
+                    .mn-split-left { position: fixed; top: 0; left: 0; width: 70%; height: 100vh; z-index: 10; }
+                    .mn-split-right { margin-left: 70%; width: 30%; }
                 }
 
                 /* Divider line animation */
@@ -248,7 +249,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                         </div>
 
                         <div className="relative z-10 w-full flex flex-col items-center">
-                            <div className="relative w-48 h-48 md:w-56 md:h-56 mb-10 mn-reveal">
+                            <div className="relative w-48 h-48 mb-10 mn-reveal">
                             <svg className="w-full h-full spin-circle" viewBox="0 0 200 200">
                                 <defs>
                                     <path id="circPath" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0" fill="none" />
@@ -287,7 +288,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                                 { val: countdown.seconds, label: 'Detik' },
                             ].map((item, i) => (
                                 <div key={i} className="text-center">
-                                    <p className={`${playfair.className} text-3xl md:text-4xl font-bold text-white`}>{item.val}</p>
+                                    <p className={`${playfair.className} text-3xl font-bold text-white`}>{item.val}</p>
                                     <p className="text-[9px] text-white/30 tracking-[0.15em] uppercase mt-1">{item.label}</p>
                                 </div>
                             ))}
@@ -301,7 +302,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                         {photos.length > 0 && (
                             <div className="flex gap-3 mt-10 w-full overflow-x-auto pb-4 px-4 navy-scrollbar mn-reveal">
                                 {photos.slice(0, 4).map((p, i) => (
-                                    <div key={i} className="flex-none w-28 h-36 md:w-36 md:h-44 rounded-xl overflow-hidden shadow-2xl">
+                                    <div key={i} className="flex-none w-28 h-36 rounded-xl overflow-hidden shadow-2xl">
                                         <img src={getPhoto(p)} alt={`Photo ${i}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
                                     </div>
                                 ))}
@@ -311,7 +312,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                 </section>
 
                     {/* ── Section 2: Greeting + Couple ── */}
-                    <section className="bg-[#f8f6f3] text-[#0B1D35] py-24 px-8 md:px-12">
+                    <section className="bg-[#f8f6f3] text-[#0B1D35] py-24 px-8">
                         <div className="text-center mb-16 mn-reveal">
                             <p className={`${playfair.className} text-sm tracking-widest uppercase text-[#0B1D35]/40 mb-4`}>Assalamualaikum Wr. Wb.</p>
                             <p className="text-sm text-[#0B1D35]/60 leading-[2] max-w-sm mx-auto">
@@ -320,11 +321,11 @@ export default function MinimalistNavy({ payload, audioController }) {
                         </div>
 
                         <div className="flex flex-col items-center mb-16 mn-reveal" data-delay="1">
-                            <div className="w-56 h-72 md:w-64 md:h-80 navy-arch mb-8 bg-gray-200 shadow-2xl">
+                            <div className="w-56 h-72 navy-arch mb-8 bg-gray-200 shadow-2xl">
                                 {bridePhoto ? <img src={bridePhoto} className="w-full h-full object-cover" alt="Bride" /> : <div className="w-full h-full bg-gradient-to-b from-[#c5cfd8] to-[#a8b5c2]" />}
                             </div>
                             <p className={`${greatVibes.className} text-3xl gold-accent mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                            <h3 className={`${playfair.className} text-xl md:text-2xl font-bold uppercase tracking-wider text-[#0B1D35] mb-2`}>{invitation?.bride_name}</h3>
+                            <h3 className={`${playfair.className} text-xl font-bold uppercase tracking-wider text-[#0B1D35] mb-2`}>{invitation?.bride_name}</h3>
                             {invitation?.bride_father && <p className="text-xs text-[#0B1D35]/50">Putri dari Bpk {invitation.bride_father} & Ibu {invitation.bride_mother}</p>}
                         </div>
 
@@ -333,20 +334,20 @@ export default function MinimalistNavy({ payload, audioController }) {
                         </div>
 
                         <div className="flex flex-col items-center mb-10 mn-reveal" data-delay="2">
-                            <div className="w-56 h-72 md:w-64 md:h-80 navy-arch mb-8 bg-gray-200 shadow-2xl">
+                            <div className="w-56 h-72 navy-arch mb-8 bg-gray-200 shadow-2xl">
                                 {groomPhoto ? <img src={groomPhoto} className="w-full h-full object-cover" alt="Groom" /> : <div className="w-full h-full bg-gradient-to-b from-[#c5cfd8] to-[#a8b5c2]" />}
                             </div>
                             <p className={`${greatVibes.className} text-3xl gold-accent mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                            <h3 className={`${playfair.className} text-xl md:text-2xl font-bold uppercase tracking-wider text-[#0B1D35] mb-2`}>{invitation?.groom_name}</h3>
+                            <h3 className={`${playfair.className} text-xl font-bold uppercase tracking-wider text-[#0B1D35] mb-2`}>{invitation?.groom_name}</h3>
                             {invitation?.groom_father && <p className="text-xs text-[#0B1D35]/50">Putra dari Bpk {invitation.groom_father} & Ibu {invitation.groom_mother}</p>}
                         </div>
                     </section>
 
                     {/* ── Section 3: Save The Date / Events ── */}
-                    <section className="bg-[#0B1D35] py-24 px-8 md:px-12 text-center">
+                    <section className="bg-[#0B1D35] py-24 px-8 text-center">
                         <div className="mn-reveal">
-                            <p className={`${playfair.className} text-2xl md:text-3xl text-white mb-0`}>Save The</p>
-                            <p className={`${greatVibes.className} text-5xl md:text-6xl gold-accent -mt-2 mb-12`}>Date</p>
+                            <p className={`${playfair.className} text-2xl text-white mb-0`}>Save The</p>
+                            <p className={`${greatVibes.className} text-5xl gold-accent -mt-2 mb-12`}>Date</p>
                         </div>
 
                         {invitation?.events && invitation.events.length > 0 ? (
@@ -397,7 +398,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                         invitation={invitation}
                         sectionBg="bg-[#f8f6f3]"
                         titleFont={playfair.className}
-                        titleSize="text-3xl md:text-4xl font-bold"
+                        titleSize="text-3xl font-bold"
                         accentText="text-[#0B1D35]"
                         subtitleText="gold-accent"
                         borderColor="border-[#0B1D35]/10"
@@ -405,7 +406,7 @@ export default function MinimalistNavy({ payload, audioController }) {
 
                     {/* ── Section 5: Love Story ── */}
                     {invitation?.love_stories && invitation.love_stories.length > 0 && (
-                        <section className="bg-[#0B1D35] py-24 px-8 md:px-12">
+                        <section className="bg-[#0B1D35] py-24 px-8">
                             <div className="text-center mb-16 mn-reveal">
                                 <p className={`${playfair.className} text-2xl text-white`}>Our</p>
                                 <p className={`${greatVibes.className} text-5xl gold-accent -mt-2`}>Love Story</p>
@@ -433,7 +434,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                     <QrCheckin guest={guest} sectionBg="bg-[#f8f6f3]" titleFont={playfair.className} textColor="text-[#0B1D35]" borderStyle="border-[#0B1D35]/10" />
 
                     {/* ── Section 7: Wedding Gift ── */}
-                    <section className="bg-[#0B1D35] py-24 px-8 md:px-12 text-center">
+                    <section className="bg-[#0B1D35] py-24 px-8 text-center">
                         <div className="mn-reveal">
                             <p className={`${playfair.className} text-2xl text-white`}>Wedding</p>
                             <p className={`${greatVibes.className} text-5xl gold-accent -mt-2 mb-12`}>Gift</p>
@@ -469,7 +470,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                     </section>
 
                     {/* ── Section 8: Wishes ── */}
-                    <section className="bg-[#f8f6f3] py-24 px-8 md:px-12">
+                    <section className="bg-[#f8f6f3] py-24 px-8">
                         <div className="text-center mb-12 mn-reveal">
                             <p className={`${playfair.className} text-2xl text-[#0B1D35]`}>Wedding</p>
                             <p className={`${greatVibes.className} text-5xl gold-accent -mt-2`}>Wishes</p>

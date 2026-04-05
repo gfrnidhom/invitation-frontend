@@ -185,7 +185,7 @@ export default function MidnightGold({ payload, audioController }) {
                 <div className="flex flex-col lg:flex-row min-h-screen">
 
                     {/* ───── LEFT PANEL (Sticky hero) ───── */}
-                    <div className="split-left-mg w-full lg:w-[55%] bg-[#0c1220] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
+                    <div className="split-left-mg w-full lg:w-[70%] bg-[#0c1220] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
                         {coverPhoto && <img src={coverPhoto} alt="Hero" className="absolute inset-0 w-full h-full object-cover opacity-60" />}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0c1220] via-[#0c1220]/50 to-transparent" />
                         <div className="gold-glow" style={{ top: '5%', right: '10%' }} />
@@ -224,13 +224,13 @@ export default function MidnightGold({ payload, audioController }) {
                     </div>
 
                     {/* ───── RIGHT PANEL (Scrollable) ───── */}
-                    <div ref={rightPanelRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto scrollbar-hide bg-[#0c1220]">
+                    <div ref={rightPanelRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto scrollbar-hide bg-[#0c1220]">
 
                         {/* ── Countdown ── */}
-                        <section className="py-20 px-8 md:px-12 text-center mg-reveal">
+                        <section className="py-20 px-8 text-center mg-reveal">
                             <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/40 to-transparent mx-auto mb-8" />
                             <p className={`${playfair.className} text-[10px] tracking-[0.4em] uppercase gold-text-soft mb-4`}>Save The Date</p>
-                            <h2 className={`${playfair.className} text-3xl md:text-4xl font-bold tracking-wider text-white mb-2`}>
+                            <h2 className={`${playfair.className} text-3xl font-bold tracking-wider text-white mb-2`}>
                                 {invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}
                             </h2>
                             <p className="text-xs text-white/30 mb-10">
@@ -245,7 +245,7 @@ export default function MidnightGold({ payload, audioController }) {
                                     { val: countdown.seconds, label: 'Detik' },
                                 ].map((item, i) => (
                                     <div key={i} className="card-midnight rounded-xl py-4 px-2">
-                                        <p className={`${playfair.className} text-2xl md:text-3xl font-bold gold-text`}>{item.val}</p>
+                                        <p className={`${playfair.className} text-2xl font-bold gold-text`}>{item.val}</p>
                                         <p className="text-[9px] uppercase tracking-widest text-white/25 mt-1">{item.label}</p>
                                     </div>
                                 ))}
@@ -253,18 +253,18 @@ export default function MidnightGold({ payload, audioController }) {
                         </section>
 
                         {/* ── Opening Quote ── */}
-                        <section className="px-8 md:px-12 pb-20 mg-reveal">
+                        <section className="px-8 pb-20 mg-reveal">
                             {photos.length > 0 && (
                                 <div className="flex gap-3 mb-10 overflow-x-auto scrollbar-hide">
                                     {photos.slice(0, 3).map((p, i) => (
-                                        <div key={i} className="flex-none w-28 h-36 md:w-36 md:h-44 rounded-xl overflow-hidden gold-border">
+                                        <div key={i} className="flex-none w-28 h-36 rounded-xl overflow-hidden gold-border">
                                             <img src={getPhoto(p)} alt={`Preview ${i}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
                                         </div>
                                     ))}
                                 </div>
                             )}
 
-                            <div className="card-midnight rounded-3xl p-8 md:p-10 text-center">
+                            <div className="card-midnight rounded-3xl p-8 text-center">
                                 <div className="w-10 h-10 rounded-full gold-border mx-auto mb-6 flex items-center justify-center">
                                     <span className="gold-text text-lg">❝</span>
                                 </div>
@@ -276,10 +276,10 @@ export default function MidnightGold({ payload, audioController }) {
                         </section>
 
                         {/* ── BRIDE & GROOM (Horizontal alternating) ── */}
-                        <section className="px-8 md:px-12 pb-20">
+                        <section className="px-8 pb-20">
                             <div className="text-center mb-12 mg-reveal">
                                 <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/40 to-transparent mx-auto mb-6" />
-                                <h2 className={`${playfair.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-white`}>Bride & Groom</h2>
+                                <h2 className={`${playfair.className} text-2xl font-bold tracking-[0.15em] uppercase text-white`}>Bride & Groom</h2>
                                 <p className="text-xs text-white/25 mt-2">Assalamualaikum Wr. Wb.</p>
                                 <p className="text-xs text-white/35 mt-3 max-w-md mx-auto leading-relaxed">
                                     Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:
@@ -287,19 +287,19 @@ export default function MidnightGold({ payload, audioController }) {
                             </div>
 
                             {/* Bride — Photo left, info right */}
-                            <div className="card-midnight rounded-3xl p-6 md:p-8 mb-6 mg-reveal" data-delay="1">
+                            <div className="card-midnight rounded-3xl p-6 mb-6 mg-reveal" data-delay="1">
                                 <div className="flex flex-col md:flex-row items-center gap-6">
                                     {bridePhoto && (
-                                        <div className="w-36 h-44 md:w-40 md:h-52 flex-none arch-frame-mg gold-border">
+                                        <div className="w-36 h-44 flex-none arch-frame-mg gold-border">
                                             <img src={bridePhoto} alt="Bride" className="w-full h-full object-cover" />
                                         </div>
                                     )}
-                                    <div className="text-center md:text-left flex-1">
+                                    <div className="text-center flex-1">
                                         <p className={`${greatVibes.className} text-3xl gold-text mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                                        <h3 className={`${playfair.className} text-xl md:text-2xl font-bold tracking-wider text-white mb-3`}>
+                                        <h3 className={`${playfair.className} text-xl font-bold tracking-wider text-white mb-3`}>
                                             {invitation?.bride_full_name || invitation?.bride_name}
                                         </h3>
-                                        <div className="w-10 h-px bg-[#c9a84c]/30 mb-3 mx-auto md:mx-0" />
+                                        <div className="w-10 h-px bg-[#c9a84c]/30 mb-3 mx-auto" />
                                         <p className="text-sm text-white/40">Putri dari</p>
                                         <p className="text-sm text-white/60 font-medium">{invitation?.bride_father || 'Bapak'} & {invitation?.bride_mother || 'Ibu'}</p>
                                     </div>
@@ -312,19 +312,19 @@ export default function MidnightGold({ payload, audioController }) {
                             </div>
 
                             {/* Groom — Info left, photo right */}
-                            <div className="card-midnight rounded-3xl p-6 md:p-8 mg-reveal" data-delay="2">
+                            <div className="card-midnight rounded-3xl p-6 mg-reveal" data-delay="2">
                                 <div className="flex flex-col md:flex-row-reverse items-center gap-6">
                                     {groomPhoto && (
-                                        <div className="w-36 h-44 md:w-40 md:h-52 flex-none arch-frame-mg gold-border">
+                                        <div className="w-36 h-44 flex-none arch-frame-mg gold-border">
                                             <img src={groomPhoto} alt="Groom" className="w-full h-full object-cover" />
                                         </div>
                                     )}
-                                    <div className="text-center md:text-right flex-1">
+                                    <div className="text-center flex-1">
                                         <p className={`${greatVibes.className} text-3xl gold-text mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                                        <h3 className={`${playfair.className} text-xl md:text-2xl font-bold tracking-wider text-white mb-3`}>
+                                        <h3 className={`${playfair.className} text-xl font-bold tracking-wider text-white mb-3`}>
                                             {invitation?.groom_full_name || invitation?.groom_name}
                                         </h3>
-                                        <div className="w-10 h-px bg-[#c9a84c]/30 mb-3 mx-auto md:ml-auto md:mr-0" />
+                                        <div className="w-10 h-px bg-[#c9a84c]/30 mb-3 mx-auto" />
                                         <p className="text-sm text-white/40">Putra dari</p>
                                         <p className="text-sm text-white/60 font-medium">{invitation?.groom_father || 'Bapak'} & {invitation?.groom_mother || 'Ibu'}</p>
                                     </div>
@@ -333,9 +333,9 @@ export default function MidnightGold({ payload, audioController }) {
                         </section>
 
                         {/* ── EVENTS ── */}
-                        <section className="px-8 md:px-12 pb-20">
+                        <section className="px-8 pb-20">
                             <div className="text-center mb-12 mg-reveal">
-                                <h2 className={`${playfair.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
+                                <h2 className={`${playfair.className} text-2xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
                                 <p className={`${greatVibes.className} text-4xl gold-text -mt-1`}>Event</p>
                             </div>
 
@@ -343,7 +343,7 @@ export default function MidnightGold({ payload, audioController }) {
                                 [...invitation.events].sort((a,b) => (a.sort_order||0) - (b.sort_order||0)).map((event, idx) => (
                                     <div key={idx} className="card-midnight rounded-3xl p-8 mb-6 overflow-hidden mg-reveal" data-delay={`${idx+1}`}>
                                         {coverPhoto && (
-                                            <div className="w-full h-44 md:h-52 arch-frame-mg mb-6 relative">
+                                            <div className="w-full h-44 arch-frame-mg mb-6 relative">
                                                 <img src={coverPhoto} alt={event.name} className="w-full h-full object-cover opacity-50" />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-[#0c1220]/90 to-transparent" />
                                                 <div className="absolute bottom-4 left-0 right-0 text-center">
@@ -387,14 +387,14 @@ export default function MidnightGold({ payload, audioController }) {
 
                         {/* ── LOVE STORY ── */}
                         {invitation?.love_stories && invitation.love_stories.length > 0 && (
-                            <section className="px-8 md:px-12 pb-20">
+                            <section className="px-8 pb-20">
                                 <div className="text-center mb-12 mg-reveal">
-                                    <h2 className={`${playfair.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-white`}>Our</h2>
+                                    <h2 className={`${playfair.className} text-2xl font-bold tracking-[0.15em] uppercase text-white`}>Our</h2>
                                     <p className={`${greatVibes.className} text-4xl gold-text -mt-1`}>Love Story</p>
                                 </div>
                                 {[...invitation.love_stories].sort((a,b) => (a.sort_order||0) - (b.sort_order||0)).map((story, i) => (
                                     <div key={story.id || i} className="card-midnight rounded-3xl p-8 text-center mb-6 mg-reveal" data-delay={`${i+1}`}>
-                                        <h3 className={`${playfair.className} text-lg md:text-xl font-bold tracking-[0.15em] uppercase gold-text mb-4`}>{story.title}</h3>
+                                        <h3 className={`${playfair.className} text-lg font-bold tracking-[0.15em] uppercase gold-text mb-4`}>{story.title}</h3>
                                         <p className="text-sm text-white/45 leading-relaxed">{story.description}</p>
                                         {story.photo && (
                                             <div className="mt-6 rounded-xl overflow-hidden gold-border">
@@ -412,25 +412,25 @@ export default function MidnightGold({ payload, audioController }) {
                             invitation={invitation}
                             sectionBg="bg-transparent"
                             titleFont={playfair.className}
-                            titleSize="text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase"
+                            titleSize="text-2xl font-bold tracking-[0.15em] uppercase"
                             accentText="text-white"
                             subtitleText="gold-text"
                             borderColor="border-[#c9a84c]/30"
                         />
 
                         {/* ── QR CHECKIN ── */}
-                        <div className="px-8 md:px-12">
+                        <div className="px-8">
                             <QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={playfair.className} textColor="text-white" borderStyle="border-[#c9a84c]/20" />
                         </div>
 
                         {/* ── WISHES ── */}
-                        <section className="px-8 md:px-12 pb-20 mg-reveal">
+                        <section className="px-8 pb-20 mg-reveal">
                             <div className="text-center mb-12">
-                                <h2 className={`${playfair.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
+                                <h2 className={`${playfair.className} text-2xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
                                 <p className={`${greatVibes.className} text-4xl gold-text -mt-1`}>Wishes</p>
                             </div>
 
-                            <div className="card-midnight rounded-3xl p-8 md:p-10">
+                            <div className="card-midnight rounded-3xl p-8">
                                 <form onSubmit={submitWish} className="space-y-4">
                                     <div>
                                         <label className={`${playfair.className} block text-[9px] tracking-[0.2em] uppercase gold-text-soft mb-2 font-bold`}>Nama</label>
@@ -467,9 +467,9 @@ export default function MidnightGold({ payload, audioController }) {
 
                         {/* ── GIFT ── */}
                         {invitation?.gift_accounts && invitation.gift_accounts.length > 0 && (
-                            <section className="px-8 md:px-12 pb-20 mg-reveal">
+                            <section className="px-8 pb-20 mg-reveal">
                                 <div className="text-center mb-12">
-                                    <h2 className={`${playfair.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
+                                    <h2 className={`${playfair.className} text-2xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
                                     <p className={`${greatVibes.className} text-4xl gold-text -mt-1`}>Gift</p>
                                 </div>
                                 <div className="space-y-4">
@@ -492,7 +492,7 @@ export default function MidnightGold({ payload, audioController }) {
                         )}
 
                         {/* ── FOOTER with Beringinesia branding ── */}
-                        <footer className="py-20 px-8 md:px-12 text-center border-t border-[#c9a84c]/10 mg-reveal">
+                        <footer className="py-20 px-8 text-center border-t border-[#c9a84c]/10 mg-reveal">
                             <p className={`${playfair.className} text-[9px] tracking-[0.4em] uppercase gold-text-soft mb-8`}>Thank You</p>
 
                             <div className="w-24 h-24 rounded-full gold-border mx-auto mb-8 flex items-center justify-center">

@@ -52,21 +52,7 @@ export default function MusicPlayer({
           )}
         </button>
         
-        {/* Animated Sound Waves (Visual only when playing) */}
-        {isPlaying && (
-          <div className="absolute -top-1 -right-1 flex gap-0.5">
-            {[1, 2, 3].map((i) => (
-              <span 
-                key={i} 
-                className="w-1 bg-current opacity-60 rounded-full animate-music-bar"
-                style={{ 
-                  height: i === 2 ? '12px' : '8px',
-                  animationDelay: `${i * 0.2}s`
-                }}
-              />
-            ))}
-          </div>
-        )}
+        {/* Animated Sound Waves (Visual only when playing) - Removed to avoid "double icon" look */}
 
         <style jsx>{`
           @keyframes music-bar {

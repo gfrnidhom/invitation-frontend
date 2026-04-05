@@ -63,7 +63,7 @@ export default function BlushRomantic({ payload, audioController }) {
 
             <div className={`transition-opacity duration-1000 ${isOpen?'opacity-100':'opacity-0 pointer-events-none'}`}>
                 <div className="flex flex-col lg:flex-row min-h-screen">
-                    <div className="sl-br w-full lg:w-[55%] bg-[#8b3a4a] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
+                    <div className="sl-br w-full lg:w-[70%] bg-[#8b3a4a] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
                         {cp&&<img src={cp} alt="Hero" className="absolute inset-0 w-full h-full object-cover opacity-50"/>}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#8b3a4a] via-[#8b3a4a]/50 to-transparent"/>
                         <div className="rg" style={{top:'8%',right:'8%'}}/>
@@ -76,33 +76,33 @@ export default function BlushRomantic({ payload, audioController }) {
                         {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-[#8b3a4a]" btnColor="text-white" btnBorder="border-[#b76e79]/30" />}
                     </div>
 
-                    <div ref={rpRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto sh bg-[#8b3a4a]">
-                        <section className="py-20 px-8 md:px-12 text-center br-rv">
+                    <div ref={rpRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto sh bg-[#8b3a4a]">
+                        <section className="py-20 px-8 text-center br-rv">
                             <p className={`${marcellus.className} text-[10px] tracking-[.4em] uppercase rg-txt mb-4`}>Save The Date</p>
-                            <h2 className={`${marcellus.className} text-3xl md:text-4xl tracking-wider text-[#fefcfa] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
+                            <h2 className={`${marcellus.className} text-3xl tracking-wider text-[#fefcfa] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
                             <p className="text-xs text-[#fefcfa]/25 mb-10">{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
-                            <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">{[{v:cd.d,l:'Hari'},{v:cd.h,l:'Jam'},{v:cd.m,l:'Menit'},{v:cd.s,l:'Detik'}].map((it,i)=>(<div key={i} className="bc rounded-2xl py-4 px-2"><p className={`${marcellus.className} text-2xl md:text-3xl rg-txt`}>{it.v}</p><p className="text-[9px] uppercase tracking-widest text-[#fefcfa]/20 mt-1">{it.l}</p></div>))}</div>
+                            <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">{[{v:cd.d,l:'Hari'},{v:cd.h,l:'Jam'},{v:cd.m,l:'Menit'},{v:cd.s,l:'Detik'}].map((it,i)=>(<div key={i} className="bc rounded-2xl py-4 px-2"><p className={`${marcellus.className} text-2xl rg-txt`}>{it.v}</p><p className="text-[9px] uppercase tracking-widest text-[#fefcfa]/20 mt-1">{it.l}</p></div>))}</div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20 br-rv">
-                            <div className="bcl rounded-3xl p-8 md:p-10 text-center">
+                        <section className="px-8 pb-20 br-rv">
+                            <div className="bcl rounded-3xl p-8 text-center">
                                 <svg className="w-8 h-8 rg-txt mx-auto mb-4 opacity-40" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                                 <p className="text-sm leading-relaxed text-[#8b3a4a]/55 italic mb-4 font-light">{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
                                 <p className="text-[10px] rg-txt tracking-widest uppercase">QS. Ar-Rum Ayat 21</p>
                             </div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 br-rv"><h2 className={`${marcellus.className} text-2xl md:text-3xl tracking-[.15em] uppercase text-[#fefcfa]`}>Bride & Groom</h2><p className="text-xs text-[#fefcfa]/20 mt-2">Assalamualaikum Wr. Wb.</p><p className="text-xs text-[#fefcfa]/30 mt-3 max-w-md mx-auto leading-relaxed font-light">Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 br-rv"><h2 className={`${marcellus.className} text-2xl tracking-[.15em] uppercase text-[#fefcfa]`}>Bride & Groom</h2><p className="text-xs text-[#fefcfa]/20 mt-2">Assalamualaikum Wr. Wb.</p><p className="text-xs text-[#fefcfa]/30 mt-3 max-w-md mx-auto leading-relaxed font-light">Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
 
                             {/* Bride — left photo, right info */}
-                            <div className="bcl rounded-3xl p-6 md:p-8 mb-6 br-rv" data-delay="1">
+                            <div className="bcl rounded-3xl p-6 mb-6 br-rv" data-delay="1">
                                 <div className="flex flex-col md:flex-row items-center gap-6">
-                                    {brP&&<div className="w-36 h-44 md:w-40 md:h-52 flex-none arch-br border-2 border-[#b76e79]/20"><img src={brP} alt="Bride" className="w-full h-full object-cover"/></div>}
-                                    <div className="text-center md:text-left flex-1">
+                                    {brP&&<div className="w-36 h-44 flex-none arch-br border-2 border-[#b76e79]/20"><img src={brP} alt="Bride" className="w-full h-full object-cover"/></div>}
+                                    <div className="text-center flex-1">
                                         <p className={`${dancing.className} text-3xl rg-txt mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                                        <h3 className={`${marcellus.className} text-xl md:text-2xl tracking-wider text-[#8b3a4a] mb-3`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
-                                        <div className="w-10 h-px bg-[#b76e79]/25 mb-3 mx-auto md:mx-0"/>
+                                        <h3 className={`${marcellus.className} text-xl tracking-wider text-[#8b3a4a] mb-3`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
+                                        <div className="w-10 h-px bg-[#b76e79]/25 mb-3 mx-auto"/>
                                         <p className="text-sm text-[#8b3a4a]/45 font-light">Putri dari</p>
                                         <p className="text-sm text-[#8b3a4a]/65 font-medium">{invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p>
                                     </div>
@@ -110,13 +110,13 @@ export default function BlushRomantic({ payload, audioController }) {
                             </div>
                             <div className="text-center my-4 br-rv"><span className={`${dancing.className} text-6xl rg-txt`}>&</span></div>
                             {/* Groom — right photo, left info */}
-                            <div className="bcl rounded-3xl p-6 md:p-8 br-rv" data-delay="2">
+                            <div className="bcl rounded-3xl p-6 br-rv" data-delay="2">
                                 <div className="flex flex-col md:flex-row-reverse items-center gap-6">
-                                    {grP&&<div className="w-36 h-44 md:w-40 md:h-52 flex-none arch-br border-2 border-[#b76e79]/20"><img src={grP} alt="Groom" className="w-full h-full object-cover"/></div>}
-                                    <div className="text-center md:text-right flex-1">
+                                    {grP&&<div className="w-36 h-44 flex-none arch-br border-2 border-[#b76e79]/20"><img src={grP} alt="Groom" className="w-full h-full object-cover"/></div>}
+                                    <div className="text-center flex-1">
                                         <p className={`${dancing.className} text-3xl rg-txt mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                                        <h3 className={`${marcellus.className} text-xl md:text-2xl tracking-wider text-[#8b3a4a] mb-3`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
-                                        <div className="w-10 h-px bg-[#b76e79]/25 mb-3 mx-auto md:ml-auto md:mr-0"/>
+                                        <h3 className={`${marcellus.className} text-xl tracking-wider text-[#8b3a4a] mb-3`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
+                                        <div className="w-10 h-px bg-[#b76e79]/25 mb-3 mx-auto"/>
                                         <p className="text-sm text-[#8b3a4a]/45 font-light">Putra dari</p>
                                         <p className="text-sm text-[#8b3a4a]/65 font-medium">{invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p>
                                     </div>
@@ -124,8 +124,8 @@ export default function BlushRomantic({ payload, audioController }) {
                             </div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 br-rv"><h2 className={`${marcellus.className} text-2xl md:text-3xl tracking-[.15em] uppercase text-[#fefcfa]`}>Wedding</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Event</p></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 br-rv"><h2 className={`${marcellus.className} text-2xl tracking-[.15em] uppercase text-[#fefcfa]`}>Wedding</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Event</p></div>
                             {invitation?.events&&invitation.events.length>0?[...invitation.events].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((ev,idx)=>(
                                 <div key={idx} className="bcl rounded-3xl p-8 mb-6 text-center br-rv" data-delay={`${idx+1}`}>
                                     <h3 className={`${marcellus.className} text-xl tracking-[.15em] uppercase text-[#8b3a4a] mb-4`}>{ev.name}</h3>
@@ -137,24 +137,24 @@ export default function BlushRomantic({ payload, audioController }) {
                             )):<div className="bcl rounded-3xl p-10 text-center"><h3 className={`${marcellus.className} text-xl tracking-wider text-[#8b3a4a] mb-2`}>Acara Pernikahan</h3><p className="text-sm text-[#8b3a4a]/35 font-light">{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p></div>}
                         </section>
 
-                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 br-rv"><h2 className={`${marcellus.className} text-2xl md:text-3xl tracking-[.15em] uppercase text-[#fefcfa]`}>Our</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Love Story</p></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="bcl rounded-3xl p-8 text-center mb-6 br-rv" data-delay={`${i+1}`}><h3 className={`${marcellus.className} text-lg md:text-xl tracking-[.15em] uppercase text-[#8b3a4a] mb-4`}>{s.title}</h3><p className="text-sm text-[#8b3a4a]/55 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover"/></div>}</div>))}</section>}
+                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 pb-20"><div className="text-center mb-12 br-rv"><h2 className={`${marcellus.className} text-2xl tracking-[.15em] uppercase text-[#fefcfa]`}>Our</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Love Story</p></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="bcl rounded-3xl p-8 text-center mb-6 br-rv" data-delay={`${i+1}`}><h3 className={`${marcellus.className} text-lg tracking-[.15em] uppercase text-[#8b3a4a] mb-4`}>{s.title}</h3><p className="text-sm text-[#8b3a4a]/55 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover"/></div>}</div>))}</section>}
 
                         <Gallery 
                             layout="abstract"
                             invitation={invitation}
                             sectionBg="bg-transparent"
                             titleFont={marcellus.className}
-                            titleSize="text-2xl md:text-3xl tracking-[.15em] uppercase"
+                            titleSize="text-2xl tracking-[.15em] uppercase"
                             accentText="text-[#fefcfa]"
                             subtitleText="rg-txt"
                             borderColor="border-[#b76e79]/30"
                         />
 
-                        <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={marcellus.className} textColor="text-[#fefcfa]" borderStyle="border-[#b76e79]/20"/></div>
+                        <div className="px-8"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={marcellus.className} textColor="text-[#fefcfa]" borderStyle="border-[#b76e79]/20"/></div>
 
-                        <section className="px-8 md:px-12 pb-20 br-rv">
-                            <div className="text-center mb-12"><h2 className={`${marcellus.className} text-2xl md:text-3xl tracking-[.15em] uppercase text-[#fefcfa]`}>Wedding</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Wishes</p></div>
-                            <div className="bcl rounded-3xl p-8 md:p-10">
+                        <section className="px-8 pb-20 br-rv">
+                            <div className="text-center mb-12"><h2 className={`${marcellus.className} text-2xl tracking-[.15em] uppercase text-[#fefcfa]`}>Wedding</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Wishes</p></div>
+                            <div className="bcl rounded-3xl p-8">
                                 <form onSubmit={sw} className="space-y-4">
                                     <div><label className={`${marcellus.className} block text-[9px] tracking-[.2em] uppercase text-[#8b3a4a]/35 mb-2`}>Nama</label><input type="text" value={ni} onChange={e=>setNi(e.target.value)} className="w-full bg-[#8b3a4a]/5 border border-[#8b3a4a]/12 rounded-xl px-5 py-3.5 text-sm text-[#8b3a4a] focus:outline-none focus:border-[#b76e79]/50 transition-colors" placeholder="Nama Anda..."/></div>
                                     <div><label className={`${marcellus.className} block text-[9px] tracking-[.2em] uppercase text-[#8b3a4a]/35 mb-2`}>Ucapan</label><textarea value={mi} onChange={e=>setMi(e.target.value)} className="w-full bg-[#8b3a4a]/5 border border-[#8b3a4a]/12 rounded-xl px-5 py-3.5 text-sm text-[#8b3a4a] h-28 resize-none focus:outline-none focus:border-[#b76e79]/50 transition-colors" placeholder="Tulis ucapan..."/></div>
@@ -164,9 +164,9 @@ export default function BlushRomantic({ payload, audioController }) {
                             </div>
                         </section>
 
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 md:px-12 pb-20 br-rv"><div className="text-center mb-12"><h2 className={`${marcellus.className} text-2xl md:text-3xl tracking-[.15em] uppercase text-[#fefcfa]`}>Wedding</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="bc rounded-2xl p-6 text-center br-rv" data-delay={`${i+1}`}><p className={`${marcellus.className} text-sm tracking-widest uppercase rg-txt mb-1`}>{a.bank_name}</p><p className="text-[10px] text-[#fefcfa]/20 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${marcellus.className} text-xl text-[#fefcfa] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className="w-full border border-[#b76e79]/25 py-3 text-[10px] uppercase tracking-widest rg-txt hover:bg-[#b76e79] hover:text-white transition-all duration-500 rounded-xl">Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 br-rv"><div className="text-center mb-12"><h2 className={`${marcellus.className} text-2xl tracking-[.15em] uppercase text-[#fefcfa]`}>Wedding</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="bc rounded-2xl p-6 text-center br-rv" data-delay={`${i+1}`}><p className={`${marcellus.className} text-sm tracking-widest uppercase rg-txt mb-1`}>{a.bank_name}</p><p className="text-[10px] text-[#fefcfa]/20 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${marcellus.className} text-xl text-[#fefcfa] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className="w-full border border-[#b76e79]/25 py-3 text-[10px] uppercase tracking-widest rg-txt hover:bg-[#b76e79] hover:text-white transition-all duration-500 rounded-xl">Copy Number</button></div>))}</div></section>}
 
-                        <footer className="py-20 px-8 md:px-12 text-center border-t border-[#fefcfa]/5 br-rv">
+                        <footer className="py-20 px-8 text-center border-t border-[#fefcfa]/5 br-rv">
                             <p className={`${marcellus.className} text-[9px] tracking-[.4em] uppercase rg-txt mb-8`}>Thank You</p>
                             <div className="w-24 h-24 rounded-full border border-[#b76e79]/20 mx-auto mb-8 flex items-center justify-center"><span className={`${dancing.className} text-4xl rg-txt`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span></div>
                             <h3 className={`${marcellus.className} text-lg tracking-[.15em] uppercase text-[#fefcfa] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>

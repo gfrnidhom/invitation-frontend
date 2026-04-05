@@ -62,7 +62,7 @@ export default function FrostedElegance({ payload, audioController }) {
 
             <div className={`transition-opacity duration-1000 ${isOpen?'opacity-100':'opacity-0 pointer-events-none'}`}>
                 <div className="flex flex-col lg:flex-row min-h-screen">
-                    <div className="sl-fe w-full lg:w-[55%] bg-[#1a1f2e] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
+                    <div className="sl-fe w-full lg:w-[70%] bg-[#1a1f2e] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
                         {cp&&<img src={cp} alt="Hero" className="absolute inset-0 w-full h-full object-cover opacity-50"/>}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#1a1f2e] via-[#1a1f2e]/50 to-transparent"/>
                         <div className="ig" style={{top:'5%',right:'10%'}}/>
@@ -76,30 +76,30 @@ export default function FrostedElegance({ payload, audioController }) {
                         {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-[#1a1f2e]" btnColor="ib" btnBorder="border-white/15 shadow-2xl" />}
                     </div>
 
-                    <div ref={rpRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto sh bg-[#1a1f2e]">
-                        <section className="py-20 px-8 md:px-12 text-center fe-rv">
+                    <div ref={rpRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto sh bg-[#1a1f2e]">
+                        <section className="py-20 px-8 text-center fe-rv">
                             <p className={`${ci.className} text-[10px] tracking-[.4em] uppercase ib mb-4 font-light`}>Save The Date</p>
-                            <h2 className={`${ci.className} text-3xl md:text-4xl font-light tracking-wider text-white mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
+                            <h2 className={`${ci.className} text-3xl font-light tracking-wider text-white mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
                             <p className="text-xs text-white/25 mb-10">{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
-                            <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">{[{v:cd.d,l:'Hari'},{v:cd.h,l:'Jam'},{v:cd.m,l:'Menit'},{v:cd.s,l:'Detik'}].map((it,i)=>(<div key={i} className="fc rounded-2xl py-4 px-2"><p className={`${ci.className} text-2xl md:text-3xl font-light ib`}>{it.v}</p><p className="text-[9px] uppercase tracking-widest text-white/20 mt-1">{it.l}</p></div>))}</div>
+                            <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">{[{v:cd.d,l:'Hari'},{v:cd.h,l:'Jam'},{v:cd.m,l:'Menit'},{v:cd.s,l:'Detik'}].map((it,i)=>(<div key={i} className="fc rounded-2xl py-4 px-2"><p className={`${ci.className} text-2xl font-light ib`}>{it.v}</p><p className="text-[9px] uppercase tracking-widest text-white/20 mt-1">{it.l}</p></div>))}</div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20 fe-rv">
-                            <div className="fcl rounded-3xl p-8 md:p-10 text-center">
+                        <section className="px-8 pb-20 fe-rv">
+                            <div className="fcl rounded-3xl p-8 text-center">
                                 <p className="text-sm leading-relaxed text-[#1a1f2e]/55 italic mb-4 font-light">{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
                                 <p className="text-[10px] ib tracking-widest uppercase">QS. Ar-Rum Ayat 21</p>
                             </div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 fe-rv"><h2 className={`${ci.className} text-2xl md:text-3xl font-light tracking-[.15em] uppercase text-white`}>Bride & Groom</h2><p className="text-xs text-white/20 mt-2">Assalamualaikum Wr. Wb.</p><p className="text-xs text-white/30 mt-3 max-w-md mx-auto leading-relaxed font-light">Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
-                            <div className="text-center mb-4 fe-rv" data-delay="1">{brP&&<div className="df mx-auto mb-6"><img src={brP} alt="Bride"/></div>}<p className={`${ci.className} text-3xl ib font-light mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p><h3 className={`${ci.className} text-xl md:text-2xl font-medium tracking-wider text-white mb-3`}>{invitation?.bride_full_name||invitation?.bride_name}</h3><p className="text-sm text-white/35 font-light">Putri dari</p><p className="text-sm text-white/50 font-medium">{invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 fe-rv"><h2 className={`${ci.className} text-2xl font-light tracking-[.15em] uppercase text-white`}>Bride & Groom</h2><p className="text-xs text-white/20 mt-2">Assalamualaikum Wr. Wb.</p><p className="text-xs text-white/30 mt-3 max-w-md mx-auto leading-relaxed font-light">Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
+                            <div className="text-center mb-4 fe-rv" data-delay="1">{brP&&<div className="df mx-auto mb-6"><img src={brP} alt="Bride"/></div>}<p className={`${ci.className} text-3xl ib font-light mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p><h3 className={`${ci.className} text-xl font-medium tracking-wider text-white mb-3`}>{invitation?.bride_full_name||invitation?.bride_name}</h3><p className="text-sm text-white/35 font-light">Putri dari</p><p className="text-sm text-white/50 font-medium">{invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p></div>
                             <div className="flex flex-col items-center my-6 fe-rv"><div className="w-px h-8 bg-gradient-to-b from-transparent via-[#a8d8ea]/30 to-transparent"/><span className={`${ci.className} text-5xl ib font-light my-2`}>&</span><div className="w-px h-8 bg-gradient-to-b from-transparent via-[#a8d8ea]/30 to-transparent"/></div>
-                            <div className="text-center fe-rv" data-delay="2">{grP&&<div className="df mx-auto mb-6"><img src={grP} alt="Groom"/></div>}<p className={`${ci.className} text-3xl ib font-light mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p><h3 className={`${ci.className} text-xl md:text-2xl font-medium tracking-wider text-white mb-3`}>{invitation?.groom_full_name||invitation?.groom_name}</h3><p className="text-sm text-white/35 font-light">Putra dari</p><p className="text-sm text-white/50 font-medium">{invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p></div>
+                            <div className="text-center fe-rv" data-delay="2">{grP&&<div className="df mx-auto mb-6"><img src={grP} alt="Groom"/></div>}<p className={`${ci.className} text-3xl ib font-light mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p><h3 className={`${ci.className} text-xl font-medium tracking-wider text-white mb-3`}>{invitation?.groom_full_name||invitation?.groom_name}</h3><p className="text-sm text-white/35 font-light">Putra dari</p><p className="text-sm text-white/50 font-medium">{invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p></div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 fe-rv"><h2 className={`${ci.className} text-2xl md:text-3xl font-light tracking-[.15em] uppercase text-white`}>Wedding</h2><p className={`${ci.className} text-4xl ib font-light -mt-1`}>Event</p></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 fe-rv"><h2 className={`${ci.className} text-2xl font-light tracking-[.15em] uppercase text-white`}>Wedding</h2><p className={`${ci.className} text-4xl ib font-light -mt-1`}>Event</p></div>
                             {invitation?.events&&invitation.events.length>0?[...invitation.events].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((ev,idx)=>(
                                 <div key={idx} className="fc rounded-3xl p-8 mb-6 text-center fe-rv" data-delay={`${idx+1}`}>
                                     <h3 className={`${ci.className} text-xl font-medium tracking-[.15em] uppercase ib mb-4`}>{ev.name}</h3>
@@ -111,24 +111,24 @@ export default function FrostedElegance({ payload, audioController }) {
                             )):<div className="fc rounded-3xl p-10 text-center"><h3 className={`${ci.className} text-xl font-light tracking-wider ib mb-2`}>Acara Pernikahan</h3><p className="text-sm text-white/30 font-light">{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p></div>}
                         </section>
 
-                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 fe-rv"><h2 className={`${ci.className} text-2xl md:text-3xl font-light tracking-[.15em] uppercase text-white`}>Our</h2><p className={`${ci.className} text-4xl ib font-light -mt-1`}>Love Story</p></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="fcl rounded-3xl p-8 text-center mb-6 fe-rv" data-delay={`${i+1}`}><h3 className={`${ci.className} text-lg md:text-xl font-medium tracking-[.15em] uppercase mb-4`}>{s.title}</h3><p className="text-sm text-[#1a1f2e]/55 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover"/></div>}</div>))}</section>}
+                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 pb-20"><div className="text-center mb-12 fe-rv"><h2 className={`${ci.className} text-2xl font-light tracking-[.15em] uppercase text-white`}>Our</h2><p className={`${ci.className} text-4xl ib font-light -mt-1`}>Love Story</p></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="fcl rounded-3xl p-8 text-center mb-6 fe-rv" data-delay={`${i+1}`}><h3 className={`${ci.className} text-lg font-medium tracking-[.15em] uppercase mb-4`}>{s.title}</h3><p className="text-sm text-[#1a1f2e]/55 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover"/></div>}</div>))}</section>}
 
                         <Gallery 
                             layout="abstract"
                             invitation={invitation}
                             sectionBg="bg-transparent"
                             titleFont={ci.className}
-                            titleSize="text-2xl md:text-3xl font-light tracking-[.15em] uppercase"
+                            titleSize="text-2xl font-light tracking-[.15em] uppercase"
                             accentText="text-white"
                             subtitleText="ib"
                             borderColor="border-white/10"
                         />
 
-                        <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={ci.className} textColor="text-white" borderStyle="border-white/10"/></div>
+                        <div className="px-8"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={ci.className} textColor="text-white" borderStyle="border-white/10"/></div>
 
-                        <section className="px-8 md:px-12 pb-20 fe-rv">
-                            <div className="text-center mb-12"><h2 className={`${ci.className} text-2xl md:text-3xl font-light tracking-[.15em] uppercase text-white`}>Wedding</h2><p className={`${ci.className} text-4xl ib font-light -mt-1`}>Wishes</p></div>
-                            <div className="fcl rounded-3xl p-8 md:p-10">
+                        <section className="px-8 pb-20 fe-rv">
+                            <div className="text-center mb-12"><h2 className={`${ci.className} text-2xl font-light tracking-[.15em] uppercase text-white`}>Wedding</h2><p className={`${ci.className} text-4xl ib font-light -mt-1`}>Wishes</p></div>
+                            <div className="fcl rounded-3xl p-8">
                                 <form onSubmit={sw} className="space-y-4">
                                     <div><label className={`${ci.className} block text-[9px] tracking-[.2em] uppercase text-[#1a1f2e]/35 mb-2 font-medium`}>Nama</label><input type="text" value={ni} onChange={e=>setNi(e.target.value)} className="w-full bg-[#1a1f2e]/5 border border-[#1a1f2e]/10 rounded-xl px-5 py-3.5 text-sm text-[#1a1f2e] focus:outline-none focus:border-[#a8d8ea]/50 transition-colors" placeholder="Nama Anda..."/></div>
                                     <div><label className={`${ci.className} block text-[9px] tracking-[.2em] uppercase text-[#1a1f2e]/35 mb-2 font-medium`}>Ucapan</label><textarea value={mi} onChange={e=>setMi(e.target.value)} className="w-full bg-[#1a1f2e]/5 border border-[#1a1f2e]/10 rounded-xl px-5 py-3.5 text-sm text-[#1a1f2e] h-28 resize-none focus:outline-none focus:border-[#a8d8ea]/50 transition-colors" placeholder="Tulis ucapan..."/></div>
@@ -138,9 +138,9 @@ export default function FrostedElegance({ payload, audioController }) {
                             </div>
                         </section>
 
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 md:px-12 pb-20 fe-rv"><div className="text-center mb-12"><h2 className={`${ci.className} text-2xl md:text-3xl font-light tracking-[.15em] uppercase text-white`}>Wedding</h2><p className={`${ci.className} text-4xl ib font-light -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="fc rounded-2xl p-6 text-center fe-rv" data-delay={`${i+1}`}><p className={`${ci.className} text-sm font-medium tracking-widest uppercase ib mb-1`}>{a.bank_name}</p><p className="text-[10px] text-white/20 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${ci.className} text-xl font-medium text-white mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className="w-full fc py-3 text-[10px] uppercase tracking-widest text-white/50 hover:bg-white/10 transition-all duration-500 rounded-xl font-medium">Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 fe-rv"><div className="text-center mb-12"><h2 className={`${ci.className} text-2xl font-light tracking-[.15em] uppercase text-white`}>Wedding</h2><p className={`${ci.className} text-4xl ib font-light -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="fc rounded-2xl p-6 text-center fe-rv" data-delay={`${i+1}`}><p className={`${ci.className} text-sm font-medium tracking-widest uppercase ib mb-1`}>{a.bank_name}</p><p className="text-[10px] text-white/20 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${ci.className} text-xl font-medium text-white mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className="w-full fc py-3 text-[10px] uppercase tracking-widest text-white/50 hover:bg-white/10 transition-all duration-500 rounded-xl font-medium">Copy Number</button></div>))}</div></section>}
 
-                        <footer className="py-20 px-8 md:px-12 text-center border-t border-white/5 fe-rv">
+                        <footer className="py-20 px-8 text-center border-t border-white/5 fe-rv">
                             <p className={`${ci.className} text-[9px] tracking-[.4em] uppercase ib mb-8 font-light`}>Thank You</p>
                             <div className="w-24 h-24 rounded-full border border-white/10 mx-auto mb-8 flex items-center justify-center"><span className={`${ci.className} text-4xl ib font-light`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span></div>
                             <h3 className={`${ci.className} text-lg font-medium tracking-[.15em] uppercase text-white mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>

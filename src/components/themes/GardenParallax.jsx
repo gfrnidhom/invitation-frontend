@@ -140,8 +140,8 @@ export default function GardenParallax({ payload, audioController }) {
                 .garden-btn:hover { background: #34495e; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
                 @media (min-width: 1024px) {
-                    .gp-split-left { position: fixed; top: 0; left: 0; width: 45%; height: 100vh; z-index: 10; border-right: 1px solid rgba(0,0,0,0.03); }
-                    .gp-split-right { margin-left: 45%; width: 55%; position: relative; }
+                    .gp-split-left { position: fixed; top: 0; left: 0; width: 70%; height: 100vh; z-index: 10; border-right: 1px solid rgba(0,0,0,0.03); }
+                    .gp-split-right { margin-left: 70%; width: 30%; position: relative; }
                 }
 
                 .arch-image { border-radius: 50% 50% 0 0; overflow: hidden; }

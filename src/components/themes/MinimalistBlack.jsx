@@ -164,7 +164,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                 <div className="flex flex-col lg:flex-row min-h-screen">
 
                     {/* ───── LEFT PANEL (Sticky hero) ───── */}
-                    <div className="split-left w-full lg:w-[55%] bg-[#0f0f0f] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
+                    <div className="split-left w-full lg:w-[70%] bg-[#0f0f0f] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
                         {/* Background cover + moon */}
                         {coverPhoto && <img src={coverPhoto} alt="Hero" className="absolute inset-0 w-full h-full object-cover opacity-70" />}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-[#0f0f0f]/40 to-transparent" />
@@ -200,12 +200,12 @@ export default function MinimalistBlack({ payload, audioController }) {
                     </div>
 
                     {/* ───── RIGHT PANEL (Scrollable content) ───── */}
-                    <div ref={rightPanelRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto scrollbar-hide bg-[#0f0f0f]">
+                    <div ref={rightPanelRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto scrollbar-hide bg-[#0f0f0f]">
 
                         {/* ── Save the Date + Countdown ── */}
-                        <section className="py-20 px-8 md:px-12 text-center mb-reveal">
+                        <section className="py-20 px-8 text-center mb-reveal">
                             <p className={`${cinzel.className} text-[10px] tracking-[0.4em] uppercase text-white/40 mb-4`}>The Wedding Of</p>
-                            <h2 className={`${cinzel.className} text-3xl md:text-4xl font-bold tracking-wider text-white mb-2`}>
+                            <h2 className={`${cinzel.className} text-3xl font-bold tracking-wider text-white mb-2`}>
                                 {invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}
                             </h2>
                             <p className="text-xs text-white/40 mb-10">
@@ -221,7 +221,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                                     { val: countdown.seconds, label: 'Detik' },
                                 ].map((item, i) => (
                                     <div key={i} className="card-dark rounded-xl py-4 px-2">
-                                        <p className={`${cinzel.className} text-2xl md:text-3xl font-bold text-white`}>{item.val}</p>
+                                        <p className={`${cinzel.className} text-2xl font-bold text-white`}>{item.val}</p>
                                         <p className="text-[9px] uppercase tracking-widest text-white/30 mt-1">{item.label}</p>
                                     </div>
                                 ))}
@@ -233,19 +233,19 @@ export default function MinimalistBlack({ payload, audioController }) {
                         </section>
 
                         {/* ── Opening verse / Quote ── */}
-                        <section className="px-8 md:px-12 pb-20 mb-reveal">
+                        <section className="px-8 pb-20 mb-reveal">
                             {/* Gallery preview thumbnails */}
                             {photos.length > 0 && (
                                 <div className="flex gap-3 mb-10 overflow-x-auto scrollbar-hide">
                                     {photos.slice(0, 3).map((p, i) => (
-                                        <div key={i} className="flex-none w-28 h-36 md:w-36 md:h-44 rounded-xl overflow-hidden">
+                                        <div key={i} className="flex-none w-28 h-36 rounded-xl overflow-hidden">
                                             <img src={getPhoto(p)} alt={`Preview ${i}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
                                         </div>
                                     ))}
                                 </div>
                             )}
 
-                            <div className="bg-white rounded-3xl p-8 md:p-10 text-center text-[#1a1a1a]">
+                            <div className="bg-white rounded-3xl p-8 text-center text-[#1a1a1a]">
                                 <p className="text-sm leading-relaxed text-gray-600 italic mb-4">
                                     {invitation?.description || '"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}
                                 </p>
@@ -254,9 +254,9 @@ export default function MinimalistBlack({ payload, audioController }) {
                         </section>
 
                         {/* ── BRIDE & GROOM ── */}
-                        <section className="px-8 md:px-12 pb-20">
+                        <section className="px-8 pb-20">
                             <div className="text-center mb-12 mb-reveal">
-                                <h2 className={`${cinzel.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-white`}>Bride & Groom</h2>
+                                <h2 className={`${cinzel.className} text-2xl font-bold tracking-[0.15em] uppercase text-white`}>Bride & Groom</h2>
                                 <p className="text-xs text-white/30 mt-2">Assalamualaikum Wr. Wb.</p>
                                 <p className="text-xs text-white/40 mt-3 max-w-md mx-auto leading-relaxed">
                                     Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami :
@@ -266,12 +266,12 @@ export default function MinimalistBlack({ payload, audioController }) {
                             {/* Bride card */}
                             <div className="bg-white rounded-3xl p-8 text-center text-[#1a1a1a] mb-6 mb-reveal" data-delay="1">
                                 {bridePhoto && (
-                                    <div className="w-40 h-52 md:w-48 md:h-60 mx-auto mb-6 arch-frame bg-gray-100">
+                                    <div className="w-40 h-52 mx-auto mb-6 arch-frame bg-gray-100">
                                         <img src={bridePhoto} alt="Bride" className="w-full h-full object-cover" />
                                     </div>
                                 )}
                                 <p className={`${greatVibes.className} text-3xl text-[#1a1a1a] mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                                <h3 className={`${cinzel.className} text-xl md:text-2xl font-bold tracking-wider mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
+                                <h3 className={`${cinzel.className} text-xl font-bold tracking-wider mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
                                 <p className="text-sm text-gray-500">Putri dari</p>
                                 <p className="text-sm text-gray-600 font-medium">{invitation?.bride_father || 'Bapak Mempelai'} & {invitation?.bride_mother || 'Ibu Mempelai'}</p>
                             </div>
@@ -284,21 +284,21 @@ export default function MinimalistBlack({ payload, audioController }) {
                             {/* Groom card */}
                             <div className="bg-white rounded-3xl p-8 text-center text-[#1a1a1a] mb-reveal" data-delay="2">
                                 {groomPhoto && (
-                                    <div className="w-40 h-52 md:w-48 md:h-60 mx-auto mb-6 arch-frame bg-gray-100">
+                                    <div className="w-40 h-52 mx-auto mb-6 arch-frame bg-gray-100">
                                         <img src={groomPhoto} alt="Groom" className="w-full h-full object-cover" />
                                     </div>
                                 )}
                                 <p className={`${greatVibes.className} text-3xl text-[#1a1a1a] mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                                <h3 className={`${cinzel.className} text-xl md:text-2xl font-bold tracking-wider mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
+                                <h3 className={`${cinzel.className} text-xl font-bold tracking-wider mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
                                 <p className="text-sm text-gray-500">Putra dari</p>
                                 <p className="text-sm text-gray-600 font-medium">{invitation?.groom_father || 'Bapak Mempelai'} & {invitation?.groom_mother || 'Ibu Mempelai'}</p>
                             </div>
                         </section>
 
                         {/* ── WEDDING EVENT ── */}
-                        <section className="px-8 md:px-12 pb-20">
+                        <section className="px-8 pb-20">
                             <div className="text-center mb-12 mb-reveal">
-                                <h2 className={`${cinzel.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
+                                <h2 className={`${cinzel.className} text-2xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
                                 <p className={`${greatVibes.className} text-4xl text-white/50 -mt-1`}>Event</p>
                             </div>
 
@@ -307,7 +307,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                                     <div key={idx} className="card-dark rounded-3xl p-8 mb-6 overflow-hidden mb-reveal" data-delay={`${idx+1}`}>
                                         {/* Arch photo */}
                                         {coverPhoto && (
-                                            <div className="w-full h-44 md:h-52 arch-frame bg-gray-900 mb-6 relative">
+                                            <div className="w-full h-44 arch-frame bg-gray-900 mb-6 relative">
                                                 <img src={coverPhoto} alt={event.name} className="w-full h-full object-cover opacity-60" />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                                                 <div className="absolute bottom-4 left-0 right-0 text-center">
@@ -358,15 +358,15 @@ export default function MinimalistBlack({ payload, audioController }) {
 
                         {/* ── LOVE STORY ── */}
                         {invitation?.love_stories && invitation.love_stories.length > 0 && (
-                            <section className="px-8 md:px-12 pb-20">
+                            <section className="px-8 pb-20">
                                 <div className="text-center mb-12 mb-reveal">
-                                    <h2 className={`${cinzel.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-white`}>Our</h2>
+                                    <h2 className={`${cinzel.className} text-2xl font-bold tracking-[0.15em] uppercase text-white`}>Our</h2>
                                     <p className={`${greatVibes.className} text-4xl text-white/50 -mt-1`}>Love Story</p>
                                 </div>
 
                                 {[...invitation.love_stories].sort((a,b) => (a.sort_order||0) - (b.sort_order||0)).map((story, i) => (
                                     <div key={story.id || i} className="bg-white rounded-3xl p-8 text-center text-[#1a1a1a] mb-6 mb-reveal" data-delay={`${i+1}`}>
-                                        <h3 className={`${cinzel.className} text-lg md:text-xl font-bold tracking-[0.15em] uppercase mb-4`}>{story.title}</h3>
+                                        <h3 className={`${cinzel.className} text-lg font-bold tracking-[0.15em] uppercase mb-4`}>{story.title}</h3>
                                         <p className="text-sm text-gray-600 leading-relaxed">{story.description}</p>
                                         {story.photo && (
                                             <div className="mt-6 rounded-xl overflow-hidden">
@@ -383,25 +383,25 @@ export default function MinimalistBlack({ payload, audioController }) {
                             invitation={invitation}
                             sectionBg="bg-transparent"
                             titleFont={cinzel.className}
-                            titleSize="text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase"
+                            titleSize="text-2xl font-bold tracking-[0.15em] uppercase"
                             accentText="text-white"
                             subtitleText="text-white/50"
                             borderColor="border-white/10"
                         />
 
                         {/* ── QR CHECKIN ── */}
-                        <div className="px-8 md:px-12">
+                        <div className="px-8">
                             <QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={cinzel.className} textColor="text-white" borderStyle="border-white/10" />
                         </div>
 
                         {/* ── RSVP & WISHES ── */}
-                        <section className="px-8 md:px-12 pb-20 mb-reveal">
+                        <section className="px-8 pb-20 mb-reveal">
                             <div className="text-center mb-12">
-                                <h2 className={`${cinzel.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
+                                <h2 className={`${cinzel.className} text-2xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
                                 <p className={`${greatVibes.className} text-4xl text-white/50 -mt-1`}>Wishes</p>
                             </div>
 
-                            <div className="bg-white rounded-3xl p-8 md:p-10 text-[#1a1a1a]">
+                            <div className="bg-white rounded-3xl p-8 text-[#1a1a1a]">
                                 <div className="space-y-4">
                                     <div>
                                         <label className={`${cinzel.className} block text-[9px] tracking-[0.2em] uppercase text-gray-400 mb-2 font-bold`}>Nama</label>
@@ -422,9 +422,9 @@ export default function MinimalistBlack({ payload, audioController }) {
 
                         {/* ── GIFT / AMPLOP DIGITAL ── */}
                         {invitation?.gift_accounts && invitation.gift_accounts.length > 0 && (
-                            <section className="px-8 md:px-12 pb-20 mb-reveal">
+                            <section className="px-8 pb-20 mb-reveal">
                                 <div className="text-center mb-12">
-                                    <h2 className={`${cinzel.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
+                                    <h2 className={`${cinzel.className} text-2xl font-bold tracking-[0.15em] uppercase text-white`}>Wedding</h2>
                                     <p className={`${greatVibes.className} text-4xl text-white/50 -mt-1`}>Gift</p>
                                 </div>
 
@@ -448,7 +448,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                         )}
 
                         {/* ── FOOTER ── */}
-                        <footer className="py-20 px-8 md:px-12 text-center border-t border-white/5 mb-reveal">
+                        <footer className="py-20 px-8 text-center border-t border-white/5 mb-reveal">
                             <p className={`${cinzel.className} text-[9px] tracking-[0.4em] uppercase text-white/20 mb-8`}>Thank You</p>
                             
                             <div className="w-24 h-24 rounded-full border border-white/10 mx-auto mb-8 flex items-center justify-center">

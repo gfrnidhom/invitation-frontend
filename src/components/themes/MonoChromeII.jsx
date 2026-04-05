@@ -73,7 +73,7 @@ export default function MonoChromeII({ payload, audioController }) {
             <div className={`transition-opacity duration-1000 ${isOpen?'opacity-100':'opacity-0 pointer-events-none'}`}>
                 <div className="flex flex-col lg:flex-row min-h-screen">
                     {/* LEFT */}
-                    <div className="sl2 w-full lg:w-[55%] bg-[#2c2420] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
+                    <div className="sl2 w-full lg:w-[70%] bg-[#2c2420] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
                         {cp&&<img src={cp} alt="Hero" className="absolute inset-0 w-full h-full object-cover opacity-40 sepia"/>}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#2c2420] via-[#2c2420]/50 to-transparent"/>
                         <div className="relative z-10">
@@ -88,48 +88,48 @@ export default function MonoChromeII({ payload, audioController }) {
                     </div>
 
                     {/* RIGHT */}
-                    <div ref={rpRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto sh bg-[#2c2420]">
+                    <div ref={rpRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto sh bg-[#2c2420]">
                         {/* Countdown */}
-                        <section className="py-20 px-8 md:px-12 text-center m2-rv">
+                        <section className="py-20 px-8 text-center m2-rv">
                             <p className={`${oswald.className} text-[10px] tracking-[.5em] uppercase text-[#d4c5b3]/35 mb-4`}>Save The Date</p>
-                            <h2 className={`${playfair.className} italic text-3xl md:text-4xl font-medium text-[#e8ddd0] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
+                            <h2 className={`${playfair.className} italic text-3xl font-medium text-[#e8ddd0] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
                             <p className="text-[10px] text-[#e8ddd0]/20 tracking-[.3em] uppercase mb-10">{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
-                            <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">{[{v:cd.d,l:'Hari'},{v:cd.h,l:'Jam'},{v:cd.m,l:'Menit'},{v:cd.s,l:'Detik'}].map((it,i)=>(<div key={i} className="m2c rounded-2xl py-4 px-2"><p className={`${playfair.className} italic text-2xl md:text-3xl sep`}>{it.v}</p><p className="text-[9px] uppercase tracking-widest text-[#e8ddd0]/15 mt-1">{it.l}</p></div>))}</div>
+                            <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">{[{v:cd.d,l:'Hari'},{v:cd.h,l:'Jam'},{v:cd.m,l:'Menit'},{v:cd.s,l:'Detik'}].map((it,i)=>(<div key={i} className="m2c rounded-2xl py-4 px-2"><p className={`${playfair.className} italic text-2xl sep`}>{it.v}</p><p className="text-[9px] uppercase tracking-widest text-[#e8ddd0]/15 mt-1">{it.l}</p></div>))}</div>
                         </section>
 
                         {/* Quote */}
-                        <section className="px-8 md:px-12 pb-20 m2-rv">
-                            <div className="m2cw rounded-3xl p-8 md:p-10 text-center">
+                        <section className="px-8 pb-20 m2-rv">
+                            <div className="m2cw rounded-3xl p-8 text-center">
                                 <p className={`${playfair.className} italic text-sm leading-relaxed text-[#2c2420]/55 mb-4`}>{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
                                 <p className={`${oswald.className} text-[10px] text-[#d4c5b3] tracking-[.3em] uppercase`}>QS. Ar-Rum Ayat 21</p>
                             </div>
                         </section>
 
                         {/* Bride & Groom — Hexagonal frame with vertical stack */}
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 m2-rv"><h2 className={`${oswald.className} text-2xl md:text-3xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Bride & Groom</h2><p className="text-[10px] text-[#e8ddd0]/15 tracking-[.3em] uppercase mt-2">Assalamualaikum Wr. Wb.</p><p className="text-[10px] text-[#e8ddd0]/25 mt-3 max-w-md mx-auto leading-relaxed font-light">Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 m2-rv"><h2 className={`${oswald.className} text-2xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Bride & Groom</h2><p className="text-[10px] text-[#e8ddd0]/15 tracking-[.3em] uppercase mt-2">Assalamualaikum Wr. Wb.</p><p className="text-[10px] text-[#e8ddd0]/25 mt-3 max-w-md mx-auto leading-relaxed font-light">Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
                             {/* Bride */}
                             <div className="text-center mb-6 m2-rv" data-delay="1">
-                                {brP&&<div className="hex-frame w-44 h-52 md:w-52 md:h-60 mx-auto mb-6 bg-[#d4c5b3]/10"><img src={brP} alt="Bride" className="w-full h-full object-cover sepia hover:sepia-0 transition-all duration-700"/></div>}
+                                {brP&&<div className="hex-frame w-44 h-52 mx-auto mb-6 bg-[#d4c5b3]/10"><img src={brP} alt="Bride" className="w-full h-full object-cover sepia hover:sepia-0 transition-all duration-700"/></div>}
                                 <p className={`${playfair.className} italic text-3xl sep mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                                <h3 className={`${oswald.className} text-xl md:text-2xl tracking-[.1em] uppercase text-[#e8ddd0] mb-3`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
+                                <h3 className={`${oswald.className} text-xl tracking-[.1em] uppercase text-[#e8ddd0] mb-3`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
                                 <p className="text-sm text-[#e8ddd0]/30 font-light">Putri dari</p>
                                 <p className="text-sm text-[#e8ddd0]/50">{invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p>
                             </div>
                             <div className="text-center my-5 m2-rv"><div className="w-px h-10 bg-[#d4c5b3]/15 mx-auto"/><span className={`${playfair.className} italic text-4xl text-[#d4c5b3]/20 my-2 block`}>&</span><div className="w-px h-10 bg-[#d4c5b3]/15 mx-auto"/></div>
                             {/* Groom */}
                             <div className="text-center m2-rv" data-delay="2">
-                                {grP&&<div className="hex-frame w-44 h-52 md:w-52 md:h-60 mx-auto mb-6 bg-[#d4c5b3]/10"><img src={grP} alt="Groom" className="w-full h-full object-cover sepia hover:sepia-0 transition-all duration-700"/></div>}
+                                {grP&&<div className="hex-frame w-44 h-52 mx-auto mb-6 bg-[#d4c5b3]/10"><img src={grP} alt="Groom" className="w-full h-full object-cover sepia hover:sepia-0 transition-all duration-700"/></div>}
                                 <p className={`${playfair.className} italic text-3xl sep mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                                <h3 className={`${oswald.className} text-xl md:text-2xl tracking-[.1em] uppercase text-[#e8ddd0] mb-3`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
+                                <h3 className={`${oswald.className} text-xl tracking-[.1em] uppercase text-[#e8ddd0] mb-3`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
                                 <p className="text-sm text-[#e8ddd0]/30 font-light">Putra dari</p>
                                 <p className="text-sm text-[#e8ddd0]/50">{invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p>
                             </div>
                         </section>
 
                         {/* Events */}
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 m2-rv"><h2 className={`${oswald.className} text-2xl md:text-3xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Wedding</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Event</p></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 m2-rv"><h2 className={`${oswald.className} text-2xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Wedding</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Event</p></div>
                             {invitation?.events&&invitation.events.length>0?[...invitation.events].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((ev,idx)=>(
                                 <div key={idx} className="m2cw rounded-3xl p-8 mb-6 text-center m2-rv" data-delay={`${idx+1}`}>
                                     <h3 className={`${oswald.className} text-xl tracking-[.15em] uppercase text-[#2c2420] mb-4`}>{ev.name}</h3>
@@ -142,26 +142,26 @@ export default function MonoChromeII({ payload, audioController }) {
                         </section>
 
                         {/* Love Story */}
-                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 m2-rv"><h2 className={`${oswald.className} text-2xl md:text-3xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Our</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Love Story</p></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="m2cw rounded-3xl p-8 text-center mb-6 m2-rv" data-delay={`${i+1}`}><h3 className={`${oswald.className} text-lg tracking-[.1em] uppercase text-[#2c2420] mb-4`}>{s.title}</h3><p className="text-sm text-[#2c2420]/55 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover sepia"/></div>}</div>))}</section>}
+                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 pb-20"><div className="text-center mb-12 m2-rv"><h2 className={`${oswald.className} text-2xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Our</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Love Story</p></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="m2cw rounded-3xl p-8 text-center mb-6 m2-rv" data-delay={`${i+1}`}><h3 className={`${oswald.className} text-lg tracking-[.1em] uppercase text-[#2c2420] mb-4`}>{s.title}</h3><p className="text-sm text-[#2c2420]/55 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover sepia"/></div>}</div>))}</section>}
 
                         {/* Gallery */}
                         <Gallery 
                             invitation={invitation}
                             sectionBg="bg-transparent"
                             titleFont={oswald.className}
-                            titleSize="text-2xl md:text-3xl tracking-[.2em] uppercase"
+                            titleSize="text-2xl tracking-[.2em] uppercase"
                             accentText="text-[#e8ddd0]"
                             subtitleText="sep"
                             borderColor="border-[#d4c5b3]/15"
                         />
 
                         {/* QR Checkin */}
-                        <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={oswald.className} textColor="text-[#e8ddd0]" borderStyle="border-[#d4c5b3]/15"/></div>
+                        <div className="px-8"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={oswald.className} textColor="text-[#e8ddd0]" borderStyle="border-[#d4c5b3]/15"/></div>
 
                         {/* Wishes */}
-                        <section className="px-8 md:px-12 pb-20 m2-rv">
-                            <div className="text-center mb-12"><h2 className={`${oswald.className} text-2xl md:text-3xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Wedding</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Wishes</p></div>
-                            <div className="m2cw rounded-3xl p-8 md:p-10">
+                        <section className="px-8 pb-20 m2-rv">
+                            <div className="text-center mb-12"><h2 className={`${oswald.className} text-2xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Wedding</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Wishes</p></div>
+                            <div className="m2cw rounded-3xl p-8">
                                 <form onSubmit={sw} className="space-y-4">
                                     <div><label className={`${oswald.className} block text-[9px] tracking-[.2em] uppercase text-[#2c2420]/30 mb-2`}>Nama</label><input type="text" value={ni} onChange={e=>setNi(e.target.value)} className="w-full bg-[#2c2420]/5 border border-[#2c2420]/10 rounded-xl px-5 py-3.5 text-sm text-[#2c2420] focus:outline-none focus:border-[#d4c5b3]/50 transition-colors" placeholder="Nama Anda..."/></div>
                                     <div><label className={`${oswald.className} block text-[9px] tracking-[.2em] uppercase text-[#2c2420]/30 mb-2`}>Ucapan</label><textarea value={mi} onChange={e=>setMi(e.target.value)} className="w-full bg-[#2c2420]/5 border border-[#2c2420]/10 rounded-xl px-5 py-3.5 text-sm text-[#2c2420] h-28 resize-none focus:outline-none focus:border-[#d4c5b3]/50 transition-colors" placeholder="Tulis ucapan..."/></div>
@@ -172,10 +172,10 @@ export default function MonoChromeII({ payload, audioController }) {
                         </section>
 
                         {/* Gift */}
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 md:px-12 pb-20 m2-rv"><div className="text-center mb-12"><h2 className={`${oswald.className} text-2xl md:text-3xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Wedding</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="m2c rounded-2xl p-6 text-center m2-rv" data-delay={`${i+1}`}><p className={`${oswald.className} text-sm tracking-[.3em] uppercase sep mb-1`}>{a.bank_name}</p><p className="text-[10px] text-[#e8ddd0]/15 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${playfair.className} italic text-xl text-[#e8ddd0] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${oswald.className} w-full border border-[#d4c5b3]/15 py-3 text-[10px] tracking-[.3em] uppercase text-[#d4c5b3]/50 hover:bg-[#d4c5b3] hover:text-[#2c2420] transition-all duration-500 rounded-xl`}>Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 m2-rv"><div className="text-center mb-12"><h2 className={`${oswald.className} text-2xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Wedding</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="m2c rounded-2xl p-6 text-center m2-rv" data-delay={`${i+1}`}><p className={`${oswald.className} text-sm tracking-[.3em] uppercase sep mb-1`}>{a.bank_name}</p><p className="text-[10px] text-[#e8ddd0]/15 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${playfair.className} italic text-xl text-[#e8ddd0] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${oswald.className} w-full border border-[#d4c5b3]/15 py-3 text-[10px] tracking-[.3em] uppercase text-[#d4c5b3]/50 hover:bg-[#d4c5b3] hover:text-[#2c2420] transition-all duration-500 rounded-xl`}>Copy Number</button></div>))}</div></section>}
 
                         {/* Footer */}
-                        <footer className="py-20 px-8 md:px-12 text-center border-t border-[#d4c5b3]/5 m2-rv">
+                        <footer className="py-20 px-8 text-center border-t border-[#d4c5b3]/5 m2-rv">
                             <p className={`${oswald.className} text-[9px] tracking-[.5em] uppercase text-[#d4c5b3]/30 mb-8`}>Thank You</p>
                             <div className="w-24 h-24 rounded-full border border-[#d4c5b3]/12 mx-auto mb-8 flex items-center justify-center"><span className={`${playfair.className} italic text-3xl sep`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span></div>
                             <h3 className={`${oswald.className} text-lg tracking-[.15em] uppercase text-[#e8ddd0] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>

@@ -208,7 +208,7 @@ export default function CinematicVow({ payload, audioController }) {
                 <div className="flex flex-col lg:flex-row min-h-screen">
 
                     {/* ───── LEFT PANEL: Always Cover Photo Slideshow ───── */}
-                    <div className="sl-cv w-full lg:w-[55%] bg-[#0a0a0f] relative flex flex-col justify-between film-grain">
+                    <div className="sl-cv w-full lg:w-[70%] bg-[#0a0a0f] relative flex flex-col justify-between film-grain">
                         {/* Cover Photo Slideshow — always visible */}
                         {coverPhotos.length > 0 ? (
                             <>
@@ -274,7 +274,7 @@ export default function CinematicVow({ payload, audioController }) {
                     </div>
 
                     {/* ───── RIGHT PANEL: Video/Slideshow BG + Scrollable Content ───── */}
-                    <div ref={rightPanelRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto sh relative">
+                    <div ref={rightPanelRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto sh relative">
                         {/* Fixed/sticky background: Video or Slideshow */}
                         <div className="rp-bg">
                             {videoSrc ? (
@@ -300,9 +300,9 @@ export default function CinematicVow({ payload, audioController }) {
                         <div className="rp-content">
 
                         {/* Countdown */}
-                        <section className="py-20 px-8 md:px-12 text-center cv-rv">
+                        <section className="py-20 px-8 text-center cv-rv">
                             <p className={`${cinzel.className} text-[8px] tracking-[.5em] uppercase text-white/25 mb-4`}>Save The Date</p>
-                            <h2 className={`${greatVibes.className} text-4xl md:text-5xl text-white mb-2`}>
+                            <h2 className={`${greatVibes.className} text-4xl text-white mb-2`}>
                                 {invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}
                             </h2>
                             <p className="text-[9px] text-white/15 tracking-[.3em] uppercase mb-10 font-light">
@@ -311,7 +311,7 @@ export default function CinematicVow({ payload, audioController }) {
                             <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">
                                 {[{ v: cd.d, l: 'Hari' }, { v: cd.h, l: 'Jam' }, { v: cd.m, l: 'Menit' }, { v: cd.s, l: 'Detik' }].map((it, i) => (
                                     <div key={i} className="cv-card rounded-2xl py-4 px-2">
-                                        <p className={`${cinzel.className} text-2xl md:text-3xl text-white`}>{it.v}</p>
+                                        <p className={`${cinzel.className} text-2xl text-white`}>{it.v}</p>
                                         <p className="text-[8px] uppercase tracking-widest text-white/15 mt-1 font-medium">{it.l}</p>
                                     </div>
                                 ))}
@@ -319,8 +319,8 @@ export default function CinematicVow({ payload, audioController }) {
                         </section>
 
                         {/* Quote */}
-                        <section className="px-8 md:px-12 pb-20 cv-rv">
-                            <div className="cv-card-solid rounded-3xl p-8 md:p-10 text-center">
+                        <section className="px-8 pb-20 cv-rv">
+                            <div className="cv-card-solid rounded-3xl p-8 text-center">
                                 <div className="w-10 h-10 rounded-full border border-white/8 mx-auto mb-6 flex items-center justify-center">
                                     <span className="text-white/20 text-lg">❝</span>
                                 </div>
@@ -332,25 +332,25 @@ export default function CinematicVow({ payload, audioController }) {
                         </section>
 
                         {/* Bride & Groom — Cinematic horizontal cards */}
-                        <section className="px-8 md:px-12 pb-20">
+                        <section className="px-8 pb-20">
                             <div className="text-center mb-12 cv-rv">
-                                <h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-white`}>Bride & Groom</h2>
+                                <h2 className={`${cinzel.className} text-xl tracking-[.15em] text-white`}>Bride & Groom</h2>
                                 <p className="text-[9px] text-white/10 tracking-[.3em] uppercase mt-2">Assalamualaikum Wr. Wb.</p>
                                 <p className="text-[9px] text-white/20 mt-3 max-w-md mx-auto leading-relaxed font-light">Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p>
                             </div>
 
                             {/* Bride */}
-                            <div className="cv-card-solid rounded-3xl p-6 md:p-8 mb-6 cv-rv" data-delay="1">
+                            <div className="cv-card-solid rounded-3xl p-6 mb-6 cv-rv" data-delay="1">
                                 <div className="flex flex-col md:flex-row items-center gap-6">
                                     {brP && (
-                                        <div className="w-36 h-44 md:w-40 md:h-52 flex-none arch-cv border border-white/8">
+                                        <div className="w-36 h-44 flex-none arch-cv border border-white/8">
                                             <img src={brP} alt="Bride" className="w-full h-full object-cover" />
                                         </div>
                                     )}
-                                    <div className="text-center md:text-left flex-1">
+                                    <div className="text-center flex-1">
                                         <p className={`${greatVibes.className} text-3xl text-white/60 mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                                        <h3 className={`${cinzel.className} text-lg md:text-xl tracking-[.05em] text-white mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
-                                        <div className="w-10 h-px bg-white/10 mb-3 mx-auto md:mx-0" />
+                                        <h3 className={`${cinzel.className} text-lg tracking-[.05em] text-white mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
+                                        <div className="w-10 h-px bg-white/10 mb-3 mx-auto" />
                                         <p className="text-xs text-white/20 font-light">Putri dari</p>
                                         <p className="text-xs text-white/35 font-medium">{invitation?.bride_father || 'Bapak'} & {invitation?.bride_mother || 'Ibu'}</p>
                                     </div>
@@ -360,17 +360,17 @@ export default function CinematicVow({ payload, audioController }) {
                             <div className="text-center my-4 cv-rv"><span className={`${greatVibes.className} text-5xl text-white/10`}>&</span></div>
 
                             {/* Groom */}
-                            <div className="cv-card-solid rounded-3xl p-6 md:p-8 cv-rv" data-delay="2">
+                            <div className="cv-card-solid rounded-3xl p-6 cv-rv" data-delay="2">
                                 <div className="flex flex-col md:flex-row-reverse items-center gap-6">
                                     {grP && (
-                                        <div className="w-36 h-44 md:w-40 md:h-52 flex-none arch-cv border border-white/8">
+                                        <div className="w-36 h-44 flex-none arch-cv border border-white/8">
                                             <img src={grP} alt="Groom" className="w-full h-full object-cover" />
                                         </div>
                                     )}
-                                    <div className="text-center md:text-right flex-1">
+                                    <div className="text-center flex-1">
                                         <p className={`${greatVibes.className} text-3xl text-white/60 mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                                        <h3 className={`${cinzel.className} text-lg md:text-xl tracking-[.05em] text-white mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
-                                        <div className="w-10 h-px bg-white/10 mb-3 mx-auto md:ml-auto md:mr-0" />
+                                        <h3 className={`${cinzel.className} text-lg tracking-[.05em] text-white mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
+                                        <div className="w-10 h-px bg-white/10 mb-3 mx-auto" />
                                         <p className="text-xs text-white/20 font-light">Putra dari</p>
                                         <p className="text-xs text-white/35 font-medium">{invitation?.groom_father || 'Bapak'} & {invitation?.groom_mother || 'Ibu'}</p>
                                     </div>
@@ -379,9 +379,9 @@ export default function CinematicVow({ payload, audioController }) {
                         </section>
 
                         {/* Events */}
-                        <section className="px-8 md:px-12 pb-20">
+                        <section className="px-8 pb-20">
                             <div className="text-center mb-12 cv-rv">
-                                <h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-white`}>Wedding</h2>
+                                <h2 className={`${cinzel.className} text-xl tracking-[.15em] text-white`}>Wedding</h2>
                                 <p className={`${greatVibes.className} text-4xl text-white/30 -mt-1`}>Event</p>
                             </div>
                             {invitation?.events && invitation.events.length > 0 ? (
@@ -409,9 +409,9 @@ export default function CinematicVow({ payload, audioController }) {
 
                         {/* Love Story */}
                         {invitation?.love_stories && invitation.love_stories.length > 0 && (
-                            <section className="px-8 md:px-12 pb-20">
+                            <section className="px-8 pb-20">
                                 <div className="text-center mb-12 cv-rv">
-                                    <h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-white`}>Our</h2>
+                                    <h2 className={`${cinzel.className} text-xl tracking-[.15em] text-white`}>Our</h2>
                                     <p className={`${greatVibes.className} text-4xl text-white/30 -mt-1`}>Love Story</p>
                                 </div>
                                 {[...invitation.love_stories].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)).map((s, i) => (
@@ -430,24 +430,24 @@ export default function CinematicVow({ payload, audioController }) {
                             invitation={invitation}
                             sectionBg="bg-transparent"
                             titleFont={cinzel.className}
-                            titleSize="text-xl md:text-2xl tracking-[.15em]"
+                            titleSize="text-xl tracking-[.15em]"
                             accentText="text-white"
                             subtitleText="text-white/30"
                             borderColor="border-white/10"
                         />
 
                         {/* QR Checkin */}
-                        <div className="px-8 md:px-12">
+                        <div className="px-8">
                             <QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={cinzel.className} textColor="text-white" borderStyle="border-white/8" />
                         </div>
 
                         {/* Wishes */}
-                        <section className="px-8 md:px-12 pb-20 cv-rv">
+                        <section className="px-8 pb-20 cv-rv">
                             <div className="text-center mb-12">
-                                <h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-white`}>Wedding</h2>
+                                <h2 className={`${cinzel.className} text-xl tracking-[.15em] text-white`}>Wedding</h2>
                                 <p className={`${greatVibes.className} text-4xl text-white/30 -mt-1`}>Wishes</p>
                             </div>
-                            <div className="cv-card-solid rounded-3xl p-8 md:p-10">
+                            <div className="cv-card-solid rounded-3xl p-8">
                                 <form onSubmit={sw} className="space-y-4">
                                     <div>
                                         <label className={`${cinzel.className} block text-[8px] tracking-[.15em] text-white/20 mb-2`}>Nama</label>
@@ -479,9 +479,9 @@ export default function CinematicVow({ payload, audioController }) {
 
                         {/* Gift */}
                         {invitation?.gift_accounts && invitation.gift_accounts.length > 0 && (
-                            <section className="px-8 md:px-12 pb-20 cv-rv">
+                            <section className="px-8 pb-20 cv-rv">
                                 <div className="text-center mb-12">
-                                    <h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-white`}>Wedding</h2>
+                                    <h2 className={`${cinzel.className} text-xl tracking-[.15em] text-white`}>Wedding</h2>
                                     <p className={`${greatVibes.className} text-4xl text-white/30 -mt-1`}>Gift</p>
                                 </div>
                                 <div className="space-y-4">
@@ -501,7 +501,7 @@ export default function CinematicVow({ payload, audioController }) {
                         )}
 
                         {/* Footer */}
-                        <footer className="py-20 px-8 md:px-12 text-center border-t border-white/5 cv-rv">
+                        <footer className="py-20 px-8 text-center border-t border-white/5 cv-rv">
                             <p className={`${cinzel.className} text-[8px] tracking-[.4em] text-white/15 mb-8`}>Thank You</p>
                             <div className="w-24 h-24 rounded-full border border-white/8 mx-auto mb-8 flex items-center justify-center">
                                 <span className={`${greatVibes.className} text-4xl text-white/20`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span>

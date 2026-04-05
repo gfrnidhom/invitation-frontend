@@ -72,7 +72,7 @@ export default function MonoChromeIV({ payload, audioController }) {
             <div className={`transition-opacity duration-1000 ${isOpen?'opacity-100':'opacity-0 pointer-events-none'}`}>
                 <div className="flex flex-col lg:flex-row min-h-screen">
                     {/* LEFT */}
-                    <div className="sl4 w-full lg:w-[55%] bg-[#18181b] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
+                    <div className="sl4 w-full lg:w-[70%] bg-[#18181b] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
                         {cp&&<img src={cp} alt="Hero" className="absolute inset-0 w-full h-full object-cover opacity-30 grayscale contrast-125"/>}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#18181b] via-[#18181b]/60 to-transparent"/>
                         <div className="relative z-10">
@@ -87,50 +87,50 @@ export default function MonoChromeIV({ payload, audioController }) {
                     </div>
 
                     {/* RIGHT */}
-                    <div ref={rpRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto sh bg-[#18181b]">
-                        <section className="py-20 px-8 md:px-12 text-center m4-rv">
+                    <div ref={rpRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto sh bg-[#18181b]">
+                        <section className="py-20 px-8 text-center m4-rv">
                             <p className={`${spaceGrotesk.className} text-[9px] tracking-[.5em] uppercase stl mb-4 font-medium`}>Save The Date</p>
-                            <h2 className={`${italiana.className} text-3xl md:text-4xl text-[#e4e4e7] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
+                            <h2 className={`${italiana.className} text-3xl text-[#e4e4e7] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
                             <p className={`${spaceGrotesk.className} text-[9px] text-[#e4e4e7]/15 tracking-[.3em] uppercase mb-10 font-light`}>{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
-                            <div className="grid grid-cols-4 gap-2 max-w-sm mx-auto">{[{v:cd.d,l:'DAYS'},{v:cd.h,l:'HRS'},{v:cd.m,l:'MIN'},{v:cd.s,l:'SEC'}].map((it,i)=>(<div key={i} className="m4c py-4 px-2"><p className={`${italiana.className} text-3xl md:text-4xl text-[#e4e4e7]`}>{it.v}</p><p className={`${spaceGrotesk.className} text-[7px] uppercase tracking-[.3em] stl mt-1 font-medium`}>{it.l}</p></div>))}</div>
+                            <div className="grid grid-cols-4 gap-2 max-w-sm mx-auto">{[{v:cd.d,l:'DAYS'},{v:cd.h,l:'HRS'},{v:cd.m,l:'MIN'},{v:cd.s,l:'SEC'}].map((it,i)=>(<div key={i} className="m4c py-4 px-2"><p className={`${italiana.className} text-3xl text-[#e4e4e7]`}>{it.v}</p><p className={`${spaceGrotesk.className} text-[7px] uppercase tracking-[.3em] stl mt-1 font-medium`}>{it.l}</p></div>))}</div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20 m4-rv">
-                            <div className="m4cw p-8 md:p-10 text-center">
+                        <section className="px-8 pb-20 m4-rv">
+                            <div className="m4cw p-8 text-center">
                                 <p className={`${italiana.className} text-sm leading-relaxed text-[#18181b]/50 mb-4`}>{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
                                 <p className={`${spaceGrotesk.className} text-[9px] text-[#18181b]/25 tracking-[.3em] uppercase font-medium`}>QS. Ar-Rum Ayat 21</p>
                             </div>
                         </section>
 
                         {/* Bride & Groom — Square photos with geometric accent */}
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 m4-rv"><h2 className={`${italiana.className} text-3xl md:text-4xl text-[#e4e4e7]`}>Bride & Groom</h2><p className={`${spaceGrotesk.className} text-[9px] text-[#e4e4e7]/12 tracking-[.3em] uppercase mt-2 font-medium`}>Assalamualaikum Wr. Wb.</p><p className={`${spaceGrotesk.className} text-[9px] text-[#e4e4e7]/20 mt-3 max-w-md mx-auto leading-relaxed font-light`}>Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 m4-rv"><h2 className={`${italiana.className} text-3xl text-[#e4e4e7]`}>Bride & Groom</h2><p className={`${spaceGrotesk.className} text-[9px] text-[#e4e4e7]/12 tracking-[.3em] uppercase mt-2 font-medium`}>Assalamualaikum Wr. Wb.</p><p className={`${spaceGrotesk.className} text-[9px] text-[#e4e4e7]/20 mt-3 max-w-md mx-auto leading-relaxed font-light`}>Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
 
-                            <div className="m4c p-6 md:p-8 mb-6 m4-rv" data-delay="1">
+                            <div className="m4c p-6 mb-6 m4-rv" data-delay="1">
                                 <div className="flex flex-col md:flex-row items-center gap-6">
-                                    {brP&&<div className="square-frame w-36 md:w-44 flex-none border border-[#e4e4e7]/8"><img src={brP} alt="Bride" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/></div>}
-                                    <div className="text-center md:text-left flex-1 line-accent pl-5">
+                                    {brP&&<div className="square-frame w-36 flex-none border border-[#e4e4e7]/8"><img src={brP} alt="Bride" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/></div>}
+                                    <div className="text-center flex-1 line-accent pl-5">
                                         <p className={`${italiana.className} text-3xl stl mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                                        <h3 className={`${spaceGrotesk.className} text-lg md:text-xl tracking-[.05em] text-[#e4e4e7] mb-3 font-medium`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
+                                        <h3 className={`${spaceGrotesk.className} text-lg tracking-[.05em] text-[#e4e4e7] mb-3 font-medium`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
                                         <p className="text-xs text-[#e4e4e7]/25 font-light">Putri dari {invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p>
                                     </div>
                                 </div>
                             </div>
                             <div className="flex items-center justify-center gap-3 my-5 m4-rv"><div className="w-px h-8 bg-[#a1a1aa]/10"/><div className="w-3 h-3 border border-[#a1a1aa]/15 rotate-45"/><div className="w-px h-8 bg-[#a1a1aa]/10"/></div>
-                            <div className="m4c p-6 md:p-8 m4-rv" data-delay="2">
+                            <div className="m4c p-6 m4-rv" data-delay="2">
                                 <div className="flex flex-col md:flex-row-reverse items-center gap-6">
-                                    {grP&&<div className="square-frame w-36 md:w-44 flex-none border border-[#e4e4e7]/8"><img src={grP} alt="Groom" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/></div>}
-                                    <div className="text-center md:text-right flex-1">
+                                    {grP&&<div className="square-frame w-36 flex-none border border-[#e4e4e7]/8"><img src={grP} alt="Groom" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/></div>}
+                                    <div className="text-center flex-1">
                                         <p className={`${italiana.className} text-3xl stl mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                                        <h3 className={`${spaceGrotesk.className} text-lg md:text-xl tracking-[.05em] text-[#e4e4e7] mb-3 font-medium`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
+                                        <h3 className={`${spaceGrotesk.className} text-lg tracking-[.05em] text-[#e4e4e7] mb-3 font-medium`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
                                         <p className="text-xs text-[#e4e4e7]/25 font-light">Putra dari {invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 m4-rv"><h2 className={`${italiana.className} text-3xl md:text-4xl text-[#e4e4e7]`}>Wedding Event</h2></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 m4-rv"><h2 className={`${italiana.className} text-3xl text-[#e4e4e7]`}>Wedding Event</h2></div>
                             {invitation?.events&&invitation.events.length>0?[...invitation.events].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((ev,idx)=>(
                                 <div key={idx} className="m4cw p-8 mb-6 text-center m4-rv" data-delay={`${idx+1}`}>
                                     <h3 className={`${italiana.className} text-xl text-[#18181b] mb-4`}>{ev.name}</h3>
@@ -142,23 +142,23 @@ export default function MonoChromeIV({ payload, audioController }) {
                             )):<div className="m4cw p-10 text-center"><h3 className={`${italiana.className} text-xl text-[#18181b] mb-2`}>Acara Pernikahan</h3></div>}
                         </section>
 
-                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 m4-rv"><h2 className={`${italiana.className} text-3xl md:text-4xl text-[#e4e4e7]`}>Our Love Story</h2></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="m4cw p-8 text-center mb-6 m4-rv" data-delay={`${i+1}`}><h3 className={`${italiana.className} text-lg text-[#18181b] mb-4`}>{s.title}</h3><p className="text-sm text-[#18181b]/50 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover grayscale"/></div>}</div>))}</section>}
+                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 pb-20"><div className="text-center mb-12 m4-rv"><h2 className={`${italiana.className} text-3xl text-[#e4e4e7]`}>Our Love Story</h2></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="m4cw p-8 text-center mb-6 m4-rv" data-delay={`${i+1}`}><h3 className={`${italiana.className} text-lg text-[#18181b] mb-4`}>{s.title}</h3><p className="text-sm text-[#18181b]/50 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover grayscale"/></div>}</div>))}</section>}
 
                         <Gallery 
                             invitation={invitation}
                             sectionBg="bg-transparent"
                             titleFont={italiana.className}
-                            titleSize="text-3xl md:text-4xl"
+                            titleSize="text-3xl"
                             accentText="text-[#e4e4e7]"
                             subtitleText="text-[#a1a1aa]"
                             borderColor="border-[#a1a1aa]/20"
                         />
 
-                        <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={italiana.className} textColor="text-[#e4e4e7]" borderStyle="border-[#a1a1aa]/10"/></div>
+                        <div className="px-8"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={italiana.className} textColor="text-[#e4e4e7]" borderStyle="border-[#a1a1aa]/10"/></div>
 
-                        <section className="px-8 md:px-12 pb-20 m4-rv">
-                            <div className="text-center mb-12"><h2 className={`${italiana.className} text-3xl md:text-4xl text-[#e4e4e7]`}>Wedding Wishes</h2></div>
-                            <div className="m4cw p-8 md:p-10">
+                        <section className="px-8 pb-20 m4-rv">
+                            <div className="text-center mb-12"><h2 className={`${italiana.className} text-3xl text-[#e4e4e7]`}>Wedding Wishes</h2></div>
+                            <div className="m4cw p-8">
                                 <form onSubmit={sw} className="space-y-4">
                                     <div><label className={`${spaceGrotesk.className} block text-[8px] tracking-[.2em] uppercase text-[#18181b]/25 mb-2 font-medium`}>Nama</label><input type="text" value={ni} onChange={e=>setNi(e.target.value)} className={`${workSans.className} w-full bg-white border border-[#18181b]/8 px-5 py-3.5 text-sm text-[#18181b] focus:outline-none focus:border-[#18181b]/25 transition-colors`} placeholder="Nama Anda..."/></div>
                                     <div><label className={`${spaceGrotesk.className} block text-[8px] tracking-[.2em] uppercase text-[#18181b]/25 mb-2 font-medium`}>Ucapan</label><textarea value={mi} onChange={e=>setMi(e.target.value)} className={`${workSans.className} w-full bg-white border border-[#18181b]/8 px-5 py-3.5 text-sm text-[#18181b] h-28 resize-none focus:outline-none focus:border-[#18181b]/25 transition-colors`} placeholder="Tulis ucapan..."/></div>
@@ -168,9 +168,9 @@ export default function MonoChromeIV({ payload, audioController }) {
                             </div>
                         </section>
 
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 md:px-12 pb-20 m4-rv"><div className="text-center mb-12"><h2 className={`${italiana.className} text-3xl md:text-4xl text-[#e4e4e7]`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="m4c p-6 text-center m4-rv" data-delay={`${i+1}`}><p className={`${spaceGrotesk.className} text-sm tracking-[.3em] uppercase stl mb-1 font-medium`}>{a.bank_name}</p><p className={`${spaceGrotesk.className} text-[9px] text-[#e4e4e7]/12 uppercase tracking-widest mb-3 font-light`}>A.N. {a.account_holder}</p><p className={`${italiana.className} text-xl text-[#e4e4e7] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${spaceGrotesk.className} w-full border border-[#a1a1aa]/10 py-3 text-[9px] tracking-[.3em] uppercase stl font-medium hover:bg-[#e4e4e7] hover:text-[#18181b] transition-all duration-500`}>Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 m4-rv"><div className="text-center mb-12"><h2 className={`${italiana.className} text-3xl text-[#e4e4e7]`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="m4c p-6 text-center m4-rv" data-delay={`${i+1}`}><p className={`${spaceGrotesk.className} text-sm tracking-[.3em] uppercase stl mb-1 font-medium`}>{a.bank_name}</p><p className={`${spaceGrotesk.className} text-[9px] text-[#e4e4e7]/12 uppercase tracking-widest mb-3 font-light`}>A.N. {a.account_holder}</p><p className={`${italiana.className} text-xl text-[#e4e4e7] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${spaceGrotesk.className} w-full border border-[#a1a1aa]/10 py-3 text-[9px] tracking-[.3em] uppercase stl font-medium hover:bg-[#e4e4e7] hover:text-[#18181b] transition-all duration-500`}>Copy Number</button></div>))}</div></section>}
 
-                        <footer className="py-20 px-8 md:px-12 text-center border-t border-[#e4e4e7]/5 m4-rv">
+                        <footer className="py-20 px-8 text-center border-t border-[#e4e4e7]/5 m4-rv">
                             <p className={`${spaceGrotesk.className} text-[8px] tracking-[.5em] uppercase stl mb-8 font-medium`}>Thank You</p>
                             <div className="w-20 h-20 border border-[#a1a1aa]/10 mx-auto mb-8 flex items-center justify-center"><span className={`${italiana.className} text-3xl stl`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span></div>
                             <h3 className={`${italiana.className} text-lg text-[#e4e4e7] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>

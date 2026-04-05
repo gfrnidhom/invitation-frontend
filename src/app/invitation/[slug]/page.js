@@ -68,38 +68,13 @@ export default function PublicInvitationViewer() {
       setIsPlaying(false);
     },
     toggle: () => {
-      if (isPlaying) audioController.pause();
-      else audioController.play();
+      if (isPlaying) {
+        audioController.pause();
+      } else {
+        audioController.play();
+      }
     }
   };
-
-  // ── Global Audio Context Unlocker (Mobile Fix) ──
-  useEffect(() => {
-    const unlockAudio = () => {
-      if (!audioRef.current) return;
-
-      // Trik "Warmup" untuk iOS
-      const playPromise = audioRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          if (!isPlaying) audioRef.current.pause();
-        }).catch(() => {
-          // Silent catch for warmup
-        });
-      }
-
-      window.removeEventListener('click', unlockAudio, true);
-      window.removeEventListener('touchstart', unlockAudio, true);
-    };
-
-    window.addEventListener('click', unlockAudio, true);
-    window.addEventListener('touchstart', unlockAudio, true);
-
-    return () => {
-      window.removeEventListener('click', unlockAudio, true);
-      window.removeEventListener('touchstart', unlockAudio, true);
-    };
-  }, [isPlaying]);
 
   useEffect(() => {
     publicInvitation.get(slug, token)

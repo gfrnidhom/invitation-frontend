@@ -145,7 +145,7 @@ export default function EarthyNature({ payload, audioController }) {
                 <div className="flex flex-col lg:flex-row min-h-screen">
 
                     {/* LEFT PANEL */}
-                    <div className="split-left-en w-full lg:w-[55%] bg-[#3d2b1f] relative flex flex-col justify-end p-8 md:p-12 lg:p-16 grain-overlay">
+                    <div className="split-left-en w-full lg:w-[70%] bg-[#3d2b1f] relative flex flex-col justify-end p-8 md:p-12 lg:p-16 grain-overlay">
                         {coverPhoto && <img src={coverPhoto} alt="Hero" className="absolute inset-0 w-full h-full object-cover opacity-55" />}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#3d2b1f] via-[#3d2b1f]/50 to-transparent" />
                         <div className="nature-glow" style={{ top: '10%', right: '5%' }} />
@@ -174,12 +174,12 @@ export default function EarthyNature({ payload, audioController }) {
                     </div>
 
                     {/* RIGHT PANEL */}
-                    <div ref={rightPanelRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto scrollbar-hide bg-[#3d2b1f]">
+                    <div ref={rightPanelRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto scrollbar-hide bg-[#3d2b1f]">
 
                         {/* Countdown */}
-                        <section className="py-20 px-8 md:px-12 text-center en-reveal">
+                        <section className="py-20 px-8 text-center en-reveal">
                             <p className={`${cormorant.className} text-[10px] tracking-[0.4em] uppercase text-[#c67a5c]/50 mb-4`}>Save The Date</p>
-                            <h2 className={`${cormorant.className} text-3xl md:text-4xl font-bold tracking-wider text-[#f5f1eb] mb-2`}>
+                            <h2 className={`${cormorant.className} text-3xl font-bold tracking-wider text-[#f5f1eb] mb-2`}>
                                 {invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}
                             </h2>
                             <p className="text-xs text-[#f5f1eb]/30 mb-10">
@@ -188,7 +188,7 @@ export default function EarthyNature({ payload, audioController }) {
                             <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto mb-12">
                                 {[{ val: countdown.days, label: 'Hari' }, { val: countdown.hours, label: 'Jam' }, { val: countdown.minutes, label: 'Menit' }, { val: countdown.seconds, label: 'Detik' }].map((item, i) => (
                                     <div key={i} className="earthy-card rounded-2xl py-4 px-2">
-                                        <p className={`${cormorant.className} text-2xl md:text-3xl font-bold terracotta`}>{item.val}</p>
+                                        <p className={`${cormorant.className} text-2xl font-bold terracotta`}>{item.val}</p>
                                         <p className="text-[9px] uppercase tracking-widest text-[#f5f1eb]/20 mt-1">{item.label}</p>
                                     </div>
                                 ))}
@@ -196,8 +196,8 @@ export default function EarthyNature({ payload, audioController }) {
                         </section>
 
                         {/* Opening Quote */}
-                        <section className="px-8 md:px-12 pb-20 en-reveal">
-                            <div className="cream-card rounded-3xl p-8 md:p-10 text-center">
+                        <section className="px-8 pb-20 en-reveal">
+                            <div className="cream-card rounded-3xl p-8 text-center">
                                 <svg className="w-8 h-8 text-[#8a9a5b] mx-auto mb-4 opacity-40" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg>
                                 <p className="text-sm leading-relaxed text-[#3d2b1f]/60 italic mb-4">
                                     {invitation?.opening_text || '"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}
@@ -207,9 +207,9 @@ export default function EarthyNature({ payload, audioController }) {
                         </section>
 
                         {/* BRIDE & GROOM — Circular overlapping */}
-                        <section className="px-8 md:px-12 pb-20">
+                        <section className="px-8 pb-20">
                             <div className="text-center mb-12 en-reveal">
-                                <h2 className={`${cormorant.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Bride & Groom</h2>
+                                <h2 className={`${cormorant.className} text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Bride & Groom</h2>
                                 <p className="text-xs text-[#f5f1eb]/25 mt-2">Assalamualaikum Wr. Wb.</p>
                                 <p className="text-xs text-[#f5f1eb]/35 mt-3 max-w-md mx-auto leading-relaxed">Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p>
                             </div>
@@ -217,12 +217,12 @@ export default function EarthyNature({ payload, audioController }) {
                             {/* Bride */}
                             <div className="cream-card rounded-3xl p-8 text-center mb-6 en-reveal" data-delay="1">
                                 {bridePhoto && (
-                                    <div className="w-36 h-36 md:w-44 md:h-44 mx-auto mb-6 circle-frame border-4 border-[#8a9a5b]/30">
+                                    <div className="w-36 h-36 mx-auto mb-6 circle-frame border-4 border-[#8a9a5b]/30">
                                         <img src={bridePhoto} alt="Bride" className="w-full h-full object-cover" />
                                     </div>
                                 )}
                                 <p className={`${sacramento.className} text-3xl text-[#c67a5c] mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                                <h3 className={`${cormorant.className} text-xl md:text-2xl font-bold tracking-wider text-[#3d2b1f] mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
+                                <h3 className={`${cormorant.className} text-xl font-bold tracking-wider text-[#3d2b1f] mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
                                 <p className="text-sm text-[#3d2b1f]/50">Putri dari</p>
                                 <p className="text-sm text-[#3d2b1f]/70 font-medium">{invitation?.bride_father || 'Bapak'} & {invitation?.bride_mother || 'Ibu'}</p>
                             </div>
@@ -232,21 +232,21 @@ export default function EarthyNature({ payload, audioController }) {
                             {/* Groom */}
                             <div className="cream-card rounded-3xl p-8 text-center en-reveal" data-delay="2">
                                 {groomPhoto && (
-                                    <div className="w-36 h-36 md:w-44 md:h-44 mx-auto mb-6 circle-frame border-4 border-[#8a9a5b]/30">
+                                    <div className="w-36 h-36 mx-auto mb-6 circle-frame border-4 border-[#8a9a5b]/30">
                                         <img src={groomPhoto} alt="Groom" className="w-full h-full object-cover" />
                                     </div>
                                 )}
                                 <p className={`${sacramento.className} text-3xl text-[#c67a5c] mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                                <h3 className={`${cormorant.className} text-xl md:text-2xl font-bold tracking-wider text-[#3d2b1f] mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
+                                <h3 className={`${cormorant.className} text-xl font-bold tracking-wider text-[#3d2b1f] mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
                                 <p className="text-sm text-[#3d2b1f]/50">Putra dari</p>
                                 <p className="text-sm text-[#3d2b1f]/70 font-medium">{invitation?.groom_father || 'Bapak'} & {invitation?.groom_mother || 'Ibu'}</p>
                             </div>
                         </section>
 
                         {/* Events */}
-                        <section className="px-8 md:px-12 pb-20">
+                        <section className="px-8 pb-20">
                             <div className="text-center mb-12 en-reveal">
-                                <h2 className={`${cormorant.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
+                                <h2 className={`${cormorant.className} text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
                                 <p className={`${sacramento.className} text-4xl terracotta -mt-1`}>Event</p>
                             </div>
                             {invitation?.events && invitation.events.length > 0 ? (
@@ -274,14 +274,14 @@ export default function EarthyNature({ payload, audioController }) {
 
                         {/* Love Story */}
                         {invitation?.love_stories && invitation.love_stories.length > 0 && (
-                            <section className="px-8 md:px-12 pb-20">
+                            <section className="px-8 pb-20">
                                 <div className="text-center mb-12 en-reveal">
-                                    <h2 className={`${cormorant.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Our</h2>
+                                    <h2 className={`${cormorant.className} text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Our</h2>
                                     <p className={`${sacramento.className} text-4xl terracotta -mt-1`}>Love Story</p>
                                 </div>
                                 {[...invitation.love_stories].sort((a,b) => (a.sort_order||0) - (b.sort_order||0)).map((story, i) => (
                                     <div key={story.id || i} className="cream-card rounded-3xl p-8 text-center mb-6 en-reveal" data-delay={`${i+1}`}>
-                                        <h3 className={`${cormorant.className} text-lg md:text-xl font-bold tracking-[0.15em] uppercase text-[#3d2b1f] mb-4`}>{story.title}</h3>
+                                        <h3 className={`${cormorant.className} text-lg font-bold tracking-[0.15em] uppercase text-[#3d2b1f] mb-4`}>{story.title}</h3>
                                         <p className="text-sm text-[#3d2b1f]/60 leading-relaxed">{story.description}</p>
                                         {story.photo && <div className="mt-6 rounded-xl overflow-hidden"><img src={getPhoto(story.photo)} alt={story.title} className="w-full h-44 object-cover" /></div>}
                                     </div>
@@ -295,22 +295,22 @@ export default function EarthyNature({ payload, audioController }) {
                             invitation={invitation}
                             sectionBg="bg-transparent"
                             titleFont={cormorant.className}
-                            titleSize="text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase"
+                            titleSize="text-2xl font-bold tracking-[0.15em] uppercase"
                             accentText="text-[#f5f1eb]"
                             subtitleText="terracotta"
                             borderColor="border-[#c67a5c]/20"
                         />
 
                         {/* QR Checkin */}
-                        <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={cormorant.className} textColor="text-[#f5f1eb]" borderStyle="border-[#c67a5c]/20" /></div>
+                        <div className="px-8"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={cormorant.className} textColor="text-[#f5f1eb]" borderStyle="border-[#c67a5c]/20" /></div>
 
                         {/* Wishes */}
-                        <section className="px-8 md:px-12 pb-20 en-reveal">
+                        <section className="px-8 pb-20 en-reveal">
                             <div className="text-center mb-12">
-                                <h2 className={`${cormorant.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
+                                <h2 className={`${cormorant.className} text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
                                 <p className={`${sacramento.className} text-4xl terracotta -mt-1`}>Wishes</p>
                             </div>
-                            <div className="cream-card rounded-3xl p-8 md:p-10">
+                            <div className="cream-card rounded-3xl p-8">
                                 <form onSubmit={submitWish} className="space-y-4">
                                     <div>
                                         <label className={`${cormorant.className} block text-[9px] tracking-[0.2em] uppercase text-[#3d2b1f]/40 mb-2 font-bold`}>Nama</label>
@@ -342,9 +342,9 @@ export default function EarthyNature({ payload, audioController }) {
 
                         {/* Gift */}
                         {invitation?.gift_accounts && invitation.gift_accounts.length > 0 && (
-                            <section className="px-8 md:px-12 pb-20 en-reveal">
+                            <section className="px-8 pb-20 en-reveal">
                                 <div className="text-center mb-12">
-                                    <h2 className={`${cormorant.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
+                                    <h2 className={`${cormorant.className} text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
                                     <p className={`${sacramento.className} text-4xl terracotta -mt-1`}>Gift</p>
                                 </div>
                                 <div className="space-y-4">
@@ -363,7 +363,7 @@ export default function EarthyNature({ payload, audioController }) {
                         )}
 
                         {/* Footer */}
-                        <footer className="py-20 px-8 md:px-12 text-center border-t border-[#f5f1eb]/5 en-reveal">
+                        <footer className="py-20 px-8 text-center border-t border-[#f5f1eb]/5 en-reveal">
                             <p className={`${cormorant.className} text-[9px] tracking-[0.4em] uppercase text-[#c67a5c]/40 mb-8`}>Thank You</p>
                             <div className="w-24 h-24 rounded-full border border-[#8a9a5b]/20 mx-auto mb-8 flex items-center justify-center">
                                 <span className={`${sacramento.className} text-4xl terracotta`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span>

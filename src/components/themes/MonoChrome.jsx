@@ -61,7 +61,7 @@ export default function MonoChrome({ payload, audioController }) {
 
             <div className={`transition-opacity duration-1000 ${isOpen?'opacity-100':'opacity-0 pointer-events-none'}`}>
                 <div className="flex flex-col lg:flex-row min-h-screen">
-                    <div className="sl-mc w-full lg:w-[55%] bg-black relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
+                    <div className="sl-mc w-full lg:w-[70%] bg-black relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
                         {cp&&<img src={cp} alt="Hero" className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale"/>}
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"/>
                         <div className="relative z-10">
@@ -75,27 +75,27 @@ export default function MonoChrome({ payload, audioController }) {
                         {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-black" btnColor="text-white/60" btnBorder="border-white/15 shadow-2xl" />}
                     </div>
 
-                    <div ref={rpRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto sh bg-black">
-                        <section className="py-20 px-8 md:px-12 text-center mc-rv">
+                    <div ref={rpRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto sh bg-black">
+                        <section className="py-20 px-8 text-center mc-rv">
                             <p className={`${bebas.className} text-xs tracking-[.5em] uppercase text-white/25 mb-4`}>Save The Date</p>
-                            <h2 className={`${bebas.className} text-4xl md:text-5xl tracking-wider text-white mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
+                            <h2 className={`${bebas.className} text-4xl tracking-wider text-white mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
                             <p className="text-[10px] text-white/20 tracking-[.3em] uppercase mb-10">{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
-                            <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">{[{v:cd.d,l:'DAYS'},{v:cd.h,l:'HRS'},{v:cd.m,l:'MIN'},{v:cd.s,l:'SEC'}].map((it,i)=>(<div key={i} className="mc-card rounded-xl py-4 px-2"><p className={`${bebas.className} text-3xl md:text-4xl text-white`}>{it.v}</p><p className="text-[8px] uppercase tracking-[.3em] text-white/20 mt-1">{it.l}</p></div>))}</div>
+                            <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">{[{v:cd.d,l:'DAYS'},{v:cd.h,l:'HRS'},{v:cd.m,l:'MIN'},{v:cd.s,l:'SEC'}].map((it,i)=>(<div key={i} className="mc-card rounded-xl py-4 px-2"><p className={`${bebas.className} text-3xl text-white`}>{it.v}</p><p className="text-[8px] uppercase tracking-[.3em] text-white/20 mt-1">{it.l}</p></div>))}</div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20 mc-rv">
-                            <div className="mc-card-w rounded-3xl p-8 md:p-10 text-center">
+                        <section className="px-8 pb-20 mc-rv">
+                            <div className="mc-card-w rounded-3xl p-8 text-center">
                                 <p className="text-sm leading-relaxed text-black/50 italic mb-4 font-light">{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
                                 <p className="text-[10px] text-black/30 tracking-[.3em] uppercase">QS. Ar-Rum Ayat 21</p>
                             </div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 mc-rv"><h2 className={`${bebas.className} text-3xl md:text-4xl tracking-[.2em] uppercase text-white`}>Bride & Groom</h2><p className="text-[10px] text-white/15 tracking-[.3em] uppercase mt-2">Assalamualaikum Wr. Wb.</p><p className="text-[10px] text-white/25 mt-3 max-w-md mx-auto leading-relaxed font-light">Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 mc-rv"><h2 className={`${bebas.className} text-3xl tracking-[.2em] uppercase text-white`}>Bride & Groom</h2><p className="text-[10px] text-white/15 tracking-[.3em] uppercase mt-2">Assalamualaikum Wr. Wb.</p><p className="text-[10px] text-white/25 mt-3 max-w-md mx-auto leading-relaxed font-light">Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p></div>
 
                             {/* Bride — Full width photo with name overlay */}
                             <div className="mb-8 mc-rv" data-delay="1">
-                                {brP&&<div className="photo-overlay rounded-2xl mb-4 aspect-[4/5]"><img src={brP} alt="Bride" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/><div className="absolute bottom-6 left-6 right-6 z-10"><p className={`${allura.className} text-3xl text-white/80 mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p><h3 className={`${bebas.className} text-2xl md:text-3xl tracking-[.15em] uppercase text-white`}>{invitation?.bride_full_name||invitation?.bride_name}</h3></div></div>}
+                                {brP&&<div className="photo-overlay rounded-2xl mb-4 aspect-[4/5]"><img src={brP} alt="Bride" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/><div className="absolute bottom-6 left-6 right-6 z-10"><p className={`${allura.className} text-3xl text-white/80 mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p><h3 className={`${bebas.className} text-2xl tracking-[.15em] uppercase text-white`}>{invitation?.bride_full_name||invitation?.bride_name}</h3></div></div>}
                                 {!brP&&<div className="text-center"><p className={`${allura.className} text-3xl text-white/60 mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p><h3 className={`${bebas.className} text-2xl tracking-[.15em] uppercase text-white`}>{invitation?.bride_full_name||invitation?.bride_name}</h3></div>}
                                 <div className="text-center mt-3"><p className="text-[10px] text-white/25 font-light">Putri dari {invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p></div>
                             </div>
@@ -104,14 +104,14 @@ export default function MonoChrome({ payload, audioController }) {
 
                             {/* Groom */}
                             <div className="mc-rv" data-delay="2">
-                                {grP&&<div className="photo-overlay rounded-2xl mb-4 aspect-[4/5]"><img src={grP} alt="Groom" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/><div className="absolute bottom-6 left-6 right-6 z-10"><p className={`${allura.className} text-3xl text-white/80 mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p><h3 className={`${bebas.className} text-2xl md:text-3xl tracking-[.15em] uppercase text-white`}>{invitation?.groom_full_name||invitation?.groom_name}</h3></div></div>}
+                                {grP&&<div className="photo-overlay rounded-2xl mb-4 aspect-[4/5]"><img src={grP} alt="Groom" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/><div className="absolute bottom-6 left-6 right-6 z-10"><p className={`${allura.className} text-3xl text-white/80 mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p><h3 className={`${bebas.className} text-2xl tracking-[.15em] uppercase text-white`}>{invitation?.groom_full_name||invitation?.groom_name}</h3></div></div>}
                                 {!grP&&<div className="text-center"><p className={`${allura.className} text-3xl text-white/60 mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p><h3 className={`${bebas.className} text-2xl tracking-[.15em] uppercase text-white`}>{invitation?.groom_full_name||invitation?.groom_name}</h3></div>}
                                 <div className="text-center mt-3"><p className="text-[10px] text-white/25 font-light">Putra dari {invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p></div>
                             </div>
                         </section>
 
-                        <section className="px-8 md:px-12 pb-20">
-                            <div className="text-center mb-12 mc-rv"><h2 className={`${bebas.className} text-3xl md:text-4xl tracking-[.2em] uppercase text-white`}>Wedding Event</h2></div>
+                        <section className="px-8 pb-20">
+                            <div className="text-center mb-12 mc-rv"><h2 className={`${bebas.className} text-3xl tracking-[.2em] uppercase text-white`}>Wedding Event</h2></div>
                             {invitation?.events&&invitation.events.length>0?[...invitation.events].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((ev,idx)=>(
                                 <div key={idx} className="mc-card rounded-2xl p-8 mb-6 text-center mc-rv" data-delay={`${idx+1}`}>
                                     <h3 className={`${bebas.className} text-2xl tracking-[.2em] uppercase text-white mb-4`}>{ev.name}</h3>
@@ -123,23 +123,23 @@ export default function MonoChrome({ payload, audioController }) {
                             )):<div className="mc-card rounded-2xl p-10 text-center"><h3 className={`${bebas.className} text-2xl tracking-[.2em] uppercase text-white mb-2`}>Acara Pernikahan</h3><p className="text-xs text-white/25 font-light">{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p></div>}
                         </section>
 
-                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 mc-rv"><h2 className={`${bebas.className} text-3xl md:text-4xl tracking-[.2em] uppercase text-white`}>Our Love Story</h2></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="mc-card-w rounded-2xl p-8 text-center mb-6 mc-rv" data-delay={`${i+1}`}><h3 className={`${bebas.className} text-xl tracking-[.15em] uppercase mb-4`}>{s.title}</h3><p className="text-sm text-black/50 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover grayscale"/></div>}</div>))}</section>}
+                        {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 pb-20"><div className="text-center mb-12 mc-rv"><h2 className={`${bebas.className} text-3xl tracking-[.2em] uppercase text-white`}>Our Love Story</h2></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="mc-card-w rounded-2xl p-8 text-center mb-6 mc-rv" data-delay={`${i+1}`}><h3 className={`${bebas.className} text-xl tracking-[.15em] uppercase mb-4`}>{s.title}</h3><p className="text-sm text-black/50 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover grayscale"/></div>}</div>))}</section>}
 
                         <Gallery 
                             invitation={invitation}
                             sectionBg="bg-transparent"
                             titleFont={bebas.className}
-                            titleSize="text-3xl md:text-4xl tracking-[.2em] uppercase"
+                            titleSize="text-3xl tracking-[.2em] uppercase"
                             accentText="text-white"
                             subtitleText="text-white/50"
                             borderColor="border-white/10"
                         />
 
-                        <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={bebas.className} textColor="text-white" borderStyle="border-white/10"/></div>
+                        <div className="px-8"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={bebas.className} textColor="text-white" borderStyle="border-white/10"/></div>
 
-                        <section className="px-8 md:px-12 pb-20 mc-rv">
-                            <div className="text-center mb-12"><h2 className={`${bebas.className} text-3xl md:text-4xl tracking-[.2em] uppercase text-white`}>Wedding Wishes</h2></div>
-                            <div className="mc-card-w rounded-2xl p-8 md:p-10">
+                        <section className="px-8 pb-20 mc-rv">
+                            <div className="text-center mb-12"><h2 className={`${bebas.className} text-3xl tracking-[.2em] uppercase text-white`}>Wedding Wishes</h2></div>
+                            <div className="mc-card-w rounded-2xl p-8">
                                 <form onSubmit={sw} className="space-y-4">
                                     <div><label className={`${bebas.className} block text-xs tracking-[.2em] uppercase text-black/30 mb-2`}>Nama</label><input type="text" value={ni} onChange={e=>setNi(e.target.value)} className="w-full bg-black/3 border border-black/8 rounded-lg px-5 py-3.5 text-sm text-black focus:outline-none focus:border-black/30 transition-colors" placeholder="Nama Anda..."/></div>
                                     <div><label className={`${bebas.className} block text-xs tracking-[.2em] uppercase text-black/30 mb-2`}>Ucapan</label><textarea value={mi} onChange={e=>setMi(e.target.value)} className="w-full bg-black/3 border border-black/8 rounded-lg px-5 py-3.5 text-sm text-black h-28 resize-none focus:outline-none focus:border-black/30 transition-colors" placeholder="Tulis ucapan..."/></div>
@@ -149,9 +149,9 @@ export default function MonoChrome({ payload, audioController }) {
                             </div>
                         </section>
 
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 md:px-12 pb-20 mc-rv"><div className="text-center mb-12"><h2 className={`${bebas.className} text-3xl md:text-4xl tracking-[.2em] uppercase text-white`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="mc-card rounded-2xl p-6 text-center mc-rv" data-delay={`${i+1}`}><p className={`${bebas.className} text-sm tracking-[.3em] uppercase text-white/60 mb-1`}>{a.bank_name}</p><p className="text-[10px] text-white/15 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${bebas.className} text-2xl text-white mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${bebas.className} w-full border border-white/10 py-3 text-xs tracking-[.3em] uppercase text-white/40 hover:bg-white hover:text-black transition-all duration-500 rounded-lg`}>Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 mc-rv"><div className="text-center mb-12"><h2 className={`${bebas.className} text-3xl tracking-[.2em] uppercase text-white`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="mc-card rounded-2xl p-6 text-center mc-rv" data-delay={`${i+1}`}><p className={`${bebas.className} text-sm tracking-[.3em] uppercase text-white/60 mb-1`}>{a.bank_name}</p><p className="text-[10px] text-white/15 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${bebas.className} text-2xl text-white mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${bebas.className} w-full border border-white/10 py-3 text-xs tracking-[.3em] uppercase text-white/40 hover:bg-white hover:text-black transition-all duration-500 rounded-lg`}>Copy Number</button></div>))}</div></section>}
 
-                        <footer className="py-20 px-8 md:px-12 text-center border-t border-white/5 mc-rv">
+                        <footer className="py-20 px-8 text-center border-t border-white/5 mc-rv">
                             <p className={`${bebas.className} text-xs tracking-[.5em] uppercase text-white/15 mb-8`}>Thank You</p>
                             <div className="w-20 h-20 border border-white/8 mx-auto mb-8 flex items-center justify-center"><span className={`${bebas.className} text-3xl text-white/30`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span></div>
                             <h3 className={`${bebas.className} text-xl tracking-[.2em] uppercase text-white mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>

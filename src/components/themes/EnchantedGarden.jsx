@@ -140,8 +140,8 @@ export default function EnchantedGarden({ payload, audioController }) {
 
                 /* ── Split layout ── */
                 @media (min-width: 1024px) {
-                    .eg-left { position: fixed; top: 0; left: 0; width: 48%; height: 100vh; z-index: 5; }
-                    .eg-right { margin-left: 48%; width: 52%; position: relative; z-index: 10; }
+                    .eg-left { position: fixed; top: 0; left: 0; width: 70%; height: 100vh; z-index: 5; }
+                    .eg-right { margin-left: 70%; width: 30%; position: relative; z-index: 10; }
                 }
 
                 /* ── Glass card ── */
