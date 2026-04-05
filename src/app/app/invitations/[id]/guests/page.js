@@ -110,7 +110,12 @@ export default function GuestsPage({ params }) {
       .replace(/\[nama_tamu\]/g, guest.name)
       .replace(/\[link_undangan\]/g, invLink);
       
-    if (guest.qr_code) {
+    if (guest.qr_code && guest.token) {
+      // Menghasilkan Tautan E-Ticket Front-End untuk Tampilan Mewah
+      const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://app.digitvitation.my.id';
+      const ticketUrl = `${baseUrl}/ticket/${invitation.slug}?to=${encodeURIComponent(nameSlug)}&token=${encodeURIComponent(guest.token)}`;
+      text += `\n\nSimpan E-Ticket Anda di tautan berikut untuk kemudahan Check-in di lokasi:\n${ticketUrl}`;
+    } else if (guest.qr_code) {
       const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000/storage';
       const qrUrl = guest.qr_code.startsWith('http') ? guest.qr_code : `${storageUrl}/${guest.qr_code}`;
       text += `\n\nSimpan QR Code berikut untuk kemudahan Check-in di lokasi:\n${qrUrl}`;
