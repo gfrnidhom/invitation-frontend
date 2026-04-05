@@ -11,33 +11,78 @@ export default function MusicPlayer({
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
+  const audioUnlocked = useRef(false);
+
+  // iOS/Mobile Browser Audio Unlock Trick
+  // Safari blocks any audio.play() that isn't DIRECTLY in an onClick handler.
+  // By executing a muted play/pause on the very FIRST click on the entire screen 
+  // (which is usually the "Buka Undangan" button), we "unlock" the audio element forever.
+  useEffect(() => {
+    const unlockAudioContext = () => {
+      if (audioUnlocked.current || !audioRef.current) return;
+      
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          audioRef.current.pause();
+          audioUnlocked.current = true;
+        }).catch(() => {
+          // Ignore
+        });
+      }
+      // Remove listeners once unlocked
+      document.removeEventListener('touchstart', unlockAudioContext, true);
+      document.removeEventListener('click', unlockAudioContext, true);
+    };
+
+    document.addEventListener('touchstart', unlockAudioContext, true);
+    document.addEventListener('click', unlockAudioContext, true);
+
+    return () => {
+      document.removeEventListener('touchstart', unlockAudioContext, true);
+      document.removeEventListener('click', unlockAudioContext, true);
+    };
+  }, []);
 
   // Handle shouldPlay prop from parent (triggered when user opens invitation)
   useEffect(() => {
     if (shouldPlay && audioRef.current && !isPlaying) {
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch(() => {
-          // Autoplay blocked by browser — user can still manually toggle
-          setIsPlaying(false);
-        });
+      const attemptPlay = () => {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => setIsPlaying(true))
+            .catch(() => {
+              console.error('Autoplay blocked by browser. Awaiting interaction.');
+              setIsPlaying(false);
+            });
+        }
+      };
+      
+      // Add a slight delay to allow the 'unlock' trick above to finish processing
+      setTimeout(attemptPlay, 100);
     }
   }, [shouldPlay]);
 
-  // Handle manual play/pause toggle
-  useEffect(() => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.play().catch(() => {
-        setIsPlaying(false);
-      });
-    } else {
-      audioRef.current.pause();
-    }
-  }, [isPlaying]);
+
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    if (!audioRef.current) return;
+    
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch((err) => {
+            console.error('Play blocked:', err);
+            setIsPlaying(false);
+          });
+      }
+    }
   };
 
   if (!musicUrl) return null;
