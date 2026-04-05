@@ -51,14 +51,29 @@ export default function PublicInvitationViewer() {
   const audioController = {
     isPlaying,
     play: () => {
-      if (!audioRef.current) return;
+      if (!audioRef.current) {
+        toast.error("Sistem Audio belum siap (no ref)");
+        return;
+      }
+      
+      // Ensure audio is loaded and log URL for debugging
+      console.log("Playing URL:", finalMusicUrl);
+      if (finalMusicUrl) {
+          toast.info("Memutar: " + finalMusicUrl.substring(0, 40) + "...");
+      }
+      
+      audioRef.current.load();
+      
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
         playPromise
-          .then(() => setIsPlaying(true))
+          .then(() => {
+             setIsPlaying(true);
+             toast.success("Musik dimulai!");
+          })
           .catch((err) => {
             console.error("Playback failed:", err);
-            // Don't toast here as it might be annoying on warmup
+            toast.error("Gagal putar musik: " + err.message);
           });
       }
     },
@@ -79,13 +94,13 @@ export default function PublicInvitationViewer() {
       if (!audioRef.current) return;
       
       // Trik "Warmup" untuk iOS
-      // Kita panggil play sebentar lalu pause untuk membuka ijin browser
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
-          // Hanya pause jika kita belum benar-benar mau memutar (belum buka undangan)
           if (!isPlaying) audioRef.current.pause();
-        }).catch(() => {});
+        }).catch(() => {
+           // Silent catch for warmup
+        });
       }
       
       window.removeEventListener('click', unlockAudio, true);
@@ -236,9 +251,21 @@ export default function PublicInvitationViewer() {
           src={finalMusicUrl} 
           loop 
           preload="auto" 
-          crossOrigin="anonymous"
         />
       )}
+
+      {/* ── DEBUG UI (Temporary) ── */}
+      <div className="fixed top-4 left-4 z-[9999] flex flex-col gap-2">
+          <button 
+            onClick={() => {
+                toast.info("Theme: " + themeSlug);
+                audioController.play();
+            }}
+            className="bg-black/50 text-white px-3 py-1 rounded text-[10px] backdrop-blur"
+          >
+            Debug Play
+          </button>
+      </div>
 
       {renderTheme()}
     </>

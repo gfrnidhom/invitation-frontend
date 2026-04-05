@@ -1,6 +1,7 @@
 import './globals.css';
 import { AuthProvider } from '@/lib/auth-context';
 import { APP_CONFIG } from '@/lib/constants';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata = {
   title: 'Wedding Invitation Manager',
@@ -23,7 +24,10 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>  
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          {children}
+          <Toaster position="top-right" />
+        </AuthProvider>
       </body>
     </html>
   );
