@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Playfair_Display, Inter, Great_Vibes } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
+import Gallery from './partials/Gallery';
 
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500'] });
@@ -421,21 +422,16 @@ export default function BotanicalSage({ payload }) {
                 </section>
 
                 {/* ── 6. OUR MOMENTS GALLERY ── */}
-                {photos.length > 0 && (
-                    <section className="py-24 bg-white text-center bs-reveal overflow-hidden">
-                        <p className={`${greatVibes.className} text-2xl text-[#5f7364] mb-2`}>Captured Memories</p>
-                        <h2 className={`${playfair.className} text-5xl md:text-6xl olive-text font-bold mb-4`}>Our Moments</h2>
-                        <FloralDivider className="w-56 mx-auto mb-14" />
-                        <div className="flex overflow-x-auto gap-5 px-6 md:px-12 pb-8 snap-x" style={{ scrollbarWidth: 'none' }}>
-                            {photos.slice(0, 8).map((photo, i) => (
-                                <div key={i} className="flex-none w-72 md:w-96 aspect-[3/4] snap-center relative group overflow-hidden bg-gray-100 rounded-xl">
-                                    <img src={getPhoto(photo)} alt={`Moment ${i+1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-[#4a5d4e]/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-                )}
+                <Gallery 
+                    layout="masonry"
+                    invitation={invitation}
+                    sectionBg="bg-white"
+                    titleFont={playfair.className}
+                    titleSize="text-5xl md:text-6xl font-bold"
+                    accentText="olive-text"
+                    subtitleText="text-[#5f7364]"
+                    borderColor="border-[#cddbcf]"
+                />
 
                 {/* ── 7. LOVE STORY TIMELINE ── */}
                 <section className="py-24 bg-[#f0f4f0] px-6 bs-reveal relative overflow-hidden">

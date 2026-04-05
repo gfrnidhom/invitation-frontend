@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Cinzel, Bodoni_Moda, Montserrat } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
+import VideoEmbed from './partials/VideoEmbed';
+import Gallery from './partials/Gallery';
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400','500','600','700','800','900'] });
 const bodoni = Bodoni_Moda({ subsets: ['latin'], weight: ['400','500','600','700','800','900'], style: ['normal','italic'] });
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['200','300','400','500','600','700','800'] });
@@ -132,7 +134,16 @@ export default function MonoChromeV({ payload }) {
 
                         {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 m5-rv"><h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-[#f2f2f7]`}>Our Love Story</h2></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="m5cw rounded-3xl p-8 text-center mb-6 m5-rv" data-delay={`${i+1}`}><h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#1c1c1e] mb-4`}>{s.title}</h3><p className={`${montserrat.className} text-sm text-[#1c1c1e]/50 leading-relaxed font-light`}>{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover grayscale"/></div>}</div>))}</section>}
 
-                        {phs.length>0&&<section className="pb-20"><div className="text-center mb-12 px-8 md:px-12 m5-rv"><h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-[#f2f2f7]`}>Our Moments</h2></div><div className="flex overflow-x-auto gap-4 px-8 md:px-12 pb-6 sh snap-x">{phs.slice(0,8).map((ph,i)=>(<div key={i} className="flex-none w-56 md:w-72 aspect-[3/4] snap-center rounded-2xl overflow-hidden group m5c m5-rv"><img src={gp(ph)} alt={`Moment ${i+1}`} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"/></div>))}</div></section>}
+                        <Gallery 
+                            layout="abstract"
+                            invitation={invitation}
+                            sectionBg="bg-transparent"
+                            titleFont={cinzel.className}
+                            titleSize="text-xl md:text-2xl tracking-[.15em]"
+                            accentText="text-[#f2f2f7]"
+                            subtitleText="text-[#d1d1d6]"
+                            borderColor="border-[#d1d1d6]/10"
+                        />
 
                         <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={cinzel.className} textColor="text-[#d1d1d6]" borderStyle="border-[#d1d1d6]/8"/></div>
 

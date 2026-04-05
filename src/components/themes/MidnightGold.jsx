@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Playfair_Display, Great_Vibes, Lato } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
+import VideoEmbed from './partials/VideoEmbed';
+import Gallery from './partials/Gallery';
 
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] });
 const greatVibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
@@ -419,21 +421,16 @@ export default function MidnightGold({ payload }) {
                         )}
 
                         {/* ── GALLERY ── */}
-                        {photos.length > 0 && (
-                            <section className="pb-20">
-                                <div className="text-center mb-12 px-8 md:px-12 mg-reveal">
-                                    <h2 className={`${playfair.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-white`}>Our Best</h2>
-                                    <p className={`${greatVibes.className} text-4xl gold-text -mt-1`}>Moments</p>
-                                </div>
-                                <div className="flex overflow-x-auto gap-4 px-8 md:px-12 pb-6 scrollbar-hide snap-x">
-                                    {photos.slice(0, 8).map((photo, i) => (
-                                        <div key={i} className="flex-none w-56 md:w-72 aspect-[3/4] snap-center rounded-2xl overflow-hidden group gold-border mg-reveal">
-                                            <img src={getPhoto(photo)} alt={`Moment ${i+1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
-                        )}
+                        <Gallery 
+                            layout="abstract"
+                            invitation={invitation}
+                            sectionBg="bg-transparent"
+                            titleFont={playfair.className}
+                            titleSize="text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase"
+                            accentText="text-white"
+                            subtitleText="gold-text"
+                            borderColor="border-[#c9a84c]/30"
+                        />
 
                         {/* ── QR CHECKIN ── */}
                         <div className="px-8 md:px-12">

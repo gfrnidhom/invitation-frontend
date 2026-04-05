@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Space_Grotesk, Italiana, Work_Sans } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
+import VideoEmbed from './partials/VideoEmbed';
+import Gallery from './partials/Gallery';
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300','400','500','600','700'] });
 const italiana = Italiana({ subsets: ['latin'], weight: ['400'] });
 const workSans = Work_Sans({ subsets: ['latin'], weight: ['200','300','400','500','600','700','800'] });
@@ -143,7 +145,15 @@ export default function MonoChromeIV({ payload }) {
 
                         {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 m4-rv"><h2 className={`${italiana.className} text-3xl md:text-4xl text-[#e4e4e7]`}>Our Love Story</h2></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="m4cw p-8 text-center mb-6 m4-rv" data-delay={`${i+1}`}><h3 className={`${italiana.className} text-lg text-[#18181b] mb-4`}>{s.title}</h3><p className="text-sm text-[#18181b]/50 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover grayscale"/></div>}</div>))}</section>}
 
-                        {phs.length>0&&<section className="pb-20"><div className="text-center mb-12 px-8 md:px-12 m4-rv"><h2 className={`${italiana.className} text-3xl md:text-4xl text-[#e4e4e7]`}>Our Moments</h2></div><div className="flex overflow-x-auto gap-3 px-8 md:px-12 pb-6 sh snap-x">{phs.slice(0,8).map((ph,i)=>(<div key={i} className="flex-none w-56 md:w-72 aspect-[3/4] snap-center overflow-hidden group m4c m4-rv"><img src={gp(ph)} alt={`Moment ${i+1}`} className="w-full h-full object-cover grayscale group-hover:grayscale-0 contrast-110 transition-all duration-700 group-hover:scale-105"/></div>))}</div></section>}
+                        <Gallery 
+                            invitation={invitation}
+                            sectionBg="bg-transparent"
+                            titleFont={italiana.className}
+                            titleSize="text-3xl md:text-4xl"
+                            accentText="text-[#e4e4e7]"
+                            subtitleText="text-[#a1a1aa]"
+                            borderColor="border-[#a1a1aa]/20"
+                        />
 
                         <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={italiana.className} textColor="text-[#e4e4e7]" borderStyle="border-[#a1a1aa]/10"/></div>
 

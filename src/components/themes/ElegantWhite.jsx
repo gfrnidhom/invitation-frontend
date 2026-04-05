@@ -186,15 +186,13 @@ export default function ElegantWhite({ payload }) {
       </section>
 
       {/* Gallery */}
-      {invitation.gallery && invitation.gallery.length > 0 && (
-        <Gallery 
-          invitation={invitation}
-          sectionBg="bg-white"
-          titleFont={serif.className}
-          accentText="text-[#c9a96e]"
-          borderColor="border-[#e8d5b7]"
-        />
-      )}
+      <Gallery 
+        invitation={invitation}
+        sectionBg="bg-white"
+        titleFont={serif.className}
+        accentText="text-[#c9a96e]"
+        borderColor="border-[#e8d5b7]"
+      />
 
       {/* Gift Accounts */}
       <div id="gift"></div>

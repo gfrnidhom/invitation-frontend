@@ -185,15 +185,14 @@ export default function ClassicJavanese({ payload }) {
       </section>
 
       {/* Gallery */}
-      {invitation.gallery && invitation.gallery.length > 0 && (
-        <Gallery 
-          invitation={invitation}
-          sectionBg="bg-[#f0d5a8]/10"
-          titleFont={displayFont.className}
-          accentText="text-[#5a3a0a]"
-          borderColor="border-[#c4913b]/30"
-        />
-      )}
+      <Gallery 
+        layout="abstract" 
+        invitation={invitation}
+        sectionBg="bg-[#f0d5a8]/10"
+        titleFont={displayFont.className}
+        accentText="text-[#5a3a0a]"
+        borderColor="border-[#c4913b]/30"
+      />
 
       {/* Multi Events List */}
       <Events 

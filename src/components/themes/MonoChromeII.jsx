@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Oswald, Playfair_Display, Source_Sans_3 } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
+import VideoEmbed from './partials/VideoEmbed';
+import Gallery from './partials/Gallery';
 const oswald = Oswald({ subsets: ['latin'], weight: ['200','300','400','500','600','700'] });
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400','500','600','700','800','900'], style: ['normal','italic'] });
 const sourceSans = Source_Sans_3({ subsets: ['latin'], weight: ['200','300','400','500','600','700','800'] });
@@ -144,7 +146,15 @@ export default function MonoChromeII({ payload }) {
                         {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 m2-rv"><h2 className={`${oswald.className} text-2xl md:text-3xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Our</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Love Story</p></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="m2cw rounded-3xl p-8 text-center mb-6 m2-rv" data-delay={`${i+1}`}><h3 className={`${oswald.className} text-lg tracking-[.1em] uppercase text-[#2c2420] mb-4`}>{s.title}</h3><p className="text-sm text-[#2c2420]/55 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover sepia"/></div>}</div>))}</section>}
 
                         {/* Gallery */}
-                        {phs.length>0&&<section className="pb-20"><div className="text-center mb-12 px-8 md:px-12 m2-rv"><h2 className={`${oswald.className} text-2xl md:text-3xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Our Best</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Moments</p></div><div className="flex overflow-x-auto gap-4 px-8 md:px-12 pb-6 sh snap-x">{phs.slice(0,8).map((ph,i)=>(<div key={i} className="flex-none w-56 md:w-72 aspect-[3/4] snap-center rounded-2xl overflow-hidden group m2c m2-rv"><img src={gp(ph)} alt={`Moment ${i+1}`} className="w-full h-full object-cover sepia group-hover:sepia-0 transition-all duration-700 group-hover:scale-105"/></div>))}</div></section>}
+                        <Gallery 
+                            invitation={invitation}
+                            sectionBg="bg-transparent"
+                            titleFont={oswald.className}
+                            titleSize="text-2xl md:text-3xl tracking-[.2em] uppercase"
+                            accentText="text-[#e8ddd0]"
+                            subtitleText="sep"
+                            borderColor="border-[#d4c5b3]/15"
+                        />
 
                         {/* QR Checkin */}
                         <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={oswald.className} textColor="text-[#e8ddd0]" borderStyle="border-[#d4c5b3]/15"/></div>

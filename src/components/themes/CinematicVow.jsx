@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Cinzel, Great_Vibes, Montserrat } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
+import VideoEmbed from './partials/VideoEmbed';
+import Gallery from './partials/Gallery';
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400','500','600','700','800','900'] });
 const greatVibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
@@ -114,15 +116,18 @@ export default function CinematicVow({ payload }) {
     return (
         <div className={`min-h-screen bg-[#0a0a0f] text-white ${montserrat.className} overflow-hidden`}>
             <style dangerouslySetInnerHTML={{ __html: `
+                html,body{margin:0;padding:0;overflow-x:hidden}
                 .cv-rv{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}.cv-rv.active{opacity:1;transform:translateY(0)}.cv-rv[data-delay="1"]{transition-delay:.15s}.cv-rv[data-delay="2"]{transition-delay:.3s}
                 .cv-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px)}
                 .cv-card-solid{background:rgba(10,10,15,.85);border:1px solid rgba(255,255,255,.06);backdrop-filter:blur(60px);-webkit-backdrop-filter:blur(60px)}
-                .sl-cv{position:sticky;top:0;height:100vh}@media(max-width:1023px){.sl-cv{position:relative;height:auto;min-height:100vh}}
+                .sl-cv{position:sticky;top:0;height:100vh}
+                @media(max-width:1023px){.sl-cv{display:none}}
                 .co-cv{position:fixed;inset:0;z-index:9999;transition:transform 1s cubic-bezier(.16,1,.3,1)}.co-cv.open{transform:translateY(-100%)}
                 .ms-cv{animation:mscv 4s linear infinite}@keyframes mscv{from{transform:rotate(0)}to{transform:rotate(360deg)}}
                 .sh::-webkit-scrollbar{display:none}.sh{-ms-overflow-style:none;scrollbar-width:none}
                 .vid-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
-                .vid-bg video,.vid-bg iframe{position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;width:auto;height:auto;transform:translate(-50%,-50%);object-fit:cover}
+                .vid-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+                .vid-bg iframe{position:absolute;top:50%;left:50%;width:max(100vw,177.78vh);height:max(100vh,56.25vw);transform:translate(-50%,-50%) scale(1.05);border:0;pointer-events:none}
                 .vid-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,10,15,.3) 0%,rgba(10,10,15,.5) 40%,rgba(10,10,15,.85) 100%)}
                 .arch-cv{border-radius:200px 200px 0 0;overflow:hidden}
                 .pulse-border{animation:pulseBorder 3s ease-in-out infinite}@keyframes pulseBorder{0%,100%{border-color:rgba(255,255,255,.08)}50%{border-color:rgba(255,255,255,.2)}}
@@ -130,6 +135,13 @@ export default function CinematicVow({ payload }) {
                 .slide-img{position:absolute;inset:0;opacity:0;transition:opacity 1.5s ease-in-out}.slide-img.active{opacity:1}
                 .slide-dots{display:flex;gap:6px;justify-content:center;margin-top:16px}.slide-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);cursor:pointer;transition:all .3s}.slide-dot.active{background:rgba(255,255,255,.6);transform:scale(1.3)}
                 .slide-counter{font-variant-numeric:tabular-nums}
+                .rp-bg{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;z-index:0;margin-bottom:-100vh}
+                @media(max-width:1023px){.rp-bg{position:fixed;inset:-2px;width:calc(100vw + 4px);height:calc(100vh + 4px);height:calc(100dvh + 4px);margin-bottom:0;z-index:0}}
+                .rp-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+                .rp-bg iframe{position:absolute;top:50%;left:50%;width:max(100vw,177.78vh);height:max(100vh,56.25vw);transform:translate(-50%,-50%) scale(1.05);border:0;pointer-events:none}
+                .rp-bg img.rp-bg-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.5s ease-in-out}
+                .rp-bg img.rp-bg-slide.active{opacity:1}
+                .rp-content{position:relative;z-index:10}
             ` }} />
 
             {invitation?.music_url && <audio ref={audioRef} src={invitation.music_url.startsWith('http') ? invitation.music_url : `${SU}/${invitation.music_url}`} loop />}
@@ -196,39 +208,28 @@ export default function CinematicVow({ payload }) {
             <div className={`transition-opacity duration-1000 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                 <div className="flex flex-col lg:flex-row min-h-screen">
 
-                    {/* ───── LEFT PANEL: Video BG + Cover Photo Slideshow ───── */}
+                    {/* ───── LEFT PANEL: Always Cover Photo Slideshow ───── */}
                     <div className="sl-cv w-full lg:w-[55%] bg-[#0a0a0f] relative flex flex-col justify-between film-grain">
-                        {/* Layer 1: Background Video (deepest) */}
-                        {videoSrc ? (
-                            <div className="vid-bg">
-                                {videoSrc.type === 'youtube' ? (
-                                    <iframe src={videoSrc.src} allow="autoplay; encrypted-media" allowFullScreen className="pointer-events-none" style={{ border: 0 }} />
-                                ) : (
-                                    <video ref={videoRef} muted loop playsInline autoPlay className="opacity-40">
-                                        <source src={videoSrc.src} type="video/mp4" />
-                                    </video>
-                                )}
-                            </div>
-                        ) : null}
-                        <div className="vid-overlay" />
-
-                        {/* Layer 2: Cover Photo Slideshow */}
-                        {coverPhotos.length > 0 && (
-                            <div className="absolute inset-0 z-[2]">
-                                {coverPhotos.map((photo, i) => (
-                                    <img
-                                        key={i}
-                                        src={photo}
-                                        alt={`Cover ${i + 1}`}
-                                        className={`slide-img w-full h-full object-cover ${i === slideIdx ? 'active' : ''}`}
-                                    />
-                                ))}
-                                {/* Gradient overlay on top of slideshow */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/40 to-[#0a0a0f]/20" />
-                            </div>
+                        {/* Cover Photo Slideshow — always visible */}
+                        {coverPhotos.length > 0 ? (
+                            <>
+                                <div className="absolute inset-0 z-[1]">
+                                    {coverPhotos.map((photo, i) => (
+                                        <img
+                                            key={i}
+                                            src={photo}
+                                            alt={`Cover ${i + 1}`}
+                                            className={`slide-img w-full h-full object-cover ${i === slideIdx ? 'active' : ''}`}
+                                        />
+                                    ))}
+                                </div>
+                                <div className="absolute inset-0 z-[2] bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/40 to-[#0a0a0f]/20" />
+                            </>
+                        ) : (
+                            <div className="vid-overlay" />
                         )}
 
-                        {/* Layer 3: Text content on top */}
+                        {/* Text content on top */}
                         <div className="relative z-10 flex-1 flex flex-col justify-end p-8 md:p-12 lg:p-16">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="w-8 h-px bg-white/20" />
@@ -265,14 +266,6 @@ export default function CinematicVow({ payload }) {
                                     <span className={`${cinzel.className} text-[8px] text-white/20 slide-counter`}>{slideIdx + 1} / {coverPhotos.length}</span>
                                 </div>
                             )}
-
-                            {/* Video playing indicator */}
-                            {videoSrc && (
-                                <div className="flex items-center gap-2 mt-4">
-                                    <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                                    <span className="text-[8px] text-white/15 uppercase tracking-[.3em] font-medium">Video Playing</span>
-                                </div>
-                            )}
                         </div>
 
                         {/* Music button */}
@@ -287,8 +280,31 @@ export default function CinematicVow({ payload }) {
                         )}
                     </div>
 
-                    {/* ───── RIGHT PANEL: Scrollable Content ───── */}
-                    <div ref={rightPanelRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto sh bg-[#0a0a0f]">
+                    {/* ───── RIGHT PANEL: Video/Slideshow BG + Scrollable Content ───── */}
+                    <div ref={rightPanelRef} className="w-full lg:w-[45%] lg:h-screen lg:overflow-y-auto sh relative">
+                        {/* Fixed/sticky background: Video or Slideshow */}
+                        <div className="rp-bg">
+                            {videoSrc ? (
+                                <>
+                                    {videoSrc.type === 'youtube' ? (
+                                        <iframe src={videoSrc.src} allow="autoplay; encrypted-media" allowFullScreen className="pointer-events-none" />
+                                    ) : (
+                                        <video muted loop playsInline autoPlay>
+                                            <source src={videoSrc.src} type="video/mp4" />
+                                        </video>
+                                    )}
+                                </>
+                            ) : coverPhotos.length > 0 ? (
+                                <>
+                                    {coverPhotos.map((photo, i) => (
+                                        <img key={i} src={photo} alt={`BG ${i + 1}`} className={`rp-bg-slide ${i === slideIdx ? 'active' : ''}`} />
+                                    ))}
+                                </>
+                            ) : null}
+                            <div className="absolute inset-0 bg-[#0a0a0f]/60" style={{zIndex:5}} />
+                        </div>
+                        {/* Scrollable content layer */}
+                        <div className="rp-content">
 
                         {/* Countdown */}
                         <section className="py-20 px-8 md:px-12 text-center cv-rv">
@@ -416,21 +432,16 @@ export default function CinematicVow({ payload }) {
                         )}
 
                         {/* Gallery */}
-                        {phs.length > 0 && (
-                            <section className="pb-20">
-                                <div className="text-center mb-12 px-8 md:px-12 cv-rv">
-                                    <h2 className={`${cinzel.className} text-xl md:text-2xl tracking-[.15em] text-white`}>Our Best</h2>
-                                    <p className={`${greatVibes.className} text-4xl text-white/30 -mt-1`}>Moments</p>
-                                </div>
-                                <div className="flex overflow-x-auto gap-4 px-8 md:px-12 pb-6 sh snap-x">
-                                    {phs.slice(0, 8).map((ph, i) => (
-                                        <div key={i} className="flex-none w-56 md:w-72 aspect-[3/4] snap-center rounded-2xl overflow-hidden group cv-card cv-rv">
-                                            <img src={gp(ph)} alt={`Moment ${i + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
-                        )}
+                        <Gallery 
+                            layout="masonry"
+                            invitation={invitation}
+                            sectionBg="bg-transparent"
+                            titleFont={cinzel.className}
+                            titleSize="text-xl md:text-2xl tracking-[.15em]"
+                            accentText="text-white"
+                            subtitleText="text-white/30"
+                            borderColor="border-white/10"
+                        />
 
                         {/* QR Checkin */}
                         <div className="px-8 md:px-12">
@@ -516,6 +527,7 @@ export default function CinematicVow({ payload }) {
                                 <p className="text-[7px] text-white/6 tracking-[.2em] uppercase mt-1 font-light">Digital Invitation</p>
                             </div>
                         </footer>
+                        </div>{/* end scrollable content layer */}
                     </div>
                 </div>
             </div>

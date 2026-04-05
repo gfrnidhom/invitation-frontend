@@ -188,15 +188,14 @@ export default function BirthdayBash({ payload }) {
       </section>
 
       {/* Gallery */}
-      {invitation.gallery && invitation.gallery.length > 0 && (
-        <Gallery 
-          invitation={invitation}
-          sectionBg="bg-transparent"
-          titleFont={displayFont.className}
-          accentText="text-[#d946ef]"
-          borderColor="border-[#fae8ff]"
-        />
-      )}
+      <Gallery 
+        layout="masonry" 
+        invitation={invitation}
+        sectionBg="bg-transparent"
+        titleFont={displayFont.className}
+        accentText="text-[#d946ef]"
+        borderColor="border-[#fae8ff]"
+      />
 
       {/* Multi Events List */}
       <Events 

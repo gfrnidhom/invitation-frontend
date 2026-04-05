@@ -1,10 +1,21 @@
 'use client';
 
 import React, { useState } from 'react';
+import VideoEmbed from './VideoEmbed';
 
 const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL;
 
-export default function Gallery({ invitation, sectionBg = 'bg-white', accentText = 'text-gray-800', subtitleText = 'text-gray-400', borderColor = 'border-gray-100' }) {
+export default function Gallery({ 
+  invitation, 
+  sectionBg = 'bg-white', 
+  accentText = 'text-gray-800', 
+  subtitleText = 'text-gray-400', 
+  borderColor = 'border-gray-100',
+  titleFont = 'font-serif',
+  titleSize = 'text-3xl',
+  imgClasses = 'shadow-sm border',
+  layout = 'grid'
+}) {
   const photos = invitation?.photos || [];
   const gallery = invitation?.gallery || [];
   
@@ -15,7 +26,9 @@ export default function Gallery({ invitation, sectionBg = 'bg-white', accentText
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
 
-  if (allPhotos.length === 0) return null;
+  const hasVideo = invitation?.background_video_url || invitation?.video_url;
+  
+  if (allPhotos.length === 0 && !hasVideo) return null;
 
   const openLightbox = (index) => {
     setPhotoIndex(index);
@@ -42,22 +55,67 @@ export default function Gallery({ invitation, sectionBg = 'bg-white', accentText
     <>
       <section id="gallery" className={`${sectionBg} px-6 py-20`}>
           <div className="max-w-4xl mx-auto">
+              <VideoEmbed invitation={invitation} sectionBg="bg-transparent" textColor={subtitleText} borderColor={borderColor} />
               <div className="text-center mb-14">
                   <p className={`text-xs tracking-[0.4em] uppercase ${subtitleText} mb-3`}>Galeri</p>
-                  <h2 className={`font-serif text-3xl ${accentText}`}>Our Moments</h2>
+                  <h2 className={`${titleFont} ${titleSize} ${accentText}`}>Our Moments</h2>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {allPhotos.map((photo, index) => (
-                      <div key={index} className={`gallery-item group relative aspect-square rounded-2xl overflow-hidden shadow-sm border ${borderColor} cursor-pointer hover:shadow-lg transition-shadow duration-300 reveal`}
-                           onClick={() => openLightbox(index)}>
-                          <img src={photo.startsWith('http') ? photo : `${storageUrl}/${photo}`} alt={`Gallery ${index + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                              <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6"/></svg>
-                          </div>
-                      </div>
-                  ))}
-              </div>
+              {allPhotos.length > 0 && (
+                <>
+                  {layout === 'grid' && (
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        {allPhotos.map((photo, index) => (
+                            <div key={index} className={`gallery-item group relative aspect-square rounded-2xl overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300 reveal ${borderColor} ${imgClasses}`}
+                                 onClick={() => openLightbox(index)}>
+                                <img src={photo.startsWith('http') ? photo : `${storageUrl}/${photo}`} alt={`Gallery ${index + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                    <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6"/></svg>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                  )}
+
+                  {layout === 'masonry' && (
+                    <div className="columns-2 md:columns-3 gap-4 space-y-4">
+                        {allPhotos.map((photo, index) => (
+                            <div key={index} className={`gallery-item group relative rounded-2xl overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300 reveal break-inside-avoid ${borderColor} ${imgClasses}`}
+                                 onClick={() => openLightbox(index)}>
+                                <img src={photo.startsWith('http') ? photo : `${storageUrl}/${photo}`} alt={`Gallery ${index + 1}`} className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                    <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6"/></svg>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                  )}
+
+                  {layout === 'abstract' && (
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 auto-rows-[150px] md:auto-rows-[250px]">
+                        {allPhotos.map((photo, index) => {
+                            let abstractClass = "col-span-1 row-span-1";
+                            if (index % 5 === 0) {
+                                abstractClass = "col-span-2 row-span-2";
+                            }
+                            if (index % 7 === 3) {
+                                abstractClass = "col-span-2 row-span-1";
+                            }
+
+                            return (
+                              <div key={index} className={`gallery-item group relative rounded-2xl overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-300 reveal ${borderColor} ${imgClasses} ${abstractClass}`}
+                                   onClick={() => openLightbox(index)}>
+                                  <img src={photo.startsWith('http') ? photo : `${storageUrl}/${photo}`} alt={`Gallery ${index + 1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                      <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6"/></svg>
+                                  </div>
+                              </div>
+                            );
+                        })}
+                    </div>
+                  )}
+                </>
+              )}
           </div>
       </section>
 

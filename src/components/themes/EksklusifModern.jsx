@@ -215,16 +215,14 @@ export default function EksklusifModern({ payload }) {
       </section>
 
       {/* Gallery */}
-      {invitation.gallery && invitation.gallery.length > 0 && (
-        <Gallery 
-          invitation={invitation}
-          sectionBg="bg-transparent"
-          titleFont={headingFont.className}
-          accentText="text-[#e1b984]"
-          borderColor="border-[#d79e60]/20"
-          imgClasses="shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5"
-        />
-      )}
+      <Gallery 
+        invitation={invitation}
+        sectionBg="bg-transparent"
+        titleFont={headingFont.className}
+        accentText="text-[#e1b984]"
+        borderColor="border-[#d79e60]/20"
+        imgClasses="shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5"
+      />
 
       {/* Multi Events */}
       <Events 

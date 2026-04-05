@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Cormorant_Garamond, Sacramento, Nunito_Sans } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
+import VideoEmbed from './partials/VideoEmbed';
+import Gallery from './partials/Gallery';
 
 const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
 const sacramento = Sacramento({ subsets: ['latin'], weight: ['400'] });
@@ -297,21 +299,16 @@ export default function EarthyNature({ payload }) {
                         )}
 
                         {/* Gallery */}
-                        {photos.length > 0 && (
-                            <section className="pb-20">
-                                <div className="text-center mb-12 px-8 md:px-12 en-reveal">
-                                    <h2 className={`${cormorant.className} text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Our Best</h2>
-                                    <p className={`${sacramento.className} text-4xl terracotta -mt-1`}>Moments</p>
-                                </div>
-                                <div className="flex overflow-x-auto gap-4 px-8 md:px-12 pb-6 scrollbar-hide snap-x">
-                                    {photos.slice(0, 8).map((photo, i) => (
-                                        <div key={i} className="flex-none w-56 md:w-72 aspect-[3/4] snap-center rounded-2xl overflow-hidden group border border-[#f5f1eb]/10 en-reveal">
-                                            <img src={getPhoto(photo)} alt={`Moment ${i+1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
-                        )}
+                        <Gallery 
+                            layout="masonry"
+                            invitation={invitation}
+                            sectionBg="bg-transparent"
+                            titleFont={cormorant.className}
+                            titleSize="text-2xl md:text-3xl font-bold tracking-[0.15em] uppercase"
+                            accentText="text-[#f5f1eb]"
+                            subtitleText="terracotta"
+                            borderColor="border-[#c67a5c]/20"
+                        />
 
                         {/* QR Checkin */}
                         <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={cormorant.className} textColor="text-[#f5f1eb]" borderStyle="border-[#c67a5c]/20" /></div>

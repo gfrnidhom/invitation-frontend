@@ -180,15 +180,14 @@ export default function RusticGarden({ payload }) {
       </section>
 
       {/* Gallery */}
-      {invitation.gallery && invitation.gallery.length > 0 && (
-        <Gallery 
-          invitation={invitation}
-          sectionBg="bg-[#f5efe6]"
-          titleFont={displayFont.className}
-          accentText="text-[#5e7a4c]"
-          borderColor="border-[#e4eadf]"
-        />
-      )}
+      <Gallery 
+        layout="masonry" 
+        invitation={invitation}
+        sectionBg="bg-[#f5efe6]"
+        titleFont={displayFont.className}
+        accentText="text-[#5e7a4c]"
+        borderColor="border-[#e4eadf]"
+      />
 
       {/* Multi Events List */}
       <Events 

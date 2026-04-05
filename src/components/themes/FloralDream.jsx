@@ -166,15 +166,14 @@ export default function FloralDream({ payload }) {
       </section>
 
       {/* Gallery */}
-      {invitation.gallery && invitation.gallery.length > 0 && (
-        <Gallery 
-          invitation={invitation}
-          sectionBg="bg-[#fef7f7]"
-          titleFont={script.className}
-          accentText="text-[#f472b6]"
-          borderColor="border-[#fce7f3]"
-        />
-      )}
+      <Gallery 
+        layout="masonry" 
+        invitation={invitation}
+        sectionBg="bg-[#fef7f7]"
+        titleFont={script.className}
+        accentText="text-[#f472b6]"
+        borderColor="border-[#fce7f3]"
+      />
 
       {/* Love Story Timeline */}
       {(invitation.loveStories || invitation.love_stories) && (invitation.loveStories || invitation.love_stories).length > 0 && (

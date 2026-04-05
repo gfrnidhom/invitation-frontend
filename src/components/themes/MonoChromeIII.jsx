@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { DM_Serif_Display, Lora, DM_Sans } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
+import VideoEmbed from './partials/VideoEmbed';
+import Gallery from './partials/Gallery';
 const dmSerif = DM_Serif_Display({ subsets: ['latin'], weight: ['400'], style: ['normal','italic'] });
 const lora = Lora({ subsets: ['latin'], weight: ['400','500','600','700'], style: ['normal','italic'] });
 const dmSans = DM_Sans({ subsets: ['latin'], weight: ['200','300','400','500','600','700'] });
@@ -152,7 +154,16 @@ export default function MonoChromeIII({ payload }) {
 
                         {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 m3-rv"><h2 className={`${dmSerif.className} text-3xl md:text-4xl text-[#1a1a1a]`}>Our Love Story</h2></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="m3cl rounded-3xl p-8 text-center mb-6 m3-rv" data-delay={`${i+1}`}><h3 className={`${dmSerif.className} text-lg text-[#1a1a1a] mb-4`}>{s.title}</h3><p className="text-sm text-[#1a1a1a]/50 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover grayscale"/></div>}</div>))}</section>}
 
-                        {phs.length>0&&<section className="pb-20"><div className="text-center mb-12 px-8 md:px-12 m3-rv"><h2 className={`${dmSerif.className} text-3xl md:text-4xl text-[#1a1a1a]`}>Our Moments</h2></div><div className="flex overflow-x-auto gap-4 px-8 md:px-12 pb-6 sh snap-x">{phs.slice(0,8).map((ph,i)=>(<div key={i} className="flex-none w-56 md:w-72 aspect-[3/4] snap-center rounded-2xl overflow-hidden group border border-[#1a1a1a]/5 m3-rv"><img src={gp(ph)} alt={`Moment ${i+1}`} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"/></div>))}</div></section>}
+                        <Gallery 
+                            layout="abstract"
+                            invitation={invitation}
+                            sectionBg="bg-transparent"
+                            titleFont={dmSerif.className}
+                            titleSize="text-3xl md:text-4xl"
+                            accentText="text-[#1a1a1a]"
+                            subtitleText="text-[#1a1a1a]/50"
+                            borderColor="border-[#1a1a1a]/10"
+                        />
 
                         <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={dmSerif.className} textColor="text-[#1a1a1a]" borderStyle="border-[#1a1a1a]/8"/></div>
 

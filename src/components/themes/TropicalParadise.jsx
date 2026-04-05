@@ -192,15 +192,14 @@ export default function TropicalParadise({ payload }) {
       </section>
 
       {/* Gallery */}
-      {invitation.gallery && invitation.gallery.length > 0 && (
-        <Gallery 
-          invitation={invitation}
-          sectionBg="bg-[#fffbf0]"
-          titleFont={displayFont.className}
-          accentText="text-[#0f766e]"
-          borderColor="border-[#fef7e6]"
-        />
-      )}
+      <Gallery 
+        layout="masonry" 
+        invitation={invitation}
+        sectionBg="bg-[#fffbf0]"
+        titleFont={displayFont.className}
+        accentText="text-[#0f766e]"
+        borderColor="border-[#fef7e6]"
+      />
 
       {/* Multi Events List */}
       <Events 

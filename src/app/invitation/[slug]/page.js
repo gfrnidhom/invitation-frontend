@@ -29,6 +29,9 @@ import MonoChromeIII from '@/components/themes/MonoChromeIII';
 import MonoChromeIV from '@/components/themes/MonoChromeIV';
 import MonoChromeV from '@/components/themes/MonoChromeV';
 import CinematicVow from '@/components/themes/CinematicVow';
+import MinimalistNavy from '@/components/themes/MinimalistNavy';
+import GardenParallax from '@/components/themes/GardenParallax';
+import EnchantedGarden from '@/components/themes/EnchantedGarden';
 
 export default function PublicInvitationViewer() {
   const { slug } = useParams();
@@ -147,6 +150,12 @@ export default function PublicInvitationViewer() {
         return <MonoChromeV payload={data} />;
       case 'cinematic-vow':
         return <CinematicVow payload={data} />;
+      case 'minimalist-navy':
+        return <MinimalistNavy payload={data} />;
+      case 'garden-parallax':
+        return <GardenParallax payload={data} />;
+      case 'enchanted-garden':
+        return <EnchantedGarden payload={data} />;
       // Future themes will be added here!
       default:
         // Fallback or elegantly handle unsupported themes

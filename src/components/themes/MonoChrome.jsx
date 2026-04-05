@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Bebas_Neue, Allura, Inter } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
+import VideoEmbed from './partials/VideoEmbed';
+import Gallery from './partials/Gallery';
 const bebas = Bebas_Neue({ subsets: ['latin'], weight: ['400'] });
 const allura = Allura({ subsets: ['latin'], weight: ['400'] });
 const inter = Inter({ subsets: ['latin'], weight: ['200','300','400','500','600','700','800'] });
@@ -124,7 +126,15 @@ export default function MonoChrome({ payload }) {
 
                         {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 mc-rv"><h2 className={`${bebas.className} text-3xl md:text-4xl tracking-[.2em] uppercase text-white`}>Our Love Story</h2></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="mc-card-w rounded-2xl p-8 text-center mb-6 mc-rv" data-delay={`${i+1}`}><h3 className={`${bebas.className} text-xl tracking-[.15em] uppercase mb-4`}>{s.title}</h3><p className="text-sm text-black/50 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover grayscale"/></div>}</div>))}</section>}
 
-                        {phs.length>0&&<section className="pb-20"><div className="text-center mb-12 px-8 md:px-12 mc-rv"><h2 className={`${bebas.className} text-3xl md:text-4xl tracking-[.2em] uppercase text-white`}>Our Moments</h2></div><div className="flex overflow-x-auto gap-4 px-8 md:px-12 pb-6 sh snap-x">{phs.slice(0,8).map((ph,i)=>(<div key={i} className="flex-none w-56 md:w-72 aspect-[3/4] snap-center rounded-2xl overflow-hidden group mc-card mc-rv"><img src={gp(ph)} alt={`Moment ${i+1}`} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"/></div>))}</div></section>}
+                        <Gallery 
+                            invitation={invitation}
+                            sectionBg="bg-transparent"
+                            titleFont={bebas.className}
+                            titleSize="text-3xl md:text-4xl tracking-[.2em] uppercase"
+                            accentText="text-white"
+                            subtitleText="text-white/50"
+                            borderColor="border-white/10"
+                        />
 
                         <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={bebas.className} textColor="text-white" borderStyle="border-white/10"/></div>
 

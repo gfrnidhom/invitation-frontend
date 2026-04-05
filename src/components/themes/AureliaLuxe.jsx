@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Playfair_Display, Inter } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
+import VideoEmbed from './partials/VideoEmbed';
+import Gallery from './partials/Gallery';
 
 // Google Fonts for Modern Minimalist Look
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
@@ -272,63 +274,18 @@ export default function AureliaLuxe({ payload }) {
                 </section>
 
                 {/* 4. VIDEO EMBED / STREAMING */}
-                {invitation?.background_video_url && (
-                    <section className="bg-gray-100 py-12 px-6 reveal">
-                        <div className="max-w-4xl mx-auto text-center">
-                            <div className="mb-10">
-                                <h3 className={`${playfair.className} text-2xl md:text-3xl text-gray-900 font-bold mb-3`}>Live Streaming</h3>
-                                <p className="text-xs text-gray-500 uppercase tracking-wider mb-6">Join through the live broadcasting community</p>
-                                <button className="px-6 py-2 border border-gray-300 text-[10px] uppercase font-bold text-gray-700 bg-white hover:bg-black hover:text-white transition-colors">WATCH LIVE STREAMING</button>
-                            </div>
-
-                            <div className="w-full relative pt-[56.25%] bg-black filter grayscale hover:grayscale-0 transition-all duration-700 cursor-pointer">
-                                {invitation.background_video_url.includes('youtube.com') || invitation.background_video_url.includes('youtu.be') ? (
-                                    <iframe 
-                                    className="absolute inset-0 w-full h-full"
-                                    src={
-                                        invitation.background_video_url.includes('watch?v=') 
-                                        ? invitation.background_video_url.replace('watch?v=', 'embed/').split('&')[0] 
-                                        : invitation.background_video_url.replace('youtu.be/', 'www.youtube.com/embed/').split('?')[0]
-                                    } 
-                                    title="Video Moments" 
-                                    frameBorder="0" 
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                                    allowFullScreen>
-                                    </iframe>
-                                ) : (
-                                    <video controls className="absolute inset-0 w-full h-full object-cover" src={invitation.background_video_url.startsWith('http') ? invitation.background_video_url : `${STORAGE_URL}/${invitation.background_video_url}`} />
-                                )}
-                            </div>
-                        </div>
-                    </section>
-                )}
+                <VideoEmbed invitation={invitation} sectionBg="bg-gray-100" textColor="text-gray-900" borderColor="border-gray-300" titleFont={playfair.className} />
 
                 {/* 5. OUR MOMENTS (GRID GALLERY) */}
-                <section className="bg-[#333333] pt-24 pb-32 px-6 relative reveal">
-                    <div className="max-w-5xl mx-auto text-center">
-                        <p className="text-[10px] text-gray-400 uppercase tracking-[0.3em] font-bold mb-4">Gallery</p>
-                        <h2 className={`${playfair.className} text-5xl md:text-6xl text-white font-bold mb-16`}>Our Moments</h2>
-                        
-                        <div className="masonry">
-                            {photos.slice(0, 6).map((photo, i) => (
-                                <div key={i} className="masonry-item mb-4 overflow-hidden relative group">
-                                    <img 
-                                        src={getPhoto(photo)} 
-                                        alt={`Moment ${i+1}`} 
-                                        className="w-full h-auto object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105"
-                                    />
-                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
-                                </div>
-                            ))}
-                            {/* Fallbacks if empty gallery */}
-                            {photos.length === 0 && [1,2,3,4].map(i => (
-                                <div key={i} className="masonry-item bg-gray-700 w-full aspect-[3/4] mb-4 flex items-center justify-center border border-gray-600">
-                                   <span className="text-gray-500 text-xs">Photo Placeholder</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
+                <Gallery 
+                    invitation={invitation}
+                    sectionBg="bg-[#333333]"
+                    titleFont={playfair.className}
+                    titleSize="text-5xl md:text-6xl font-bold"
+                    accentText="text-white"
+                    subtitleText="text-gray-400"
+                    borderColor="border-gray-600"
+                />
 
                 {/* 6. QUOTE CARD (OVERLAPPING BG) */}
                 <section className="relative h-40 bg-gray-50 flex items-center justify-center reveal">

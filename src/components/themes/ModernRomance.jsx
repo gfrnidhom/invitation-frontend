@@ -271,17 +271,16 @@ export default function ModernRomance({ payload }) {
       </section>
 
       {/* Gallery */}
-      {invitation.gallery && invitation.gallery.length > 0 && (
-        <Gallery 
-          invitation={invitation}
-          sectionBg="bg-[#fcfaf9]"
-          titleFont={scriptFont.className}
-          titleSize="text-5xl md:text-6xl"
-          accentText="text-[#a3714b]"
-          borderColor="border-[#d7c4af]"
-          imgClasses="bg-white p-2 shadow-md filter contrast-[0.95]"
-        />
-      )}
+      <Gallery 
+        layout="abstract" 
+        invitation={invitation}
+        sectionBg="bg-[#fcfaf9]"
+        titleFont={scriptFont.className}
+        titleSize="text-5xl md:text-6xl"
+        accentText="text-[#a3714b]"
+        borderColor="border-[#d7c4af]"
+        imgClasses="bg-white p-2 shadow-md filter contrast-[0.95]"
+      />
 
       {/* Love Story Timeline */}
       {(invitation.loveStories || invitation.love_stories) && (invitation.loveStories || invitation.love_stories).length > 0 && (

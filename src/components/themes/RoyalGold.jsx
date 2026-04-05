@@ -193,15 +193,14 @@ export default function RoyalGold({ payload }) {
       </section>
 
       {/* Gallery */}
-      {invitation.gallery && invitation.gallery.length > 0 && (
-        <Gallery 
-          invitation={invitation}
-          sectionBg="bg-[#0a0a0f]"
-          titleFont={displayFont.className}
-          accentText="text-[#d4b96a]"
-          borderColor="border-[#c9a84c]/10"
-        />
-      )}
+      <Gallery 
+        layout="abstract" 
+        invitation={invitation}
+        sectionBg="bg-[#0a0a0f]"
+        titleFont={displayFont.className}
+        accentText="text-[#d4b96a]"
+        borderColor="border-[#c9a84c]/10"
+      />
 
       {/* Multi Events List */}
       <Events 

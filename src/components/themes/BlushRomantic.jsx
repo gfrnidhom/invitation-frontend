@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Marcellus, Dancing_Script, Poppins } from 'next/font/google';
 import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
+import VideoEmbed from './partials/VideoEmbed';
+import Gallery from './partials/Gallery';
 const marcellus = Marcellus({ subsets: ['latin'], weight: ['400'] });
 const dancing = Dancing_Script({ subsets: ['latin'], weight: ['400','500','600','700'] });
 const poppins = Poppins({ subsets: ['latin'], weight: ['200','300','400','500','600','700'] });
@@ -138,7 +140,16 @@ export default function BlushRomantic({ payload }) {
 
                         {invitation?.love_stories&&invitation.love_stories.length>0&&<section className="px-8 md:px-12 pb-20"><div className="text-center mb-12 br-rv"><h2 className={`${marcellus.className} text-2xl md:text-3xl tracking-[.15em] uppercase text-[#fefcfa]`}>Our</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Love Story</p></div>{[...invitation.love_stories].sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map((s,i)=>(<div key={s.id||i} className="bcl rounded-3xl p-8 text-center mb-6 br-rv" data-delay={`${i+1}`}><h3 className={`${marcellus.className} text-lg md:text-xl tracking-[.15em] uppercase text-[#8b3a4a] mb-4`}>{s.title}</h3><p className="text-sm text-[#8b3a4a]/55 leading-relaxed font-light">{s.description}</p>{s.photo&&<div className="mt-6 rounded-xl overflow-hidden"><img src={gp(s.photo)} alt={s.title} className="w-full h-44 object-cover"/></div>}</div>))}</section>}
 
-                        {phs.length>0&&<section className="pb-20"><div className="text-center mb-12 px-8 md:px-12 br-rv"><h2 className={`${marcellus.className} text-2xl md:text-3xl tracking-[.15em] uppercase text-[#fefcfa]`}>Our Best</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Moments</p></div><div className="flex overflow-x-auto gap-4 px-8 md:px-12 pb-6 sh snap-x">{phs.slice(0,8).map((ph,i)=>(<div key={i} className="flex-none w-56 md:w-72 aspect-[3/4] snap-center rounded-2xl overflow-hidden group border border-[#fefcfa]/10 br-rv"><img src={gp(ph)} alt={`Moment ${i+1}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/></div>))}</div></section>}
+                        <Gallery 
+                            layout="abstract"
+                            invitation={invitation}
+                            sectionBg="bg-transparent"
+                            titleFont={marcellus.className}
+                            titleSize="text-2xl md:text-3xl tracking-[.15em] uppercase"
+                            accentText="text-[#fefcfa]"
+                            subtitleText="rg-txt"
+                            borderColor="border-[#b76e79]/30"
+                        />
 
                         <div className="px-8 md:px-12"><QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={marcellus.className} textColor="text-[#fefcfa]" borderStyle="border-[#b76e79]/20"/></div>
 
