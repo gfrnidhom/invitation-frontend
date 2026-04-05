@@ -24,11 +24,18 @@ export function middleware(request) {
   }
 
   // Jika user mengakses /app/slug, rewrite ke struktur internal /invitation/slug
+  // KECUALI untuk halaman bawaan dashboard aplikasi (seperti /app/dashboard)
   if (url.pathname.startsWith('/app/')) {
     const slug = url.pathname.replace('/app/', '');
-    const newUrl = url.clone();
-    newUrl.pathname = `/invitation/${slug}`;
-    return NextResponse.rewrite(newUrl);
+    const firstSegment = slug.split('/')[0];
+    const reservedDashboardRoutes = ['dashboard', 'gallery', 'invitations', 'profile', 'subscriptions', 'themes'];
+    
+    // Pastikan ini bukan halaman dashboard
+    if (!reservedDashboardRoutes.includes(firstSegment)) {
+      const newUrl = url.clone();
+      newUrl.pathname = `/invitation/${slug}`;
+      return NextResponse.rewrite(newUrl);
+    }
   }
 
   return NextResponse.next();
