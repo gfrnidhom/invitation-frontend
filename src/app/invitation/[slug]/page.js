@@ -1,12 +1,12 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import { publicInvitation } from '@/lib/api';
 import Head from 'next/head';
+import toast from 'react-hot-toast';
 
 // We will import themes dynamically or statically here soon
 import ModernMinimalist from '@/components/themes/ModernMinimalist';
+// ... other imports ...
 import ElegantWhite from '@/components/themes/ElegantWhite';
 import FloralDream from '@/components/themes/FloralDream';
 import ClassicJavanese from '@/components/themes/ClassicJavanese';
@@ -41,28 +41,51 @@ export default function PublicInvitationViewer() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  
+  // ── Global Audio Engine ──
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const audioController = {
+    isPlaying,
+    play: () => {
+      if (!audioRef.current) return;
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch((err) => {
+            console.error("Playback failed:", err);
+            // Don't toast here as it might be annoying on warmup
+          });
+      }
+    },
+    pause: () => {
+      if (!audioRef.current) return;
+      audioRef.current.pause();
+      setIsPlaying(false);
+    },
+    toggle: () => {
+      if (isPlaying) audioController.pause();
+      else audioController.play();
+    }
+  };
 
   // ── Global Audio Context Unlocker (Mobile Fix) ──
   useEffect(() => {
     const unlockAudio = () => {
-      const audios = document.querySelectorAll('audio');
-      if (audios.length === 0) return;
+      if (!audioRef.current) return;
       
-      audios.forEach(audio => {
-        // Play and immediately pause/mute to satisfy browser gesture requirements
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise.then(() => {
-            // If the audio shouldn't be playing yet, we just pause it.
-            // This "unblocks" the element for later .play() calls in themes.
-            if (audio.paused) audio.pause();
-          }).catch(() => {
-            // Ignore as this is just a warmup trigger
-          });
-        }
-      });
+      // Trik "Warmup" untuk iOS
+      // Kita panggil play sebentar lalu pause untuk membuka ijin browser
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          // Hanya pause jika kita belum benar-benar mau memutar (belum buka undangan)
+          if (!isPlaying) audioRef.current.pause();
+        }).catch(() => {});
+      }
       
-      // Cleanup: only need to run this once per page load
       window.removeEventListener('click', unlockAudio, true);
       window.removeEventListener('touchstart', unlockAudio, true);
     };
@@ -74,7 +97,7 @@ export default function PublicInvitationViewer() {
       window.removeEventListener('click', unlockAudio, true);
       window.removeEventListener('touchstart', unlockAudio, true);
     };
-  }, [data]); // Re-run if data/theme changes
+  }, [isPlaying]);
 
   useEffect(() => {
     publicInvitation.get(slug, token)
@@ -119,12 +142,10 @@ export default function PublicInvitationViewer() {
     );
   }
 
-  // Inject Meta Data to Document Head dynamically
   const invitation = data.invitation;
+  const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://app.digitvitation.my.id/storage';
 
-  // Normalize photo fields: backend returns arrays (JSON cast)
-  // bride_photo & groom_photo are single photos → flatten to string
-  // cover_photo is intentionally an array (slideshow/thumbnails) → keep as array
+  // Normalize photo fields
   if (invitation) {
     ['bride_photo', 'groom_photo'].forEach(field => {
       if (Array.isArray(invitation[field])) {
@@ -137,74 +158,86 @@ export default function PublicInvitationViewer() {
 
   // THEME SWITCHER
   const renderTheme = () => {
+    const props = { payload: data, audioController };
     switch (themeSlug) {
       case 'modern-minimalist':
-        return <ModernMinimalist payload={data} />;
+        return <ModernMinimalist {...props} />;
       case 'elegant-white':
-        return <ElegantWhite payload={data} />;
+        return <ElegantWhite {...props} />;
       case 'floral-dream':
-        return <FloralDream payload={data} />;
+        return <FloralDream {...props} />;
       case 'classic-javanese':
-        return <ClassicJavanese payload={data} />;
+        return <ClassicJavanese {...props} />;
       case 'rustic-garden':
-        return <RusticGarden payload={data} />;
+        return <RusticGarden {...props} />;
       case 'royal-gold':
-        return <RoyalGold payload={data} />;
+        return <RoyalGold {...props} />;
       case 'birthday-bash':
-        return <BirthdayBash payload={data} />;
+        return <BirthdayBash {...props} />;
       case 'tropical-paradise':
-        return <TropicalParadise payload={data} />;
+        return <TropicalParadise {...props} />;
       case 'modern-romance':
-        return <ModernRomance payload={data} />;
+        return <ModernRomance {...props} />;
       case 'eksklusif-modern':
-        return <EksklusifModern payload={data} />;
+        return <EksklusifModern {...props} />;
       case 'aurelia-luxe':
-        return <AureliaLuxe payload={data} />;
+        return <AureliaLuxe {...props} />;
       case 'botanical-sage':
-        return <BotanicalSage payload={data} />;
+        return <BotanicalSage {...props} />;
       case 'minimalist-black':
-        return <MinimalistBlack payload={data} />;
+        return <MinimalistBlack {...props} />;
       case 'midnight-gold':
-        return <MidnightGold payload={data} />;
+        return <MidnightGold {...props} />;
       case 'earthy-nature':
-        return <EarthyNature payload={data} />;
+        return <EarthyNature {...props} />;
       case 'frosted-elegance':
-        return <FrostedElegance payload={data} />;
+        return <FrostedElegance {...props} />;
       case 'blush-romantic':
-        return <BlushRomantic payload={data} />;
+        return <BlushRomantic {...props} />;
       case 'monochrome':
-        return <MonoChrome payload={data} />;
+        return <MonoChrome {...props} />;
       case 'monochrome-ii':
-        return <MonoChromeII payload={data} />;
+        return <MonoChromeII {...props} />;
       case 'monochrome-iii':
-        return <MonoChromeIII payload={data} />;
+        return <MonoChromeIII {...props} />;
       case 'monochrome-iv':
-        return <MonoChromeIV payload={data} />;
+        return <MonoChromeIV {...props} />;
       case 'monochrome-v':
-        return <MonoChromeV payload={data} />;
+        return <MonoChromeV {...props} />;
       case 'cinematic-vow':
-        return <CinematicVow payload={data} />;
+        return <CinematicVow {...props} />;
       case 'minimalist-navy':
-        return <MinimalistNavy payload={data} />;
+        return <MinimalistNavy {...props} />;
       case 'garden-parallax':
-        return <GardenParallax payload={data} />;
+        return <GardenParallax {...props} />;
       case 'enchanted-garden':
-        return <EnchantedGarden payload={data} />;
-      // Future themes will be added here!
+        return <EnchantedGarden {...props} />;
       default:
-        // Fallback or elegantly handle unsupported themes
-        return <ModernMinimalist payload={data} />; 
+        return <ModernMinimalist {...props} />; 
     }
   };
 
+  const finalMusicUrl = invitation?.music_url 
+    ? (invitation.music_url.startsWith('http') ? invitation.music_url : `${storageUrl}/${invitation.music_url}`)
+    : null;
+
   return (
     <>
-      <title>{`${invitation.groom_name} & ${invitation.bride_name} | Wedding Invitation`}</title>
-      <meta name="description" content={invitation.description || 'Anda diundang ke acara pernikahan kami!'} />
-      {/* 
-        NOTE: For true OpenGraph preview features in WhatsApp, Next.js 'generateMetadata' is needed. 
-        Because this is a strictly Client Component for now, we set basic head.
-      */}
+      <Head>
+        <title>{`${invitation.groom_name} & ${invitation.bride_name} | Wedding Invitation`}</title>
+      </Head>
+      
+      {/* ── SINGLE GLOBAL AUDIO ELEMENT ── */}
+      {finalMusicUrl && (
+        <audio 
+          ref={audioRef} 
+          src={finalMusicUrl} 
+          loop 
+          preload="auto" 
+          crossOrigin="anonymous"
+        />
+      )}
+
       {renderTheme()}
     </>
   );

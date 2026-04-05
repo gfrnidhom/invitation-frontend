@@ -13,11 +13,9 @@ const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700', '900'] });
 
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://app.digitvitation.my.id/storage';
 
-export default function MidnightGold({ payload }) {
+export default function MidnightGold({ payload, audioController }) {
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
     const rightPanelRef = useRef(null);
 
     const [nameInput, setNameInput] = useState(guestName || '');
@@ -81,21 +79,11 @@ export default function MidnightGold({ payload }) {
 
     const handleOpen = () => {
         setIsOpen(true);
-        if (audioRef.current) {
-            // Force play on user interaction
-            const playPromise = audioRef.current.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => setIsPlaying(true)).catch(() => {
-                    console.error("Audio playback triggered but blocked.");
-                });
-            }
-        }
+        if (audioController) audioController.play();
     };
 
     const toggleAudio = () => {
-        if (!audioRef.current) return;
-        if (isPlaying) { audioRef.current.pause(); setIsPlaying(false); }
-        else { audioRef.current.play(); setIsPlaying(true); }
+        if (audioController) audioController.toggle();
     };
 
     const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
@@ -159,10 +147,7 @@ export default function MidnightGold({ payload }) {
                 }
             `}} />
 
-            {/* AUDIO */}
-            {invitation?.music_url && (
-                <audio ref={audioRef} src={invitation.music_url.startsWith('http') ? invitation.music_url : `${STORAGE_URL}/${invitation.music_url}`} loop />
-            )}
+
 
             {/* ═══════ COVER OVERLAY ═══════ */}
             <div className={`cover-overlay-mg ${isOpen ? 'open' : ''}`}>
@@ -236,7 +221,7 @@ export default function MidnightGold({ payload }) {
 
                         {invitation?.music_url && (
                             <button onClick={toggleAudio} className="absolute bottom-8 right-8 lg:bottom-1/2 lg:-right-6 lg:translate-y-1/2 z-50 w-12 h-12 rounded-full bg-[#0c1220] gold-border flex items-center justify-center hover:border-[#c9a84c]/60 transition-all shadow-2xl">
-                                {isPlaying ? (
+                                {audioController?.isPlaying ? (
                                     <svg className="w-5 h-5 music-spin-mg gold-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z" /></svg>
                                 ) : (
                                     <svg className="w-5 h-5 gold-text" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
