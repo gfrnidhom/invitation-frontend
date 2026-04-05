@@ -14,41 +14,63 @@ export function middleware(request) {
     return NextResponse.next();
   }
 
-  // Pengecekan Subdomain
-  // Saat production, ganti 'localhost:3000' dengan main domain, misalnya 'undanganku.com'
-  const mainDomain = 'localhost:3000'; 
+  const hostname = host?.split(':')[0]; // hostname tanpa port
+
+  // === PRODUCTION: digitvitation.my.id ===
+  const prodDomain = 'digitvitation.my.id';
   
-  if (host && host.includes(mainDomain)) {
-    // Memisahkan subdomain
-    // Contoh host: 'dimas-nisa.localhost:3000' -> subdomain: 'dimas-nisa'
-    // Contoh host: 'localhost:3000' -> arr akan berupa ['localhost:3000'], yang jika pop() itu 'localhost:3000', tidak akan masuk kondisi
-    const hostname = host.split(':')[0]; // get hostname only without port
+  if (hostname && hostname.endsWith(prodDomain)) {
+    // Cek apakah ada subdomain
+    // Contoh: dimas-nisa.digitvitation.my.id → parts = ['dimas-nisa', 'digitvitation', 'my', 'id']
+    // digitvitation.my.id → parts = ['digitvitation', 'my', 'id']
+    // www.digitvitation.my.id → parts = ['www', 'digitvitation', 'my', 'id']
     const parts = hostname.split('.');
+    const domainParts = prodDomain.split('.').length; // 3 untuk 'digitvitation.my.id'
     
-    // Asumsi: maindomain di localhost adalah localhost. Jadi dimas-nisa.localhost akan jadi ['dimas-nisa', 'localhost']
-    // Saat dionlinekan bisa 3 parts: ['dimas-nisa', 'undangan', 'com'] 
-    
-    // Kita filter dulu untuk domain lokal (localhost)
-    if (hostname !== 'localhost' && hostname.endsWith('.localhost')) {
-      const subdomain = hostname.replace('.localhost', '');
+    if (parts.length > domainParts) {
+      // Ada subdomain
+      const subdomain = parts.slice(0, parts.length - domainParts).join('.');
       
-      // Jika subdomain valid, bukan 'www', bukan 'app', maka anggap itu adalah slug undangan/tema
+      // Skip subdomain www dan app
       if (subdomain !== 'www' && subdomain !== 'app') {
         const newUrl = url.clone();
         
-        // Handle route khusus '/preview' untuk preview tema
         if (url.pathname.startsWith('/preview')) {
           newUrl.pathname = `/invitation/preview/${subdomain}`;
         } else {
-          // Redirect logic internal tanpa merubah URL yg ada di browser
-          // User mengetik dimas-nisa.localhost:3000, Next.js akan memanggil path /invitation/dimas-nisa
           newUrl.pathname = `/invitation/${subdomain}${url.pathname === '/' ? '' : url.pathname}`;
         }
         
         return NextResponse.rewrite(newUrl);
       }
     } else {
-      // Main Domain logic
+      // Main domain (tanpa subdomain) — handle /preview/
+      if (url.pathname.startsWith('/preview/')) {
+        const slug = url.pathname.replace('/preview/', '');
+        const newUrl = url.clone();
+        newUrl.pathname = `/invitation/preview/${slug}`;
+        return NextResponse.rewrite(newUrl);
+      }
+    }
+  }
+
+  // === LOCAL DEV: localhost ===
+  if (hostname && hostname.endsWith('localhost')) {
+    if (hostname !== 'localhost') {
+      const subdomain = hostname.replace('.localhost', '');
+      
+      if (subdomain !== 'www' && subdomain !== 'app') {
+        const newUrl = url.clone();
+        
+        if (url.pathname.startsWith('/preview')) {
+          newUrl.pathname = `/invitation/preview/${subdomain}`;
+        } else {
+          newUrl.pathname = `/invitation/${subdomain}${url.pathname === '/' ? '' : url.pathname}`;
+        }
+        
+        return NextResponse.rewrite(newUrl);
+      }
+    } else {
       if (url.pathname.startsWith('/preview/')) {
         const slug = url.pathname.replace('/preview/', '');
         const newUrl = url.clone();
@@ -64,13 +86,6 @@ export function middleware(request) {
 // Konfigurasi matcher supaya middleware ini bekerja disemua rute selain statis
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
-     */
     '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };

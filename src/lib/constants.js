@@ -24,11 +24,11 @@ export const APP_CONFIG = {
 // Mendapatkan URL lengkap untuk live undangan berdasarkan slug
 export const getInvitationUrl = (slug) => {
   if (!slug) return '#';
-  return `http://${slug}.${APP_CONFIG.DOMAIN}`;
+  return `https://${slug}.${APP_CONFIG.DOMAIN}`;
 };
 
 // Mendapatkan URL lengkap untuk halaman preview tema berdasarkan slug tema
 export const getThemePreviewUrl = (slug) => {
   if (!slug) return '#';
-  return `http://${APP_CONFIG.DOMAIN}/preview/${slug}`;
+  return `https://${APP_CONFIG.DOMAIN}/preview/${slug}`;
 };
