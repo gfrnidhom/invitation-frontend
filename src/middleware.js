@@ -14,71 +14,21 @@ export function middleware(request) {
     return NextResponse.next();
   }
 
-  const hostname = host?.split(':')[0]; // hostname tanpa port
-
-  // === PRODUCTION: digitvitation.my.id ===
-  const prodDomain = 'digitvitation.my.id';
-  
-  if (hostname && hostname.endsWith(prodDomain)) {
-    // Cek apakah ada subdomain
-    // Contoh: dimas-nisa.digitvitation.my.id → parts = ['dimas-nisa', 'digitvitation', 'my', 'id']
-    // digitvitation.my.id → parts = ['digitvitation', 'my', 'id']
-    // www.digitvitation.my.id → parts = ['www', 'digitvitation', 'my', 'id']
-    const parts = hostname.split('.');
-    const domainParts = prodDomain.split('.').length; // 3 untuk 'digitvitation.my.id'
-    
-    if (parts.length > domainParts) {
-      // Ada subdomain
-      const subdomain = parts.slice(0, parts.length - domainParts).join('.');
-      
-      // Subdomain undangan (bukan www/app)
-      if (subdomain !== 'www' && subdomain !== 'app') {
-        const newUrl = url.clone();
-        
-        if (url.pathname.startsWith('/preview')) {
-          newUrl.pathname = `/invitation/preview/${subdomain}`;
-        } else {
-          newUrl.pathname = `/invitation/${subdomain}${url.pathname === '/' ? '' : url.pathname}`;
-        }
-        
-        return NextResponse.rewrite(newUrl);
-      }
-      // www/app → lanjut ke logic main domain di bawah
-    }
-
-    // Main domain (atau www/app subdomain) — handle /preview/
-    if (url.pathname.startsWith('/preview/')) {
-      const slug = url.pathname.replace('/preview/', '');
-      const newUrl = url.clone();
-      newUrl.pathname = `/invitation/preview/${slug}`;
-      return NextResponse.rewrite(newUrl);
-    }
+  // Jika ada path khusus yang perlu ditangani middleware (selain subdomain)
+  // Misalnya untuk `/preview/` agar tetap sesuai logic sebelumnya
+  if (url.pathname.startsWith('/preview/')) {
+    const slug = url.pathname.replace('/preview/', '');
+    const newUrl = url.clone();
+    newUrl.pathname = `/invitation/preview/${slug}`;
+    return NextResponse.rewrite(newUrl);
   }
 
-  // === LOCAL DEV: localhost ===
-  if (hostname && hostname.endsWith('localhost')) {
-    if (hostname !== 'localhost') {
-      const subdomain = hostname.replace('.localhost', '');
-      
-      if (subdomain !== 'www' && subdomain !== 'app') {
-        const newUrl = url.clone();
-        
-        if (url.pathname.startsWith('/preview')) {
-          newUrl.pathname = `/invitation/preview/${subdomain}`;
-        } else {
-          newUrl.pathname = `/invitation/${subdomain}${url.pathname === '/' ? '' : url.pathname}`;
-        }
-        
-        return NextResponse.rewrite(newUrl);
-      }
-    } else {
-      if (url.pathname.startsWith('/preview/')) {
-        const slug = url.pathname.replace('/preview/', '');
-        const newUrl = url.clone();
-        newUrl.pathname = `/invitation/preview/${slug}`;
-        return NextResponse.rewrite(newUrl);
-      }
-    }
+  // Jika user mengakses /app/slug, rewrite ke struktur internal /invitation/slug
+  if (url.pathname.startsWith('/app/')) {
+    const slug = url.pathname.replace('/app/', '');
+    const newUrl = url.clone();
+    newUrl.pathname = `/invitation/${slug}`;
+    return NextResponse.rewrite(newUrl);
   }
 
   return NextResponse.next();

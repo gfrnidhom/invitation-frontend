@@ -24,7 +24,7 @@ export const APP_CONFIG = {
 // Mendapatkan URL lengkap untuk live undangan berdasarkan slug
 export const getInvitationUrl = (slug) => {
   if (!slug) return '#';
-  return `https://${slug}.${APP_CONFIG.DOMAIN}`;
+  return `https://${APP_CONFIG.DOMAIN}/app/${slug}`;
 };
 
 // Mendapatkan URL lengkap untuk halaman preview tema berdasarkan slug tema
