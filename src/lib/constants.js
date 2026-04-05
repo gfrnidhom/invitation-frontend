@@ -4,16 +4,16 @@
 export const APP_CONFIG = {
   // 1. Domain Utama Aplikasi (tanpa http://)
   // Saat production, ubah menjadi domain kamu misal: 'undanganku.com'
-  DOMAIN: 'localhost:3000',
+  DOMAIN: 'digitvitation.my.id',
 
   // 2. Base URL Backend/API (jika diperlukan untuk link lain)
-  API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api',
+  API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'https://app.digitvitation.my.id/api',
 
   // 3. Base URL Storage (untuk memuat gambar/file dari backend)
-  STORAGE_URL: process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000/storage',
+  STORAGE_URL: process.env.NEXT_PUBLIC_STORAGE_URL || 'https://app.digitvitation.my.id/storage',
 
   // 4. API Keys
-  MIDTRANS_CLIENT_KEY: process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || 'SB-Mid-client-B4SmQWAOW3frAFD9',
+  MIDTRANS_CLIENT_KEY: process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY || 'Mid-client-Bg1b5RB7V2qKBDBT',
 };
 
 
