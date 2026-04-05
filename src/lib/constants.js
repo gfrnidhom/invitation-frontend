@@ -4,7 +4,7 @@
 export const APP_CONFIG = {
   // 1. Domain Utama Aplikasi (tanpa http://)
   // Saat production, ubah menjadi domain kamu misal: 'undanganku.com'
-  DOMAIN: 'localhost:3000',
+  DOMAIN: 'digitvitation.my.id',
 
   // 2. Base URL Backend/API (jika diperlukan untuk link lain)
   API_BASE_URL: process.env.NEXT_PUBLIC_API_URL || 'https://app.digitvitation.my.id/api',
@@ -24,7 +24,7 @@ export const APP_CONFIG = {
 // Mendapatkan URL lengkap untuk live undangan berdasarkan slug
 export const getInvitationUrl = (slug) => {
   if (!slug) return '#';
-  return `http://${APP_CONFIG.DOMAIN}/${slug}`;
+  return `https://${APP_CONFIG.DOMAIN}/${slug}`;
 };
 
 // Mendapatkan URL lengkap untuk halaman preview tema berdasarkan slug tema
