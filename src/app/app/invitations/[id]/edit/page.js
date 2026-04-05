@@ -529,7 +529,8 @@ function SettingsTab({ invitation, onSave, saving }) {
         <div style={{ marginTop: '8px', fontSize: '13px', color: '#64748b' }}>
           Variabel yang tersedia: <br/>
           <code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px', marginRight: '6px' }}>[nama_tamu]</code>
-          <code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>[link_undangan]</code>
+          <code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px', marginRight: '6px' }}>[link_undangan]</code>
+          <code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>[eticket]</code>
         </div>
       </div>
       <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Pengaturan'}</button>

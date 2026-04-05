@@ -101,24 +101,33 @@ export default function GuestsPage({ params }) {
 
   const getInviteText = (guest) => {
     if (!invitation) return '';
-    const nameSlug = guest.name.trim().replace(/\s+/g, '-');
+    const nameSlug = guest.name.trim().replace(/\\s+/g, '-');
     const invLink = `${getInvitationUrl(invitation.slug)}?to=${encodeURIComponent(nameSlug)}`;
     
-    const template = invitation.whatsapp_template || `Halo [nama_tamu],\n\nKami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.\n\nSimpan tanggalnya dan jadilah bagian dari hari istimewa kami.\n\nLihat detail undangan di sini:\n[link_undangan]\n\nAtas kehadiran & doanya, kami ucapkan terima kasih.`;
+    const template = invitation.whatsapp_template || `Halo [nama_tamu],\\n\\nKami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.\\n\\nSimpan tanggalnya dan jadilah bagian dari hari istimewa kami.\\n\\nLihat detail undangan di sini:\\n[link_undangan]\\n\\nAtas kehadiran & doanya, kami ucapkan terima kasih.`;
     
-    let text = template
-      .replace(/\[nama_tamu\]/g, guest.name)
-      .replace(/\[link_undangan\]/g, invLink);
-      
+    let ticketUrl = '';
     if (guest.qr_code && guest.token) {
-      // Menghasilkan Tautan E-Ticket Front-End untuk Tampilan Mewah
       const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://app.digitvitation.my.id';
-      const ticketUrl = `${baseUrl}/ticket/${invitation.slug}?to=${encodeURIComponent(nameSlug)}&token=${encodeURIComponent(guest.token)}`;
-      text += `\n\nSimpan E-Ticket Anda di tautan berikut untuk kemudahan Check-in di lokasi:\n${ticketUrl}`;
+      ticketUrl = `${baseUrl}/ticket/${invitation.slug}?to=${encodeURIComponent(nameSlug)}&token=${encodeURIComponent(guest.token)}`;
     } else if (guest.qr_code) {
       const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000/storage';
-      const qrUrl = guest.qr_code.startsWith('http') ? guest.qr_code : `${storageUrl}/${guest.qr_code}`;
-      text += `\n\nSimpan QR Code berikut untuk kemudahan Check-in di lokasi:\n${qrUrl}`;
+      ticketUrl = guest.qr_code.startsWith('http') ? guest.qr_code : `${storageUrl}/${guest.qr_code}`;
+    }
+
+    let text = template
+      .replace(/\\[nama_tamu\\]/g, guest.name)
+      .replace(/\\[link_undangan\\]/g, invLink);
+      
+    if (text.includes('[eticket]')) {
+      text = text.replace(/\\[eticket\\]/g, ticketUrl);
+    } else {
+      // Auto-append if [eticket] isn't used in the template but the guest has one
+      if (guest.qr_code && guest.token) {
+        text += `\\n\\nSimpan E-Ticket Anda di tautan berikut untuk kemudahan Check-in di lokasi:\\n${ticketUrl}`;
+      } else if (guest.qr_code) {
+        text += `\\n\\nSimpan QR Code berikut untuk kemudahan Check-in di lokasi:\\n${ticketUrl}`;
+      }
     }
     return text;
   };
