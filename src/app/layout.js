@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
         <script
-          src="https://app.sandbox.midtrans.com/snap/snap.js"
+          src="https://app.midtrans.com/snap/snap.js"
           data-client-key={APP_CONFIG.MIDTRANS_CLIENT_KEY}
         />
       </head>
