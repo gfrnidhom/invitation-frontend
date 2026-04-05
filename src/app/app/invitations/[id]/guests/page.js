@@ -2,7 +2,7 @@
 
 import { useState, useEffect, use, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Plus, Search, Trash2, UserCheck, Users, MessageCircle, Clock, CheckCircle, XCircle, FileText, Save, Upload, Download, QrCode, X, Printer } from 'lucide-react';
+import { ArrowLeft, Plus, Search, Trash2, UserCheck, Users, MessageCircle, Clock, CheckCircle, XCircle, FileText, Save, Upload, Download, QrCode, X, Printer, Copy, ChevronLeft, ChevronRight } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import toast from 'react-hot-toast';
 import { confirmAction } from '@/lib/toast-confirm';
@@ -20,6 +20,12 @@ export default function GuestsPage({ params }) {
   const [saving, setSaving] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
+  const [totalGuests, setTotalGuests] = useState(0);
+  const [perPage, setPerPage] = useState(15);
+
   const [showImportModal, setShowImportModal] = useState(false);
   const [importFile, setImportFile] = useState(null);
   const [importPreview, setImportPreview] = useState([]);
@@ -28,12 +34,38 @@ export default function GuestsPage({ params }) {
   const fileInputRef = useRef(null);
   const [dragOver, setDragOver] = useState(false);
 
+  const fetchGuests = async (page = 1) => {
+    try {
+      const res = await guests.list(id, page);
+      setGuestList(res.data || []);
+      if (res.meta) {
+        setCurrentPage(res.meta.current_page || page);
+        setLastPage(res.meta.last_page || 1);
+        setTotalGuests(res.meta.total || 0);
+        setPerPage(res.meta.per_page || 15);
+      } else if (res.last_page) {
+        setCurrentPage(res.current_page || page);
+        setLastPage(res.last_page || 1);
+        setTotalGuests(res.total || 0);
+        setPerPage(res.per_page || 15);
+      }
+    } catch {
+      setGuestList([]);
+    }
+  };
+
   useEffect(() => { 
     Promise.all([
-      guests.list(id).then((res) => setGuestList(res.data || [])).catch(() => {}),
+      fetchGuests(1),
       invitations.get(id).then((res) => setInvitation(res.data || res)).catch(() => {})
     ]).finally(() => setLoading(false)); 
   }, [id]);
+
+  const handlePageChange = (page) => {
+    if (page < 1 || page > lastPage) return;
+    setCurrentPage(page);
+    fetchGuests(page);
+  };
 
   const handleSave = async () => { 
     setSaving(true); 
@@ -44,7 +76,8 @@ export default function GuestsPage({ params }) {
         toast.success('Informasi tamu diperbarui');
       } else {
         const res = await guests.create(id, form); 
-        setGuestList(prev => [...prev, res.data || res]); 
+        // Refresh current page to get accurate data
+        await fetchGuests(currentPage);
         toast.success('Tamu berhasil ditambahkan'); 
       }
       setForm({ name: '', phone: '', email: '', address: '', group: '' }); 
@@ -63,34 +96,49 @@ export default function GuestsPage({ params }) {
     setShowModal(true);
   };
   
-  const handleDelete = (guestId) => { confirmAction('Hapus tamu ini?', async () => { try { await guests.delete(id, guestId); setGuestList(prev => prev.filter((g) => g.id !== guestId)); toast.success('Tamu dihapus'); } catch { toast.error('Gagal menghapus tamu'); } }); };
+  const handleDelete = (guestId) => { confirmAction('Hapus tamu ini?', async () => { try { await guests.delete(id, guestId); await fetchGuests(currentPage); toast.success('Tamu dihapus'); } catch { toast.error('Gagal menghapus tamu'); } }); };
   const handleCheckIn = async (guestId) => { try { await guests.checkIn(guestId); setGuestList(prev => prev.map((g) => g.id === guestId ? { ...g, is_checked_in: true, rsvp_status: 'attending' } : g)); toast.success('Tamu berhasil check-in'); } catch { toast.error('Gagal check-in'); } };
 
-  const getWaLink = (guest) => {
-    if (!guest.phone || !invitation) return '#';
-    
+  const getInviteText = (guest) => {
+    if (!invitation) return '';
     const nameSlug = guest.name.trim().replace(/\s+/g, '-');
     const invLink = `${getInvitationUrl(invitation.slug)}?to=${encodeURIComponent(nameSlug)}`;
     
     const template = invitation.whatsapp_template || `Halo [nama_tamu],\n\nKami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.\n\nSimpan tanggalnya dan jadilah bagian dari hari istimewa kami.\n\nLihat detail undangan di sini:\n[link_undangan]\n\nAtas kehadiran & doanya, kami ucapkan terima kasih.`;
     
-    const text = template
+    let text = template
       .replace(/\[nama_tamu\]/g, guest.name)
       .replace(/\[link_undangan\]/g, invLink);
       
-    const phone = guest.phone.replace(/^0/, '62');
-    let finalMsg = text;
     if (guest.qr_code) {
       const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://localhost:8000/storage';
       const qrUrl = guest.qr_code.startsWith('http') ? guest.qr_code : `${storageUrl}/${guest.qr_code}`;
-      finalMsg += `\n\nSimpan QR Code berikut untuk kemudahan Check-in di lokasi:\n${qrUrl}`;
+      text += `\n\nSimpan QR Code berikut untuk kemudahan Check-in di lokasi:\n${qrUrl}`;
     }
-    return `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(finalMsg)}`;
+    return text;
+  };
+
+  const handleCopyInvite = async (guest) => {
+    const text = getInviteText(guest);
+    if (!text) { toast.error('Data undangan belum lengkap'); return; }
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success('Teks undangan berhasil disalin!');
+    } catch {
+      toast.error('Gagal menyalin teks');
+    }
+  };
+
+  const getWaLink = (guest) => {
+    if (!guest.phone || !invitation) return '#';
+    const text = getInviteText(guest);
+    const phone = guest.phone.replace(/^0/, '62');
+    return `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
   };
 
   const filtered = guestList.filter((g) => g.name?.toLowerCase().includes(search.toLowerCase()));
   const rsvpStats = {
-    total: guestList.length,
+    total: totalGuests || guestList.length,
     confirmed: guestList.filter((g) => ['confirmed', 'hadir', 'attending'].includes(g.rsvp_status?.toLowerCase())).length,
     declined: guestList.filter((g) => ['declined', 'tidak_hadir'].includes(g.rsvp_status?.toLowerCase())).length,
     pending: guestList.filter((g) => !g.rsvp_status || g.rsvp_status?.toLowerCase() === 'pending').length,
@@ -160,8 +208,8 @@ export default function GuestsPage({ params }) {
       toast.success(res.message || 'Berhasil mengimport tamu');
       
       // Refresh guest list
-      const guestRes = await guests.list(id);
-      setGuestList(guestRes.data || []);
+      await fetchGuests(1);
+      setCurrentPage(1);
     } catch (err) {
       toast.error('Gagal mengimport tamu. Pastikan format benar.');
     } finally {
@@ -206,90 +254,278 @@ export default function GuestsPage({ params }) {
     return guest.qr_code.startsWith('http') ? guest.qr_code : `${storageUrl}/${guest.qr_code}`;
   };
 
+  // Generate pagination page numbers
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisible = 5;
+    let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    let end = Math.min(lastPage, start + maxVisible - 1);
+    if (end - start + 1 < maxVisible) {
+      start = Math.max(1, end - maxVisible + 1);
+    }
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
+  };
+
   if (loading) return <div className="page-loading"><div className="spinner" /></div>;
 
   return (
-    <div style={{ animation: 'slide-up 0.4s ease-out' }}>
-      <button className="btn btn-ghost btn-sm" onClick={() => router.push('/app/invitations')} style={{ marginBottom: '8px' }}><ArrowLeft size={16} /> Kembali</button>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
-        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '24px', fontWeight: '700', color: '#1e293b', margin: 0 }}>Daftar Tamu</h1>
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          <button className="btn btn-secondary" onClick={() => { setShowImportModal(true); setImportPreview([]); setImportFile(null); setImportResult(null); }}><Upload size={16} /> Import Excel</button>
-          <button className="btn btn-primary" onClick={() => { setForm({ name: '', phone: '', email: '', address: '', group: '' }); setEditingId(null); setShowModal(true); }}><Plus size={16} /> Tambah Tamu</button>
-        </div>
-      </div>
+    <div style={{ animation: 'slide-up 0.4s ease-out', width: '100%', maxWidth: '100vw', overflowX: 'hidden' }}>
+      <style>{`
+        /* Master Responsive Layout */
+        .guests-page-container {
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
+        }
 
-      {/* RSVP Stats Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px', marginBottom: '24px' }}>
-        {[
-          { icon: Users, label: 'Total Tamu', value: rsvpStats.total, color: '#6366f1', bg: '#eef2ff' },
-          { icon: CheckCircle, label: 'Hadir', value: rsvpStats.confirmed, color: '#10b981', bg: '#ecfdf5' },
-          { icon: XCircle, label: 'Tidak Hadir', value: rsvpStats.declined, color: '#ef4444', bg: '#fef2f2' },
-          { icon: Clock, label: 'Pending', value: rsvpStats.pending, color: '#f59e0b', bg: '#fffbeb' },
-        ].map((s, i) => {
-          const Icon = s.icon;
-          return (
-            <div key={i} style={{ padding: '16px', borderRadius: '12px', background: s.bg, textAlign: 'center' }}>
-              <Icon size={20} color={s.color} style={{ margin: '0 auto 8px' }} />
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '24px', fontWeight: '700', color: s.color }}>{s.value}</div>
-              <div style={{ fontSize: '12px', fontWeight: '500', color: s.color, opacity: 0.7 }}>{s.label}</div>
+        .guest-stats-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+          margin-bottom: 24px;
+          width: 100%;
+        }
+
+        .stat-card-modern {
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+          border-radius: 20px;
+          padding: 24px;
+          display: flex;
+          flex-direction: column;
+          transition: all 0.3s ease;
+        }
+
+        .header-actions-group {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+        }
+
+        .search-container {
+          width: 360px;
+          position: relative;
+          margin-bottom: 20px;
+        }
+
+        .table-scroll-container {
+          width: 100%;
+          max-width: 100%;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          border-radius: 14px;
+          border: 1px solid #e2e8f0;
+          background: #ffffff;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .table-modern {
+          width: 100%;
+          border-collapse: collapse;
+          min-width: 900px; /* Ensures table doesn't squash, forcing scroll */
+        }
+
+        /* ─── Tablet & Mobile Adjustments ─── */
+        @media (max-width: 1024px) {
+          .guest-stats-grid { 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 16px; 
+          }
+        }
+
+        @media (max-width: 768px) {
+          .header-actions-group {
+            width: 100%;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 16px;
+          }
+          .header-actions-group button {
+            width: 100%;
+            justify-content: center;
+          }
+          .search-container {
+            width: 100%;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .guest-stats-grid { 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+          }
+          .stat-card-modern {
+            padding: 16px;
+            border-radius: 16px;
+          }
+          .stat-card-modern .stat-icon-wrapper {
+            width: 36px !important;
+            height: 36px !important;
+            margin-bottom: 12px !important;
+            border-radius: 10px !important;
+          }
+          .stat-card-modern .stat-icon-wrapper svg {
+            width: 18px;
+            height: 18px;
+          }
+          .stat-card-modern .stat-value {
+            font-size: 22px !important;
+          }
+          .stat-card-modern .stat-label {
+            font-size: 12px !important;
+            margin-top: 2px !important;
+          }
+        }
+      `}</style>
+
+      <div className="guests-page-container">
+        
+        {/* Top Header Row */}
+        <button className="btn btn-ghost btn-sm" onClick={() => router.push('/app/invitations')} style={{ marginBottom: '12px' }}><ArrowLeft size={16} /> Kembali</button>
+        
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px', flexWrap: 'wrap' }}>
+          <div style={{ flex: '1 1 300px' }}>
+            <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '26px', fontWeight: '800', color: '#0f172a', margin: 0, letterSpacing: '-0.5px' }}>Daftar Tamu</h1>
+            <p style={{ margin: '4px 0 0', fontSize: '14px', color: '#64748b' }}>Kelola undangan dan lacak kehadiran tamu Anda.</p>
+          </div>
+          <div className="header-actions-group">
+            <button className="btn btn-secondary" onClick={() => { setShowImportModal(true); setImportPreview([]); setImportFile(null); setImportResult(null); }}>
+              <Upload size={16} /> Import Excel
+            </button>
+            <button className="btn btn-primary" onClick={() => { setForm({ name: '', phone: '', email: '', address: '', group: '' }); setEditingId(null); setShowModal(true); }}>
+              <Plus size={16} /> Tambah Tamu
+            </button>
+          </div>
+        </div>
+
+        {/* Responsive Real Grid for Stats */}
+        <div className="guest-stats-grid">
+          {[
+            { icon: Users, label: 'Total Tamu', value: rsvpStats.total, color: '#6366f1', bg: '#eef2ff' },
+            { icon: CheckCircle, label: 'Hadir', value: rsvpStats.confirmed, color: '#10b981', bg: '#ecfdf5' },
+            { icon: XCircle, label: 'Tidak Hadir', value: rsvpStats.declined, color: '#ef4444', bg: '#fef2f2' },
+            { icon: Clock, label: 'Pending', value: rsvpStats.pending, color: '#f59e0b', bg: '#fffbeb' },
+          ].map((card, i) => {
+            const Icon = card.icon;
+            return (
+              <div key={i} className="stat-card-modern" style={{ background: `linear-gradient(135deg, #ffffff 0%, ${card.bg}60 100%)` }}>
+                <div className="stat-icon-wrapper" style={{ background: card.bg, color: card.color, width: '48px', height: '48px', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+                  <Icon size={24} strokeWidth={2.5} />
+                </div>
+                <div className="stat-value" style={{ fontSize: '32px', fontWeight: '800', color: '#0f172a', fontFamily: 'var(--font-heading)', lineHeight: '1' }}>
+                  {card.value.toLocaleString()}
+                </div>
+                <div className="stat-label" style={{ fontSize: '14px', fontWeight: '600', color: '#64748b', marginTop: '6px' }}>
+                  {card.label}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Search Input Container */}
+        <div className="search-container">
+          <Search size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+          <input className="input" placeholder="Cari nama tamu..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ paddingLeft: '44px', width: '100%', height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
+        </div>
+
+        {/* Scrollable Data Table Wrapper */}
+        {filtered.length === 0 ? (
+          <div className="card empty-state" style={{ textAlign: 'center', padding: '60px 20px', background: '#f8fafc', border: '2px dashed #cbd5e1' }}>
+            <Users size={56} strokeWidth={1} color="#94a3b8" style={{ margin: '0 auto 16px' }} />
+            <div className="empty-title" style={{ fontSize: '18px', fontWeight: '600', color: '#334155', marginBottom: '8px' }}>Belum Ada Tamu</div>
+            <div className="empty-text" style={{ fontSize: '14px', color: '#64748b', maxWidth: '400px', margin: '0 auto' }}>Tambahkan tamu undangan secara manual atau import dari file Excel untuk menghemat waktu.</div>
+          </div>
+        ) : (
+          <>
+            <div className="table-scroll-container">
+              <table className="table-modern">
+                <thead>
+                  <tr>
+                    <th style={{ padding: '16px 20px', textAlign: 'left', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#475569', background: '#f8fafc', borderBottom: '1px solid #e2e8f0', whiteSpace: 'nowrap' }}>Tamu & Info</th>
+                    <th style={{ padding: '16px 20px', textAlign: 'left', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#475569', background: '#f8fafc', borderBottom: '1px solid #e2e8f0', whiteSpace: 'nowrap' }}>Kontak</th>
+                    <th style={{ padding: '16px 20px', textAlign: 'left', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#475569', background: '#f8fafc', borderBottom: '1px solid #e2e8f0', whiteSpace: 'nowrap', width: '120px' }}>Status RSVP</th>
+                    <th style={{ padding: '16px 20px', textAlign: 'left', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#475569', background: '#f8fafc', borderBottom: '1px solid #e2e8f0', whiteSpace: 'nowrap', width: '130px' }}>Check-in</th>
+                    <th style={{ padding: '16px 20px', textAlign: 'left', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#475569', background: '#f8fafc', borderBottom: '1px solid #e2e8f0', whiteSpace: 'nowrap', width: '180px' }}>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((guest) => (
+                    <tr key={guest.id} style={{ transition: 'background-color 0.2s', ':hover': { background: '#f8fafc' }, borderBottom: '1px solid #f1f5f9' }}>
+                      <td style={{ padding: '16px 20px' }}>
+                        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>{guest.name}</div>
+                        <div style={{ fontSize: '13px', color: '#64748b', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: '6px', fontWeight: '500' }}>{guest.group || 'Umum'}</span>
+                          {guest.qr_code && (
+                            <button onClick={() => setSelectedQr(guest)} style={{ background: '#f3e8ff', color: '#7c3aed', border: '1px solid #ddd6fe', padding: '2px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '700', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', transition: 'all 0.2s' }}>
+                              <QrCode size={12} /> QR Code
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                      <td style={{ padding: '16px 20px', fontSize: '14px', color: '#475569', whiteSpace: 'nowrap' }}>
+                        {guest.phone ? <span style={{ fontWeight: '500' }}>{guest.phone}</span> : '-'}
+                      </td>
+                      <td style={{ padding: '16px 20px' }}>
+                        {getRsvpBadge(guest.rsvp_status)}
+                      </td>
+                      <td style={{ padding: '16px 20px' }}>
+                        {guest.is_checked_in 
+                          ? <span style={{ padding: '6px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', backgroundColor: '#dcfce7', color: '#166534', border: '1px solid #bbf7d0', display: 'inline-flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}><CheckCircle size={14} /> Hadir</span> 
+                          : <button className="btn btn-ghost btn-sm" onClick={() => handleCheckIn(guest.id)} style={{ whiteSpace: 'nowrap', color: '#64748b', background: '#f1f5f9' }}><UserCheck size={14} /> Check-in</button>
+                        }
+                      </td>
+                      <td style={{ padding: '16px 20px' }}>
+                        <div style={{ display: 'flex', gap: '6px', flexWrap: 'nowrap' }}>
+                          <button onClick={() => handleCopyInvite(guest)} style={{ background: '#e0e7ff', color: '#4338ca', border: 'none', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} title="Copy Undangan">
+                            <Copy size={16} />
+                          </button>
+                          {guest.phone && (
+                            <a href={getWaLink(guest)} target="_blank" rel="noreferrer" style={{ background: '#d1fae5', color: '#047857', border: 'none', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} title="Kirim WhatsApp">
+                              <MessageCircle size={16} />
+                            </a>
+                          )}
+                          <button onClick={() => handleEditClick(guest)} style={{ background: '#dbeafe', color: '#1d4ed8', border: 'none', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} title="Edit">
+                            <FileText size={16} />
+                          </button>
+                          <button onClick={() => handleDelete(guest.id)} style={{ background: '#fee2e2', color: '#b91c1c', border: 'none', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} title="Hapus">
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          );
-        })}
-      </div>
 
-      {/* Search */}
-      <div style={{ marginBottom: '20px', position: 'relative', maxWidth: '360px' }}>
-        <Search size={16} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
-        <input className="input" placeholder="Cari tamu..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ paddingLeft: '40px' }} />
-      </div>
+            {/* Pagination Controls */}
+            {lastPage > 1 && (
+              <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage <= 1} style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '8px', color: '#475569', cursor: currentPage <= 1 ? 'not-allowed' : 'pointer', opacity: currentPage <= 1 ? 0.5 : 1 }}>
+                    <ChevronLeft size={16} />
+                  </button>
+                  {getPageNumbers().map(page => (
+                    <button key={page} onClick={() => handlePageChange(page)} style={{ minWidth: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: currentPage === page ? '#6366f1' : '#fff', border: `1px solid ${currentPage === page ? '#6366f1' : '#cbd5e1'}`, borderRadius: '8px', color: currentPage === page ? '#fff' : '#475569', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }}>
+                      {page}
+                    </button>
+                  ))}
+                  <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage >= lastPage} style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '8px', color: '#475569', cursor: currentPage >= lastPage ? 'not-allowed' : 'pointer', opacity: currentPage >= lastPage ? 0.5 : 1 }}>
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+                <div style={{ fontSize: '13px', color: '#64748b', fontWeight: '500' }}>
+                  Halaman {currentPage} dari {lastPage} • Total {totalGuests} tamu
+                </div>
+              </div>
+            )}
+          </>
+        )}
 
-      {/* Guest Table */}
-      {filtered.length === 0 ? (
-        <div className="card empty-state">
-          <Users size={48} strokeWidth={1.5} color="#94a3b8" />
-          <div className="empty-title" style={{ marginTop: '16px' }}>Belum Ada Tamu</div>
-          <div className="empty-text">Tambahkan tamu undangan untuk mulai mengelola daftar.</div>
-        </div>
-      ) : (
-        <div className="table-container">
-          <table>
-            <thead><tr><th>Nama</th><th>Telepon</th><th>RSVP</th><th>QR Code</th><th>Check-in</th><th>Aksi</th></tr></thead>
-            <tbody>
-              {filtered.map((guest) => (
-                <tr key={guest.id}>
-                  <td style={{ fontWeight: '500' }}>{guest.name} <div style={{ fontSize: '12px', color: '#64748b' }}>{guest.group || 'Umum'}</div></td>
-                  <td>{guest.phone || '-'}</td>
-                  <td>{getRsvpBadge(guest.rsvp_status)}</td>
-                  <td>
-                    {guest.qr_code ? (
-                      <button 
-                        className="btn btn-ghost btn-sm" 
-                        onClick={() => setSelectedQr(guest)} 
-                        style={{ color: '#8b5cf6', display: 'flex', alignItems: 'center', gap: '4px' }} 
-                        title="Lihat QR Code"
-                      >
-                        <QrCode size={16} />
-                        <span style={{ fontSize: '12px' }}>Lihat</span>
-                      </button>
-                    ) : (
-                      <span style={{ fontSize: '12px', color: '#94a3b8' }}>-</span>
-                    )}
-                  </td>
-                  <td>{guest.is_checked_in ? <span style={{ padding: '4px 12px', borderRadius: '99px', fontSize: '12px', fontWeight: '600', backgroundColor: '#e0e7ff', color: '#4338ca', border: '1px solid #a5b4fc' }}>Checked-in</span> : <button className="btn btn-ghost btn-sm" onClick={() => handleCheckIn(guest.id)}><UserCheck size={14} /> Check-in</button>}</td>
-                  <td>
-                    <div style={{ display: 'flex', gap: '4px' }}>
-                      {guest.phone && <a href={getWaLink(guest)} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm" style={{ color: '#10b981' }} title="Kirim WhatsApp"><MessageCircle size={15} /></a>}
-                      <button className="btn btn-ghost btn-sm" onClick={() => handleEditClick(guest)} style={{ color: '#3b82f6' }} title="Edit"><FileText size={15} /></button>
-                      <button className="btn btn-ghost btn-sm" onClick={() => handleDelete(guest.id)} style={{ color: 'var(--color-danger)' }} title="Hapus"><Trash2 size={15} /></button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      </div>
 
       {/* Add/Edit Guest Modal */}
       {showModal && (

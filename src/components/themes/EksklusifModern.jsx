@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Playfair_Display, Inter } from 'next/font/google';
 import CoverOverlay from './partials/CoverOverlay';
 import CoupleProfile from './partials/CoupleProfile';
@@ -30,6 +30,7 @@ const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:800
 
 export default function EksklusifModern({ payload }) {
   const { invitation, guest, guestName } = payload;
+  const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -75,6 +76,7 @@ export default function EksklusifModern({ payload }) {
       <CoverOverlay 
         invitation={invitation} 
         guestName={guestName} 
+        onOpen={() => setIsOpened(true)}
         overlayBg="bg-[#0a0a0a]" // obsidian-950
         titleFont={headingFont.className}
         subtitleFont={bodyFont.className}
@@ -86,6 +88,7 @@ export default function EksklusifModern({ payload }) {
       {invitation.music_url && (
         <MusicPlayer 
           musicUrl={invitation.music_url} 
+          shouldPlay={isOpened}
           btnBg="glass-panel shadow-[0_0_20px_rgba(215,158,96,0.2)]" 
           btnColor="text-[#e1b984]" 
           btnBorder="" 

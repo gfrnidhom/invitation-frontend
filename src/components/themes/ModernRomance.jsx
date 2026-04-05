@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alex_Brush, Montserrat, Playfair_Display } from 'next/font/google';
 import CoverOverlay from './partials/CoverOverlay';
 import CoupleProfile from './partials/CoupleProfile';
@@ -36,6 +36,7 @@ const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:800
 
 export default function ModernRomance({ payload }) {
   const { invitation, guest, guestName } = payload;
+  const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -81,6 +82,7 @@ export default function ModernRomance({ payload }) {
       <CoverOverlay 
         invitation={invitation} 
         guestName={guestName} 
+        onOpen={() => setIsOpened(true)}
         overlayBg="bg-[#fcfaf9]" // romance-50
         titleFont={serifFont.className}
         subtitleFont={sansFont.className}
@@ -92,6 +94,7 @@ export default function ModernRomance({ payload }) {
       {invitation.music_url && (
         <MusicPlayer 
           musicUrl={invitation.music_url} 
+          shouldPlay={isOpened}
           btnBg="glass-light backdrop-blur-md border border-[#e6dacd]" 
           btnColor="text-[#a3714b]" 
           btnBorder="" 

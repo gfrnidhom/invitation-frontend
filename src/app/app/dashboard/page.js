@@ -32,75 +32,99 @@ export default function DashboardPage() {
   if (loading) return <div className="page-loading"><div className="spinner" /></div>;
 
   return (
-    <div style={{ animation: 'slide-up 0.4s ease-out' }}>
-      <div style={{ marginBottom: '28px' }}>
-        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', fontWeight: '700', color: '#1e293b', margin: 0 }}>Dashboard</h1>
-        <p style={{ color: '#64748b', fontSize: '14px', marginTop: '4px' }}>Selamat datang kembali! Berikut ringkasan undangan Anda.</p>
-      </div>
+    <>
+      <style>{`
+        .dash-stats-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+          margin-bottom: 32px;
+        }
+        .dash-actions-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
+        @media (max-width: 1024px) {
+          .dash-stats-grid { grid-template-columns: repeat(2, 1fr); }
+          .dash-actions-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+          .dash-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+          .dash-actions-grid { grid-template-columns: 1fr; gap: 12px; }
+        }
+      `}</style>
+      <div style={{ animation: 'slide-up 0.4s ease-out' }}>
+        <div style={{ marginBottom: '28px' }}>
+          <h1 className="dashboard-heading" style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', fontWeight: '700', color: '#1e293b', margin: 0 }}>Dashboard</h1>
+          <p className="dashboard-subtext" style={{ color: '#64748b', fontSize: '14px', marginTop: '4px' }}>Selamat datang kembali! Berikut ringkasan undangan Anda.</p>
+        </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', marginBottom: '32px' }}>
-        {statCards.map((card, i) => {
-          const Icon = card.icon;
-          return (
-            <div key={i} className="stat-card" style={{ 
-              animation: `slide-up 0.4s ease-out ${i * 0.1}s both`,
-              background: `linear-gradient(135deg, #ffffff 0%, ${card.bg}90 100%)`,
-              border: '1px solid #f1f5f9',
-              boxShadow: '0 10px 25px -5px rgba(0,0,0,0.03), 0 8px 10px -6px rgba(0,0,0,0.01)',
-              borderRadius: '24px',
-              padding: '26px',
-              display: 'flex',
-              flexDirection: 'column',
-              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-              cursor: 'default',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = `0 20px 25px -5px ${card.color}15, 0 8px 10px -6px rgba(0,0,0,0.01)`; }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(0,0,0,0.03), 0 8px 10px -6px rgba(0,0,0,0.01)'; }}
-            >
-              <div className="stat-icon" style={{ background: card.bg, color: card.color, width: '52px', height: '52px', borderRadius: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px' }}>
-                <Icon size={26} strokeWidth={2.5} />
-              </div>
-              <div className="stat-value" style={{ fontSize: '32px', fontWeight: '800', color: '#0f172a', fontFamily: 'var(--font-heading)', lineHeight: '1.2' }}>{card.value.toLocaleString()}</div>
-              <div className="stat-label" style={{ fontSize: '15px', fontWeight: '500', color: '#64748b', marginTop: '6px' }}>{card.label}</div>
-            </div>
-          );
-        })}
-      </div>
-
-      <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '20px', fontWeight: '600', color: '#1e293b', marginBottom: '16px' }}>Aksi Cepat</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px' }}>
-        {quickActions.map((action, i) => {
-          const Icon = action.icon;
-          return (
-            <Link key={i} href={action.href}
-              style={{
-                padding: '24px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '20px',
-                animation: `slide-up 0.4s ease-out ${(i + 4) * 0.1}s both`,
-                background: `linear-gradient(to right, #ffffff, #f8fafc)`,
-                border: '1px solid #e2e8f0',
+        <div className="dash-stats-grid">
+          {statCards.map((card, i) => {
+            const Icon = card.icon;
+            return (
+              <div key={i} className="stat-card" style={{ 
+                animation: `slide-up 0.4s ease-out ${i * 0.1}s both`,
+                background: `linear-gradient(135deg, #ffffff 0%, ${card.bg}90 100%)`,
+                border: '1px solid #f1f5f9',
+                boxShadow: '0 10px 25px -5px rgba(0,0,0,0.03), 0 8px 10px -6px rgba(0,0,0,0.01)',
                 borderRadius: '24px',
-                boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.02)',
+                padding: '26px',
+                display: 'flex',
+                flexDirection: 'column',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                cursor: 'default',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = `0 12px 24px -8px ${action.color}30, 0 4px 6px -2px rgba(0,0,0,0.02)`; e.currentTarget.style.borderColor = `${action.color}30`; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.02)'; e.currentTarget.style.borderColor = '#e2e8f0'; }}
-            >
-              <div style={{
-                width: '60px', height: '60px', borderRadius: '20px',
-                background: `linear-gradient(135deg, ${action.color}20 0%, ${action.color}10 100%)`, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: action.color,
-                boxShadow: `inset 0 0 0 1px ${action.color}20`
-              }}>
-                <Icon size={28} strokeWidth={2} />
+              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = `0 20px 25px -5px ${card.color}15, 0 8px 10px -6px rgba(0,0,0,0.01)`; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(0,0,0,0.03), 0 8px 10px -6px rgba(0,0,0,0.01)'; }}
+              >
+                <div className="stat-icon" style={{ background: card.bg, color: card.color, width: '52px', height: '52px', borderRadius: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '18px' }}>
+                  <Icon size={26} strokeWidth={2.5} />
+                </div>
+                <div className="stat-value" style={{ fontSize: '32px', fontWeight: '800', color: '#0f172a', fontFamily: 'var(--font-heading)', lineHeight: '1.2' }}>{card.value.toLocaleString()}</div>
+                <div className="stat-label" style={{ fontSize: '15px', fontWeight: '500', color: '#64748b', marginTop: '6px' }}>{card.label}</div>
               </div>
-              <div>
-                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: '700', fontSize: '17px', color: '#0f172a' }}>{action.title}</div>
-                <div style={{ fontSize: '14px', color: '#64748b', marginTop: '4px', lineHeight: '1.4' }}>{action.desc}</div>
-              </div>
-            </Link>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '20px', fontWeight: '600', color: '#1e293b', marginBottom: '16px' }}>Aksi Cepat</h2>
+        <div className="dash-actions-grid">
+          {quickActions.map((action, i) => {
+            const Icon = action.icon;
+            return (
+              <Link key={i} href={action.href}
+                style={{
+                  padding: '24px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '20px',
+                  animation: `slide-up 0.4s ease-out ${(i + 4) * 0.1}s both`,
+                  background: `linear-gradient(to right, #ffffff, #f8fafc)`,
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '24px',
+                  boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.02)',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = `0 12px 24px -8px ${action.color}30, 0 4px 6px -2px rgba(0,0,0,0.02)`; e.currentTarget.style.borderColor = `${action.color}30`; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -2px rgba(0,0,0,0.02)'; e.currentTarget.style.borderColor = '#e2e8f0'; }}
+              >
+                <div style={{
+                  width: '60px', height: '60px', borderRadius: '20px',
+                  background: `linear-gradient(135deg, ${action.color}20 0%, ${action.color}10 100%)`, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: action.color,
+                  boxShadow: `inset 0 0 0 1px ${action.color}20`,
+                  flexShrink: 0
+                }}>
+                  <Icon size={28} strokeWidth={2} />
+                </div>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: '700', fontSize: '17px', color: '#0f172a' }}>{action.title}</div>
+                  <div style={{ fontSize: '14px', color: '#64748b', marginTop: '4px', lineHeight: '1.4' }}>{action.desc}</div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

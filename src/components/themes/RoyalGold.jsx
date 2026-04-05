@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Cinzel, EB_Garamond } from 'next/font/google';
 import CoverOverlay from './partials/CoverOverlay';
 import CoupleProfile from './partials/CoupleProfile';
@@ -30,6 +30,7 @@ const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:800
 
 export default function RoyalGold({ payload }) {
   const { invitation, guest, guestName } = payload;
+  const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -65,6 +66,7 @@ export default function RoyalGold({ payload }) {
       <CoverOverlay 
         invitation={invitation} 
         guestName={guestName} 
+        onOpen={() => setIsOpened(true)}
         overlayBg="bg-[#0a0a0f]" // royal-900
         titleFont={displayFont.className}
         subtitleFont={bodyFont.className}
@@ -76,6 +78,7 @@ export default function RoyalGold({ payload }) {
       {invitation.music_url && (
         <MusicPlayer 
           musicUrl={invitation.music_url} 
+          shouldPlay={isOpened}
           btnBg="bg-[#c9a84c]/20 backdrop-blur-sm" 
           btnColor="text-[#c9a84c]" 
           btnBorder="border border-[#c9a84c]/30" 

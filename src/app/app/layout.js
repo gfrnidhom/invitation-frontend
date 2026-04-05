@@ -194,12 +194,12 @@ export default function DashboardLayout({ children }) {
           .user-info { display: block !important; }
         }
       `}</style>
-      <div style={{ display: 'flex', minHeight: '100vh', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', minHeight: '100vh', overflow: 'hidden', width: '100%', maxWidth: '100vw' }}>
         <Sidebar mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
-        <div className="main-content" style={{ flex: 1, marginLeft: 0, transition: 'margin-left 0.3s ease', padding: '24px 24px 24px 0', height: '100vh', display: 'flex' }}>
-          <div style={{ background: '#ffffff', borderRadius: '24px', flex: 1, display: 'flex', flexDirection: 'column', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', overflow: 'hidden' }}>
+        <div className="main-content" style={{ flex: 1, minWidth: 0, marginLeft: 0, transition: 'margin-left 0.3s ease', padding: '24px 24px 24px 0', height: '100vh', display: 'flex' }}>
+          <div style={{ background: '#ffffff', borderRadius: '24px', flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', overflow: 'hidden' }}>
             <Topbar onMenuClick={() => setMobileOpen(!mobileOpen)} mobileOpen={mobileOpen} />
-            <main style={{ padding: '0 32px 32px', flex: 1, overflowY: 'auto' }}>
+            <main style={{ padding: '0 32px 32px', flex: 1, minWidth: 0, overflowY: 'auto', overflowX: 'hidden' }}>
               {children}
               <Toaster position="bottom-right" toastOptions={{ style: { borderRadius: '12px', background: '#1e293b', color: '#fff' } }} />
             </main>
@@ -209,3 +209,4 @@ export default function DashboardLayout({ children }) {
     </>
   );
 }
+

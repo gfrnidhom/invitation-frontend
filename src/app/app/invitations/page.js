@@ -69,7 +69,7 @@ export default function InvitationsPage() {
           <Link href="/app/invitations/create" className="btn btn-primary" style={{ marginTop: '20px' }}><Plus size={16} /> Buat Sekarang</Link>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: '20px' }}>
           {data.map((inv, i) => (
             <div key={inv.id} className="card" style={{ overflow: 'hidden', animation: `slide-up 0.4s ease-out ${i * 0.05}s both` }}>
               <div style={{

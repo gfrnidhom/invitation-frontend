@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Josefin_Sans, Poppins } from 'next/font/google';
 import CoverOverlay from './partials/CoverOverlay';
 import CoupleProfile from './partials/CoupleProfile';
@@ -30,6 +30,7 @@ const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:800
 
 export default function TropicalParadise({ payload }) {
   const { invitation, guest, guestName } = payload;
+  const [isOpened, setIsOpened] = useState(false);
 
   // Extract first cover photo safely (cover_photo can be array or string)
   const coverPhotoUrl = (() => {
@@ -66,6 +67,7 @@ export default function TropicalParadise({ payload }) {
       <CoverOverlay 
         invitation={invitation} 
         guestName={guestName} 
+        onOpen={() => setIsOpened(true)}
         overlayBg="bg-[#fffbf0]" // sand-50
         titleFont={displayFont.className}
         subtitleFont={bodyFont.className}
@@ -78,6 +80,7 @@ export default function TropicalParadise({ payload }) {
       {invitation.music_url && (
         <MusicPlayer 
           musicUrl={invitation.music_url} 
+          shouldPlay={isOpened}
           btnBg="bg-[#14b8a6] shadow-lg shadow-[#14b8a6]/30" 
           btnColor="text-white" 
           btnBorder="border-none" 

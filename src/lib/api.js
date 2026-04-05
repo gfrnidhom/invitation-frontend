@@ -189,7 +189,7 @@ export const payments = {
 
 // ── Guestbook / Wishes ──
 export const guestbook = {
-  list: (invitationId) => request(`/invitations/${invitationId}/guestbook`),
+  list: (invitationId, page = 1) => request(`/invitations/${invitationId}/guestbook?page=${page}`),
   delete: (invitationId, entryId) => request(`/invitations/${invitationId}/guestbook/${entryId}`, { method: 'DELETE' }),
 };
 
