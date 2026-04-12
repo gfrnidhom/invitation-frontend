@@ -78,8 +78,27 @@ export default function PublicInvitationViewer() {
 
   useEffect(() => {
     publicInvitation.get(slug, token)
-      .then(res => {
+      .then(async (res) => {
         if (res.success && res.data) {
+          // Fetch guestbook messages and attach to invitation
+          const inv = res.data.invitation;
+          if (inv?.id) {
+            try {
+              const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://app.digitvitation.my.id/api';
+              const gbRes = await fetch(`${API_URL}/invitations/${inv.id}/guestbook`, {
+                headers: { 'Accept': 'application/json' }
+              });
+              if (gbRes.ok) {
+                const gbData = await gbRes.json();
+                // Support both paginated (data.data) and flat (data) array responses
+                inv.guestMessages = Array.isArray(gbData.data) ? gbData.data
+                  : Array.isArray(gbData) ? gbData : [];
+              }
+            } catch (e) {
+              console.warn('Failed to fetch guestbook:', e);
+              inv.guestMessages = [];
+            }
+          }
           setData(res.data);
         } else {
           setError(true);

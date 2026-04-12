@@ -15,9 +15,16 @@ export function middleware(request) {
   }
 
   // Jika ada path khusus yang perlu ditangani middleware (selain subdomain)
-  // Misalnya untuk `/preview/` agar tetap sesuai logic sebelumnya
+  // Misalnya untuk `/preview/` atau `/tema/` agar sesuai logic sebelumnya
   if (url.pathname.startsWith('/preview/')) {
     const slug = url.pathname.replace('/preview/', '');
+    const newUrl = url.clone();
+    newUrl.pathname = `/invitation/preview/${slug}`;
+    return NextResponse.rewrite(newUrl);
+  }
+
+  if (url.pathname.startsWith('/tema/')) {
+    const slug = url.pathname.replace('/tema/', '');
     const newUrl = url.clone();
     newUrl.pathname = `/invitation/preview/${slug}`;
     return NextResponse.rewrite(newUrl);
@@ -36,6 +43,7 @@ export function middleware(request) {
     'checkout',  // Halaman checkout/pembayaran
     'app',       // Halaman dashboard user
     'preview',   // Route internal Next.js (walaupun dicatch di atas, lebih aman dimasukkan)
+    'tema',      // Alias untuk route preview tema
     'ticket',    // Route E-Ticket
     'invitation',// Explicitly ignore invitation route if accessed raw
     'api',       // API route

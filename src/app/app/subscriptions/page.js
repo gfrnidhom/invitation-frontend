@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Gem, Check, ShoppingCart, Clock, CheckCircle, XCircle, CreditCard, ArrowLeft } from 'lucide-react';
+import { Gem, Check, ShoppingCart, Clock, CheckCircle, XCircle, CreditCard, ArrowLeft, Plus } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { packages as packagesApi, payments, subscriptions } from '@/lib/api';
 
@@ -12,20 +12,23 @@ export default function SubscriptionsPage() {
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(null);
   const [showPricing, setShowPricing] = useState(false);
+  const [activePlan, setActivePlan] = useState(null);
 
   useEffect(() => {
     Promise.all([
       packagesApi.list().then((res) => setPlans(res.data || [])).catch(() => {}),
       payments.history().then((res) => setHistory(res.data || [])).catch(() => {}),
+      subscriptions.current().then((res) => {
+        if (res.data && res.data.status === 'active') setActivePlan(res.data.package);
+      }).catch(() => {})
     ]).finally(() => setLoading(false));
   }, []);
 
   const hasTransactions = history.length > 0;
   const showCards = !hasTransactions || showPricing;
 
-  const handleSubscribe = (packageId) => {
-    // Navigate to checkout page instead of instant payment
-    window.location.href = `/checkout/${packageId}`;
+  const handleSubscribe = (packageIdentifier) => {
+    window.location.href = `/checkout/${packageIdentifier}`;
   };
 
   const handlePayExisting = async (transaction) => {
@@ -47,8 +50,8 @@ export default function SubscriptionsPage() {
         },
       });
     } else {
-      // Retry with new transaction
-      handleSubscribe(transaction.package_id);
+      // Retry with new transaction using slug if available, else id
+      handleSubscribe(transaction.package?.slug || transaction.package_slug || transaction.package_id);
     }
   };
 
@@ -89,7 +92,21 @@ export default function SubscriptionsPage() {
       {/* ─── Transaction History View ─── */}
       {!showCards && (
         <div>
-          <div style={{ display: 'grid', gap: '16px', marginBottom: '24px' }}>
+          <style>{`
+            .history-card {
+               background: white;
+               border-radius: 20px;
+               border: 1px solid #f1f5f9;
+               box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+               transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            }
+            .history-card:hover {
+               border-color: #e2e8f0;
+               box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+               transform: scale(1.01);
+            }
+          `}</style>
+          <div style={{ display: 'grid', gap: '20px', marginBottom: '32px' }}>
             {history.map((tx, i) => {
               const status = statusConfig[tx.status] || statusConfig['pending'];
               const StatusIcon = status.icon;
@@ -98,78 +115,166 @@ export default function SubscriptionsPage() {
               const amount = tx.amount || tx.total || tx.gross_amount || 0;
 
               return (
-                <div key={tx.id || i} className="card" style={{ padding: '24px', animation: `slide-up 0.4s ease-out ${i * 0.05}s both` }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
-                    <div style={{ flex: 1, minWidth: '200px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                        <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: status.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <StatusIcon size={22} color={status.color} />
-                        </div>
-                        <div>
-                          <div style={{ fontFamily: 'var(--font-heading)', fontWeight: '600', fontSize: '16px', color: '#1e293b' }}>{packageName}</div>
-                          <span style={{ fontSize: '12px', fontWeight: '600', color: status.color, background: status.bg, padding: '2px 10px', borderRadius: '20px' }}>
-                            {status.label}
-                          </span>
-                        </div>
+                <div key={tx.id || i} className="history-card" style={{ padding: '24px', animation: `slide-up 0.4s ease-out ${i * 0.05}s both` }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
+                    
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, minWidth: '280px' }}>
+                      <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: status.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <StatusIcon size={24} color={status.color} />
                       </div>
-                      <div style={{ display: 'grid', gap: '6px', fontSize: '13px', color: '#64748b' }}>
-                        <div>ID Transaksi: <span style={{ fontFamily: 'monospace', color: '#475569' }}>{tx.order_id || tx.id}</span></div>
-                        {amount > 0 && <div>Total: <span style={{ fontWeight: '600', color: '#1e293b' }}>Rp {Number(amount).toLocaleString('id-ID')}</span></div>}
-                        {tx.created_at && <div>Tanggal: {new Date(tx.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>}
+                      <div>
+                        <div style={{ fontFamily: 'var(--font-heading)', fontWeight: '700', fontSize: '18px', color: '#1e293b', marginBottom: '4px' }}>{packageName}</div>
+                        <div style={{ fontSize: '13px', color: '#64748b', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                          <span>ID: <span style={{ fontFamily: 'monospace', color: '#475569', fontWeight: '500' }}>{tx.order_id || tx.id}</span></span>
+                          <span style={{ color: '#cbd5e1' }}>•</span>
+                          <span>{tx.created_at ? new Date(tx.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : ''}</span>
+                        </div>
                       </div>
                     </div>
 
-                    {isPending && (
-                      <button className="btn btn-primary" onClick={() => handlePayExisting(tx)} disabled={processing === tx.id}
-                        style={{ whiteSpace: 'nowrap' }}>
-                        <CreditCard size={16} /> {processing === tx.id ? 'Memproses...' : 'Bayar Sekarang'}
-                      </button>
-                    )}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '32px', flexWrap: 'wrap' }}>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontSize: '13px', color: '#94a3b8', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '600' }}>Total Tagihan</div>
+                        <div style={{ fontWeight: '800', color: '#0f172a', fontSize: '20px' }}>Rp {Number(amount).toLocaleString('id-ID')}</div>
+                      </div>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-end', minWidth: '140px' }}>
+                        <span style={{ fontSize: '11px', fontWeight: '800', color: status.color, background: status.bg, padding: '6px 16px', borderRadius: '20px', display: 'inline-flex', alignItems: 'center', gap: '6px', letterSpacing: '0.05em' }}>
+                          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: status.color }}></div>
+                          {status.label.toUpperCase()}
+                        </span>
+                        {isPending && (
+                          <button className="btn btn-primary btn-sm" onClick={() => handlePayExisting(tx)} disabled={processing === tx.id} style={{ width: '100%', borderRadius: '10px', fontSize: '13px' }}>
+                            {processing === tx.id ? 'Memproses...' : 'Bayar Sekarang'}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               );
             })}
           </div>
 
-          <button className="btn btn-secondary" onClick={() => setShowPricing(true)} style={{ width: '100%' }}>
-            <ShoppingCart size={16} /> Beli Paket Baru
-          </button>
+          <div
+            onClick={() => setShowPricing(true)}
+            style={{ padding: '24px', borderRadius: '20px', background: '#f8fafc', border: '2px dashed #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.3s ease' }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--color-primary-400)'; e.currentTarget.style.background = '#eef2ff'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#cbd5e1'; e.currentTarget.style.background = '#f8fafc'; }}
+          >
+             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--color-primary-600)', fontWeight: '700', fontSize: '16px' }}>
+                <Plus size={20} strokeWidth={3} /> Mulai Langganan Paket Baru
+             </div>
+          </div>
+          <div style={{ textAlign: 'center', marginTop: '16px', fontSize: '13px', color: '#94a3b8' }}>Upgrade paket tidak bisa menggunakan paket yang sama atau lebih rendah.</div>
         </div>
       )}
 
       {/* ─── Pricing Cards View ─── */}
       {showCards && (
         <>
-          {plans.length === 0 ? (
-            <div className="card empty-state"><Gem size={48} strokeWidth={1.5} color="#94a3b8" /><div className="empty-title" style={{ marginTop: '16px' }}>Paket Belum Tersedia</div><div className="empty-text">Paket langganan akan segera tersedia.</div></div>
+          {plans.filter(p => !activePlan || Number(p.price) >= Number(activePlan.price)).length === 0 ? (
+            <div className="card empty-state">
+              <Gem size={48} strokeWidth={1.5} color="#94a3b8" />
+              <div className="empty-title" style={{ marginTop: '16px' }}>Anda berada di paket tertinggi!</div>
+              <div className="empty-text">Saat ini Anda sudah menikmati seluruh fitur terbaik kami.</div>
+            </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '960px', margin: '0 auto' }}>
-              {plans.map((plan, i) => {
-                const color = planColors[i % planColors.length]; const isPopular = i === 1;
+            <>
+            <style>{`
+              .pricing-card {
+                 background: white;
+                 border-radius: 24px;
+                 border: 1px solid #e2e8f0;
+                 transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+                 position: relative;
+                 display: flex;
+                 flex-direction: column;
+                 box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+              }
+              .pricing-card:hover {
+                 transform: translateY(-8px);
+                 box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+                 border-color: #cbd5e1;
+              }
+              .pricing-card.popular {
+                 border: 2px solid var(--color-primary-500);
+                 box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.25);
+              }
+              .pricing-card.popular:hover {
+                 box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.4);
+                 border: 2px solid var(--color-primary-600);
+              }
+              .pop-badge {
+                 position: absolute;
+                 top: -14px;
+                 left: 50%;
+                 transform: translateX(-50%);
+                 background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+                 color: white;
+                 padding: 6px 18px;
+                 border-radius: 20px;
+                 font-size: 11px;
+                 font-weight: 800;
+                 letter-spacing: 0.1em;
+                 box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+                 white-space: nowrap;
+                 z-index: 10;
+              }
+            `}</style>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px', maxWidth: '960px', margin: '0 auto', paddingTop: '16px' }}>
+              {plans.filter(p => !activePlan || Number(p.price) >= Number(activePlan.price)).map((plan, i) => {
+                const isPopular = i === 1 || plan.name.toLowerCase().includes('pro');
                 let features = Array.isArray(plan.features) ? plan.features : (() => { try { return JSON.parse(plan.features) || []; } catch { return []; } })();
                 if (features.length === 0) features = ['Akses Semua Tema Premium', 'Buku Tamu & RSVP Tanpa Batas', 'Galeri Foto Lengkap', 'Pengelolaan Love Story & Acara', 'Custom Music & Teks'];
+                
                 return (
-                  <div key={plan.id} className="card" style={{ overflow: 'hidden', animation: `slide-up 0.4s ease-out ${i * 0.1}s both`, border: isPopular ? '2px solid var(--color-primary-400)' : '1px solid transparent', position: 'relative' }}>
-                    {isPopular && (<div style={{ position: 'absolute', top: '12px', right: '12px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: 'white', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: '700', letterSpacing: '0.05em' }}>POPULER</div>)}
-                    <div style={{ background: color.gradient, padding: '28px', color: 'white' }}>
-                      <div style={{ fontSize: '14px', fontWeight: '500', opacity: 0.8 }}>{plan.name}</div>
-                      <div style={{ fontFamily: 'var(--font-heading)', fontSize: '36px', fontWeight: '800', marginTop: '8px' }}>{plan.price === 0 ? 'Gratis' : `Rp ${Number(plan.price).toLocaleString('id-ID')}`}</div>
-                      {plan.duration && <div style={{ fontSize: '13px', opacity: 0.7, marginTop: '4px' }}>{plan.duration}</div>}
+                  <div key={plan.id} className={`pricing-card ${isPopular ? 'popular' : ''}`} style={{ animation: `slide-up 0.4s ease-out ${i * 0.1}s both` }}>
+                    {isPopular && <div className="pop-badge">PALING POPULER</div>}
+                    
+                    <div style={{ padding: '40px 32px 24px' }}>
+                      <div style={{ fontSize: '15px', fontWeight: '700', color: isPopular ? 'var(--color-primary-600)' : '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{plan.name}</div>
+                      
+                      <div style={{ display: 'flex', alignItems: 'flex-start', marginTop: '16px', color: '#0f172a' }}>
+                          <span style={{ fontSize: '18px', fontWeight: '700', marginTop: '6px', marginRight: '4px' }}>Rp</span>
+                          <span style={{ fontFamily: 'var(--font-heading)', fontSize: '46px', fontWeight: '800', lineHeight: '1', letterSpacing: '-1px' }}>
+                             {plan.price === 0 ? 'Gratis' : Number(plan.price).toLocaleString('id-ID')}
+                          </span>
+                      </div>
+                      
+                      {plan.duration && <div style={{ fontSize: '14px', color: '#64748b', marginTop: '8px', fontWeight: '500' }}>/ {plan.duration === '1 Tahun' ? 'tahun' : plan.duration}</div>}
                     </div>
-                    <div style={{ padding: '24px' }}>
-                      <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'grid', gap: '10px' }}>
+                    
+                    <div style={{ padding: '0 32px 32px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                      {activePlan && Number(plan.price) === Number(activePlan.price) ? (
+                        <button className="btn" style={{ width: '100%', textAlign: 'center', display: 'block', padding: '14px', borderRadius: '12px', fontSize: '15px', fontWeight: '800', marginBottom: '32px', background: '#f1f5f9', color: '#64748b', border: '1px solid #e2e8f0' }} disabled>
+                          <Check size={16} style={{display:'inline', marginRight:'6px', verticalAlign:'text-bottom'}} />
+                          SEDANG AKTIF
+                        </button>
+                      ) : (
+                        <Link href={`/checkout/${plan.slug}`} className={`btn ${isPopular ? 'btn-primary' : 'btn-secondary'}`} style={{ width: '100%', textAlign: 'center', display: 'block', padding: '14px', borderRadius: '12px', fontSize: '15px', fontWeight: '600', marginBottom: '32px', boxShadow: isPopular ? '0 8px 20px -8px rgba(99,102,241,0.5)' : 'none' }}>
+                          {plan.price === 0 ? 'Mulai Gratis' : 'Pilih Paket Ini'}
+                        </Link>
+                      )}
+
+                      <div style={{ fontSize: '13px', fontWeight: '700', color: '#1e293b', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Yang Anda Dapatkan:</div>
+                      <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '14px' }}>
                         {features.map((f, j) => (
-                          <li key={j} style={{ fontSize: '14px', color: '#475569', display: 'flex', gap: '8px', alignItems: 'center' }}><Check size={16} color="#10b981" strokeWidth={3} /> {f}</li>
+                          <li key={j} style={{ fontSize: '14px', color: '#475569', display: 'flex', gap: '12px', alignItems: 'flex-start', lineHeight: '1.4' }}>
+                              <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#ecfdf5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
+                                 <Check size={12} color="#10b981" strokeWidth={3.5} />
+                              </div>
+                              {f}
+                          </li>
                         ))}
                       </ul>
-                      <Link href={`/checkout/${plan.slug}`} className={`btn ${isPopular ? 'btn-primary' : 'btn-secondary'}`} style={{ width: '100%', textAlign: 'center', display: 'block' }}>
-                        {plan.price === 0 ? 'Mulai Gratis' : <><ShoppingCart size={16} style={{display:'inline', marginRight:'6px', verticalAlign:'text-bottom'}} /> Berlangganan</>}
-                      </Link>
                     </div>
                   </div>
                 );
               })}
             </div>
+            </>
           )}
         </>
       )}

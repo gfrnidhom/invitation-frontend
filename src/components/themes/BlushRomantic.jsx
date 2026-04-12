@@ -172,7 +172,7 @@ export default function BlushRomantic({ payload, audioController }) {
                             <h3 className={`${marcellus.className} text-lg tracking-[.15em] uppercase text-[#fefcfa] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>
                             <p className="text-xs text-[#fefcfa]/12 tracking-widest uppercase">{ed.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</p>
                             <div className="flex items-center justify-center gap-3 mt-10 text-[#b76e79]/25"><div className="h-px w-12 bg-current"/><svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><div className="h-px w-12 bg-current"/></div>
-                            <div className="mt-12 pt-8 border-t border-[#b76e79]/5"><p className={`${marcellus.className} text-[10px] rg-txt tracking-[.3em] uppercase`}>Beringinesia</p><p className="text-[8px] text-[#fefcfa]/8 tracking-[.2em] uppercase mt-1">Digital Invitation</p></div>
+                            <div className="mt-12 pt-8 border-t border-[#b76e79]/5"><p className={`${marcellus.className} text-[10px] rg-txt tracking-[.3em] uppercase`}>Digivitation</p><p className="text-[8px] text-[#fefcfa]/8 tracking-[.2em] uppercase mt-1">Digital Invitation</p></div>
                         </footer>
                     </div>
                 </div>

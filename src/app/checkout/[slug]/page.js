@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
-import { packages as packagesApi, payments } from '@/lib/api';
+import { packages as packagesApi, payments, subscriptions } from '@/lib/api';
 import { ShieldCheck, ArrowLeft, Loader2, Check } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
@@ -18,6 +18,8 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState('');
   const [processing, setProcessing] = useState(false);
+  const [activeSub, setActiveSub] = useState(null);
+  const [discount, setDiscount] = useState(0);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -26,13 +28,28 @@ export default function CheckoutPage() {
   }, [user, authLoading, router, slug]);
 
   useEffect(() => {
-    const fetchPackage = async () => {
+    const fetchData = async () => {
       try {
-        const res = await packagesApi.list();
-        const packages = res.data || [];
+        const [resPkg, resSub] = await Promise.all([
+          packagesApi.list(),
+          subscriptions.current().catch(() => ({ data: null }))
+        ]);
+        
+        const packages = resPkg.data || [];
         const selectedPlan = packages.find(p => p.slug === slug);
+        
+        let currentSub = null;
+        if (resSub.data && resSub.data.status === 'active') {
+           currentSub = resSub.data;
+           setActiveSub(currentSub);
+        }
+
         if (selectedPlan) {
           setPlan(selectedPlan);
+          
+          if (currentSub && currentSub.package && currentSub.package_id !== selectedPlan.id) {
+             setDiscount(Number(currentSub.package.price));
+          }
         } else {
           toast.error('Paket tidak ditemukan');
           router.push('/app/subscriptions');
@@ -44,7 +61,7 @@ export default function CheckoutPage() {
       }
     };
 
-    if (user) fetchPackage();
+    if (user) fetchData();
   }, [slug, user, router]);
 
   const handlePay = async () => {
@@ -175,6 +192,13 @@ export default function CheckoutPage() {
                   <div style={{ fontSize: '18px', fontWeight: '700' }}>Rp {Number(plan.price).toLocaleString('id-ID')}</div>
                 </div>
                 <div style={{ fontSize: '14px', color: '#cbd5e1' }}>Masa aktif: {plan.duration}</div>
+
+                {discount > 0 && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '12px', color: '#34d399', fontWeight: '500' }}>
+                    <div style={{ fontSize: '14px' }}>Potongan Sisa {activeSub?.package?.name}</div>
+                    <div style={{ fontSize: '16px' }}>- Rp {discount.toLocaleString('id-ID')}</div>
+                  </div>
+                )}
               </div>
               
               <div style={{ marginBottom: '32px' }}>
@@ -190,7 +214,7 @@ export default function CheckoutPage() {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', paddingTop: '24px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
                 <div style={{ fontSize: '16px', color: '#cbd5e1' }}>Total Pembayaran</div>
-                <div style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', fontWeight: '800' }}>Rp {Number(plan.price).toLocaleString('id-ID')}</div>
+                <div style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', fontWeight: '800' }}>Rp {Math.max(1000, Number(plan.price) - discount).toLocaleString('id-ID')}</div>
               </div>
 
               <button 

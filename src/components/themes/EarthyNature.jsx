@@ -376,7 +376,7 @@ export default function EarthyNature({ payload, audioController }) {
                             </div>
 
                             <div className="mt-12 pt-8 border-t border-[#8a9a5b]/5">
-                                <p className={`${cormorant.className} text-[10px] sage tracking-[0.3em] uppercase`}>Beringinesia</p>
+                                <p className={`${cormorant.className} text-[10px] sage tracking-[0.3em] uppercase`}>Digivitation</p>
                                 <p className="text-[8px] text-[#f5f1eb]/10 tracking-[0.2em] uppercase mt-1">Digital Invitation</p>
                             </div>
                         </footer>

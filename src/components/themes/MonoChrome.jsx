@@ -157,7 +157,7 @@ export default function MonoChrome({ payload, audioController }) {
                             <h3 className={`${bebas.className} text-xl tracking-[.2em] uppercase text-white mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>
                             <p className="text-[10px] text-white/10 tracking-[.3em] uppercase">{ed.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</p>
                             <div className="flex items-center justify-center gap-4 mt-10 text-white/8"><div className="h-px w-16 bg-current"/><div className="w-1.5 h-1.5 bg-current"/><div className="h-px w-16 bg-current"/></div>
-                            <div className="mt-12 pt-8 border-t border-white/3"><p className={`${bebas.className} text-sm text-white/20 tracking-[.4em] uppercase`}>Beringinesia</p><p className="text-[8px] text-white/8 tracking-[.3em] uppercase mt-1">Digital Invitation</p></div>
+                            <div className="mt-12 pt-8 border-t border-white/3"><p className={`${bebas.className} text-sm text-white/20 tracking-[.4em] uppercase`}>Digivitation</p><p className="text-[8px] text-white/8 tracking-[.3em] uppercase mt-1">Digital Invitation</p></div>
                         </footer>
                     </div>
                 </div>

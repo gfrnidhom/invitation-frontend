@@ -166,7 +166,7 @@ export default function MonoChromeV({ payload, audioController }) {
                             <h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#f2f2f7] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>
                             <p className={`${montserrat.className} text-[9px] text-[#d1d1d6]/8 tracking-[.3em] uppercase font-light`}>{ed.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</p>
                             <div className="flex items-center justify-center gap-3 mt-10 ch opacity-20"><div className="h-px w-12 bg-current"/><span className={`${cinzel.className} text-[8px]`}>✦</span><div className="h-px w-12 bg-current"/></div>
-                            <div className="mt-12 pt-8 border-t border-[#d1d1d6]/3"><p className={`${cinzel.className} text-[9px] ch tracking-[.3em]`}>Beringinesia</p><p className={`${montserrat.className} text-[7px] text-[#d1d1d6]/6 tracking-[.2em] uppercase mt-1 font-light`}>Digital Invitation</p></div>
+                            <div className="mt-12 pt-8 border-t border-[#d1d1d6]/3"><p className={`${cinzel.className} text-[9px] ch tracking-[.3em]`}>Digivitation</p><p className={`${montserrat.className} text-[7px] text-[#d1d1d6]/6 tracking-[.2em] uppercase mt-1 font-light`}>Digital Invitation</p></div>
                         </footer>
                     </div>
                 </div>

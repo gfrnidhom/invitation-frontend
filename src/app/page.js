@@ -1,307 +1,706 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Sparkles, Palette, Crown, Heart, Check, ArrowRight, LayoutDashboard, Gem, Quote, BookHeart, Star, ChevronDown, ChevronUp, MessageCircle } from 'lucide-react';
+import { Sparkles, Palette, Crown, Heart, Check, ArrowRight, LayoutDashboard, Gem, Quote, BookHeart, Star, ChevronDown, ChevronUp, MessageCircle, Users, Music, Camera, Send, Menu, X, Play, Eye, Zap, Shield, Clock, Gift } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 import { packages as packagesApi, themes, testimonials, faqs } from '@/lib/api';
+import { getThemePreviewUrl } from '@/lib/constants';
+
+/* ─────────── Scroll Animation Hook ─────────── */
+function useInView(options = {}) {
+  const ref = useRef(null);
+  const [isInView, setIsInView] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsInView(true);
+        observer.unobserve(entry.target);
+      }
+    }, { threshold: 0.15, ...options });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+  return [ref, isInView];
+}
+
+/* ─────────── Animated Section Wrapper ─────────── */
+function AnimatedSection({ children, className = '', style = {}, delay = 0 }) {
+  const [ref, isInView] = useInView();
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        ...style,
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? 'translateY(0)' : 'translateY(40px)',
+        transition: `opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* ─────────── Floating Particles Component ─────────── */
+function FloatingParticles() {
+  return (
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+      {[...Array(6)].map((_, i) => (
+        <div
+          key={i}
+          className="landing-particle"
+          style={{
+            position: 'absolute',
+            width: `${8 + i * 4}px`,
+            height: `${8 + i * 4}px`,
+            borderRadius: '50%',
+            background: `radial-gradient(circle, rgba(255,255,255,${0.15 + i * 0.03}) 0%, transparent 70%)`,
+            left: `${10 + i * 15}%`,
+            top: `${20 + (i % 3) * 25}%`,
+            animation: `landing-float ${5 + i * 1.5}s ease-in-out infinite`,
+            animationDelay: `${i * 0.8}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ─────────── COUNTER ANIMATION ─────────── */
+function AnimatedCounter({ end, suffix = '', duration = 2000 }) {
+  const [count, setCount] = useState(0);
+  const [ref, isInView] = useInView();
+
+  useEffect(() => {
+    if (!isInView) return;
+    let start = 0;
+    const step = end / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= end) { setCount(end); clearInterval(timer); }
+      else setCount(Math.floor(start));
+    }, 16);
+    return () => clearInterval(timer);
+  }, [isInView, end, duration]);
+
+  return <span ref={ref}>{count.toLocaleString('id-ID')}{suffix}</span>;
+}
+
 
 export default function Home() {
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
-  
+
   const [plans, setPlans] = useState([]);
   const [themeList, setThemeList] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [testimonialList, setTestimonialList] = useState([]);
   const [faqList, setFaqList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openFaq, setOpenFaq] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     Promise.all([
       packagesApi.list().then(res => setPlans(res.data || [])).catch(() => {}),
-      themes.list().then(res => setThemeList(res.data || [])).catch(() => {}),
+      themes.list().then(res => {
+        setThemeList(res.data || []);
+        if (res.categories) setCategories(res.categories);
+      }).catch(() => {}),
       testimonials.list().then(res => setTestimonialList(res.data || [])).catch(() => {}),
       faqs.list().then(res => setFaqList(res.data || [])).catch(() => {})
     ]).finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const planColors = [
-    { gradient: 'linear-gradient(135deg, #64748b, #475569)' },
-    { gradient: 'linear-gradient(135deg, #6366f1, #4f46e5)' },
-    { gradient: 'linear-gradient(135deg, #f59e0b, #d97706)' },
+    { gradient: 'linear-gradient(135deg, #64748b, #475569)', glow: 'rgba(100,116,139,0.2)' },
+    { gradient: 'linear-gradient(135deg, #6366f1, #4f46e5)', glow: 'rgba(99,102,241,0.25)' },
+    { gradient: 'linear-gradient(135deg, #f59e0b, #d97706)', glow: 'rgba(245,158,11,0.25)' },
   ];
 
   if (authLoading) return <div className="page-loading"><div className="spinner" /></div>;
 
   return (
-    <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', fontFamily: 'var(--font-sans)', color: '#334155', overflowX: 'hidden' }}>
-      
+    <div className="landing-root">
+
       {/* ─── NAVIGATION BAR ─── */}
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(0,0,0,0.05)', zIndex: 50, padding: '16px 24px' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-          {/* 1. LOGO (LEFT) */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'var(--color-primary-600)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)' }}>
+      <nav className={`landing-nav ${scrolled ? 'landing-nav-scrolled' : ''}`}>
+        <div className="landing-nav-inner">
+          {/* LOGO */}
+          <div className="landing-logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <div className="landing-logo-icon">
               <Heart size={20} strokeWidth={2.5} />
             </div>
-            <span style={{ fontFamily: 'var(--font-heading)', fontSize: '20px', fontWeight: '800', color: '#1e293b', letterSpacing: '-0.3px' }}>Beringinesia</span>
+            <span className="landing-logo-text">Digivitation</span>
           </div>
 
-          {/* 2. MENU LINKS (CENTER) */}
-          <div className="hidden md:flex items-center gap-7" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
-            <a href="#fitur" style={{ fontSize: '15px', fontWeight: '500', color: '#475569', textDecoration: 'none', transition: 'color 0.2s' }}>Fitur</a>
-            <a href="#tema" style={{ fontSize: '15px', fontWeight: '500', color: '#475569', textDecoration: 'none', transition: 'color 0.2s' }}>Tema</a>
-            <a href="#harga" style={{ fontSize: '15px', fontWeight: '500', color: '#475569', textDecoration: 'none', transition: 'color 0.2s' }}>Harga</a>
-            <a href="#testimoni" style={{ fontSize: '15px', fontWeight: '500', color: '#475569', textDecoration: 'none', transition: 'color 0.2s' }}>Ulasan</a>
-            <a href="#faq" style={{ fontSize: '15px', fontWeight: '500', color: '#475569', textDecoration: 'none', transition: 'color 0.2s' }}>FAQ</a>
+          {/* MENU LINKS (Desktop) */}
+          <div className="landing-nav-links">
+            <a href="#fitur">Fitur</a>
+            <a href="#tema">Tema</a>
+            <a href="#harga">Harga</a>
+            <a href="#testimoni">Ulasan</a>
+            <a href="#faq">FAQ</a>
           </div>
 
-          {/* 3. AUTH / ACTION BUTTONS (RIGHT) */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {/* AUTH BUTTONS */}
+          <div className="landing-nav-actions">
             {user ? (
-              <Link href="/app/dashboard" className="btn btn-primary" style={{ padding: '8px 20px', fontSize: '14px', borderRadius: '10px' }}>
+              <Link href="/app/dashboard" className="btn btn-primary" style={{ padding: '10px 24px', fontSize: '14px', borderRadius: '12px' }}>
                 <LayoutDashboard size={16} /> Dashboard
               </Link>
             ) : (
               <>
-                <Link href="/login" style={{ fontSize: '14px', fontWeight: '600', color: 'var(--color-primary-600)', textDecoration: 'none', padding: '8px 16px' }}>Masuk</Link>
-                <Link href="/register" className="btn btn-primary" style={{ padding: '8px 20px', fontSize: '14px', borderRadius: '10px' }}>Daftar Gratis</Link>
+                <Link href="/login" className="landing-nav-login">Masuk</Link>
+                <Link href="/register" className="btn btn-primary" style={{ padding: '10px 24px', fontSize: '14px', borderRadius: '12px' }}>
+                  Daftar Gratis
+                </Link>
               </>
             )}
           </div>
+
+          {/* MOBILE TOGGLE */}
+          <button className="landing-mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+
+        {/* MOBILE MENU */}
+        {mobileMenuOpen && (
+          <div className="landing-mobile-menu">
+            <a href="#fitur" onClick={() => setMobileMenuOpen(false)}>Fitur</a>
+            <a href="#tema" onClick={() => setMobileMenuOpen(false)}>Tema</a>
+            <a href="#harga" onClick={() => setMobileMenuOpen(false)}>Harga</a>
+            <a href="#testimoni" onClick={() => setMobileMenuOpen(false)}>Ulasan</a>
+            <a href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
+            <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', marginTop: '8px', display: 'flex', gap: '12px' }}>
+              {user ? (
+                <Link href="/app/dashboard" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Dashboard</Link>
+              ) : (
+                <>
+                  <Link href="/login" className="btn btn-secondary" style={{ flex: 1, justifyContent: 'center' }}>Masuk</Link>
+                  <Link href="/register" className="btn btn-primary" style={{ flex: 1, justifyContent: 'center' }}>Daftar</Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </nav>
 
-      <div style={{ paddingTop: '70px' }}>
-        {/* ─── HERO SECTION ─── */}
-        <section style={{ padding: '80px 24px', textAlign: 'center', maxWidth: '800px', margin: '0 auto', animation: 'slide-up 0.6s ease-out' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'var(--color-primary-50)', color: 'var(--color-primary-600)', padding: '6px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: '600', marginBottom: '24px' }}>
-            <Sparkles size={14} /> Solusi Undangan Digital Modern
+      {/* ─── HERO SECTION ─── */}
+      <section className="landing-hero">
+        <FloatingParticles />
+        <div className="landing-hero-bg" />
+        <div className="landing-hero-content">
+          <div className="landing-hero-text">
+            <AnimatedSection>
+              <div className="landing-badge">
+                <Sparkles size={14} /> Platform Undangan Digital #1
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={0.1}>
+              <h1 className="landing-hero-title">
+                Buat Undangan
+                <span className="landing-hero-title-accent"> Pernikahan Digital </span>
+                yang Memukau
+              </h1>
+            </AnimatedSection>
+            <AnimatedSection delay={0.2}>
+              <p className="landing-hero-desc">
+                Sebarkan kabar bahagia dengan elegan. Pilih dari koleksi template premium, atur RSVP, kelola tamu, dan bagikan galeri foto — semua dalam satu platform canggih.
+              </p>
+            </AnimatedSection>
+            <AnimatedSection delay={0.3}>
+              <div className="landing-hero-buttons">
+                <Link href={user ? "/app/dashboard" : "/register"} className="landing-btn-cta">
+                  Mulai Buat Undangan <ArrowRight size={18} />
+                </Link>
+                <a href="#tema" className="landing-btn-outline">
+                  <Play size={16} /> Lihat Demo
+                </a>
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={0.4}>
+              <div className="landing-hero-stats">
+                <div className="landing-hero-stat">
+                  <strong><AnimatedCounter end={5000} suffix="+" /></strong>
+                  <span>Undangan Dibuat</span>
+                </div>
+                <div className="landing-hero-stat-divider" />
+                <div className="landing-hero-stat">
+                  <strong><AnimatedCounter end={15} suffix="+" /></strong>
+                  <span>Tema Premium</span>
+                </div>
+                <div className="landing-hero-stat-divider" />
+                <div className="landing-hero-stat">
+                  <strong><AnimatedCounter end={99} suffix="%" /></strong>
+                  <span>Kepuasan Pelanggan</span>
+                </div>
+              </div>
+            </AnimatedSection>
           </div>
-          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: '800', color: '#0f172a', lineHeight: '1.1', margin: '0 0 24px', letterSpacing: '-1px' }}>
-            Buat Undangan Pernikahan <span style={{ color: 'var(--color-primary-600)' }}>Impian Anda</span> Dalam Hitungan Menit
-          </h1>
-          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: '#475569', lineHeight: '1.6', margin: '0 auto 40px', maxWidth: '600px' }}>
-            Sebarkan kabar bahagia dengan elegan. Template premium, buku tamu interaktif, manajemen kehadiran, dan galeri foto dalam satu platform praktis.
-          </p>
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href={user ? "/app/dashboard" : "/register"} className="btn btn-primary" style={{ padding: '14px 32px', fontSize: '16px', borderRadius: '12px' }}>
-              Buat Undangan Sekarang <ArrowRight size={18} />
-            </Link>
-            <a href="#tema" className="btn btn-secondary" style={{ padding: '14px 32px', fontSize: '16px', borderRadius: '12px' }}>
-              Lihat Tema Preview
-            </a>
-          </div>
-        </section>
 
-        {/* ─── FEATURES SECTION ─── */}
-        <section id="fitur" style={{ padding: '80px 24px', background: 'white' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', fontWeight: '800', color: '#1e293b', margin: '0 0 16px' }}>Kenapa Memilih Kami?</h2>
-              <p style={{ color: '#64748b', fontSize: '16px', maxWidth: '500px', margin: '0 auto' }}>Lebih dari sekadar undangan gambar, platform kami memberikan pengalaman interaktif bagi tamu Anda.</p>
+          <AnimatedSection delay={0.2} className="landing-hero-image-wrap">
+            <div className="landing-hero-image-container">
+              <div className="landing-hero-image-glow" />
+              <Image
+                src="/images/hero-mockup.png"
+                alt="Digivitation Wedding Invitation Mockup"
+                width={550}
+                height={550}
+                className="landing-hero-image"
+                priority
+              />
+              {/* Floating badge */}
+              <div className="landing-hero-float-badge landing-hero-float-1">
+                <Users size={16} color="#6366f1" /> <span>500+ Tamu RSVP</span>
+              </div>
+              <div className="landing-hero-float-badge landing-hero-float-2">
+                <Camera size={16} color="#ec4899" /> <span>Galeri Premium</span>
+              </div>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px' }}>
-              {[
-                { icon: Palette, title: 'Desain Premium Beragam', desc: 'Pilihan tema eksklusif yang bisa disesuaikan dengan konsep warna dan gaya pernikahan Anda.' },
-                { icon: BookHeart, title: 'Buku Tamu Interaktif', desc: 'Terima doa dan harapan secara langsung dari tamu yang hadir, lengkap dengan konfirmasi kehadiran (RSVP).' },
-                { icon: LayoutDashboard, title: 'Dashboard Manajemen', desc: 'Kelola data tamu, lacak jadwal pembayaran, dan lihat statistik kunjungan undangan Anda dengan mudah.' }
-              ].map((f, i) => {
-                const Icon = f.icon;
-                return (
-                  <div key={i} style={{ padding: '32px', background: '#f8fafc', borderRadius: '24px', border: '1px solid #e2e8f0', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }} className="feature-card">
-                    <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: 'var(--color-primary-100)', color: 'var(--color-primary-600)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ─── TRUSTED / SOCIAL PROOF BAR ─── */}
+      <section className="landing-social-proof">
+        <AnimatedSection>
+          <p className="landing-social-proof-text">Dipercaya oleh ribuan pasangan untuk hari istimewa mereka</p>
+          <div className="landing-social-proof-avatars">
+            {[...'ABCDEFGH'].map((letter, i) => (
+              <div key={i} className="landing-social-proof-avatar" style={{ 
+                background: `hsl(${i * 45}, 60%, 70%)`,
+                zIndex: 8 - i,
+                marginLeft: i > 0 ? '-10px' : '0',
+              }}>
+                {letter}
+              </div>
+            ))}
+            <span className="landing-social-proof-count">+5.000 pengguna</span>
+          </div>
+        </AnimatedSection>
+      </section>
+
+      {/* ─── FEATURES SECTION ─── */}
+      <section id="fitur" className="landing-features">
+        <div className="landing-container">
+          <AnimatedSection className="landing-section-header">
+            <div className="landing-badge" style={{ background: 'rgba(99,102,241,0.1)', color: '#6366f1' }}>
+              <Zap size={14} /> Fitur Unggulan
+            </div>
+            <h2 className="landing-section-title">Semua yang Anda Butuhkan<br/>dalam Satu Platform</h2>
+            <p className="landing-section-desc">Lebih dari sekadar undangan gambar — platform kami memberikan pengalaman interaktif dan profesional.</p>
+          </AnimatedSection>
+
+          <div className="landing-features-grid">
+            {[
+              { icon: Palette, title: 'Desain Premium Beragam', desc: 'Pilih dari koleksi tema eksklusif yang bisa disesuaikan dengan konsep warna dan gaya pernikahan Anda.', color: '#6366f1', bg: '#eef2ff' },
+              { icon: BookHeart, title: 'Buku Tamu & RSVP', desc: 'Terima doa dan ucapan selamat secara digital, lengkap dengan konfirmasi kehadiran tamu real-time.', color: '#ec4899', bg: '#fdf2f8' },
+              { icon: LayoutDashboard, title: 'Dashboard Lengkap', desc: 'Kelola data tamu, lacak pembayaran, dan lihat statistik kunjungan undangan Anda secara real-time.', color: '#f59e0b', bg: '#fffbeb' },
+              { icon: Music, title: 'Musik Latar Custom', desc: 'Upload lagu favorit atau pilih dari koleksi musik romantis kami untuk mengiringi undangan digital Anda.', color: '#10b981', bg: '#ecfdf5' },
+              { icon: Camera, title: 'Galeri Foto Cantik', desc: 'Tampilkan momen pre-wedding terbaik dalam galeri foto interaktif dengan layout yang memukau.', color: '#8b5cf6', bg: '#f5f3ff' },
+              { icon: Send, title: 'Bagikan Mudah', desc: 'Kirim undangan via WhatsApp, Instagram, atau salin link. Satu undangan untuk semua platform.', color: '#3b82f6', bg: '#eff6ff' },
+            ].map((f, i) => {
+              const Icon = f.icon;
+              return (
+                <AnimatedSection key={i} delay={i * 0.1}>
+                  <div className="landing-feature-card">
+                    <div className="landing-feature-icon" style={{ background: f.bg, color: f.color }}>
+                      <Icon size={26} />
+                    </div>
+                    <h3 className="landing-feature-title">{f.title}</h3>
+                    <p className="landing-feature-desc">{f.desc}</p>
+                  </div>
+                </AnimatedSection>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── HOW IT WORKS ─── */}
+      <section className="landing-how-it-works">
+        <div className="landing-container">
+          <AnimatedSection className="landing-section-header">
+            <div className="landing-badge" style={{ background: 'rgba(16,185,129,0.1)', color: '#10b981' }}>
+              <Clock size={14} /> Mudah & Cepat
+            </div>
+            <h2 className="landing-section-title">3 Langkah Mudah<br/>Membuat Undangan</h2>
+            <p className="landing-section-desc">Buat undangan digital impian Anda hanya dalam hitungan menit.</p>
+          </AnimatedSection>
+
+          <div className="landing-steps">
+            {[
+              { step: '01', title: 'Pilih Template', desc: 'Jelajahi koleksi tema premium kami dan pilih yang sesuai dengan gaya pernikahan Anda.', icon: Palette },
+              { step: '02', title: 'Isi Detail Acara', desc: 'Masukkan informasi pernikahan, foto, love story, dan detail acara melalui dashboard editor.', icon: BookHeart },
+              { step: '03', title: 'Bagikan ke Tamu', desc: 'Kirim undangan digital Anda langsung via WhatsApp, media sosial, atau salin link undangan.', icon: Send },
+            ].map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <AnimatedSection key={i} delay={i * 0.15}>
+                  <div className="landing-step-card">
+                    <div className="landing-step-number">{s.step}</div>
+                    <div className="landing-step-icon-wrap">
                       <Icon size={28} />
                     </div>
-                    <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '20px', fontWeight: '700', color: '#1e293b', margin: '0 0 12px' }}>{f.title}</h3>
-                    <p style={{ color: '#475569', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>{f.desc}</p>
+                    <h3 className="landing-step-title">{s.title}</h3>
+                    <p className="landing-step-desc">{s.desc}</p>
                   </div>
-                );
-              })}
-            </div>
+                </AnimatedSection>
+              );
+            })}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ─── THEMES SHOWCASE ─── */}
-        <section id="tema" style={{ padding: '100px 24px', background: '#f8fafc' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', fontWeight: '800', color: '#1e293b', margin: '0 0 16px' }}>Koleksi Tema Eksklusif</h2>
-              <p style={{ color: '#64748b', fontSize: '16px', maxWidth: '500px', margin: '0 auto' }}>Sempurna di setiap layar, memukau di setiap pandangan.</p>
+      {/* ─── SHOWCASE / IMAGE BANNER ─── */}
+      <section className="landing-showcase">
+        <div className="landing-showcase-overlay" />
+        <Image
+          src="/images/wedding-scene.png"
+          alt="Beautiful wedding ceremony"
+          fill
+          style={{ objectFit: 'cover' }}
+        />
+        <div className="landing-showcase-content">
+          <AnimatedSection>
+            <h2 className="landing-showcase-title">Wujudkan Pernikahan Impian Anda</h2>
+            <p className="landing-showcase-desc">
+              Dari dekorasi mewah hingga undangan digital yang memukau, kami membantu Anda menyempurnakan setiap detail hari istimewa.
+            </p>
+            <Link href={user ? "/app/dashboard" : "/register"} className="landing-btn-cta" style={{ display: 'inline-flex' }}>
+              Mulai Sekarang <ArrowRight size={18} />
+            </Link>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ─── THEMES SHOWCASE ─── */}
+      <section id="tema" className="landing-themes">
+        <div className="landing-container">
+          <AnimatedSection className="landing-section-header">
+            <div className="landing-badge" style={{ background: 'rgba(139,92,246,0.1)', color: '#8b5cf6' }}>
+              <Palette size={14} /> Koleksi Tema
             </div>
-            {loading ? (
-              <div style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}><div className="spinner" /></div>
-            ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
-                {themeList.slice(0, 4).map((theme, i) => (
-                  <div key={theme.id} style={{ background: 'white', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', animation: `slide-up 0.5s ease-out ${i * 0.1}s both` }}>
-                    <div style={{ aspectRatio: '3/4', position: 'relative', background: '#e2e8f0' }}>
-                      {theme.thumbnail ? (
-                        <img src={`${process.env.NEXT_PUBLIC_STORAGE_URL}/${theme.thumbnail}`} alt={theme.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      ) : (
-                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Palette size={32} color="#94a3b8" /></div>
-                      )}
-                      {theme.is_premium === 1 && (
-                        <div style={{ position: 'absolute', top: '16px', right: '16px', background: 'var(--color-warning)', color: 'white', padding: '6px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <Crown size={12} /> PREMIUM
+            <h2 className="landing-section-title">Tema Eksklusif &<br/>Desain Memukau</h2>
+            <p className="landing-section-desc">Setiap tema dirancang dengan detail tinggi, responsif di semua perangkat, dan bisa disesuaikan sepenuhnya.</p>
+          </AnimatedSection>
+
+          {loading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '60px' }}><div className="spinner" /></div>
+          ) : (
+            <>
+              {categories && categories.length > 0 && (
+                <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginBottom: '32px', flexWrap: 'wrap' }}>
+                  <button
+                    onClick={() => setSelectedCategory('all')}
+                    className={`btn ${selectedCategory === 'all' ? 'btn-primary' : 'btn-secondary'}`}
+                    style={{ borderRadius: '20px', padding: '8px 16px', fontSize: '14px' }}
+                  >
+                    Semua Tema
+                  </button>
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
+                      className={`btn ${selectedCategory === cat.id ? 'btn-primary' : 'btn-secondary'}`}
+                      style={{ borderRadius: '20px', padding: '8px 16px', fontSize: '14px' }}
+                    >
+                      {cat.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            
+              <div className="landing-themes-grid">
+                {themeList
+                  .filter(theme => selectedCategory === 'all' || theme.category_id === selectedCategory)
+                  .map((theme, i) => (
+                  <AnimatedSection key={theme.id} delay={(i % 4) * 0.1}>
+                    <div className="landing-theme-card">
+                      <div className="landing-theme-image" style={{ aspectRatio: '16/9' }}>
+                        {theme.thumbnail ? (
+                          <img src={theme.thumbnail.startsWith('http') ? theme.thumbnail : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${theme.thumbnail}`} alt={theme.name} />
+                        ) : (
+                          <div className="landing-theme-placeholder"><Palette size={36} color="#94a3b8" /></div>
+                        )}
+                        {theme.is_premium === 1 && (
+                          <div className="landing-theme-premium-badge">
+                            <Crown size={12} /> PREMIUM
+                          </div>
+                        )}
+                        <a href={getThemePreviewUrl(theme.slug)} target="_blank" rel="noreferrer" className="landing-theme-overlay">
+                          <Eye size={20} />
+                          <span>Preview Tema</span>
+                        </a>
+                      </div>
+                      <div className="landing-theme-info">
+                        <h3>{theme.name}</h3>
+                        <p>{theme.description || `${theme.category || 'Tema elegan'} dengan desain modern dan responsif`}</p>
+                        <div style={{ marginTop: '16px' }}>
+                          <a href={getThemePreviewUrl(theme.slug)} target="_blank" rel="noreferrer" className="btn btn-secondary btn-sm" style={{ width: '100%', justifyContent: 'center' }}>
+                            <Eye size={14} /> Lihat Preview
+                          </a>
                         </div>
-                      )}
+                      </div>
                     </div>
-                    <div style={{ padding: '20px' }}>
-                      <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', fontWeight: '700', color: '#1e293b', margin: '0 0 8px' }}>{theme.name}</h3>
-                      <p style={{ color: '#64748b', fontSize: '13px', margin: '0' }}>{theme.description || 'Tema elegan dengan desain modern'}</p>
-                    </div>
-                  </div>
+                  </AnimatedSection>
                 ))}
               </div>
-            )}
-            {themeList.length > 4 && (
-              <div style={{ textAlign: 'center', marginTop: '48px' }}>
-                <Link href={user ? "/app/themes" : "/login"} className="btn btn-secondary" style={{ padding: '12px 28px', borderRadius: '12px', fontSize: '15px' }}>Lihat Semua Tema</Link>
-              </div>
-            )}
-          </div>
-        </section>
+            </>
+          )}
+        </div>
+      </section>
 
-        {/* ─── PRICING SHOWCASE ─── */}
-        <section id="harga" style={{ padding: '100px 24px', background: '#0f172a' }}>
-          <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(99, 102, 241, 0.2)', color: '#818cf8', padding: '6px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: '600', marginBottom: '16px' }}>
-                <Gem size={14} /> Investasi Terbaik
+      {/* ─── FLATLAY IMAGE SECTION ─── */}
+      <section className="landing-flatlay-section">
+        <div className="landing-container">
+          <div className="landing-flatlay-grid">
+            <AnimatedSection className="landing-flatlay-image-wrap">
+              <Image
+                src="/images/wedding-flatlay.png"
+                alt="Premium wedding invitation stationery"
+                width={560}
+                height={560}
+                className="landing-flatlay-image"
+              />
+            </AnimatedSection>
+            <AnimatedSection delay={0.15} className="landing-flatlay-text">
+              <div className="landing-badge" style={{ background: 'rgba(236,72,153,0.1)', color: '#ec4899' }}>
+                <Heart size={14} /> Mengapa Kami
               </div>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', fontWeight: '800', color: 'white', margin: '0 0 16px' }}>Pilih Paket Langganan</h2>
-              <p style={{ color: '#94a3b8', fontSize: '16px', maxWidth: '500px', margin: '0 auto' }}>Dapatkan akses ke fitur premium untuk membuat hari spesial Anda menjadi hadiah yang paling dikenang.</p>
+              <h2 className="landing-section-title" style={{ textAlign: 'left' }}>Undangan Digital Premium untuk Momen Tak Terlupakan</h2>
+              <p className="landing-section-desc" style={{ textAlign: 'left', margin: '0 0 32px' }}>
+                Kami menghadirkan pengalaman undangan digital terbaik dengan desain premium, fitur lengkap, dan kemudahan penggunaan yang tidak tertandingi.
+              </p>
+              <ul className="landing-flatlay-list">
+                {[
+                  'Desain responsif sempurna di semua perangkat',
+                  'Editor drag-and-drop yang mudah digunakan',
+                  'Fitur RSVP & buku tamu interaktif',
+                  'Integrasi WhatsApp untuk pengiriman instan',
+                  'Musik latar kustom untuk suasana romantis',
+                  'Dukungan pelanggan 24/7',
+                ].map((item, i) => (
+                  <li key={i} className="landing-flatlay-list-item">
+                    <div className="landing-flatlay-check"><Check size={14} strokeWidth={3} /></div>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── PRICING SECTION ─── */}
+      <section id="harga" className="landing-pricing">
+        <div className="landing-container">
+          <AnimatedSection className="landing-section-header">
+            <div className="landing-badge" style={{ background: 'rgba(99,102,241,0.15)', color: '#818cf8' }}>
+              <Gem size={14} /> Harga Terjangkau
             </div>
-            
-            {loading ? (
-              <div style={{ display: 'flex', justifyContent: 'center', padding: '40px' }}><div className="spinner" /></div>
-            ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-                {plans.length === 0 ? (
-                  <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#94a3b8' }}>Paket belum tersedia.</div>
-                ) : plans.map((plan, i) => {
-                  const color = planColors[i % planColors.length];
-                  const isPopular = i === 1;
-                  let features = Array.isArray(plan.features) ? plan.features : (() => { try { return JSON.parse(plan.features) || []; } catch { return []; } })();
-                  if (features.length === 0) features = ['Akses Semua Tema Premium', 'Buku Tamu & RSVP Tanpa Batas', 'Galeri Foto Lengkap', 'Pengelolaan Love Story & Acara', 'Custom Music & Teks'];
-                  
-                  return (
-                    <div key={plan.id} style={{ background: 'white', borderRadius: '24px', overflow: 'hidden', border: isPopular ? '2px solid #8b5cf6' : '1px solid transparent', position: 'relative', display: 'flex', flexDirection: 'column' }}>
-                      {isPopular && (<div style={{ position: 'absolute', top: '16px', right: '16px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: 'white', padding: '4px 12px', borderRadius: '20px', fontSize: '11px', fontWeight: '700', letterSpacing: '0.05em' }}>PALING DIMINATI</div>)}
-                      <div style={{ background: color.gradient, padding: '32px', color: 'white' }}>
-                        <div style={{ fontSize: '15px', fontWeight: '600', opacity: 0.9 }}>{plan.name}</div>
-                        <div style={{ fontFamily: 'var(--font-heading)', fontSize: '40px', fontWeight: '800', marginTop: '12px', letterSpacing: '-1px' }}>{plan.price === 0 ? 'Gratis' : `Rp ${Number(plan.price).toLocaleString('id-ID')}`}</div>
-                        <div style={{ fontSize: '14px', opacity: 0.8, marginTop: '8px' }}>Masa Aktif: {plan.duration}</div>
+            <h2 className="landing-section-title" style={{ color: 'white' }}>Pilih Paket Langganan<br/>yang Tepat</h2>
+            <p className="landing-section-desc" style={{ color: '#94a3b8' }}>Investasi sekali untuk momen yang tak akan terlupakan seumur hidup.</p>
+          </AnimatedSection>
+
+          {loading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '60px' }}><div className="spinner" /></div>
+          ) : (
+            <div className="landing-pricing-grid">
+              {plans.length === 0 ? (
+                <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#94a3b8' }}>Paket belum tersedia.</div>
+              ) : plans.map((plan, i) => {
+                const color = planColors[i % planColors.length];
+                const isPopular = i === 1;
+                let features = Array.isArray(plan.features) ? plan.features : (() => { try { return JSON.parse(plan.features) || []; } catch { return []; } })();
+                if (features.length === 0) features = ['Akses Semua Tema Premium', 'Buku Tamu & RSVP Tanpa Batas', 'Galeri Foto Lengkap', 'Pengelolaan Love Story & Acara', 'Custom Music & Teks'];
+
+                return (
+                  <AnimatedSection key={plan.id} delay={i * 0.1}>
+                    <div className={`landing-pricing-card ${isPopular ? 'landing-pricing-popular' : ''}`}>
+                      {isPopular && (
+                        <div className="landing-pricing-popular-badge">
+                          <Star size={12} fill="white" /> PALING DIMINATI
+                        </div>
+                      )}
+                      <div className="landing-pricing-header" style={{ background: color.gradient }}>
+                        <div className="landing-pricing-name">{plan.name}</div>
+                        <div className="landing-pricing-price">
+                          {plan.price === 0 ? 'Gratis' : `Rp ${Number(plan.price).toLocaleString('id-ID')}`}
+                        </div>
+                        <div className="landing-pricing-duration">Masa Aktif: {plan.duration}</div>
                       </div>
-                      <div style={{ padding: '32px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                        <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px', display: 'grid', gap: '16px' }}>
+                      <div className="landing-pricing-body">
+                        <ul className="landing-pricing-features">
                           {features.map((f, j) => (
-                            <li key={j} style={{ fontSize: '15px', color: '#475569', display: 'flex', gap: '12px', alignItems: 'flex-start', lineHeight: '1.4' }}>
-                              <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#ecfdf5', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Check size={12} strokeWidth={3} /></div>
+                            <li key={j}>
+                              <div className="landing-pricing-check"><Check size={12} strokeWidth={3} /></div>
                               {f}
                             </li>
                           ))}
                         </ul>
-                        <div style={{ marginTop: 'auto' }}>
-                          <Link href={user ? `/checkout/${plan.slug}` : `/login?redirect=/checkout/${plan.slug}`} className={`btn ${isPopular ? 'btn-primary' : 'btn-secondary'}`} style={{ width: '100%', padding: '14px', fontSize: '15px', borderRadius: '12px', display: 'inline-block', textAlign: 'center' }}>
-                            {plan.price === 0 ? 'Mulai Sekarang' : 'Beli Paket Ini'}
-                          </Link>
-                        </div>
+                        <Link
+                          href={user ? `/checkout/${plan.slug}` : `/login?redirect=/checkout/${plan.slug}`}
+                          className={`landing-pricing-button ${isPopular ? 'landing-pricing-button-primary' : ''}`}
+                        >
+                          {plan.price === 0 ? 'Mulai Sekarang' : 'Beli Paket Ini'}
+                        </Link>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* ─── TESTIMONIALS SECTION ─── */}
-        <section id="testimoni" style={{ padding: '100px 24px', background: '#f8fafc' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'var(--color-success-100)', color: 'var(--color-success-600)', padding: '6px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: '600', marginBottom: '16px' }}>
-                <MessageCircle size={14} /> Kata Mereka
-              </div>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', fontWeight: '800', color: '#1e293b', margin: '0 0 16px' }}>Dipercaya Ratusan Pasangan</h2>
-              <p style={{ color: '#64748b', fontSize: '16px', maxWidth: '500px', margin: '0 auto' }}>Cerita bahagia dari mereka yang telah menggunakan Beringinesia.</p>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px' }}>
-              {testimonialList.length === 0 && !loading ? (
-                <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#64748b' }}>Belum ada ulasan saat ini.</div>
-              ) : testimonialList.map((testimoni) => (
-                <div key={testimoni.id} style={{ background: 'white', padding: '32px', borderRadius: '24px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', border: '1px solid #f1f5f9', position: 'relative' }}>
-                  <Quote size={32} color="var(--color-primary-100)" style={{ position: 'absolute', top: '24px', right: '24px' }} />
-                  <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={16} fill={i < testimoni.rating ? "#fbbf24" : "none"} color={i < testimoni.rating ? "#fbbf24" : "#cbd5e1"} strokeWidth={i < testimoni.rating ? 0 : 2} />
-                    ))}
-                  </div>
-                  <p style={{ color: '#475569', fontSize: '15px', lineHeight: '1.7', margin: '0 0 24px', fontStyle: 'italic' }}>&quot;{testimoni.content}&quot;</p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--color-primary-100), var(--color-primary-200))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary-600)', fontWeight: '700', fontSize: '18px' }}>
-                      {testimoni.name.charAt(0)}
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: '700', color: '#1e293b', fontSize: '15px' }}>{testimoni.name}</div>
-                      <div style={{ fontSize: '13px', color: '#64748b' }}>{testimoni.role}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ─── FAQ SECTION ─── */}
-        <section id="faq" style={{ padding: '100px 24px', background: 'white' }}>
-          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', fontWeight: '800', color: '#1e293b', margin: '0 0 16px' }}>Pertanyaan Seputar Platform Ini</h2>
-              <p style={{ color: '#64748b', fontSize: '16px', margin: '0 auto' }}>Temukan jawaban cepat untuk pertanyaan yang sering ditanyakan pengguna.</p>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {faqList.length === 0 && !loading ? (
-                <div style={{ textAlign: 'center', color: '#64748b' }}>FAQ belum tersedia.</div>
-              ) : faqList.map((faq) => {
-                const isOpen = openFaq === faq.id;
-                return (
-                  <div key={faq.id} style={{ background: '#f8fafc', borderRadius: '16px', overflow: 'hidden', border: '1px solid #e2e8f0', transition: 'all 0.3s' }}>
-                    <button 
-                      onClick={() => setOpenFaq(isOpen ? null : faq.id)}
-                      style={{ width: '100%', background: 'none', border: 'none', padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', textAlign: 'left' }}
-                    >
-                      <span style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '600', color: '#1e293b' }}>{faq.question}</span>
-                      {isOpen ? <ChevronUp size={20} color="#64748b" /> : <ChevronDown size={20} color="#64748b" />}
-                    </button>
-                    {isOpen && (
-                      <div style={{ padding: '0 24px 24px', color: '#475569', fontSize: '15px', lineHeight: '1.6', animation: 'fadeIn 0.3s' }}>
-                        {faq.answer}
-                      </div>
-                    )}
-                  </div>
+                  </AnimatedSection>
                 );
               })}
             </div>
-          </div>
-        </section>
+          )}
+        </div>
+      </section>
 
-        {/* ─── CTA FOOTER ─── */}
-        <section style={{ padding: '80px 24px', textAlign: 'center', background: 'white', borderTop: '1px solid #f1f5f9' }}>
-          <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-            <Quote size={40} color="var(--color-primary-200)" style={{ margin: '0 auto 24px' }} />
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', fontWeight: '800', color: '#1e293b', margin: '0 0 16px' }}>Siap Mengundang Orang-Orang Tercinta?</h2>
-            <p style={{ color: '#64748b', fontSize: '16px', margin: '0 0 32px' }}>Bergabung dengan jutaan pasangan yang telah menggunakan Beringinesia untuk memperindah momen pernikahan mereka.</p>
-            <Link href="/register" className="btn btn-primary" style={{ padding: '14px 40px', fontSize: '16px', borderRadius: '12px', display: 'inline-block' }}>Daftar Sekarang Secara Gratis</Link>
+      {/* ─── TESTIMONIALS SECTION ─── */}
+      <section id="testimoni" className="landing-testimonials">
+        <div className="landing-container">
+          <AnimatedSection className="landing-section-header">
+            <div className="landing-badge" style={{ background: 'rgba(16,185,129,0.1)', color: '#10b981' }}>
+              <MessageCircle size={14} /> Kata Mereka
+            </div>
+            <h2 className="landing-section-title">Dipercaya Ratusan Pasangan<br/>di Seluruh Indonesia</h2>
+            <p className="landing-section-desc">Cerita bahagia dari mereka yang telah menggunakan Digivitation untuk hari istimewa mereka.</p>
+          </AnimatedSection>
+
+          <div className="landing-testimonials-grid">
+            {testimonialList.length === 0 && !loading ? (
+              <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#64748b' }}>Belum ada ulasan saat ini.</div>
+            ) : testimonialList.map((testimoni, i) => (
+              <AnimatedSection key={testimoni.id} delay={i * 0.1}>
+                <div className="landing-testimonial-card">
+                  <Quote size={32} className="landing-testimonial-quote-icon" />
+                  <div className="landing-testimonial-stars">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} size={15} fill={j < testimoni.rating ? "#fbbf24" : "none"} color={j < testimoni.rating ? "#fbbf24" : "#cbd5e1"} strokeWidth={j < testimoni.rating ? 0 : 2} />
+                    ))}
+                  </div>
+                  <p className="landing-testimonial-content">&quot;{testimoni.content}&quot;</p>
+                  <div className="landing-testimonial-author">
+                    <div className="landing-testimonial-avatar">
+                      {testimoni.name.charAt(0)}
+                    </div>
+                    <div>
+                      <div className="landing-testimonial-name">{testimoni.name}</div>
+                      <div className="landing-testimonial-role">{testimoni.role}</div>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
           </div>
-          <div style={{ marginTop: '80px', color: '#94a3b8', fontSize: '14px' }}>
-            &copy; {new Date().getFullYear()} Beringinesia Digital Invitation. Hak Cipta Dilindungi.
+        </div>
+      </section>
+
+      {/* ─── FAQ SECTION ─── */}
+      <section id="faq" className="landing-faq">
+        <div className="landing-container" style={{ maxWidth: '800px' }}>
+          <AnimatedSection className="landing-section-header">
+            <div className="landing-badge" style={{ background: 'rgba(59,130,246,0.1)', color: '#3b82f6' }}>
+              <MessageCircle size={14} /> FAQ
+            </div>
+            <h2 className="landing-section-title">Pertanyaan yang Sering<br/>Ditanyakan</h2>
+            <p className="landing-section-desc">Temukan jawaban cepat untuk pertanyaan seputar platform kami.</p>
+          </AnimatedSection>
+
+          <div className="landing-faq-list">
+            {faqList.length === 0 && !loading ? (
+              <div style={{ textAlign: 'center', color: '#64748b' }}>FAQ belum tersedia.</div>
+            ) : faqList.map((faq, i) => {
+              const isOpen = openFaq === faq.id;
+              return (
+                <AnimatedSection key={faq.id} delay={i * 0.05}>
+                  <div className={`landing-faq-item ${isOpen ? 'landing-faq-item-open' : ''}`}>
+                    <button className="landing-faq-question" onClick={() => setOpenFaq(isOpen ? null : faq.id)}>
+                      <span>{faq.question}</span>
+                      <div className={`landing-faq-chevron ${isOpen ? 'landing-faq-chevron-open' : ''}`}>
+                        <ChevronDown size={20} />
+                      </div>
+                    </button>
+                    <div className={`landing-faq-answer ${isOpen ? 'landing-faq-answer-open' : ''}`}>
+                      <p>{faq.answer}</p>
+                    </div>
+                  </div>
+                </AnimatedSection>
+              );
+            })}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      {/* ─── CTA SECTION ─── */}
+      <section className="landing-cta">
+        <FloatingParticles />
+        <div className="landing-cta-content">
+          <AnimatedSection>
+            <Gift size={48} color="rgba(255,255,255,0.3)" style={{ margin: '0 auto 24px', display: 'block' }} />
+            <h2 className="landing-cta-title">Siap Mengundang Orang-Orang Tercinta?</h2>
+            <p className="landing-cta-desc">
+              Bergabung dengan ribuan pasangan yang telah mempercayakan hari istimewa mereka kepada Digivitation.
+            </p>
+            <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link href="/register" className="landing-btn-cta">
+                Daftar Sekarang — Gratis! <ArrowRight size={18} />
+              </Link>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ─── FOOTER ─── */}
+      <footer className="landing-footer">
+        <div className="landing-container">
+          <div className="landing-footer-grid">
+            <div className="landing-footer-brand">
+              <div className="landing-logo" style={{ cursor: 'default', marginBottom: '16px' }}>
+                <div className="landing-logo-icon" style={{ background: 'rgba(99,102,241,0.2)', boxShadow: 'none' }}>
+                  <Heart size={20} strokeWidth={2.5} color="#818cf8" />
+                </div>
+                <span className="landing-logo-text" style={{ color: 'white' }}>Digivitation</span>
+              </div>
+              <p style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.7', maxWidth: '300px' }}>
+                Platform undangan digital modern untuk momen pernikahan Anda yang tak terlupakan.
+              </p>
+            </div>
+            <div className="landing-footer-links">
+              <h4>Platform</h4>
+              <a href="#fitur">Fitur</a>
+              <a href="#tema">Tema</a>
+              <a href="#harga">Harga</a>
+            </div>
+            <div className="landing-footer-links">
+              <h4>Dukungan</h4>
+              <a href="#faq">FAQ</a>
+              <a href="#testimoni">Ulasan</a>
+            </div>
+            <div className="landing-footer-links">
+              <h4>Akun</h4>
+              <Link href="/login">Masuk</Link>
+              <Link href="/register">Daftar</Link>
+            </div>
+          </div>
+          <div className="landing-footer-bottom">
+            &copy; {new Date().getFullYear()} Digivitation Digital Invitation. Hak Cipta Dilindungi.
+          </div>
+        </div>
+      </footer>
 
     </div>
   );

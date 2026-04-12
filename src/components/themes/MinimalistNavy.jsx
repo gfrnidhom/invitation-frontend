@@ -19,7 +19,7 @@ export default function MinimalistNavy({ payload, audioController }) {
     const [isOpen, setIsOpen] = useState(false);
     const [nameInput, setNameInput] = useState(guestName || '');
     const [messageInput, setMessageInput] = useState('');
-    const [wishes, setWishes] = useState([]);
+    const [wishes, setWishes] = useState(invitation?.guestMessages || []);
     const [submitting, setSubmitting] = useState(false);
 
     const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();

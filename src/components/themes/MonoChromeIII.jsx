@@ -187,7 +187,7 @@ export default function MonoChromeIII({ payload, audioController }) {
                             <h3 className={`${dmSerif.className} text-lg text-[#1a1a1a] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>
                             <p className="text-[10px] text-[#1a1a1a]/10 tracking-[.3em] uppercase">{ed.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</p>
                             <div className="flex items-center justify-center gap-4 mt-10 text-[#1a1a1a]/8"><div className="h-px w-16 bg-current"/><svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><div className="h-px w-16 bg-current"/></div>
-                            <div className="mt-12 pt-8 border-t border-[#1a1a1a]/3"><p className={`${dmSans.className} text-[10px] text-[#1a1a1a]/30 tracking-[.4em] uppercase font-medium`}>Beringinesia</p><p className="text-[8px] text-[#1a1a1a]/10 tracking-[.2em] uppercase mt-1">Digital Invitation</p></div>
+                            <div className="mt-12 pt-8 border-t border-[#1a1a1a]/3"><p className={`${dmSans.className} text-[10px] text-[#1a1a1a]/30 tracking-[.4em] uppercase font-medium`}>Digivitation</p><p className="text-[8px] text-[#1a1a1a]/10 tracking-[.2em] uppercase mt-1">Digital Invitation</p></div>
                         </footer>
                     </div>
                 </div>

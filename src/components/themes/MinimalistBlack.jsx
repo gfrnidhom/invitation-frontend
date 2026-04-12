@@ -22,8 +22,25 @@ export default function MinimalistBlack({ payload, audioController }) {
     // Form state
     const [nameInput, setNameInput] = useState(guestName || '');
     const [messageInput, setMessageInput] = useState('');
-    const [wishes, setWishes] = useState([]);
+    const [wishes, setWishes] = useState(invitation?.guestMessages || []);
     const [submitting, setSubmitting] = useState(false);
+
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://app.digitvitation.my.id/api';
+    const submitWish = async (e) => {
+        e.preventDefault();
+        if (!nameInput.trim() || !messageInput.trim()) return;
+        setSubmitting(true);
+        try {
+            await fetch(`${API_URL}/invitations/${invitation.id}/guestbook`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({ name: nameInput, message: messageInput })
+            });
+            setWishes([{ name: nameInput, message: messageInput, created_at: new Date().toISOString() }, ...wishes]);
+            setMessageInput('');
+            toast.success('Ucapan terkirim!');
+        } catch { toast.error('Gagal mengirim ucapan'); }
+        finally { setSubmitting(false); }
+    };
 
     // Countdown
     const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();
@@ -402,7 +419,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                             </div>
 
                             <div className="bg-white rounded-3xl p-8 text-[#1a1a1a]">
-                                <div className="space-y-4">
+                                <form onSubmit={submitWish} className="space-y-4">
                                     <div>
                                         <label className={`${cinzel.className} block text-[9px] tracking-[0.2em] uppercase text-gray-400 mb-2 font-bold`}>Nama</label>
                                         <input type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
@@ -413,10 +430,25 @@ export default function MinimalistBlack({ payload, audioController }) {
                                         <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)}
                                             className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-3.5 text-sm h-28 resize-none focus:outline-none focus:border-gray-400 transition-colors" placeholder="Tulis ucapan..." />
                                     </div>
-                                    <button className={`${cinzel.className} w-full bg-[#1a1a1a] text-white py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-black transition-colors`}>
-                                        Kirim Ucapan
+                                    <button type="submit" disabled={submitting} className={`${cinzel.className} w-full bg-[#1a1a1a] text-white py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-black transition-colors disabled:opacity-50`}>
+                                        {submitting ? 'Mengirim...' : 'Kirim Ucapan'}
                                     </button>
-                                </div>
+                                </form>
+                                {wishes.length > 0 && (
+                                    <div className="mt-8 space-y-3 max-h-[300px] overflow-y-auto">
+                                        {wishes.map((m, i) => (
+                                            <div key={i} className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
+                                                <p className="text-sm text-gray-600">{m.message}</p>
+                                                <div className="flex items-center gap-2 mt-2">
+                                                    <div className="w-6 h-6 rounded-full bg-[#1a1a1a] flex items-center justify-center">
+                                                        <span className="text-white text-[10px] font-bold">{m.name?.charAt(0)?.toUpperCase()}</span>
+                                                    </div>
+                                                    <p className="text-xs text-gray-400">{m.name}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         </section>
 

@@ -491,7 +491,7 @@ export default function MidnightGold({ payload, audioController }) {
                             </section>
                         )}
 
-                        {/* ── FOOTER with Beringinesia branding ── */}
+                        {/* ── FOOTER with Digivitation branding ── */}
                         <footer className="py-20 px-8 text-center border-t border-[#c9a84c]/10 mg-reveal">
                             <p className={`${playfair.className} text-[9px] tracking-[0.4em] uppercase gold-text-soft mb-8`}>Thank You</p>
 
@@ -515,7 +515,7 @@ export default function MidnightGold({ payload, audioController }) {
                             </div>
 
                             <div className="mt-12 pt-8 border-t border-[#c9a84c]/5">
-                                <p className={`${playfair.className} text-[10px] gold-text tracking-[0.3em] uppercase`}>Beringinesia</p>
+                                <p className={`${playfair.className} text-[10px] gold-text tracking-[0.3em] uppercase`}>Digivitation</p>
                                 <p className="text-[8px] text-white/15 tracking-[0.2em] uppercase mt-1">Digital Invitation</p>
                             </div>
                         </footer>

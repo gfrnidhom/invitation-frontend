@@ -30,7 +30,7 @@ export default function GardenParallax({ payload, audioController }) {
 
     const [nameInput, setNameInput] = useState(guestName || '');
     const [messageInput, setMessageInput] = useState('');
-    const [wishes, setWishes] = useState([]);
+    const [wishes, setWishes] = useState(invitation?.guestMessages || []);
     const [submitting, setSubmitting] = useState(false);
 
     const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();

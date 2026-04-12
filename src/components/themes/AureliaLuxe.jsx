@@ -21,7 +21,7 @@ export default function AureliaLuxe({ payload, audioController }) {
     // Form Guestbook state
     const [guestNameInput, setGuestNameInput] = useState(guestName || '');
     const [wishInput, setWishInput] = useState('');
-    const [wishes, setWishes] = useState([]);
+    const [wishes, setWishes] = useState(invitation?.guestMessages || []);
     const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
@@ -333,13 +333,15 @@ export default function AureliaLuxe({ payload, audioController }) {
                         <div className="w-2/3 md:w-1/2 h-full bg-white"></div>
                     </div>
 
-                    <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col md:flex-row bg-[#6B7280]/95 backdrop-blur-md rounded-tr-3xl rounded-bl-3xl shadow-2xl overflow-hidden p-10 md:p-14 text-white">
+                    <div className="relative z-10 w-full max-w-5xl mx-auto bg-[#6B7280]/95 backdrop-blur-md rounded-tr-3xl rounded-bl-3xl shadow-2xl overflow-hidden p-10 md:p-14 text-white">
+                        <div className="flex flex-col md:flex-row">
                         <div className="w-full md:w-1/3 mb-10 md:mb-0">
                            <h2 className={`${playfair.className} text-4xl md:text-5xl font-bold mb-2`}>RSVP</h2>
                            <p className="text-xs uppercase tracking-widest text-white/70 mb-6">Or Send A Wish</p>
                            <p className="text-[10px] text-white/50 border-t border-white/20 pt-4 max-w-[200px] leading-relaxed">Please let us know if you could make it, or feel free to leave a heartfelt message here.</p>
                         </div>
                         <div className="w-full md:w-2/3 flex flex-col gap-6">
+                           <form onSubmit={async (e) => { e.preventDefault(); if(!guestNameInput.trim()||!wishInput.trim())return; setSubmitting(true); try{ const API_URL=process.env.NEXT_PUBLIC_API_URL||'https://app.digitvitation.my.id/api'; await fetch(`${API_URL}/invitations/${invitation.id}/guestbook`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:guestNameInput,message:wishInput})}); setWishes([{name:guestNameInput,message:wishInput,created_at:new Date().toISOString()},...wishes]); setWishInput(''); toast.success('Ucapan terkirim!'); }catch{toast.error('Gagal mengirim ucapan');}finally{setSubmitting(false);} }} className="flex flex-col gap-6">
                            <div className="flex flex-col md:flex-row gap-6">
                                <div className="flex-1">
                                    <label className="block text-[9px] uppercase tracking-widest font-bold mb-2 text-white/70">Your Name</label>
@@ -350,10 +352,27 @@ export default function AureliaLuxe({ payload, audioController }) {
                                <label className="block text-[9px] uppercase tracking-widest font-bold mb-2 text-white/70">Your Wish / Message</label>
                                <textarea className="w-full bg-white/10 border-b border-white/30 px-0 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-white transition-colors h-24 resize-none" placeholder="Write something beautiful..." value={wishInput} onChange={(e) => setWishInput(e.target.value)}></textarea>
                            </div>
-                           <button className="self-end px-12 py-3 bg-white text-[#6B7280] text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-black hover:text-white transition-colors">
-                               SEND MESSAGE
+                           <button type="submit" disabled={submitting} className="self-end px-12 py-3 bg-white text-[#6B7280] text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-black hover:text-white transition-colors disabled:opacity-50">
+                               {submitting ? 'MENGIRIM...' : 'SEND MESSAGE'}
                            </button>
+                           </form>
                         </div>
+                        </div>
+                        {wishes.length > 0 && (
+                            <div className="mt-10 pt-8 border-t border-white/15 space-y-3 max-h-[400px] overflow-y-auto">
+                                {wishes.map((m, i) => (
+                                    <div key={i} className="bg-white/8 rounded-2xl p-4 border border-white/10">
+                                        <p className="text-sm text-white/70">{m.message}</p>
+                                        <div className="flex items-center gap-2 mt-2">
+                                            <div className="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center">
+                                                <span className="text-white text-[10px] font-bold">{m.name?.charAt(0)?.toUpperCase()}</span>
+                                            </div>
+                                            <p className="text-xs text-white/40">{m.name}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </section>
 

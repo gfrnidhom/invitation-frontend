@@ -75,7 +75,7 @@ export default function BotanicalSage({ payload, audioController }) {
 
     const [guestNameInput, setGuestNameInput] = useState(guestName || '');
     const [wishInput, setWishInput] = useState('');
-    const [wishes, setWishes] = useState([]);
+    const [wishes, setWishes] = useState(invitation?.guestMessages || []);
     const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
@@ -465,7 +465,8 @@ export default function BotanicalSage({ payload, audioController }) {
                     <LeafOrnament className="absolute -top-16 left-1/4 w-32 opacity-10 rotate-12" />
                     <LeafOrnament className="absolute -bottom-16 right-1/4 w-32 opacity-10 -rotate-12" flip />
 
-                    <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col md:flex-row sage-glass rounded-3xl overflow-hidden p-8 md:p-14">
+                    <div className="relative z-10 w-full max-w-5xl mx-auto sage-glass rounded-3xl overflow-hidden p-8 md:p-14">
+                        <div className="flex flex-col md:flex-row">
                         <div className="w-full md:w-2/5 mb-10 md:mb-0 pr-0 md:pr-10 border-b md:border-b-0 md:border-r border-[#cddbcf]/40 pb-8 md:pb-0">
                             <WeddingRings className="w-16 h-10 mb-4 opacity-40" />
                             <h2 className={`${playfair.className} text-4xl md:text-5xl font-bold mb-2 olive-text`}>RSVP</h2>
@@ -473,6 +474,7 @@ export default function BotanicalSage({ payload, audioController }) {
                             <p className="text-sm text-[#5f7364] leading-relaxed max-w-xs">We would love to know if you can join us. Leave your wishes below.</p>
                         </div>
                         <div className="w-full md:w-3/5 md:pl-10 flex flex-col gap-5">
+                            <form onSubmit={async (e) => { e.preventDefault(); if(!guestNameInput.trim()||!wishInput.trim())return; setSubmitting(true); try{ const API_URL=process.env.NEXT_PUBLIC_API_URL||'https://app.digitvitation.my.id/api'; await fetch(`${API_URL}/invitations/${invitation.id}/guestbook`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:guestNameInput,message:wishInput})}); setWishes([{name:guestNameInput,message:wishInput,created_at:new Date().toISOString()},...wishes]); setWishInput(''); toast.success('Ucapan terkirim!'); }catch{toast.error('Gagal mengirim ucapan');}finally{setSubmitting(false);} }} className="flex flex-col gap-5">
                             <div>
                                 <label className="block text-[9px] uppercase tracking-widest font-bold mb-2 text-[#5f7364]">Your Name</label>
                                 <input type="text" className="w-full bg-white/70 border border-[#cddbcf] px-5 py-3.5 text-sm text-[#334036] focus:outline-none focus:border-[#4a5d4e] focus:ring-2 focus:ring-[#4a5d4e]/10 transition-all rounded-xl" placeholder="Full Name..." value={guestNameInput} onChange={(e) => setGuestNameInput(e.target.value)} />
@@ -481,10 +483,27 @@ export default function BotanicalSage({ payload, audioController }) {
                                 <label className="block text-[9px] uppercase tracking-widest font-bold mb-2 text-[#5f7364]">Your Message</label>
                                 <textarea className="w-full bg-white/70 border border-[#cddbcf] px-5 py-3.5 text-sm text-[#334036] focus:outline-none focus:border-[#4a5d4e] focus:ring-2 focus:ring-[#4a5d4e]/10 transition-all h-28 resize-none rounded-xl" placeholder="Write something beautiful..." value={wishInput} onChange={(e) => setWishInput(e.target.value)} />
                             </div>
-                            <button className="self-end sage-btn px-10 py-3.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase">
-                                Send Message
+                            <button type="submit" disabled={submitting} className="self-end sage-btn px-10 py-3.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase disabled:opacity-50">
+                                {submitting ? 'Mengirim...' : 'Send Message'}
                             </button>
+                            </form>
                         </div>
+                        </div>
+                        {wishes.length > 0 && (
+                            <div className="mt-10 pt-8 border-t border-[#cddbcf]/40 space-y-3 max-h-[400px] overflow-y-auto">
+                                {wishes.map((m, i) => (
+                                    <div key={i} className="bg-white/50 rounded-2xl p-4 border border-[#cddbcf]/30">
+                                        <p className="text-sm text-[#334036]/70">{m.message}</p>
+                                        <div className="flex items-center gap-2 mt-2">
+                                            <div className="w-6 h-6 rounded-full bg-[#4a5d4e]/15 flex items-center justify-center">
+                                                <span className="olive-text text-[10px] font-bold">{m.name?.charAt(0)?.toUpperCase()}</span>
+                                            </div>
+                                            <p className="text-xs text-[#5f7364]">{m.name}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </section>
 

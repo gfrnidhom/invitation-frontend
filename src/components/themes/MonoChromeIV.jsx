@@ -176,7 +176,7 @@ export default function MonoChromeIV({ payload, audioController }) {
                             <h3 className={`${italiana.className} text-lg text-[#e4e4e7] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>
                             <p className={`${spaceGrotesk.className} text-[9px] text-[#e4e4e7]/8 tracking-[.3em] uppercase font-light`}>{ed.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</p>
                             <div className="flex items-center justify-center gap-3 mt-10 text-[#a1a1aa]/8"><div className="h-px w-12 bg-current"/><div className="w-2 h-2 border border-current rotate-45"/><div className="h-px w-12 bg-current"/></div>
-                            <div className="mt-12 pt-8 border-t border-[#e4e4e7]/3"><p className={`${spaceGrotesk.className} text-[9px] stl tracking-[.4em] uppercase font-medium`}>Beringinesia</p><p className={`${spaceGrotesk.className} text-[7px] text-[#e4e4e7]/6 tracking-[.2em] uppercase mt-1 font-light`}>Digital Invitation</p></div>
+                            <div className="mt-12 pt-8 border-t border-[#e4e4e7]/3"><p className={`${spaceGrotesk.className} text-[9px] stl tracking-[.4em] uppercase font-medium`}>Digivitation</p><p className={`${spaceGrotesk.className} text-[7px] text-[#e4e4e7]/6 tracking-[.2em] uppercase mt-1 font-light`}>Digital Invitation</p></div>
                         </footer>
                     </div>
                 </div>

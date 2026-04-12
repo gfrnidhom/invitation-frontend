@@ -516,7 +516,7 @@ export default function CinematicVow({ payload, audioController }) {
                             </div>
 
                             <div className="mt-12 pt-8 border-t border-white/3">
-                                <p className={`${cinzel.className} text-[9px] text-white/15 tracking-[.3em]`}>Beringinesia</p>
+                                <p className={`${cinzel.className} text-[9px] text-white/15 tracking-[.3em]`}>Digivitation</p>
                                 <p className="text-[7px] text-white/6 tracking-[.2em] uppercase mt-1 font-light">Digital Invitation</p>
                             </div>
                         </footer>
