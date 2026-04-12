@@ -13,6 +13,7 @@ import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import CountdownTimer from './partials/CountdownTimer';
 import MusicPlayer from './partials/MusicPlayer';
+import TurutMengundang from './partials/TurutMengundang';
 
 const headingFont = Playfair_Display({ 
   subsets: ['latin'], 
@@ -142,15 +143,26 @@ export default function EksklusifModern({ payload, audioController }) {
         borderColor="border-none"
       />
 
+
+      {/* Turut Mengundang */}
+      <TurutMengundang 
+        invitation={invitation}
+        sectionBg="bg-transparent"
+        accentText="text-gray-200"
+        subtitleText="text-[#d79e60]"
+        borderColor="border-[#d79e60]"
+      />
+
       {/* Story / Description */}
-      {invitation.description && (
+      {invitation.quotes && (
         <section className="px-6 py-32 relative reveal">
           <div className="max-w-2xl mx-auto text-center glass-panel p-12 rounded-3xl relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-[#6f432a]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <svg className="w-8 h-8 mx-auto text-[#d79e60] mb-8" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             <p className={`${headingFont.className} text-xl md:text-2xl leading-relaxed text-gray-200 italic font-light`}>
-              &quot;{invitation.description}&quot;
+              &quot;{invitation.quotes}&quot;
             </p>
+            {invitation.quotes_name && <p className="text-[10px] text-[#d79e60] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
           </div>
         </section>
       )}

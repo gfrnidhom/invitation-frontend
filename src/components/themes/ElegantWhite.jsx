@@ -13,6 +13,7 @@ import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import CountdownTimer from './partials/CountdownTimer';
 import MusicPlayer from './partials/MusicPlayer';
+import TurutMengundang from './partials/TurutMengundang';
 
 const serif = Cormorant_Garamond({ 
   subsets: ['latin'], 
@@ -141,14 +142,25 @@ export default function ElegantWhite({ payload, audioController }) {
         borderColor="border-[#e8d5b7]/30"
       />
 
+      {/* Turut Mengundang */}
+      <TurutMengundang 
+        invitation={invitation}
+        sectionBg="bg-[#faf8f5]"
+        titleFont={serif.className}
+        accentText="text-gray-700"
+        subtitleText="text-[#c9a96e]"
+        borderColor="border-[#e8d5b7]"
+      />
+
       {/* Story / Description */}
-      {invitation.description && (
+      {invitation.quotes && (
         <section className="px-6 py-20 max-w-2xl mx-auto text-center animate-on-scroll slide-up">
           <p className="text-xs tracking-[0.4em] uppercase text-[#c9a96e] mb-6">Our Story</p>
           <div className="w-12 h-px bg-[#c9a96e] mx-auto mb-8"></div>
           <p className={`${serif.className} text-xl leading-relaxed text-gray-600 italic`}>
-            &quot;{invitation.description}&quot;
+            &quot;{invitation.quotes}&quot;
           </p>
+          {invitation.quotes_name && <p className="text-xs tracking-widest text-[#c9a96e] uppercase mt-4">{invitation.quotes_name}</p>}
         </section>
       )}
 

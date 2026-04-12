@@ -95,7 +95,14 @@ function DetailTab({ invitation, onSave, saving }) {
     quotes: invitation?.quotes || '',
     quotes_name: invitation?.quotes_name || '',
     live_streaming_link: invitation?.live_streaming_link || '',
-    turut_mengundang: invitation?.turut_mengundang || [],
+    closing_text: invitation?.closing_text || '',
+    turut_mengundang: (() => {
+      let tm = invitation?.turut_mengundang || [];
+      if (typeof tm === 'string') {
+        try { tm = JSON.parse(tm); } catch { tm = []; }
+      }
+      return Array.isArray(tm) ? tm : [];
+    })(),
     background_video_url: invitation?.background_video_url || '',
     cover_photo: null,
     cover_photos: []
@@ -111,7 +118,14 @@ function DetailTab({ invitation, onSave, saving }) {
       if (key === 'cover_photos') {
         form[key].forEach(f => fd.append('cover_photo[]', f));
       } else if (key === 'turut_mengundang') {
-        form[key].forEach((t, i) => { if (t.trim() !== '') fd.append(`turut_mengundang[${i}]`, t.trim()); });
+        const validItems = form[key].filter(t => t.trim() !== '');
+        if (validItems.length > 0) {
+          validItems.forEach((t, i) => fd.append(`turut_mengundang[${i}]`, t.trim()));
+        } else {
+          // If empty, send an empty string so Laravel receives it and converts to null
+          // to overwrite any existing values with null/empty instead of ignoring the field.
+          fd.append('turut_mengundang', '');
+        }
       } else if (form[key] !== null && form[key] !== '' && key !== 'cover_photo') {
         fd.append(key, form[key]);
       }
@@ -866,23 +880,29 @@ function GiftTab({ invitationId }) {
 
   useEffect(() => { 
     giftAccounts.list(invitationId).then((res) => setItems(res.data || [])).finally(() => setLoading(false)); 
-    banks.list().then(res => setBankOptions(res.data || res)).catch(err => console.error(err));
+    banks.list().then(res => {
+      const data = res.data || res;
+      setBankOptions(Array.isArray(data) ? data : []);
+    }).catch(err => console.error('Failed to load banks:', err));
   }, [invitationId]);
   
   const handleSave = async () => { 
     try { 
       const payload = { ...form };
       if (payload.sort_order === '' || payload.sort_order === null) payload.sort_order = 0;
+      // Ensure bank_id is sent as integer
+      if (payload.bank_id) payload.bank_id = parseInt(payload.bank_id, 10);
 
       if (editingId) {
-        const res = await giftAccounts.update(invitationId, editingId, payload);
-        setItems(prev => prev.map(item => item.id === editingId ? (res.data || res) : item));
+        await giftAccounts.update(invitationId, editingId, payload);
         toast.success('Rekening diperbarui');
       } else {
-        const res = await giftAccounts.create(invitationId, payload); 
-        setItems(prev => [...prev, res.data || res]); 
+        await giftAccounts.create(invitationId, payload); 
         toast.success('Rekening ditambahkan');
       }
+      // Re-fetch to get proper bank relationship data from server
+      const refreshRes = await giftAccounts.list(invitationId);
+      setItems(refreshRes.data || []);
       setForm({ bank_id: '', account_holder: '', account_number: '', sort_order: '' }); 
       setShowForm(false); 
       setEditingId(null);

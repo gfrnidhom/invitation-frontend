@@ -13,6 +13,7 @@ import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import CountdownTimer from './partials/CountdownTimer';
 import MusicPlayer from './partials/MusicPlayer';
+import TurutMengundang from './partials/TurutMengundang';
 
 const scriptFont = Alex_Brush({ 
   subsets: ['latin'], 
@@ -140,8 +141,19 @@ export default function ModernRomance({ payload, audioController }) {
         </div>
       </section>
 
+
+      {/* Turut Mengundang */}
+      <TurutMengundang 
+        invitation={invitation}
+        sectionBg="bg-[#fcfaf9]"
+        titleFont={serifFont.className}
+        accentText="text-gray-700"
+        subtitleText="text-[#a3714b]"
+        borderColor="border-[#d7c4af]"
+      />
+
       {/* Quote */}
-      {invitation.description && (
+      {invitation.quotes && (
         <section className="py-24 px-6 bg-white reveal">
           <div className="max-w-3xl mx-auto text-center relative">
             <div className="flex justify-center mb-8 opacity-40 text-[#b68b64]">
@@ -151,8 +163,9 @@ export default function ModernRomance({ payload, audioController }) {
               </svg>
             </div>
             <p className={`${serifFont.className} text-xl md:text-2xl leading-loose text-gray-600 italic`}>
-              &quot;{invitation.description}&quot;
+              &quot;{invitation.quotes}&quot;
             </p>
+            {invitation.quotes_name && <p className="text-[10px] text-[#a3714b] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
           </div>
         </section>
       )}

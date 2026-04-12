@@ -335,12 +335,33 @@ export default function BotanicalSage({ payload, audioController }) {
                         <div className="max-w-3xl mx-auto px-8 text-center relative z-10">
                             <svg className="w-10 h-10 mx-auto mb-6 text-[#8ba891] opacity-50" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
                             <p className={`${playfair.className} text-xl md:text-2xl font-medium leading-relaxed italic text-white/90`}>
-                                "{invitation.description}"
+                                "{invitation.quotes}"
                             </p>
+                            {invitation?.quotes_name && <p className="text-[10px] text-white/50 tracking-widest uppercase mt-4 font-bold">{invitation.quotes_name}</p>}
                             <FloralDivider className="w-48 mx-auto mt-8 opacity-30 invert" />
                         </div>
                     </section>
                 )}
+
+                {/* Turut Mengundang */}
+                {(() => {
+                    let tmItems = invitation?.turut_mengundang || [];
+                    if (typeof tmItems === 'string') { try { tmItems = JSON.parse(tmItems); } catch { tmItems = []; } }
+                    if (!Array.isArray(tmItems)) tmItems = [];
+                    tmItems = tmItems.filter(t => t && String(t).trim() !== '');
+                    if (tmItems.length === 0) return null;
+                    return (
+                        <section className="py-16 px-6 text-center bg-[#e8ede9] bs-reveal">
+                            <p className="text-[10px] text-[#5f7364] uppercase tracking-[0.3em] font-bold mb-6">Turut Mengundang</p>
+                            <div className="w-12 h-px bg-[#5f7364]/30 mx-auto mb-8" />
+                            <div className="space-y-2">
+                                {tmItems.map((name, i) => (
+                                    <p key={i} className={`${playfair.className} text-base text-[#3a4a3c] font-medium`}>{name}</p>
+                                ))}
+                            </div>
+                        </section>
+                    );
+                })()}
 
                 {/* ── 4. WEDDING DAY EVENTS ── */}
                 <section className="py-24 bg-[#e8ede9] text-center px-6 bs-reveal relative overflow-hidden">

@@ -18,8 +18,17 @@ export default function ProfilePage() {
 
   const handleSave = async (e) => {
     e.preventDefault(); setSaving(true); setMessage('');
-    try { await profile.update(form); await refreshUser(); setMessage('Profil berhasil diperbarui!'); setTimeout(() => setMessage(''), 3000); }
-    catch { setMessage('Gagal memperbarui profil'); } finally { setSaving(false); }
+    try {
+      // Only send fields the backend accepts (name, phone)
+      const { name, phone } = form;
+      await profile.update({ name, phone });
+      await refreshUser();
+      setMessage('Profil berhasil diperbarui!');
+      setTimeout(() => setMessage(''), 3000);
+    } catch (err) {
+      const msg = err?.message || err?.error || 'Gagal memperbarui profil';
+      setMessage(msg);
+    } finally { setSaving(false); }
   };
 
   if (loading) return <div className="page-loading"><div className="spinner" /></div>;
@@ -47,7 +56,7 @@ export default function ProfilePage() {
         <form onSubmit={handleSave}>
           <div style={{ display: 'grid', gap: '20px' }}>
             <div><label className="label">Nama Lengkap</label><input className="input" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required /></div>
-            <div><label className="label">Email</label><input className="input" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required /></div>
+            <div><label className="label">Email <span style={{ fontSize: '11px', color: '#94a3b8', fontWeight: '400' }}>(tidak dapat diubah)</span></label><input className="input" type="email" value={form.email} readOnly disabled style={{ opacity: 0.6, cursor: 'not-allowed' }} /></div>
             <div><label className="label">Nomor Telepon</label><input className="input" type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="628xxxxxxxxxx" /></div>
           </div>
           <button className="btn btn-primary btn-lg" type="submit" disabled={saving} style={{ width: '100%', marginTop: '24px' }}>

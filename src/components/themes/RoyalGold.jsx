@@ -13,6 +13,7 @@ import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import CountdownTimer from './partials/CountdownTimer';
 import MusicPlayer from './partials/MusicPlayer';
+import TurutMengundang from './partials/TurutMengundang';
 
 const displayFont = Cinzel({ 
   subsets: ['latin'], 
@@ -145,13 +146,24 @@ export default function RoyalGold({ payload, audioController }) {
         borderColor="border-[#c9a84c]/10"
       />
 
+      {/* Turut Mengundang */}
+      <TurutMengundang 
+        invitation={invitation}
+        sectionBg="bg-[#0a0a0f]"
+        titleFont={bodyFont.className}
+        accentText="text-[#e8d5a8]"
+        subtitleText="text-[#c9a84c]/60"
+        borderColor="border-[#c9a84c]"
+      />
+
       {/* Story / Description */}
-      {invitation.description && (
+      {invitation.quotes && (
         <section className="px-6 py-20 max-w-2xl mx-auto text-center reveal">
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/50 to-transparent mx-auto mb-8"></div>
           <p className="text-xl italic leading-relaxed text-[#e8d5a8]/70">
-            &quot;{invitation.description}&quot;
+            &quot;{invitation.quotes}&quot;
           </p>
+          {invitation.quotes_name && <p className="text-[10px] text-[#c9a84c]/60 tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/50 to-transparent mx-auto mt-8"></div>
         </section>
       )}

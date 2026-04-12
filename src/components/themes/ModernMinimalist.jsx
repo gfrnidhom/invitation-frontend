@@ -12,6 +12,7 @@ import Guestbook from './partials/Guestbook';
 import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import MusicPlayer from './partials/MusicPlayer';
+import TurutMengundang from './partials/TurutMengundang';
 
 const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://app.digitvitation.my.id/storage';
 
@@ -142,13 +143,23 @@ export default function ModernMinimalist({ payload, audioController }) {
 
             <CoupleProfile invitation={invitation} sectionBg="bg-white" cardBg="bg-gray-50" />
 
+            {/* Turut Mengundang */}
+            <TurutMengundang 
+                invitation={invitation}
+                sectionBg="bg-white"
+                accentText="text-gray-700"
+                subtitleText="text-gray-400"
+                borderColor="border-gray-300"
+            />
+
             {/* Description */}
             {invitation?.quotes && (
                 <section className="px-6 py-24 max-w-xl mx-auto text-center reveal">
                     <div className="w-8 h-8 mx-auto mb-6 rounded-full border-2 border-gray-900 flex items-center justify-center">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg>
                     </div>
-                    <p className="font-body text-lg leading-relaxed text-gray-500">{invitation.description}</p>
+                    <p className="font-body text-lg leading-relaxed text-gray-500">"{invitation.quotes}"</p>
+                    {invitation?.quotes_name && <p className="font-body text-xs tracking-widest text-gray-400 uppercase mt-4">{invitation.quotes_name}</p>}
                 </section>
             )}
 

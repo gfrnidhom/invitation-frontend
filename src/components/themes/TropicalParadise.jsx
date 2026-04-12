@@ -13,6 +13,7 @@ import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import CountdownTimer from './partials/CountdownTimer';
 import MusicPlayer from './partials/MusicPlayer';
+import TurutMengundang from './partials/TurutMengundang';
 
 const displayFont = Josefin_Sans({ 
   subsets: ['latin'], 
@@ -144,13 +145,23 @@ export default function TropicalParadise({ payload, audioController }) {
         borderColor="border-[#ccfbf1]"
       />
 
+      {/* Turut Mengundang */}
+      <TurutMengundang 
+        invitation={invitation}
+        sectionBg="bg-[#fffbf0]"
+        accentText="text-gray-700"
+        subtitleText="text-[#0d9488]"
+        borderColor="border-[#2dd4bf]"
+      />
+
       {/* Story / Description */}
-      {invitation.description && (
+      {invitation.quotes && (
         <section className="px-6 py-20 max-w-2xl mx-auto text-center reveal">
           <div className="w-12 h-1 bg-gradient-to-r from-[#2dd4bf] to-[#fb7185] rounded-full mx-auto mb-8"></div>
           <p className="text-lg leading-relaxed text-gray-500">
-            &quot;{invitation.description}&quot;
+            &quot;{invitation.quotes}&quot;
           </p>
+          {invitation.quotes_name && <p className="text-[10px] text-[#0d9488] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
         </section>
       )}
 

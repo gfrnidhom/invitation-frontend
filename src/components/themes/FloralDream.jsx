@@ -13,6 +13,7 @@ import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import CountdownTimer from './partials/CountdownTimer';
 import MusicPlayer from './partials/MusicPlayer';
+import TurutMengundang from './partials/TurutMengundang';
 
 const script = Great_Vibes({ 
   subsets: ['latin'], 
@@ -133,13 +134,23 @@ export default function FloralDream({ payload, audioController }) {
         borderColor="border-[#fce7f3]"
       />
 
+      {/* Turut Mengundang */}
+      <TurutMengundang 
+        invitation={invitation}
+        sectionBg="bg-[#fef7f7]"
+        accentText="text-gray-600"
+        subtitleText="text-[#f472b6]"
+        borderColor="border-[#fce7f3]"
+      />
+
       {/* Story / Description */}
-      {invitation.description && (
+      {invitation.quotes && (
         <section className="px-6 py-20 max-w-2xl mx-auto text-center reveal">
           <svg className="w-8 h-8 mx-auto text-[#f9a8d4] mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           <p className={`text-lg leading-relaxed text-gray-500 italic`}>
-            &quot;{invitation.description}&quot;
+            &quot;{invitation.quotes}&quot;
           </p>
+          {invitation.quotes_name && <p className="text-[10px] text-[#f472b6] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
         </section>
       )}
 

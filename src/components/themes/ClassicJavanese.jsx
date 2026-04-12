@@ -13,6 +13,7 @@ import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import CountdownTimer from './partials/CountdownTimer';
 import MusicPlayer from './partials/MusicPlayer';
+import TurutMengundang from './partials/TurutMengundang';
 
 const displayFont = Cinzel_Decorative({ 
   subsets: ['latin'], 
@@ -135,15 +136,26 @@ export default function ClassicJavanese({ payload, audioController }) {
         borderColor="border-[#f9ecd8]"
       />
 
+      {/* Turut Mengundang */}
+      <TurutMengundang 
+        invitation={invitation}
+        sectionBg="bg-[#fdf8f0]"
+        titleFont={bodyFont.className}
+        accentText="text-[#2d1810]"
+        subtitleText="text-[#c4913b]"
+        borderColor="border-[#c4913b]"
+      />
+
       {/* Story / Description */}
-      {invitation.description && (
+      {invitation.quotes && (
         <section className="px-6 py-20 max-w-2xl mx-auto text-center reveal">
           <div className="w-8 h-px bg-[#c4913b] mx-auto mb-4"></div>
           <p className="text-xs tracking-[0.3em] uppercase text-[#c4913b] mb-6">Bismillahirrahmanirrahim</p>
           <div className="w-8 h-px bg-[#c4913b] mx-auto mb-8"></div>
           <p className="text-base italic leading-relaxed text-gray-600">
-            &quot;{invitation.description}&quot;
+            &quot;{invitation.quotes}&quot;
           </p>
+          {invitation.quotes_name && <p className="text-[10px] text-[#c4913b] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
         </section>
       )}
 

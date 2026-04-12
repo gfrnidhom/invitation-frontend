@@ -372,6 +372,30 @@ export default function SereneGarden({ payload, audioController }) {
                     </div>
                 </section>
 
+                {/* ── Section 2.5: Turut Mengundang ── */}
+                {(() => {
+                    let tmItems = invitation?.turut_mengundang || [];
+                    if (typeof tmItems === 'string') {
+                        try { tmItems = JSON.parse(tmItems); } catch { tmItems = []; }
+                    }
+                    if (!Array.isArray(tmItems)) tmItems = [];
+                    tmItems = tmItems.filter(t => t && String(t).trim() !== '');
+                    if (tmItems.length === 0) return null;
+                    return (
+                        <section className="py-16 px-8 text-center bg-[#f4f7f4]">
+                            <div className="g1-reveal">
+                                <p className="text-[10px] tracking-[0.3em] uppercase text-green-accent font-semibold mb-6">Turut Mengundang</p>
+                                <div className="w-10 h-px bg-green-accent/30 mx-auto mb-8" />
+                                <div className="space-y-2">
+                                    {tmItems.map((name, i) => (
+                                        <p key={i} className={`${cormorant.className} text-lg text-[#4A4A4A] font-medium`}>{name}</p>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+                    );
+                })()}
+
                 {/* ── Section 3: Save The Date ── */}
                 <section className="py-20 px-8 text-center bg-gradient-to-b from-[#f4f7f4] to-white relative pb-32">
                     <div className="g1-reveal mb-12">

@@ -274,8 +274,29 @@ export default function AureliaLuxe({ payload, audioController }) {
                         <p className={`${playfair.className} text-xl md:text-3xl text-gray-900 font-bold italic leading-relaxed`}>
                             "{invitation?.quotes || 'A happy marriage is a long conversation which always seems too short.'}"
                         </p>
+                        <p className="text-[10px] text-gray-400 tracking-widest uppercase mt-4 font-bold">{invitation?.quotes_name || ''}</p>
                     </div>
                 </section>
+
+                {/* Turut Mengundang */}
+                {(() => {
+                    let tmItems = invitation?.turut_mengundang || [];
+                    if (typeof tmItems === 'string') { try { tmItems = JSON.parse(tmItems); } catch { tmItems = []; } }
+                    if (!Array.isArray(tmItems)) tmItems = [];
+                    tmItems = tmItems.filter(t => t && String(t).trim() !== '');
+                    if (tmItems.length === 0) return null;
+                    return (
+                        <section className="py-16 px-6 text-center bg-gray-50 reveal">
+                            <p className="text-[10px] text-gray-400 uppercase tracking-[0.3em] font-bold mb-6">Turut Mengundang</p>
+                            <div className="w-12 h-px bg-gray-300 mx-auto mb-8" />
+                            <div className="space-y-2">
+                                {tmItems.map((name, i) => (
+                                    <p key={i} className={`${playfair.className} text-base text-gray-700 font-medium`}>{name}</p>
+                                ))}
+                            </div>
+                        </section>
+                    );
+                })()}
 
                 {/* 7. OUR LOVE STORY */}
                 <section className="py-24 bg-gray-50 px-6 reveal">

@@ -13,6 +13,7 @@ import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import CountdownTimer from './partials/CountdownTimer';
 import MusicPlayer from './partials/MusicPlayer';
+import TurutMengundang from './partials/TurutMengundang';
 
 const displayFont = Playfair_Display({ 
   subsets: ['latin'], 
@@ -128,13 +129,24 @@ export default function RusticGarden({ payload, audioController }) {
         borderColor="border-[#e4eadf]"
       />
 
+      {/* Turut Mengundang */}
+      <TurutMengundang 
+        invitation={invitation}
+        sectionBg="bg-[#f5efe6]"
+        titleFont={displayFont.className}
+        accentText="text-[#3e5233]"
+        subtitleText="text-[#8aab75]"
+        borderColor="border-[#8aab75]"
+      />
+
       {/* Story / Description */}
-      {invitation.description && (
+      {invitation.quotes && (
         <section className="px-6 py-20 max-w-2xl mx-auto text-center reveal">
           <svg className="w-10 h-10 mx-auto text-[#8aab75] mb-6" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
           <p className={`${displayFont.className} text-xl italic leading-relaxed text-gray-600`}>
-            &quot;{invitation.description}&quot;
+            &quot;{invitation.quotes}&quot;
           </p>
+          {invitation.quotes_name && <p className="text-[10px] text-[#8aab75] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
         </section>
       )}
 
