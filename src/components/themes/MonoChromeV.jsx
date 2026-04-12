@@ -78,7 +78,7 @@ export default function MonoChromeV({ payload, audioController }) {
                             <h1 className={`${bodoni.className} italic text-6xl md:text-7xl lg:text-8xl text-[#f2f2f7] leading-[1] mb-2`}>{invitation?.groom_name?.split(' ')[0]}</h1>
                             <p className={`${cinzel.className} text-xs ch my-2`}>✦</p>
                             <h1 className={`${bodoni.className} italic text-6xl md:text-7xl lg:text-8xl text-[#f2f2f7] leading-[1] mb-8`}>{invitation?.bride_name?.split(' ')[0]}</h1>
-                            {invitation?.description&&<p className={`${montserrat.className} text-xs text-[#d1d1d6]/25 leading-relaxed max-w-lg mb-10 font-light`}>"{invitation.description}"</p>}
+                            {invitation?.quotes&&<p className={`${montserrat.className} text-xs text-[#d1d1d6]/25 leading-relaxed max-w-lg mb-10 font-light`}>"{invitation.description}"</p>}
                             {guestName&&<div className="mb-6"><p className={`${montserrat.className} text-[8px] text-[#d1d1d6]/10 tracking-[.3em] uppercase mb-1 font-medium`}>Dear</p><p className={`${bodoni.className} italic text-2xl ch`}>{guestName}</p></div>}
                         </div>
                         {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-[#1c1c1e]" btnColor="ch" btnBorder="border-[#d1d1d6]/10 shadow-2xl" />}
@@ -94,8 +94,8 @@ export default function MonoChromeV({ payload, audioController }) {
 
                         <section className="px-8 pb-20 m5-rv">
                             <div className="m5cw rounded-3xl p-8 text-center">
-                                <p className={`${bodoni.className} italic text-sm leading-relaxed text-[#1c1c1e]/50 mb-4`}>{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
-                                <p className={`${cinzel.className} text-[9px] text-[#1c1c1e]/25 tracking-[.2em]`}>QS. Ar-Rum Ayat 21</p>
+                                <p className={`${bodoni.className} italic text-sm leading-relaxed text-[#1c1c1e]/50 mb-4`}>{invitation?.quotes||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
+                                <p className={`${cinzel.className} text-[9px] text-[#1c1c1e]/25 tracking-[.2em]`}>{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 

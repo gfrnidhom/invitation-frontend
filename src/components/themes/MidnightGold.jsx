@@ -204,7 +204,7 @@ export default function MidnightGold({ payload, audioController }) {
                                 {invitation?.bride_name?.split(' ')[0]}
                             </h1>
 
-                            {invitation?.description && (
+                            {invitation?.quotes && (
                                 <p className="text-sm text-white/40 leading-relaxed max-w-lg mb-10 italic">
                                     "{invitation.description}"
                                 </p>
@@ -269,9 +269,9 @@ export default function MidnightGold({ payload, audioController }) {
                                     <span className="gold-text text-lg">❝</span>
                                 </div>
                                 <p className="text-sm leading-relaxed text-white/50 italic mb-4">
-                                    {invitation?.opening_text || '"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}
+                                    {invitation?.quotes || '"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}
                                 </p>
-                                <p className="text-[10px] gold-text-soft tracking-widest uppercase">QS. Ar-Rum Ayat 21</p>
+                                <p className="text-[10px] gold-text-soft tracking-widest uppercase">{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 

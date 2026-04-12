@@ -80,7 +80,7 @@ export default function MonoChromeIV({ payload, audioController }) {
                             <h1 className={`${italiana.className} text-6xl md:text-7xl lg:text-8xl text-[#e4e4e7] leading-[.85] mb-3`}>{invitation?.groom_name?.split(' ')[0]}</h1>
                             <div className="flex items-center gap-3 mb-3"><div className="w-8 h-px bg-[#a1a1aa]/20"/><span className={`${italiana.className} text-2xl text-[#a1a1aa]/30`}>&</span></div>
                             <h1 className={`${italiana.className} text-6xl md:text-7xl lg:text-8xl text-[#e4e4e7] leading-[.85] mb-8`}>{invitation?.bride_name?.split(' ')[0]}</h1>
-                            {invitation?.description&&<p className="text-xs text-[#e4e4e7]/25 leading-relaxed max-w-lg mb-10 font-light">"{invitation.description}"</p>}
+                            {invitation?.quotes&&<p className="text-xs text-[#e4e4e7]/25 leading-relaxed max-w-lg mb-10 font-light">"{invitation.description}"</p>}
                             {guestName&&<div className="mb-6 line-accent pl-5"><p className={`${spaceGrotesk.className} text-[8px] text-[#e4e4e7]/12 tracking-[.3em] uppercase mb-1 font-medium`}>Dear</p><p className={`${italiana.className} text-2xl stl`}>{guestName}</p></div>}
                         </div>
                         {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-[#18181b]" btnColor="stl" btnBorder="border-[#a1a1aa]/12 shadow-2xl" />}
@@ -97,8 +97,8 @@ export default function MonoChromeIV({ payload, audioController }) {
 
                         <section className="px-8 pb-20 m4-rv">
                             <div className="m4cw p-8 text-center">
-                                <p className={`${italiana.className} text-sm leading-relaxed text-[#18181b]/50 mb-4`}>{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
-                                <p className={`${spaceGrotesk.className} text-[9px] text-[#18181b]/25 tracking-[.3em] uppercase font-medium`}>QS. Ar-Rum Ayat 21</p>
+                                <p className={`${italiana.className} text-sm leading-relaxed text-[#18181b]/50 mb-4`}>{invitation?.quotes||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
+                                <p className={`${spaceGrotesk.className} text-[9px] text-[#18181b]/25 tracking-[.3em] uppercase font-medium`}>{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 

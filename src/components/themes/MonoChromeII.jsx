@@ -81,7 +81,7 @@ export default function MonoChromeII({ payload, audioController }) {
                             <h1 className={`${playfair.className} italic text-6xl md:text-7xl lg:text-8xl text-[#e8ddd0] leading-[1.1] mb-3 font-medium`}>{invitation?.groom_name?.split(' ')[0]}</h1>
                             <p className={`${playfair.className} italic text-3xl text-[#d4c5b3]/30 mb-3`}>&</p>
                             <h1 className={`${playfair.className} italic text-6xl md:text-7xl lg:text-8xl text-[#e8ddd0] leading-[1.1] mb-8 font-medium`}>{invitation?.bride_name?.split(' ')[0]}</h1>
-                            {invitation?.description&&<p className="text-sm text-[#e8ddd0]/30 leading-relaxed max-w-lg mb-10 italic font-light">"{invitation.description}"</p>}
+                            {invitation?.quotes&&<p className="text-sm text-[#e8ddd0]/30 leading-relaxed max-w-lg mb-10 italic font-light">"{invitation.description}"</p>}
                             {guestName&&<div className="mb-6"><p className="text-[9px] text-[#e8ddd0]/15 tracking-[.3em] uppercase mb-1">Dear</p><p className={`${playfair.className} italic text-2xl sep`}>{guestName}</p></div>}
                         </div>
                         {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-[#2c2420]" btnColor="sep" btnBorder="border-[#d4c5b3]/15 shadow-2xl" />}
@@ -100,8 +100,8 @@ export default function MonoChromeII({ payload, audioController }) {
                         {/* Quote */}
                         <section className="px-8 pb-20 m2-rv">
                             <div className="m2cw rounded-3xl p-8 text-center">
-                                <p className={`${playfair.className} italic text-sm leading-relaxed text-[#2c2420]/55 mb-4`}>{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
-                                <p className={`${oswald.className} text-[10px] text-[#d4c5b3] tracking-[.3em] uppercase`}>QS. Ar-Rum Ayat 21</p>
+                                <p className={`${playfair.className} italic text-sm leading-relaxed text-[#2c2420]/55 mb-4`}>{invitation?.quotes||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
+                                <p className={`${oswald.className} text-[10px] text-[#d4c5b3] tracking-[.3em] uppercase`}>{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 

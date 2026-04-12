@@ -343,9 +343,9 @@ export default function EnchantedGarden({ payload, audioController }) {
                         <div className="max-w-md mx-auto text-center eg-reveal">
                             <img src={ASSETS.divider} alt="" className="w-40 mx-auto mb-10 opacity-60" />
                             <p className={`${playfair.className} text-lg md:text-xl leading-[2] eg-text-light italic`}>
-                                "{invitation?.description || 'Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu.'}"
+                                "{invitation?.quotes || 'Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu.'}"
                             </p>
-                            <p className="mt-6 text-[10px] tracking-[0.3em] uppercase eg-text-muted">— QS. Ar-Rum : 21 —</p>
+                            <p className="mt-6 text-[10px] tracking-[0.3em] uppercase eg-text-muted">{invitation?.quotes_name || '— QS. Ar-Rum : 21 —'}</p>
                             <img src={ASSETS.divider} alt="" className="w-40 mx-auto mt-10 opacity-60 rotate-180" />
                         </div>
                     </section>

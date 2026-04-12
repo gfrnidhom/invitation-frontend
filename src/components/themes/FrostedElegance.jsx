@@ -70,7 +70,7 @@ export default function FrostedElegance({ payload, audioController }) {
                         <div className="relative z-10">
                             <p className={`${ci.className} text-[10px] tracking-[.4em] uppercase ib mb-6 font-light`}>Our Wedding</p>
                             <h1 className={`${ci.className} text-6xl md:text-7xl lg:text-8xl text-white leading-[1.1] mb-8 font-light`}>{invitation?.groom_name?.split(' ')[0]} <span className="ib opacity-60">&</span> {invitation?.bride_name?.split(' ')[0]}</h1>
-                            {invitation?.description&&<p className="text-sm text-white/35 leading-relaxed max-w-lg mb-10 italic font-light">"{invitation.description}"</p>}
+                            {invitation?.quotes&&<p className="text-sm text-white/35 leading-relaxed max-w-lg mb-10 italic font-light">"{invitation.description}"</p>}
                             {guestName&&<div className="mb-6"><p className="text-[10px] text-white/20 tracking-widest uppercase mb-1">Dear</p><p className={`${ci.className} text-3xl ib font-light`}>{guestName}</p></div>}
                         </div>
                         {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-[#1a1f2e]" btnColor="ib" btnBorder="border-white/15 shadow-2xl" />}
@@ -86,8 +86,8 @@ export default function FrostedElegance({ payload, audioController }) {
 
                         <section className="px-8 pb-20 fe-rv">
                             <div className="fcl rounded-3xl p-8 text-center">
-                                <p className="text-sm leading-relaxed text-[#1a1f2e]/55 italic mb-4 font-light">{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
-                                <p className="text-[10px] ib tracking-widest uppercase">QS. Ar-Rum Ayat 21</p>
+                                <p className="text-sm leading-relaxed text-[#1a1f2e]/55 italic mb-4 font-light">{invitation?.quotes||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
+                                <p className="text-[10px] ib tracking-widest uppercase">{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 

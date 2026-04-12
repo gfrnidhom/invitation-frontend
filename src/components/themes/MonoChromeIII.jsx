@@ -80,7 +80,7 @@ export default function MonoChromeIII({ payload, audioController }) {
                             <h1 className={`${dmSerif.className} text-6xl md:text-7xl lg:text-8xl text-white leading-[1.1] mb-3`}>{invitation?.groom_name?.split(' ')[0]}</h1>
                             <p className={`${lora.className} italic text-3xl text-white/20 mb-3`}>&</p>
                             <h1 className={`${dmSerif.className} text-6xl md:text-7xl lg:text-8xl text-white leading-[1.1] mb-8`}>{invitation?.bride_name?.split(' ')[0]}</h1>
-                            {invitation?.description&&<p className="text-sm text-white/30 leading-relaxed max-w-lg mb-10 font-light">"{invitation.description}"</p>}
+                            {invitation?.quotes&&<p className="text-sm text-white/30 leading-relaxed max-w-lg mb-10 font-light">"{invitation.description}"</p>}
                             {guestName&&<div className="mb-6"><p className="text-[9px] text-white/15 tracking-[.3em] uppercase mb-1">Dear</p><p className={`${lora.className} italic text-2xl text-white/60`}>{guestName}</p></div>}
                         </div>
                         {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-white" btnColor="text-[#1a1a1a]" btnBorder="border-[#1a1a1a]/10 shadow-2xl" />}
@@ -99,8 +99,8 @@ export default function MonoChromeIII({ payload, audioController }) {
                         {/* Quote */}
                         <section className="px-8 pb-20 m3-rv">
                             <div className="m3cl rounded-3xl p-8 text-center">
-                                <p className={`${lora.className} italic text-sm leading-relaxed text-[#1a1a1a]/50 mb-4`}>{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
-                                <p className={`${dmSans.className} text-[10px] text-[#1a1a1a]/25 tracking-[.3em] uppercase font-medium`}>QS. Ar-Rum Ayat 21</p>
+                                <p className={`${lora.className} italic text-sm leading-relaxed text-[#1a1a1a]/50 mb-4`}>{invitation?.quotes||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
+                                <p className={`${dmSans.className} text-[10px] text-[#1a1a1a]/25 tracking-[.3em] uppercase font-medium`}>{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 

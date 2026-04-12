@@ -69,7 +69,7 @@ export default function MonoChrome({ payload, audioController }) {
                             <h1 className={`${bebas.className} text-7xl md:text-8xl lg:text-9xl text-white leading-[0.85] mb-4`}>{invitation?.groom_name?.split(' ')[0]}</h1>
                             <p className={`${allura.className} text-4xl text-white/20 mb-4`}>&</p>
                             <h1 className={`${bebas.className} text-7xl md:text-8xl lg:text-9xl text-white leading-[0.85] mb-8`}>{invitation?.bride_name?.split(' ')[0]}</h1>
-                            {invitation?.description&&<p className="text-xs text-white/30 leading-relaxed max-w-lg mb-10 font-light">"{invitation.description}"</p>}
+                            {invitation?.quotes&&<p className="text-xs text-white/30 leading-relaxed max-w-lg mb-10 font-light">"{invitation.description}"</p>}
                             {guestName&&<div className="mb-6"><p className="text-[9px] text-white/15 tracking-[.3em] uppercase mb-1">Dear</p><p className={`${allura.className} text-3xl text-white/60`}>{guestName}</p></div>}
                         </div>
                         {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-black" btnColor="text-white/60" btnBorder="border-white/15 shadow-2xl" />}
@@ -85,8 +85,8 @@ export default function MonoChrome({ payload, audioController }) {
 
                         <section className="px-8 pb-20 mc-rv">
                             <div className="mc-card-w rounded-3xl p-8 text-center">
-                                <p className="text-sm leading-relaxed text-black/50 italic mb-4 font-light">{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
-                                <p className="text-[10px] text-black/30 tracking-[.3em] uppercase">QS. Ar-Rum Ayat 21</p>
+                                <p className="text-sm leading-relaxed text-black/50 italic mb-4 font-light">{invitation?.quotes||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
+                                <p className="text-[10px] text-black/30 tracking-[.3em] uppercase">{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 

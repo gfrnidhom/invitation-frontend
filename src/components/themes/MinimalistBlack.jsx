@@ -195,7 +195,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                             </h1>
 
                             {/* Quote */}
-                            {invitation?.description && (
+                            {invitation?.quotes && (
                                 <p className="text-sm text-white/50 leading-relaxed max-w-lg mb-10 italic">
                                     "{invitation.description}"
                                 </p>
@@ -264,9 +264,9 @@ export default function MinimalistBlack({ payload, audioController }) {
 
                             <div className="bg-white rounded-3xl p-8 text-center text-[#1a1a1a]">
                                 <p className="text-sm leading-relaxed text-gray-600 italic mb-4">
-                                    {invitation?.description || '"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}
+                                    {invitation?.quotes || '"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}
                                 </p>
-                                <p className="text-[10px] text-gray-400 tracking-widest uppercase">QS. Ar-Rum Ayat 21</p>
+                                <p className="text-[10px] text-gray-400 tracking-widest uppercase">{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 

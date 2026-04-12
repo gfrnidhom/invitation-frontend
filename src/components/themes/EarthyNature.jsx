@@ -157,7 +157,7 @@ export default function EarthyNature({ payload, audioController }) {
                                 {invitation?.groom_name?.split(' ')[0]} <span className="terracotta opacity-60">&</span> {invitation?.bride_name?.split(' ')[0]}
                             </h1>
 
-                            {invitation?.description && (
+                            {invitation?.quotes && (
                                 <p className="text-sm text-[#f5f1eb]/40 leading-relaxed max-w-lg mb-10 italic">"{invitation.description}"</p>
                             )}
                             {guestName && (
@@ -200,9 +200,9 @@ export default function EarthyNature({ payload, audioController }) {
                             <div className="cream-card rounded-3xl p-8 text-center">
                                 <svg className="w-8 h-8 text-[#8a9a5b] mx-auto mb-4 opacity-40" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg>
                                 <p className="text-sm leading-relaxed text-[#3d2b1f]/60 italic mb-4">
-                                    {invitation?.opening_text || '"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}
+                                    {invitation?.quotes || '"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}
                                 </p>
-                                <p className="text-[10px] text-[#8a9a5b] tracking-widest uppercase">QS. Ar-Rum Ayat 21</p>
+                                <p className="text-[10px] text-[#8a9a5b] tracking-widest uppercase">{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 

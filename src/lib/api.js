@@ -164,6 +164,11 @@ export const themes = {
   get: (id) => request(`/themes/${id}`),
 };
 
+// ── Banks ──
+export const banks = {
+  list: () => request('/banks'),
+};
+
 // ── User Active Theme ──
 export const userThemes = {
   current: () => request('/user-themes/current'),

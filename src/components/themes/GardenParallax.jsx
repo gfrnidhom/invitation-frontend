@@ -247,9 +247,9 @@ export default function GardenParallax({ payload, audioController }) {
                         <div className="gp-reveal max-w-md mx-auto">
                             <span className="text-3xl text-[#cbd5e0]">“</span>
                             <p className={`${cormorant.className} text-lg leading-relaxed text-[#5d6d7e] italic`}>
-                                {invitation?.description || 'Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati.'}
+                                {invitation?.quotes || 'Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati.'}
                             </p>
-                            <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#95a5a6]">( QS. Ar-Rum Ayat 21 )</p>
+                            <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#95a5a6]">{invitation?.quotes_name || '( QS. Ar-Rum Ayat 21 )'}</p>
                         </div>
                     </section>
 

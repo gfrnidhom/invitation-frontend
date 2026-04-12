@@ -143,7 +143,7 @@ export default function ModernMinimalist({ payload, audioController }) {
             <CoupleProfile invitation={invitation} sectionBg="bg-white" cardBg="bg-gray-50" />
 
             {/* Description */}
-            {invitation?.description && (
+            {invitation?.quotes && (
                 <section className="px-6 py-24 max-w-xl mx-auto text-center reveal">
                     <div className="w-8 h-8 mx-auto mb-6 rounded-full border-2 border-gray-900 flex items-center justify-center">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg>

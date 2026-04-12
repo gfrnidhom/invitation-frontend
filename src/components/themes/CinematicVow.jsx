@@ -243,7 +243,7 @@ export default function CinematicVow({ payload, audioController }) {
                                 {invitation?.bride_name?.split(' ')[0]}
                             </h1>
 
-                            {invitation?.description && (
+                            {invitation?.quotes && (
                                 <p className="text-xs text-white/30 leading-relaxed max-w-lg mb-6 italic font-light drop-shadow">"{invitation.description}"</p>
                             )}
 
@@ -325,9 +325,9 @@ export default function CinematicVow({ payload, audioController }) {
                                     <span className="text-white/20 text-lg">❝</span>
                                 </div>
                                 <p className={`${montserrat.className} text-sm leading-relaxed text-white/40 italic mb-4 font-light`}>
-                                    {invitation?.opening_text || '"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}
+                                    {invitation?.quotes || '"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}
                                 </p>
-                                <p className={`${cinzel.className} text-[9px] text-white/15 tracking-[.2em]`}>QS. Ar-Rum Ayat 21</p>
+                                <p className={`${cinzel.className} text-[9px] text-white/15 tracking-[.2em]`}>{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 

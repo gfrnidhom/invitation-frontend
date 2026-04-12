@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft, Save, Plus, Trash2, Upload, X, FileText, Heart, Calendar, Image, BookHeart, Gift, Music } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { confirmAction } from '@/lib/toast-confirm';
-import { invitations, events as eventsApi, loveStories, giftAccounts, gallery, music as musicApi } from '@/lib/api';
+import { invitations, events as eventsApi, loveStories, giftAccounts, gallery, music as musicApi, banks } from '@/lib/api';
 
 const tabs = [
   { id: 'detail', label: 'Detail', icon: FileText },
@@ -92,7 +92,10 @@ function DetailTab({ invitation, onSave, saving }) {
     longitude: invitation?.longitude || '', 
     description: invitation?.description || '', 
     opening_text: invitation?.opening_text || '', 
-    closing_text: invitation?.closing_text || '',
+    quotes: invitation?.quotes || '',
+    quotes_name: invitation?.quotes_name || '',
+    live_streaming_link: invitation?.live_streaming_link || '',
+    turut_mengundang: invitation?.turut_mengundang || [],
     background_video_url: invitation?.background_video_url || '',
     cover_photo: null,
     cover_photos: []
@@ -107,6 +110,8 @@ function DetailTab({ invitation, onSave, saving }) {
     Object.keys(form).forEach(key => {
       if (key === 'cover_photos') {
         form[key].forEach(f => fd.append('cover_photo[]', f));
+      } else if (key === 'turut_mengundang') {
+        form[key].forEach((t, i) => { if (t.trim() !== '') fd.append(`turut_mengundang[${i}]`, t.trim()); });
       } else if (form[key] !== null && form[key] !== '' && key !== 'cover_photo') {
         fd.append(key, form[key]);
       }
@@ -114,6 +119,21 @@ function DetailTab({ invitation, onSave, saving }) {
     existingCovers.forEach(c => fd.append('cover_photo_existing[]', c));
     if (existingCovers.length === 0) fd.append('cover_photo_existing[]', '');
     onSave(fd);
+  };
+
+  const addTurutMengundang = () => {
+    setForm({ ...form, turut_mengundang: [...form.turut_mengundang, ''] });
+  };
+
+  const updateTurutMengundang = (index, value) => {
+    const newArr = [...form.turut_mengundang];
+    newArr[index] = value;
+    setForm({ ...form, turut_mengundang: newArr });
+  };
+
+  const removeTurutMengundang = (index) => {
+    const newArr = form.turut_mengundang.filter((_, i) => i !== index);
+    setForm({ ...form, turut_mengundang: newArr });
   };
 
   return (
@@ -159,6 +179,32 @@ function DetailTab({ invitation, onSave, saving }) {
           </div>
         )}
       </div>
+      <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '8px 0' }} />
+      <div><label className="label">Live Streaming Link (Opsional, misal Youtube/Zoom)</label><input className="input" placeholder="https://..." value={form.live_streaming_link} onChange={(e) => setForm({ ...form, live_streaming_link: e.target.value })} /></div>
+      <div><label className="label">Nama/Sumber Quotes</label><input className="input" value={form.quotes_name} onChange={(e) => setForm({ ...form, quotes_name: e.target.value })} placeholder="QS. AR-RUM AYAT 21" /></div>
+      <div><label className="label">Quotes / Kutipan Pernikahan</label><textarea className="input" rows="3" value={form.quotes} onChange={(e) => setForm({ ...form, quotes: e.target.value })} style={{ resize: 'vertical' }} placeholder="Dan di antara tanda-tanda kekuasaan-Nya..." /></div>
+      
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <label className="label" style={{ margin: 0 }}>Turut Mengundang</label>
+          <button type="button" className="btn btn-secondary btn-sm" onClick={addTurutMengundang} style={{ padding: '4px 8px', fontSize: '12px' }}>
+            <Plus size={14} /> Tambah Orang
+          </button>
+        </div>
+        {form.turut_mengundang.length === 0 ? (
+          <p style={{ color: '#94a3b8', fontSize: '13px' }}>Belum ada daftar turut mengundang.</p>
+        ) : (
+          <div style={{ display: 'grid', gap: '8px' }}>
+            {form.turut_mengundang.map((item, i) => (
+              <div key={i} style={{ display: 'flex', gap: '8px' }}>
+                <input className="input" value={item} onChange={(e) => updateTurutMengundang(i, e.target.value)} placeholder="Bpk. Budi & Ibu Siti" style={{ flex: 1 }} />
+                <button type="button" onClick={() => removeTurutMengundang(i)} className="btn btn-ghost btn-sm" style={{ color: '#ef4444', padding: '0 8px' }}><X size={16} /></button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '8px 0' }} />
       <div><label className="label">Teks Pembuka (Diatas Doa/Mempelai)</label><textarea className="input" rows="3" value={form.opening_text} onChange={(e) => setForm({ ...form, opening_text: e.target.value })} style={{ resize: 'vertical' }} /></div>
       <div><label className="label">Teks Penutup (Terima Kasih)</label><textarea className="input" rows="3" value={form.closing_text} onChange={(e) => setForm({ ...form, closing_text: e.target.value })} style={{ resize: 'vertical' }} /></div>
@@ -813,11 +859,15 @@ function StoryTab({ invitationId }) {
 
 function GiftTab({ invitationId }) {
   const [items, setItems] = useState([]); const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({ bank_name: '', account_holder: '', account_number: '', sort_order: '' }); 
+  const [bankOptions, setBankOptions] = useState([]);
+  const [form, setForm] = useState({ bank_id: '', account_holder: '', account_number: '', sort_order: '' }); 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
-  useEffect(() => { giftAccounts.list(invitationId).then((res) => setItems(res.data || [])).finally(() => setLoading(false)); }, [invitationId]);
+  useEffect(() => { 
+    giftAccounts.list(invitationId).then((res) => setItems(res.data || [])).finally(() => setLoading(false)); 
+    banks.list().then(res => setBankOptions(res.data || res)).catch(err => console.error(err));
+  }, [invitationId]);
   
   const handleSave = async () => { 
     try { 
@@ -833,7 +883,7 @@ function GiftTab({ invitationId }) {
         setItems(prev => [...prev, res.data || res]); 
         toast.success('Rekening ditambahkan');
       }
-      setForm({ bank_name: '', account_holder: '', account_number: '', sort_order: '' }); 
+      setForm({ bank_id: '', account_holder: '', account_number: '', sort_order: '' }); 
       setShowForm(false); 
       setEditingId(null);
     } catch (err) { 
@@ -842,7 +892,7 @@ function GiftTab({ invitationId }) {
   };
 
   const handleEdit = (acc) => {
-    setForm({ bank_name: acc.bank_name || '', account_holder: acc.account_holder || '', account_number: acc.account_number || '', sort_order: acc.sort_order || '' });
+    setForm({ bank_id: acc.bank_id || '', account_holder: acc.account_holder || '', account_number: acc.account_number || '', sort_order: acc.sort_order || '' });
     setEditingId(acc.id);
     setShowForm(true);
   };
@@ -853,11 +903,24 @@ function GiftTab({ invitationId }) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '600', margin: 0 }}>Rekening Hadiah</h3>
-        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ bank_name: '', account_holder: '', account_number: '', sort_order: '' }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ bank_id: '', account_holder: '', account_number: '', sort_order: '' }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
       </div>
       {showForm && (
         <div style={{ display: 'grid', gap: '12px', marginBottom: '20px', padding: '20px', background: '#f8fafc', borderRadius: '12px' }}>
-          <div><label className="label">Nama Bank / Wallet</label><input className="input" value={form.bank_name} onChange={(e) => setForm({ ...form, bank_name: e.target.value })} placeholder="BCA / DANA" /></div>
+          <div>
+            <label className="label">Bank / E-Wallet</label>
+            <select className="input" value={form.bank_id} onChange={(e) => setForm({ ...form, bank_id: e.target.value })}>
+              <option value="">Pilih Bank / E-Wallet</option>
+              {bankOptions.map(b => (
+                <option key={b.id} value={b.id}>{b.name}</option>
+              ))}
+            </select>
+            {form.bank_id && bankOptions.find(b => b.id == form.bank_id)?.logo && (
+              <div style={{ marginTop: '8px' }}>
+                <img src={bankOptions.find(b => b.id == form.bank_id).logo.startsWith('http') ? bankOptions.find(b => b.id == form.bank_id).logo : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${bankOptions.find(b => b.id == form.bank_id).logo}`} alt="Logo" style={{ height: '30px', objectFit: 'contain' }} />
+              </div>
+            )}
+          </div>
           <div><label className="label">Nama Pemilik</label><input className="input" value={form.account_holder} onChange={(e) => setForm({ ...form, account_holder: e.target.value })} /></div>
           <div><label className="label">Nomor Rekening</label><input className="input" value={form.account_number} onChange={(e) => setForm({ ...form, account_number: e.target.value })} /></div>
           <div><label className="label">Urutan</label><input className="input" type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: e.target.value })} placeholder="1" /></div>
@@ -867,7 +930,18 @@ function GiftTab({ invitationId }) {
       {items.length === 0 ? <p style={{ color: '#94a3b8', textAlign: 'center', padding: '40px' }}>Belum ada rekening hadiah</p> : (
         <div style={{ display: 'grid', gap: '12px' }}>{items.map((acc) => (
           <div key={acc.id} style={{ padding: '16px', background: '#f8fafc', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div><div style={{ fontWeight: '600', color: '#1e293b' }}>{acc.bank_name}</div><div style={{ fontSize: '13px', color: '#64748b' }}>{acc.account_holder} - {acc.account_number}</div></div>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              {acc.bank?.logo ? (
+                <div style={{ width: '44px', height: '44px', background: 'white', borderRadius: '8px', padding: '4px', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                   <img src={acc.bank.logo.startsWith('http') ? acc.bank.logo : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${acc.bank.logo}`} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                </div>
+              ) : (
+                <div style={{ width: '44px', height: '44px', background: '#e2e8f0', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b' }}>
+                  <Gift size={20} />
+                </div>
+              )}
+              <div><div style={{ fontWeight: '600', color: '#1e293b' }}>{acc.bank?.name || acc.bank_name || 'Bank'}</div><div style={{ fontSize: '13px', color: '#64748b' }}>{acc.account_holder} - {acc.account_number}</div></div>
+            </div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <button className="btn btn-ghost btn-sm" onClick={() => handleEdit(acc)} style={{ color: '#3b82f6' }}>Edit</button>
               <button className="btn btn-ghost btn-sm" onClick={() => handleDelete(acc.id)} style={{ color: 'var(--color-danger)' }}><Trash2 size={14} /></button>

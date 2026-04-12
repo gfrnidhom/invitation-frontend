@@ -272,7 +272,7 @@ export default function AureliaLuxe({ payload, audioController }) {
                     
                     <div className="relative z-10 bg-white/95 backdrop-blur-sm px-10 py-12 md:py-16 md:px-20 max-w-3xl w-11/12 mx-auto text-center shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-gray-100">
                         <p className={`${playfair.className} text-xl md:text-3xl text-gray-900 font-bold italic leading-relaxed`}>
-                            "{invitation?.description || 'A happy marriage is a long conversation which always seems too short.'}"
+                            "{invitation?.quotes || 'A happy marriage is a long conversation which always seems too short.'}"
                         </p>
                     </div>
                 </section>

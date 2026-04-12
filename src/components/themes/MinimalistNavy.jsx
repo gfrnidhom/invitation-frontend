@@ -225,7 +225,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                         </p>
 
                         <p className="text-sm text-white/50 italic leading-[1.8] mb-12 max-w-md mn-reveal" data-delay="2">
-                            "{invitation?.description || 'What counts in making a happy marriage is not so much how compatible you are, but how you deal with incompatibility.'}"
+                            "{invitation?.quotes || 'What counts in making a happy marriage is not so much how compatible you are, but how you deal with incompatibility.'}"
                         </p>
 
                         {guestName && (
@@ -268,9 +268,9 @@ export default function MinimalistNavy({ payload, audioController }) {
 
                         <div className="text-center max-w-md mb-14 mn-reveal" data-delay="1">
                             <p className="text-xs text-white/50 leading-[2] italic">
-                                "{invitation?.description || 'Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu.'}"
+                                "{invitation?.quotes || 'Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu.'}"
                             </p>
-                            <p className="text-[10px] text-white/30 mt-4 tracking-widest uppercase">( QS. Ar-Rum Ayat 21 )</p>
+                            <p className="text-[10px] text-white/30 mt-4 tracking-widest uppercase">{invitation?.quotes_name || '( QS. Ar-Rum Ayat 21 )'}</p>
                         </div>
 
                         <div className="flex items-center gap-4 mb-10 mn-reveal" data-delay="2">

@@ -34,6 +34,7 @@ import CinematicVow from '@/components/themes/CinematicVow';
 import MinimalistNavy from '@/components/themes/MinimalistNavy';
 import GardenParallax from '@/components/themes/GardenParallax';
 import EnchantedGarden from '@/components/themes/EnchantedGarden';
+import SereneGarden from '@/components/themes/SereneGarden';
 
 export default function PublicInvitationViewer() {
   const { slug } = useParams();
@@ -208,6 +209,8 @@ export default function PublicInvitationViewer() {
         return <GardenParallax {...props} />;
       case 'enchanted-garden':
         return <EnchantedGarden {...props} />;
+      case 'serene-garden':
+        return <SereneGarden {...props} />;
       default:
         return <ModernMinimalist {...props} />;
     }

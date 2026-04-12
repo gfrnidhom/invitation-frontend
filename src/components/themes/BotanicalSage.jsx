@@ -328,7 +328,7 @@ export default function BotanicalSage({ payload, audioController }) {
                 </section>
 
                 {/* ── 3. QUOTE / DESCRIPTION ── */}
-                {invitation?.description && (
+                {invitation?.quotes && (
                     <section className="py-20 bg-[#4a5d4e] relative bs-reveal overflow-hidden">
                         <CornerOrnament className="absolute top-2 left-2 w-16 md:w-24 opacity-40 invert" position="top-left" />
                         <CornerOrnament className="absolute bottom-2 right-2 w-16 md:w-24 opacity-40 invert" position="bottom-right" />

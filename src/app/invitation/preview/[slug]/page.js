@@ -31,6 +31,7 @@ import CinematicVow from '@/components/themes/CinematicVow';
 import MinimalistNavy from '@/components/themes/MinimalistNavy';
 import GardenParallax from '@/components/themes/GardenParallax';
 import EnchantedGarden from '@/components/themes/EnchantedGarden';
+import SereneGarden from '@/components/themes/SereneGarden';
 
 export default function ThemePreviewPage() {
   const { slug } = useParams();
@@ -137,6 +138,8 @@ export default function ThemePreviewPage() {
         return <GardenParallax payload={data} />;
       case 'enchanted-garden':
         return <EnchantedGarden payload={data} />;
+      case 'serene-garden':
+        return <SereneGarden payload={data} />;
       default:
         return (
           <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f8fafc', padding: '24px' }}>

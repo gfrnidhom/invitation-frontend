@@ -70,7 +70,7 @@ export default function BlushRomantic({ payload, audioController }) {
                         <div className="relative z-10">
                             <p className={`${marcellus.className} text-[10px] tracking-[.4em] uppercase rg-txt mb-6`}>Our Wedding</p>
                             <h1 className={`${dancing.className} text-6xl md:text-7xl lg:text-8xl text-[#fefcfa] leading-[1.1] mb-8`}>{invitation?.groom_name?.split(' ')[0]} <span className="rg-txt opacity-60">&</span> {invitation?.bride_name?.split(' ')[0]}</h1>
-                            {invitation?.description&&<p className="text-sm text-[#fefcfa]/35 leading-relaxed max-w-lg mb-10 italic font-light">"{invitation.description}"</p>}
+                            {invitation?.quotes&&<p className="text-sm text-[#fefcfa]/35 leading-relaxed max-w-lg mb-10 italic font-light">"{invitation.description}"</p>}
                             {guestName&&<div className="mb-6"><p className="text-[10px] text-[#fefcfa]/20 tracking-widest uppercase mb-1">Dear</p><p className={`${dancing.className} text-3xl rg-txt`}>{guestName}</p></div>}
                         </div>
                         {invitation?.music_url&&<MusicPlayer audioController={audioController} btnBg="bg-[#8b3a4a]" btnColor="text-white" btnBorder="border-[#b76e79]/30" />}
@@ -87,8 +87,8 @@ export default function BlushRomantic({ payload, audioController }) {
                         <section className="px-8 pb-20 br-rv">
                             <div className="bcl rounded-3xl p-8 text-center">
                                 <svg className="w-8 h-8 rg-txt mx-auto mb-4 opacity-40" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                                <p className="text-sm leading-relaxed text-[#8b3a4a]/55 italic mb-4 font-light">{invitation?.opening_text||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
-                                <p className="text-[10px] rg-txt tracking-widest uppercase">QS. Ar-Rum Ayat 21</p>
+                                <p className="text-sm leading-relaxed text-[#8b3a4a]/55 italic mb-4 font-light">{invitation?.quotes||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
+                                <p className="text-[10px] rg-txt tracking-widest uppercase">{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 
