@@ -35,7 +35,14 @@ export default function CinematicVow({ payload, audioController }) {
     const [sub, setSub] = useState(false);
     const ed = (() => {
         if (!invitation?.event_date) return new Date();
-        const dateStr = invitation.event_date.split('T')[0].split(' ')[0];
+        let baseDate = new Date(invitation.event_date.replace(' ', 'T'));
+        if (isNaN(baseDate)) {
+            baseDate = new Date(invitation.event_date.split('T')[0].split(' ')[0] + 'T00:00:00');
+        }
+        const _y = baseDate.getFullYear();
+        const _m = String(baseDate.getMonth() + 1).padStart(2, '0');
+        const _d = String(baseDate.getDate()).padStart(2, '0');
+        const dateStr = `${_y}-${_m}-${_d}`;
         let timeStr = '08:00';
         if (invitation.event_time) {
             let match = invitation.event_time.replace(/\./g, ':').match(/(\d{1,2}:\d{2})/);

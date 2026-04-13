@@ -39,11 +39,22 @@ export default function CountdownTimer({
     // Make sure it has seconds for robust iOS Safari parsing
     timeParts += ':00';
     
-    const dateOnly = eventDate.split('T')[0].split(' ')[0];
-    const parsedDate = new Date(`${dateOnly}T${timeParts}`);
+    // Parse the UTC date safely into local time first to avoid timezone subtraction bugs
+    let baseDate = new Date(eventDate.replace(' ', 'T'));
+    if (isNaN(baseDate)) {
+        baseDate = new Date(eventDate.split('T')[0].split(' ')[0] + 'T00:00:00');
+    }
+    
+    const y = baseDate.getFullYear();
+    const m = String(baseDate.getMonth() + 1).padStart(2, '0');
+    const day = String(baseDate.getDate()).padStart(2, '0');
+    const targetDateStr = `${y}-${m}-${day}`;
+    
+    const parsedDate = new Date(`${targetDateStr}T${timeParts}`);
+    const finalDate = isNaN(parsedDate) ? baseDate : parsedDate;
     
     const updateCountdown = () => {
-      const diff = parsedDate - new Date();
+      const diff = finalDate - new Date();
       if (diff <= 0) return;
       
       setTimeLeft({

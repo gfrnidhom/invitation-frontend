@@ -35,7 +35,19 @@ export default function MinimalistNavy({ payload, audioController }) {
 
     const eventDate = (() => {
         if (!invitation?.event_date) return new Date();
-        const dateStr = invitation.event_date.split('T')[0].split(' ')[0];
+        
+        // Parse the UTC date safely into local time first to avoid timezone subtraction bugs
+        let baseDate = new Date(invitation.event_date.replace(' ', 'T'));
+        if (isNaN(baseDate)) {
+            // Fallback for Safari if strictly YYYY-MM-DD
+            baseDate = new Date(invitation.event_date.split('T')[0].split(' ')[0] + 'T00:00:00');
+        }
+        
+        const y = baseDate.getFullYear();
+        const m = String(baseDate.getMonth() + 1).padStart(2, '0');
+        const day = String(baseDate.getDate()).padStart(2, '0');
+        const dateStr = `${y}-${m}-${day}`;
+        
         let timeStr = '08:00';
         if (invitation.event_time) {
             let match = invitation.event_time.replace(/\./g, ':').match(/(\d{1,2}:\d{2})/);
@@ -44,8 +56,9 @@ export default function MinimalistNavy({ payload, audioController }) {
                 if (timeStr.length === 4) timeStr = '0' + timeStr;
             }
         }
+        
         const d = new Date(`${dateStr}T${timeStr}:00`);
-        return isNaN(d) ? new Date(dateStr) : d;
+        return isNaN(d) ? baseDate : d;
     })();
     const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     const rightPanelRef = useRef(null);
