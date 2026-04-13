@@ -17,6 +17,16 @@ import TurutMengundang from './partials/TurutMengundang';
 const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://app.digitvitation.my.id/storage';
 
 export default function ModernMinimalist({ payload, audioController }) {
+    const landingPhoto = (() => {
+        const lp = payload.invitation?.landing_photo;
+        if (!lp) return null;
+        let photo = Array.isArray(lp) ? lp[0] : lp;
+        if (typeof photo === 'object' && photo !== null) photo = photo.photo || photo.url;
+        if (typeof photo !== 'string') return null;
+        if (!photo.startsWith('http') && !photo.startsWith('/')) photo = `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${photo}`;
+        return photo;
+    })();
+
     const { invitation, guestName, guest } = payload;
     const audioRef = useRef(null);
 
@@ -26,10 +36,17 @@ export default function ModernMinimalist({ payload, audioController }) {
     useEffect(() => {
         if (!invitation?.event_date) return;
         
-        // Parse "YYYY-MM-DD" and "HH:MM"
-        const dateStr = invitation.event_date.split('T')[0];
-        const timeStr = invitation.event_time ? invitation.event_time.split('-')[0].trim() : '08:00';
-        const targetDate = new Date(`${dateStr}T${timeStr}`);
+        const dateStr = invitation.event_date.split('T')[0].split(' ')[0];
+        let timeStr = '08:00';
+        if (invitation.event_time) {
+            const normalized = invitation.event_time.replace(/\./g, ':');
+            const match = normalized.match(/(\d{1,2}:\d{2})/);
+            if (match) {
+                timeStr = match[0];
+                if (timeStr.length === 4) timeStr = '0' + timeStr;
+            }
+        }
+        const targetDate = new Date(`${dateStr}T${timeStr}:00`);
 
         const timer = setInterval(() => {
             const diff = targetDate - new Date();

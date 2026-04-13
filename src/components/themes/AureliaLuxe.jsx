@@ -16,6 +16,16 @@ const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500'] });
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
 export default function AureliaLuxe({ payload, audioController }) {
+    const landingPhoto = (() => {
+        const lp = payload.invitation?.landing_photo;
+        if (!lp) return null;
+        let photo = Array.isArray(lp) ? lp[0] : lp;
+        if (typeof photo === 'object' && photo !== null) photo = photo.photo || photo.url;
+        if (typeof photo !== 'string') return null;
+        if (!photo.startsWith('http') && !photo.startsWith('/')) photo = `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${photo}`;
+        return photo;
+    })();
+
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
 
@@ -66,7 +76,20 @@ export default function AureliaLuxe({ payload, audioController }) {
 
 
     // Date formatting helpers
-    const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();
+    const eventDate = (() => {
+        if (!invitation?.event_date) return new Date();
+        const dateStr = invitation.event_date.split('T')[0].split(' ')[0];
+        let timeStr = '08:00';
+        if (invitation.event_time) {
+            let match = invitation.event_time.replace(/\./g, ':').match(/(\d{1,2}:\d{2})/);
+            if (match) {
+                timeStr = match[0];
+                if (timeStr.length === 4) timeStr = '0' + timeStr;
+            }
+        }
+        const d = new Date(`${dateStr}T${timeStr}:00`);
+        return isNaN(d) ? new Date(dateStr) : d;
+    })();
     const dayName = eventDate.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
     const monthName = eventDate.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
     const dateNum = eventDate.toLocaleDateString('en-US', { day: '2-digit' });
@@ -139,9 +162,9 @@ export default function AureliaLuxe({ payload, audioController }) {
                             {dateNum}<br/>{yearNum}
                         </div>
 
-                        {coverPhoto ? (
+                        {(landingPhoto || coverPhoto) ? (
                             <div className="relative z-10 w-64 h-[28rem] md:w-80 md:h-[36rem] arch-frame overflow-hidden border border-gray-100 shadow-xl bg-gray-100 mix-blend-multiply filter grayscale contrast-125">
-                                <img src={coverPhoto} alt="Cover" className="w-full h-full object-cover origin-top" />
+                                <img src={landingPhoto || coverPhoto} alt="Cover" className="w-full h-full object-cover origin-top" />
                             </div>
                         ) : (
                             <div className="relative z-10 w-64 h-[28rem] md:w-80 md:h-[36rem] arch-frame border border-gray-200 bg-gray-50 flex items-center justify-center">

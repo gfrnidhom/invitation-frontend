@@ -31,7 +31,12 @@ export default function CoverOverlay({ invitation, guestName, onOpen }) {
     }, 1000);
   };
 
-  const firstCover = invitation?.cover_photo ? (Array.isArray(invitation.cover_photo) ? invitation.cover_photo[0] : invitation.cover_photo) : null;
+  const lp = invitation?.landing_photo;
+  let firstCover = lp ? (Array.isArray(lp) ? lp[0] : lp) : null;
+  if (!firstCover) {
+    const cp = invitation?.cover_photo;
+    firstCover = cp ? (Array.isArray(cp) ? cp[0] : cp) : null;
+  }
   const bgStyle = firstCover 
     ? { backgroundImage: `url(${firstCover.startsWith('http') ? firstCover : `${storageUrl}/${firstCover}`})`, backgroundSize: 'cover', backgroundPosition: 'center' }
     : { backgroundColor: '#111827' };

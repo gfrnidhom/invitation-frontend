@@ -25,16 +25,22 @@ export default function CountdownTimer({
     // Parse time robustly
     let timeParts = '08:00';
     if (eventTime) {
-      const extracted = eventTime.split('-')[0].trim();
-      if (extracted.includes(':')) {
-        timeParts = extracted;
+      // normalize dots to colons, e.g. "09.00" -> "09:00"
+      const normalizedTime = eventTime.replace(/\./g, ':');
+      // extract just the HH:MM part
+      const match = normalizedTime.match(/(\d{1,2}:\d{2})/);
+      if (match) {
+        timeParts = match[0];
+        // Ensure 2-digit pad (e.g. "9:00" -> "09:00")
+        if (timeParts.length === 4) timeParts = '0' + timeParts;
       }
     }
-    // Safari & iOS require YYYY-MM-DDTHH:MM:SS for robust parsing
-    if (timeParts.length === 5) {
-      timeParts += ':00';
-    }
-    const parsedDate = new Date(`${eventDate.split('T')[0]}T${timeParts}`);
+    
+    // Make sure it has seconds for robust iOS Safari parsing
+    timeParts += ':00';
+    
+    const dateOnly = eventDate.split('T')[0].split(' ')[0];
+    const parsedDate = new Date(`${dateOnly}T${timeParts}`);
     
     const updateCountdown = () => {
       const diff = parsedDate - new Date();

@@ -36,6 +36,16 @@ const serifFont = Playfair_Display({
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
 export default function ModernRomance({ payload, audioController }) {
+    const landingPhoto = (() => {
+        const lp = payload.invitation?.landing_photo;
+        if (!lp) return null;
+        let photo = Array.isArray(lp) ? lp[0] : lp;
+        if (typeof photo === 'object' && photo !== null) photo = photo.photo || photo.url;
+        if (typeof photo !== 'string') return null;
+        if (!photo.startsWith('http') && !photo.startsWith('/')) photo = `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${photo}`;
+        return photo;
+    })();
+
   const { invitation, guest, guestName } = payload;
   const [isOpened, setIsOpened] = useState(false);
 

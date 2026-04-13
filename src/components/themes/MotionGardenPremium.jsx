@@ -12,6 +12,16 @@ const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitatio
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://digitvitation.my.id/api';
 
 export default function MotionGardenPremium({ payload, audioController }) {
+    const landingPhoto = (() => {
+        const lp = payload.invitation?.landing_photo;
+        if (!lp) return null;
+        let photo = Array.isArray(lp) ? lp[0] : lp;
+        if (typeof photo === 'object' && photo !== null) photo = photo.photo || photo.url;
+        if (typeof photo !== 'string') return null;
+        if (!photo.startsWith('http') && !photo.startsWith('/')) photo = `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${photo}`;
+        return photo;
+    })();
+
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
     const [nameInput, setNameInput] = useState(guestName || '');
@@ -21,7 +31,20 @@ export default function MotionGardenPremium({ payload, audioController }) {
     const heroVideoRef = useRef(null);
     const [showMotionText, setShowMotionText] = useState(false);
 
-    const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();
+    const eventDate = (() => {
+        if (!invitation?.event_date) return new Date();
+        const dateStr = invitation.event_date.split('T')[0].split(' ')[0];
+        let timeStr = '08:00';
+        if (invitation.event_time) {
+            let match = invitation.event_time.replace(/\./g, ':').match(/(\d{1,2}:\d{2})/);
+            if (match) {
+                timeStr = match[0];
+                if (timeStr.length === 4) timeStr = '0' + timeStr;
+            }
+        }
+        const d = new Date(`${dateStr}T${timeStr}:00`);
+        return isNaN(d) ? new Date(dateStr) : d;
+    })();
     const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     const [slideIndex, setSlideIndex] = useState(0);
 
@@ -168,8 +191,8 @@ export default function MotionGardenPremium({ payload, audioController }) {
             {/* ══════════════════════ LEFT PANE (DESKTOP) ══════════════════════ */}
             <div className="hidden lg:block g1-split-left bg-[#9e7a4b] relative overflow-hidden">
                 <div className="absolute inset-0">
-                    {coverPhoto ? (
-                        <img src={coverPhoto} alt="Cover" className="w-full h-full object-cover object-center" />
+                    {(landingPhoto || coverPhoto) ? (
+                        <img src={landingPhoto || coverPhoto} alt="Cover" className="w-full h-full object-cover object-center" />
                     ) : (
                         <video className="w-full h-full object-cover" autoPlay muted loop playsInline poster="/themes/motion-garden-premium/garden-v2-05-fallback.jpeg">
                             <source src={VIDEO_BG} type="video/mp4" />
@@ -197,8 +220,8 @@ export default function MotionGardenPremium({ payload, audioController }) {
                     <div className="absolute inset-0">
                         {photos.length > 0 ? (
                             <img src={getPhoto(photos[0])} alt="Cover Right" className="w-full h-full object-cover" />
-                        ) : coverPhoto ? (
-                            <img src={coverPhoto} alt="Cover Right" className="w-full h-full object-cover" />
+                        ) : (landingPhoto || coverPhoto) ? (
+                            <img src={landingPhoto || coverPhoto} alt="Cover Right" className="w-full h-full object-cover" />
                         ) : (
                             <video className="w-full h-full object-cover" autoPlay muted loop playsInline poster="/themes/motion-garden-premium/garden-v2-05-fallback.jpeg">
                                 <source src={VIDEO_BG} type="video/mp4" />

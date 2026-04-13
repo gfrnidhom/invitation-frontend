@@ -14,6 +14,16 @@ const SU = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage
 const AU = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
 
 export default function MonoChromeIII({ payload, audioController }) {
+    const landingPhoto = (() => {
+        const lp = payload.invitation?.landing_photo;
+        if (!lp) return null;
+        let photo = Array.isArray(lp) ? lp[0] : lp;
+        if (typeof photo === 'object' && photo !== null) photo = photo.photo || photo.url;
+        if (typeof photo !== 'string') return null;
+        if (!photo.startsWith('http') && !photo.startsWith('/')) photo = `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${photo}`;
+        return photo;
+    })();
+
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
     const rpRef = useRef(null);
@@ -21,7 +31,20 @@ export default function MonoChromeIII({ payload, audioController }) {
     const [mi, setMi] = useState('');
     const [ws, setWs] = useState(invitation?.guestMessages || []);
     const [sub, setSub] = useState(false);
-    const ed = invitation?.event_date ? new Date(invitation.event_date) : new Date();
+    const ed = (() => {
+        if (!invitation?.event_date) return new Date();
+        const dateStr = invitation.event_date.split('T')[0].split(' ')[0];
+        let timeStr = '08:00';
+        if (invitation.event_time) {
+            let match = invitation.event_time.replace(/\./g, ':').match(/(\d{1,2}:\d{2})/);
+            if (match) {
+                timeStr = match[0];
+                if (timeStr.length === 4) timeStr = '0' + timeStr;
+            }
+        }
+        const d = new Date(`${dateStr}T${timeStr}:00`);
+        return isNaN(d) ? new Date(dateStr) : d;
+    })();
     const [cd, setCd] = useState({ d:0, h:0, m:0, s:0 });
 
     useEffect(() => { const t = setInterval(() => { const diff = ed - new Date(); if(diff>0) setCd({ d:Math.floor(diff/(864e5)), h:Math.floor((diff/36e5)%24), m:Math.floor((diff/6e4)%60), s:Math.floor((diff/1e3)%60) }); }, 1000); return () => clearInterval(t); }, []);
@@ -53,7 +76,7 @@ export default function MonoChromeIII({ payload, audioController }) {
             {/* COVER - Dark overlay on white */}
             <div className={`co3 ${isOpen?'open':''}`}>
                 <div className="relative w-full h-full flex flex-col items-center justify-center bg-white">
-                    {cp&&<img src={cp} alt="Cover" className="absolute inset-0 w-full h-full object-cover opacity-15 grayscale"/>}
+                    {cp&&<img src={landingPhoto || cp} alt="Cover" className="absolute inset-0 w-full h-full object-cover opacity-15 grayscale"/>}
                     <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/80 to-white"/>
                     <div className="relative z-10 text-center px-6 flex flex-col items-center">
                         <div className="w-20 h-px bg-[#1a1a1a]/15 mb-8"/>

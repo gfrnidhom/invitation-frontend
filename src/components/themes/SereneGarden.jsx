@@ -22,7 +22,20 @@ export default function SereneGarden({ payload, audioController }) {
     const heroVideoRef = useRef(null);
     const [showMotionText, setShowMotionText] = useState(false);
 
-    const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();
+    const eventDate = (() => {
+        if (!invitation?.event_date) return new Date();
+        const dateStr = invitation.event_date.split('T')[0].split(' ')[0];
+        let timeStr = '08:00';
+        if (invitation.event_time) {
+            let match = invitation.event_time.replace(/\./g, ':').match(/(\d{1,2}:\d{2})/);
+            if (match) {
+                timeStr = match[0];
+                if (timeStr.length === 4) timeStr = '0' + timeStr;
+            }
+        }
+        const d = new Date(`${dateStr}T${timeStr}:00`);
+        return isNaN(d) ? new Date(dateStr) : d;
+    })();
     const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     const [slideIndex, setSlideIndex] = useState(0);
 

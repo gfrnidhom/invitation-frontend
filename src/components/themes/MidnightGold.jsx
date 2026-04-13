@@ -16,6 +16,16 @@ const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700', '900'] });
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://app.digitvitation.my.id/storage';
 
 export default function MidnightGold({ payload, audioController }) {
+    const landingPhoto = (() => {
+        const lp = payload.invitation?.landing_photo;
+        if (!lp) return null;
+        let photo = Array.isArray(lp) ? lp[0] : lp;
+        if (typeof photo === 'object' && photo !== null) photo = photo.photo || photo.url;
+        if (typeof photo !== 'string') return null;
+        if (!photo.startsWith('http') && !photo.startsWith('/')) photo = `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${photo}`;
+        return photo;
+    })();
+
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
     const rightPanelRef = useRef(null);
@@ -25,7 +35,20 @@ export default function MidnightGold({ payload, audioController }) {
     const [wishes, setWishes] = useState(invitation?.guestMessages || []);
     const [submitting, setSubmitting] = useState(false);
 
-    const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();
+    const eventDate = (() => {
+        if (!invitation?.event_date) return new Date();
+        const dateStr = invitation.event_date.split('T')[0].split(' ')[0];
+        let timeStr = '08:00';
+        if (invitation.event_time) {
+            let match = invitation.event_time.replace(/\./g, ':').match(/(\d{1,2}:\d{2})/);
+            if (match) {
+                timeStr = match[0];
+                if (timeStr.length === 4) timeStr = '0' + timeStr;
+            }
+        }
+        const d = new Date(`${dateStr}T${timeStr}:00`);
+        return isNaN(d) ? new Date(dateStr) : d;
+    })();
     const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
     useEffect(() => {
@@ -152,7 +175,7 @@ export default function MidnightGold({ payload, audioController }) {
             {/* ═══════ COVER OVERLAY ═══════ */}
             <div className={`cover-overlay-mg ${isOpen ? 'open' : ''}`}>
                 <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#0a0e1a]">
-                    {coverPhoto && <img src={coverPhoto} alt="Cover" className="absolute inset-0 w-full h-full object-cover opacity-40" />}
+                    {coverPhoto && <img src={landingPhoto || coverPhoto} alt="Cover" className="absolute inset-0 w-full h-full object-cover opacity-40" />}
                     <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e1a]/50 via-[#0a0e1a]/70 to-[#0a0e1a]/95" />
                     <div className="gold-glow" style={{ top: '8%', right: '15%' }} />
 

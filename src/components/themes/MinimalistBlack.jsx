@@ -16,6 +16,16 @@ const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400', '500'
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
 export default function MinimalistBlack({ payload, audioController }) {
+    const landingPhoto = (() => {
+        const lp = payload.invitation?.landing_photo;
+        if (!lp) return null;
+        let photo = Array.isArray(lp) ? lp[0] : lp;
+        if (typeof photo === 'object' && photo !== null) photo = photo.photo || photo.url;
+        if (typeof photo !== 'string') return null;
+        if (!photo.startsWith('http') && !photo.startsWith('/')) photo = `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${photo}`;
+        return photo;
+    })();
+
     const { invitation, guest, guestName } = payload;
     const [isOpen, setIsOpen] = useState(false);
     const rightPanelRef = useRef(null);
@@ -44,7 +54,20 @@ export default function MinimalistBlack({ payload, audioController }) {
     };
 
     // Countdown
-    const eventDate = invitation?.event_date ? new Date(invitation.event_date) : new Date();
+    const eventDate = (() => {
+        if (!invitation?.event_date) return new Date();
+        const dateStr = invitation.event_date.split('T')[0].split(' ')[0];
+        let timeStr = '08:00';
+        if (invitation.event_time) {
+            let match = invitation.event_time.replace(/\./g, ':').match(/(\d{1,2}:\d{2})/);
+            if (match) {
+                timeStr = match[0];
+                if (timeStr.length === 4) timeStr = '0' + timeStr;
+            }
+        }
+        const d = new Date(`${dateStr}T${timeStr}:00`);
+        return isNaN(d) ? new Date(dateStr) : d;
+    })();
     const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
     useEffect(() => {
@@ -148,7 +171,7 @@ export default function MinimalistBlack({ payload, audioController }) {
             <div className={`cover-overlay-mb ${isOpen ? 'open' : ''}`}>
                 <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#0a0a0a]">
                     {/* Background cover image */}
-                    {coverPhoto && <img src={coverPhoto} alt="Cover" className="absolute inset-0 w-full h-full object-cover opacity-50" />}
+                    {coverPhoto && <img src={landingPhoto || coverPhoto} alt="Cover" className="absolute inset-0 w-full h-full object-cover opacity-50" />}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90" />
                     
                     {/* Moon glow */}
