@@ -1,4 +1,5 @@
 'use client';
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Cinzel, Bodoni_Moda, Montserrat } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -158,7 +159,9 @@ export default function MonoChromeV({ payload, audioController }) {
                             </div>
                         </section>
 
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 m5-rv"><div className="text-center mb-12"><h2 className={`${cinzel.className} text-xl tracking-[.15em] text-[#f2f2f7]`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="m5c rounded-2xl p-6 text-center m5-rv" data-delay={`${i+1}`}><p className={`${cinzel.className} text-sm tracking-[.15em] ch mb-1`}>{a.bank_name}</p><p className={`${montserrat.className} text-[9px] text-[#d1d1d6]/12 uppercase tracking-widest mb-3 font-light`}>A.N. {a.account_holder}</p><p className={`${bodoni.className} italic text-xl text-[#f2f2f7] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${cinzel.className} w-full border border-[#d1d1d6]/8 py-3 text-[9px] tracking-[.15em] ch hover:bg-[#f2f2f7] hover:text-[#1c1c1e] transition-all duration-500 rounded-xl`}>Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 m5-rv"><div className="text-center mb-12"><h2 className={`${cinzel.className} text-xl tracking-[.15em] text-[#f2f2f7]`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((acc, i) => (
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="MonoChromeV" />
+                            ))}</div></section>}
 
                         <footer className="py-20 px-8 text-center border-t border-[#d1d1d6]/5 m5-rv">
                             <p className={`${cinzel.className} text-[8px] tracking-[.4em] ch mb-8`}>Thank You</p>

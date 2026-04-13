@@ -1,5 +1,6 @@
 'use client';
 
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Pinyon_Script, Cormorant_Garamond, Jost } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -348,13 +349,8 @@ export default function GardenParallax({ payload, audioController }) {
                         </div>
 
                         <div className="grid gap-6 max-w-xs mx-auto">
-                            {invitation?.gift_accounts?.map((acc, i) => (
-                                <div key={i} className="garden-glass p-8 rounded-3xl gp-reveal">
-                                    <p className="text-[9px] uppercase tracking-widest text-[#95a5a6] mb-2">{acc.bank_name}</p>
-                                    <p className="text-sm font-semibold mb-1 uppercase">{acc.account_holder}</p>
-                                    <p className={`${cormorant.className} text-2xl font-bold mb-4`}>{acc.account_number}</p>
-                                    <button onClick={() => { navigator.clipboard.writeText(acc.account_number); toast.success('Copied!'); }} className="text-[9px] uppercase tracking-widest text-[#5d6d7e] font-bold border-b border-[#5d6d7e]">Copy Number</button>
-                                </div>
+                            {invitation.gift_accounts.map((acc, i) => (
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="GardenParallax" />
                             ))}
                         </div>
                     </section>

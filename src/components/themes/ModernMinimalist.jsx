@@ -217,7 +217,7 @@ export default function ModernMinimalist({ payload, audioController }) {
             <Gallery layout="abstract" invitation={invitation} />
             <Events invitation={invitation} sectionBg="bg-white" accentText="text-gray-900" accentBg="bg-gray-900" cardBg="bg-gray-50" iconBg="bg-gray-200/50" btnBorder="border-gray-200" btnHoverBg="bg-gray-100" />
             <LoveStory invitation={invitation} sectionBg="bg-gray-50" accentText="text-gray-900" accentBg="bg-gray-900" lineBg="bg-gray-300" dotBg="bg-gray-900" cardBg="bg-white" />
-            <GiftAccounts invitation={invitation} sectionBg="bg-white" accentText="text-gray-900" accentBg="bg-gray-900" cardBg="bg-gray-50" iconBg="bg-gray-200/50" btnBorder="border-gray-200" btnHoverBg="bg-gray-100" />
+            <GiftAccounts variant="ModernMinimalist" invitation={invitation} sectionBg="bg-white" accentText="text-gray-900" accentBg="bg-gray-900" cardBg="bg-gray-50" iconBg="bg-gray-200/50" btnBorder="border-gray-200" btnHoverBg="bg-gray-100" />
             <QrCheckin guest={guest} sectionBg='bg-transparent' />
             <Guestbook invitation={invitation} guestName={guestName} guestToken={guest?.token} />
 

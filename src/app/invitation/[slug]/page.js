@@ -35,6 +35,7 @@ import MinimalistNavy from '@/components/themes/MinimalistNavy';
 import GardenParallax from '@/components/themes/GardenParallax';
 import EnchantedGarden from '@/components/themes/EnchantedGarden';
 import SereneGarden from '@/components/themes/SereneGarden';
+import MotionGardenPremium from '@/components/themes/MotionGardenPremium';
 
 export default function PublicInvitationViewer() {
   const { slug } = useParams();
@@ -211,6 +212,8 @@ export default function PublicInvitationViewer() {
         return <EnchantedGarden {...props} />;
       case 'serene-garden':
         return <SereneGarden {...props} />;
+      case 'motion-garden-premium':
+        return <MotionGardenPremium {...props} />;
       default:
         return <ModernMinimalist {...props} />;
     }

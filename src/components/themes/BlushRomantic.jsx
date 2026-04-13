@@ -1,4 +1,5 @@
 'use client';
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Marcellus, Dancing_Script, Poppins } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -164,7 +165,9 @@ export default function BlushRomantic({ payload, audioController }) {
                             </div>
                         </section>
 
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 br-rv"><div className="text-center mb-12"><h2 className={`${marcellus.className} text-2xl tracking-[.15em] uppercase text-[#fefcfa]`}>Wedding</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="bc rounded-2xl p-6 text-center br-rv" data-delay={`${i+1}`}><p className={`${marcellus.className} text-sm tracking-widest uppercase rg-txt mb-1`}>{a.bank_name}</p><p className="text-[10px] text-[#fefcfa]/20 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${marcellus.className} text-xl text-[#fefcfa] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className="w-full border border-[#b76e79]/25 py-3 text-[10px] uppercase tracking-widest rg-txt hover:bg-[#b76e79] hover:text-white transition-all duration-500 rounded-xl">Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 br-rv"><div className="text-center mb-12"><h2 className={`${marcellus.className} text-2xl tracking-[.15em] uppercase text-[#fefcfa]`}>Wedding</h2><p className={`${dancing.className} text-4xl rg-txt -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((acc, i) => (
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="BlushRomantic" />
+                            ))}</div></section>}
 
                         <footer className="py-20 px-8 text-center border-t border-[#fefcfa]/5 br-rv">
                             <p className={`${marcellus.className} text-[9px] tracking-[.4em] uppercase rg-txt mb-8`}>Thank You</p>

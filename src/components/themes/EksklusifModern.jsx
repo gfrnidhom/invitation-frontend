@@ -267,7 +267,7 @@ export default function EksklusifModern({ payload, audioController }) {
       {/* Gift Sections */}
       <div id="gift"></div>
       {(invitation.giftAccounts || invitation.gift_accounts) && (invitation.giftAccounts || invitation.gift_accounts).length > 0 && (
-        <GiftAccounts 
+        <GiftAccounts variant="EksklusifModern" 
           invitation={invitation}
           sectionBg="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#141414] to-[#0a0a0a]"
           titleFont={headingFont.className}

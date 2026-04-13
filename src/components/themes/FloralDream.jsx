@@ -206,7 +206,7 @@ export default function FloralDream({ payload, audioController }) {
       {/* Gift Accounts */}
       <div id="gift"></div>
       {(invitation.giftAccounts || invitation.gift_accounts) && (invitation.giftAccounts || invitation.gift_accounts).length > 0 && (
-        <GiftAccounts 
+        <GiftAccounts variant="FloralDream" 
           invitation={invitation}
           sectionBg="bg-[#fef7f7]"
           titleFont={script.className}

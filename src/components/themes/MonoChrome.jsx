@@ -1,4 +1,5 @@
 'use client';
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Bebas_Neue, Allura, Inter } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -149,7 +150,9 @@ export default function MonoChrome({ payload, audioController }) {
                             </div>
                         </section>
 
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 mc-rv"><div className="text-center mb-12"><h2 className={`${bebas.className} text-3xl tracking-[.2em] uppercase text-white`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="mc-card rounded-2xl p-6 text-center mc-rv" data-delay={`${i+1}`}><p className={`${bebas.className} text-sm tracking-[.3em] uppercase text-white/60 mb-1`}>{a.bank_name}</p><p className="text-[10px] text-white/15 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${bebas.className} text-2xl text-white mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${bebas.className} w-full border border-white/10 py-3 text-xs tracking-[.3em] uppercase text-white/40 hover:bg-white hover:text-black transition-all duration-500 rounded-lg`}>Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 mc-rv"><div className="text-center mb-12"><h2 className={`${bebas.className} text-3xl tracking-[.2em] uppercase text-white`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((acc, i) => (
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="MonoChrome" />
+                            ))}</div></section>}
 
                         <footer className="py-20 px-8 text-center border-t border-white/5 mc-rv">
                             <p className={`${bebas.className} text-xs tracking-[.5em] uppercase text-white/15 mb-8`}>Thank You</p>

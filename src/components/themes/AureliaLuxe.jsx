@@ -1,5 +1,6 @@
 'use client';
 
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Playfair_Display, Inter } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -415,21 +416,8 @@ export default function AureliaLuxe({ payload, audioController }) {
                         <div className="grid md:grid-cols-3 justify-center gap-8">
                             {invitation?.gift_accounts && invitation.gift_accounts.length > 0 ? (
                                 invitation.gift_accounts.map((acc, i) => (
-                                    <div key={acc.id || i} className="border border-gray-100 p-8 flex flex-col items-center shadow-sm relative group bg-white hover:-translate-y-1 transition-transform">
-                                        <h4 className="text-sm font-bold text-gray-800 tracking-widest uppercase mb-2">{acc.bank_name}</h4>
-                                        <p className="text-[10px] text-gray-500 mb-6 uppercase tracking-wider">A.N. {acc.account_holder}</p>
-                                        <p className={`${playfair.className} text-xl text-gray-900 font-bold mb-6`}>{acc.account_number}</p>
-                                        <button 
-                                            onClick={() => {
-                                                navigator.clipboard.writeText(acc.account_number);
-                                                toast.success('Nomor rekening disalin!');
-                                            }}
-                                            className="px-6 py-2 border border-gray-300 text-[9px] font-bold uppercase tracking-widest text-gray-600 hover:bg-black hover:text-white transition-colors"
-                                        >
-                                            COPY NUMBER
-                                        </button>
-                                    </div>
-                                ))
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="AureliaLuxe" />
+                            ))
                             ) : (
                                 <div className="col-span-3 text-center text-xs text-gray-400 py-10">Belum ada informasi rekening hadiah yang ditambahkan.</div>
                             )}

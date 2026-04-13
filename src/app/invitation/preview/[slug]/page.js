@@ -32,6 +32,7 @@ import MinimalistNavy from '@/components/themes/MinimalistNavy';
 import GardenParallax from '@/components/themes/GardenParallax';
 import EnchantedGarden from '@/components/themes/EnchantedGarden';
 import SereneGarden from '@/components/themes/SereneGarden';
+import MotionGardenPremium from '@/components/themes/MotionGardenPremium';
 
 export default function ThemePreviewPage() {
   const { slug } = useParams();
@@ -140,6 +141,8 @@ export default function ThemePreviewPage() {
         return <EnchantedGarden payload={data} />;
       case 'serene-garden':
         return <SereneGarden payload={data} />;
+      case 'motion-garden-premium':
+        return <MotionGardenPremium payload={data} />;
       default:
         return (
           <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f8fafc', padding: '24px' }}>

@@ -2,25 +2,53 @@
 
 import { useState, useEffect, use, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Save, Plus, Trash2, Upload, X, FileText, Heart, Calendar, Image, BookHeart, Gift, Music } from 'lucide-react';
+import { ArrowLeft, Save, Plus, Trash2, Upload, X, FileText, Heart, Calendar, Image, BookHeart, Gift, Music, Settings, Video, Quote, Users, UserCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { confirmAction } from '@/lib/toast-confirm';
 import { invitations, events as eventsApi, loveStories, giftAccounts, gallery, music as musicApi, banks } from '@/lib/api';
+import { compressImage } from '@/lib/image-compressor';
 
-const tabs = [
-  { id: 'detail', label: 'Detail', icon: FileText },
-  { id: 'couple', label: 'Mempelai', icon: Heart },
-  { id: 'events', label: 'Acara', icon: Calendar },
-  { id: 'gallery', label: 'Galeri', icon: Image },
-  { id: 'story', label: 'Love Story', icon: BookHeart },
-  { id: 'gift', label: 'Hadiah', icon: Gift },
-  { id: 'settings', label: 'Pengaturan', icon: FileText },
+const tabGroups = [
+  { 
+    group: 'Detail Undangan', 
+    items: [
+      { id: 'info', label: 'Info Dasar', icon: FileText, desc: 'Judul, tanggal, lokasi, dan deskripsi acara' },
+      { id: 'cover', label: 'Foto Cover', icon: Image, desc: 'Upload foto cover undangan' },
+      { id: 'quotes', label: 'Quotes & Doa', icon: Quote, desc: 'Kutipan pernikahan dan teks pembuka/penutup' },
+      { id: 'turut', label: 'Turut Mengundang', icon: Users, desc: 'Daftar orang yang turut mengundang' },
+    ]
+  },
+  {
+    group: 'Mempelai',
+    items: [
+      { id: 'bride', label: 'Mempelai Wanita', icon: Heart, desc: 'Data dan foto mempelai wanita' },
+      { id: 'groom', label: 'Mempelai Pria', icon: UserCircle, desc: 'Data dan foto mempelai pria' },
+    ]
+  },
+  {
+    group: 'Konten',
+    items: [
+      { id: 'events', label: 'Jadwal Acara', icon: Calendar, desc: 'Atur jadwal dan lokasi setiap acara' },
+      { id: 'gallery', label: 'Galeri Foto', icon: Image, desc: 'Upload dan kelola foto galeri' },
+      { id: 'story', label: 'Love Story', icon: BookHeart, desc: 'Ceritakan perjalanan cinta kalian' },
+      { id: 'gift', label: 'Hadiah', icon: Gift, desc: 'Kelola rekening hadiah digital' },
+    ]
+  },
+  {
+    group: 'Pengaturan',
+    items: [
+      { id: 'music', label: 'Musik & WA', icon: Music, desc: 'Musik latar dan template WhatsApp' },
+      { id: 'streaming', label: 'Live Streaming', icon: Video, desc: 'Link live streaming dan video background' },
+    ]
+  }
 ];
+
+const allTabs = tabGroups.flatMap(g => g.items);
 
 export default function EditInvitationPage({ params }) {
   const { id } = use(params);
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('detail');
+  const [activeTab, setActiveTab] = useState('info');
   const [invitation, setInvitation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -46,110 +74,177 @@ export default function EditInvitationPage({ params }) {
 
   if (loading) return <div className="page-loading"><div className="spinner" /></div>;
 
+  const activeTabData = allTabs.find(t => t.id === activeTab);
+
   return (
     <div style={{ animation: 'slide-up 0.4s ease-out' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
+      <style>{`
+        .edit-sidebar-nav {
+          width: 220px;
+          min-width: 220px;
+          background: #f8fafc;
+          border-right: 1px solid #e2e8f0;
+          border-radius: 16px 0 0 16px;
+          padding: 16px 0;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+          overflow-y: auto;
+        }
+        .edit-sidebar-nav .nav-group-label {
+          font-size: 9.5px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          color: #94a3b8;
+          padding: 12px 20px 6px;
+          margin: 0;
+        }
+        .edit-sidebar-nav .nav-group-label:first-child {
+          padding-top: 4px;
+        }
+        .edit-sidebar-nav .nav-item {
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          padding: 9px 16px;
+          margin: 1px 8px;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 500;
+          color: #64748b;
+          cursor: pointer;
+          border: none;
+          background: transparent;
+          width: calc(100% - 16px);
+          text-align: left;
+          transition: all 0.15s ease;
+        }
+        .edit-sidebar-nav .nav-item:hover {
+          background: #e2e8f0;
+          color: #334155;
+        }
+        .edit-sidebar-nav .nav-item.active {
+          background: linear-gradient(135deg, #6366f1, #8b5cf6);
+          color: #ffffff;
+          font-weight: 600;
+          box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+        }
+        .edit-content-area {
+          flex: 1;
+          min-width: 0;
+          padding: 28px;
+          overflow-y: auto;
+        }
+        .edit-split-layout {
+          display: flex;
+          border: 1px solid #e2e8f0;
+          border-radius: 16px;
+          background: #fff;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+          min-height: 70vh;
+          overflow: hidden;
+        }
+        @media (max-width: 768px) {
+          .edit-sidebar-nav {
+            width: 100%;
+            min-width: unset;
+            flex-direction: row;
+            overflow-x: auto;
+            overflow-y: hidden;
+            border-right: none;
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 16px 16px 0 0;
+            padding: 10px 8px;
+            gap: 4px;
+          }
+          .edit-sidebar-nav .nav-group-label { display: none; }
+          .edit-sidebar-nav .nav-item {
+            white-space: nowrap;
+            padding: 7px 12px;
+            margin: 0;
+            width: auto;
+            font-size: 12px;
+          }
+          .edit-split-layout { flex-direction: column; }
+          .edit-content-area { padding: 20px 16px; }
+        }
+      `}</style>
+
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
-          <button className="btn btn-ghost btn-sm" onClick={() => router.push('/app/invitations')} style={{ marginBottom: '8px' }}>
+          <button className="btn btn-ghost btn-sm" onClick={() => router.push('/app/invitations')} style={{ marginBottom: '6px' }}>
             <ArrowLeft size={16} /> Kembali
           </button>
-          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '24px', fontWeight: '700', color: '#1e293b', margin: 0 }}>Edit Undangan</h1>
+          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '22px', fontWeight: '700', color: '#1e293b', margin: 0 }}>Edit Undangan</h1>
         </div>
         {message && <span className={`badge ${message === 'Tersimpan!' ? 'badge-success' : 'badge-danger'}`}>{message}</span>}
       </div>
 
-      <div className="tab-list" style={{ marginBottom: '24px' }}>
-        {tabs.map((tab) => {
-          const Icon = tab.icon;
-          return (
-            <button key={tab.id} className={`tab-item ${activeTab === tab.id ? 'active' : ''}`} onClick={() => setActiveTab(tab.id)}>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}><Icon size={15} /> {tab.label}</span>
-            </button>
-          );
-        })}
-      </div>
+      {/* Split Layout: Sidebar + Content */}
+      <div className="edit-split-layout">
+        {/* Vertical Section Nav */}
+        <div className="edit-sidebar-nav">
+          {tabGroups.map((group) => (
+            <div key={group.group}>
+              <p className="nav-group-label">{group.group}</p>
+              {group.items.map((tab) => {
+                const Icon = tab.icon;
+                return (
+                  <button key={tab.id} className={`nav-item ${activeTab === tab.id ? 'active' : ''}`} onClick={() => setActiveTab(tab.id)}>
+                    <Icon size={15} strokeWidth={activeTab === tab.id ? 2.5 : 1.8} />
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
 
-      <div className="card" style={{ padding: '28px' }}>
-        {activeTab === 'detail' && <DetailTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
-        {activeTab === 'couple' && <CoupleTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
-        {activeTab === 'events' && <EventsTab invitationId={id} />}
-        {activeTab === 'gallery' && <GalleryTab invitationId={id} />}
-        {activeTab === 'story' && <StoryTab invitationId={id} />}
-        {activeTab === 'gift' && <GiftTab invitationId={id} />}
-        {activeTab === 'settings' && <SettingsTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
+        {/* Content Area */}
+        <div className="edit-content-area">
+          <div style={{ marginBottom: '24px', paddingBottom: '16px', borderBottom: '1px solid #f1f5f9' }}>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', fontWeight: '700', color: '#1e293b', margin: '0 0 4px' }}>
+              {activeTabData?.label || 'Info Dasar'}
+            </h2>
+            <p style={{ fontSize: '13px', color: '#94a3b8', margin: 0 }}>
+              {activeTabData?.desc || ''}
+            </p>
+          </div>
+          {activeTab === 'info' && <InfoTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
+          {activeTab === 'cover' && <CoverTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
+          {activeTab === 'quotes' && <QuotesTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
+          {activeTab === 'turut' && <TurutTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
+          {activeTab === 'bride' && <BrideTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
+          {activeTab === 'groom' && <GroomTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
+          {activeTab === 'events' && <EventsTab invitationId={id} />}
+          {activeTab === 'gallery' && <GalleryTab invitationId={id} />}
+          {activeTab === 'story' && <StoryTab invitationId={id} />}
+          {activeTab === 'gift' && <GiftTab invitationId={id} />}
+          {activeTab === 'music' && <MusicTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
+          {activeTab === 'streaming' && <StreamingTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
+        </div>
       </div>
     </div>
   );
 }
 
-function DetailTab({ invitation, onSave, saving }) {
-  const [form, setForm] = useState({ 
-    title: invitation?.title || '', 
-    event_date: invitation?.event_date || '', 
-    event_time: invitation?.event_time || '', 
-    location: invitation?.location || '', 
-    latitude: invitation?.latitude || '', 
-    longitude: invitation?.longitude || '', 
-    description: invitation?.description || '', 
-    opening_text: invitation?.opening_text || '', 
-    quotes: invitation?.quotes || '',
-    quotes_name: invitation?.quotes_name || '',
-    live_streaming_link: invitation?.live_streaming_link || '',
-    closing_text: invitation?.closing_text || '',
-    turut_mengundang: (() => {
-      let tm = invitation?.turut_mengundang || [];
-      if (typeof tm === 'string') {
-        try { tm = JSON.parse(tm); } catch { tm = []; }
-      }
-      return Array.isArray(tm) ? tm : [];
-    })(),
-    background_video_url: invitation?.background_video_url || '',
-    cover_photo: null,
-    cover_photos: []
+function InfoTab({ invitation, onSave, saving }) {
+  const [form, setForm] = useState({
+    title: invitation?.title || '',
+    event_date: invitation?.event_date || '',
+    event_time: invitation?.event_time || '',
+    location: invitation?.location || '',
+    latitude: invitation?.latitude || '',
+    longitude: invitation?.longitude || '',
+    description: invitation?.description || '',
   });
-
-  const [existingCovers, setExistingCovers] = useState(
-    invitation?.cover_photo ? (Array.isArray(invitation.cover_photo) ? invitation.cover_photo : [invitation.cover_photo]).filter(Boolean) : []
-  );
-
   const handleSave = () => {
     const fd = new FormData();
-    Object.keys(form).forEach(key => {
-      if (key === 'cover_photos') {
-        form[key].forEach(f => fd.append('cover_photo[]', f));
-      } else if (key === 'turut_mengundang') {
-        const validItems = form[key].filter(t => t.trim() !== '');
-        if (validItems.length > 0) {
-          validItems.forEach((t, i) => fd.append(`turut_mengundang[${i}]`, t.trim()));
-        } else {
-          // If empty, send an empty string so Laravel receives it and converts to null
-          // to overwrite any existing values with null/empty instead of ignoring the field.
-          fd.append('turut_mengundang', '');
-        }
-      } else if (form[key] !== null && form[key] !== '' && key !== 'cover_photo') {
-        fd.append(key, form[key]);
-      }
-    });
-    existingCovers.forEach(c => fd.append('cover_photo_existing[]', c));
-    if (existingCovers.length === 0) fd.append('cover_photo_existing[]', '');
+    Object.keys(form).forEach(key => { if (form[key] !== null && form[key] !== '') fd.append(key, form[key]); });
     onSave(fd);
   };
-
-  const addTurutMengundang = () => {
-    setForm({ ...form, turut_mengundang: [...form.turut_mengundang, ''] });
-  };
-
-  const updateTurutMengundang = (index, value) => {
-    const newArr = [...form.turut_mengundang];
-    newArr[index] = value;
-    setForm({ ...form, turut_mengundang: newArr });
-  };
-
-  const removeTurutMengundang = (index) => {
-    const newArr = form.turut_mengundang.filter((_, i) => i !== index);
-    setForm({ ...form, turut_mengundang: newArr });
-  };
-
   return (
     <div style={{ display: 'grid', gap: '20px', maxWidth: '600px' }}>
       <div><label className="label">Judul Undangan (mis: Dimas & Nisa)</label><input className="input" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
@@ -163,71 +258,186 @@ function DetailTab({ invitation, onSave, saving }) {
         <div><label className="label">Longitude Peta</label><input className="input" placeholder="106.816666" value={form.longitude} onChange={(e) => setForm({ ...form, longitude: e.target.value })} /></div>
       </div>
       <div><label className="label">Deskripsi / Detail Tambahan Acara</label><textarea className="input" rows="2" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} style={{ resize: 'vertical' }} /></div>
-      <div><label className="label">Background Video URL (Opsional, MP4/Youtube)</label><input className="input" placeholder="https://..." value={form.background_video_url} onChange={(e) => setForm({ ...form, background_video_url: e.target.value })} /></div>
-      <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-          <label className="label" style={{ margin: 0 }}>Foto Cover</label>
-          <label className="btn btn-secondary btn-sm" style={{ cursor: 'pointer', padding: '6px 12px' }}>
-            <Upload size={14} /> Tambah Foto
-            <input type="file" multiple accept="image/*" onChange={(e) => setForm({ ...form, cover_photos: [...form.cover_photos, ...Array.from(e.target.files)] })} style={{ display: 'none' }} />
-          </label>
-        </div>
-        
-        {existingCovers.length === 0 && form.cover_photos.length === 0 ? (
-          <p style={{ color: '#94a3b8', textAlign: 'center', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1', fontSize: '14px' }}>Belum ada foto yang dipilih</p>
-        ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '12px' }}>
-            {existingCovers.map((photo, i) => (
-              <div key={`exist-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
-                <img src={photo.startsWith('http') ? photo : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${photo}`} alt="Existing" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <button onClick={() => setExistingCovers(existingCovers.filter((_, idx) => idx !== i))} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
-              </div>
-            ))}
-            {form.cover_photos.map((file, i) => (
-              <div key={`new-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
-                <img src={URL.createObjectURL(file)} alt="New" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(59, 130, 246, 0.8)', color: 'white', fontSize: '10px', textAlign: 'center', padding: '2px', fontWeight: 'bold' }}>BARU</div>
-                <button onClick={() => setForm({ ...form, cover_photos: form.cover_photos.filter((_, idx) => idx !== i) })} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '8px 0' }} />
-      <div><label className="label">Live Streaming Link (Opsional, misal Youtube/Zoom)</label><input className="input" placeholder="https://..." value={form.live_streaming_link} onChange={(e) => setForm({ ...form, live_streaming_link: e.target.value })} /></div>
-      <div><label className="label">Nama/Sumber Quotes</label><input className="input" value={form.quotes_name} onChange={(e) => setForm({ ...form, quotes_name: e.target.value })} placeholder="QS. AR-RUM AYAT 21" /></div>
-      <div><label className="label">Quotes / Kutipan Pernikahan</label><textarea className="input" rows="3" value={form.quotes} onChange={(e) => setForm({ ...form, quotes: e.target.value })} style={{ resize: 'vertical' }} placeholder="Dan di antara tanda-tanda kekuasaan-Nya..." /></div>
-      
-      <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-          <label className="label" style={{ margin: 0 }}>Turut Mengundang</label>
-          <button type="button" className="btn btn-secondary btn-sm" onClick={addTurutMengundang} style={{ padding: '4px 8px', fontSize: '12px' }}>
-            <Plus size={14} /> Tambah Orang
-          </button>
-        </div>
-        {form.turut_mengundang.length === 0 ? (
-          <p style={{ color: '#94a3b8', fontSize: '13px' }}>Belum ada daftar turut mengundang.</p>
-        ) : (
-          <div style={{ display: 'grid', gap: '8px' }}>
-            {form.turut_mengundang.map((item, i) => (
-              <div key={i} style={{ display: 'flex', gap: '8px' }}>
-                <input className="input" value={item} onChange={(e) => updateTurutMengundang(i, e.target.value)} placeholder="Bpk. Budi & Ibu Siti" style={{ flex: 1 }} />
-                <button type="button" onClick={() => removeTurutMengundang(i)} className="btn btn-ghost btn-sm" style={{ color: '#ef4444', padding: '0 8px' }}><X size={16} /></button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '8px 0' }} />
-      <div><label className="label">Teks Pembuka (Diatas Doa/Mempelai)</label><textarea className="input" rows="3" value={form.opening_text} onChange={(e) => setForm({ ...form, opening_text: e.target.value })} style={{ resize: 'vertical' }} /></div>
-      <div><label className="label">Teks Penutup (Terima Kasih)</label><textarea className="input" rows="3" value={form.closing_text} onChange={(e) => setForm({ ...form, closing_text: e.target.value })} style={{ resize: 'vertical' }} /></div>
-      <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Detail'}</button>
+      <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Info'}</button>
     </div>
   );
 }
 
-function SettingsTab({ invitation, onSave, saving }) {
+function CoverTab({ invitation, onSave, saving }) {
+  const [coverPhotos, setCoverPhotos] = useState([]);
+  const [existingCovers, setExistingCovers] = useState(
+    invitation?.cover_photo ? (Array.isArray(invitation.cover_photo) ? invitation.cover_photo : [invitation.cover_photo]).filter(Boolean) : []
+  );
+
+  const [landingPhotos, setLandingPhotos] = useState([]);
+  const [existingLandings, setExistingLandings] = useState(
+    invitation?.landing_photo ? (Array.isArray(invitation.landing_photo) ? invitation.landing_photo : [invitation.landing_photo]).filter(Boolean) : []
+  );
+
+  const handleSave = () => {
+    const fd = new FormData();
+    
+    coverPhotos.forEach(f => fd.append('cover_photo[]', f));
+    existingCovers.forEach(c => fd.append('cover_photo_existing[]', c));
+    if (existingCovers.length === 0 && coverPhotos.length === 0) fd.append('cover_photo_existing[]', '');
+
+    landingPhotos.forEach(f => fd.append('landing_photo[]', f));
+    existingLandings.forEach(c => fd.append('landing_photo_existing[]', c));
+    if (existingLandings.length === 0 && landingPhotos.length === 0) fd.append('landing_photo_existing[]', '');
+
+    onSave(fd);
+  };
+
+  return (
+    <div style={{ display: 'grid', gap: '20px', maxWidth: '600px' }}>
+      
+      {/* Cover Photos */}
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <div>
+            <label className="label" style={{ margin: 0 }}>Foto Cover Undangan</label>
+            <div style={{ fontSize: '12px', color: '#64748b', marginTop: '4px', fontWeight: 'normal' }}>📍 Tampil di halaman paling depan (amplop digital) sebelum tamu mengklik Buka Undangan.</div>
+          </div>
+          <label className="btn btn-secondary btn-sm" style={{ cursor: 'pointer', padding: '6px 12px' }}>
+            <Upload size={14} /> Tambah Foto
+            <input type="file" multiple accept="image/*" onChange={async (e) => {
+              const files = Array.from(e.target.files);
+              const compressedFiles = await Promise.all(files.map(f => compressImage(f, { maxSizeMB: 2.5, maxWidthOrHeight: 1920 })));
+              setCoverPhotos([...coverPhotos, ...compressedFiles]);
+            }} style={{ display: 'none' }} />
+          </label>
+        </div>
+        {existingCovers.length === 0 && coverPhotos.length === 0 ? (
+          <p style={{ color: '#94a3b8', textAlign: 'center', padding: '40px 20px', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1', fontSize: '14px' }}>Belum ada foto cover. Upload foto untuk ditampilkan di halaman undangan.</p>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '12px' }}>
+            {existingCovers.map((photo, i) => (
+              <div key={`exist-cover-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
+                <img src={photo.startsWith('http') ? photo : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${photo}`} alt="Existing" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <button onClick={() => setExistingCovers(existingCovers.filter((_, idx) => idx !== i))} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
+              </div>
+            ))}
+            {coverPhotos.map((file, i) => (
+              <div key={`new-cover-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
+                <img src={URL.createObjectURL(file)} alt="New" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(59, 130, 246, 0.8)', color: 'white', fontSize: '10px', textAlign: 'center', padding: '2px', fontWeight: 'bold' }}>BARU</div>
+                <button onClick={() => setCoverPhotos(coverPhotos.filter((_, idx) => idx !== i))} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '4px 0' }} />
+
+      {/* Landing Photos */}
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <div>
+            <label className="label" style={{ margin: 0 }}>Foto Landing Page</label>
+            <div style={{ fontSize: '12px', color: '#64748b', marginTop: '4px', fontWeight: 'normal' }}>📍 Tampil memanjang sebagai latar belakang utama (Hero Banner) sesaat setelah undangan dibuka.</div>
+          </div>
+          <label className="btn btn-secondary btn-sm" style={{ cursor: 'pointer', padding: '6px 12px' }}>
+            <Upload size={14} /> Tambah Foto
+            <input type="file" multiple accept="image/*" onChange={async (e) => {
+              const files = Array.from(e.target.files);
+              const compressedFiles = await Promise.all(files.map(f => compressImage(f, { maxSizeMB: 2.5, maxWidthOrHeight: 1920 })));
+              setLandingPhotos([...landingPhotos, ...compressedFiles]);
+            }} style={{ display: 'none' }} />
+          </label>
+        </div>
+        {existingLandings.length === 0 && landingPhotos.length === 0 ? (
+          <p style={{ color: '#94a3b8', textAlign: 'center', padding: '40px 20px', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1', fontSize: '14px' }}>Belum ada foto landing page.</p>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '12px' }}>
+            {existingLandings.map((photo, i) => (
+              <div key={`exist-landing-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
+                <img src={photo.startsWith('http') ? photo : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${photo}`} alt="Existing" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <button onClick={() => setExistingLandings(existingLandings.filter((_, idx) => idx !== i))} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
+              </div>
+            ))}
+            {landingPhotos.map((file, i) => (
+              <div key={`new-landing-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
+                <img src={URL.createObjectURL(file)} alt="New" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(59, 130, 246, 0.8)', color: 'white', fontSize: '10px', textAlign: 'center', padding: '2px', fontWeight: 'bold' }}>BARU</div>
+                <button onClick={() => setLandingPhotos(landingPhotos.filter((_, idx) => idx !== i))} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Foto'}</button>
+    </div>
+  );
+}
+
+function QuotesTab({ invitation, onSave, saving }) {
+  const [form, setForm] = useState({
+    quotes: invitation?.quotes || '',
+    quotes_name: invitation?.quotes_name || '',
+    opening_text: invitation?.opening_text || '',
+    closing_text: invitation?.closing_text || '',
+  });
+  const handleSave = () => {
+    const fd = new FormData();
+    Object.keys(form).forEach(key => fd.append(key, form[key]));
+    onSave(fd);
+  };
+  return (
+    <div style={{ display: 'grid', gap: '20px', maxWidth: '600px' }}>
+      <div><label className="label">Nama/Sumber Quotes</label><input className="input" value={form.quotes_name} onChange={(e) => setForm({ ...form, quotes_name: e.target.value })} placeholder="QS. AR-RUM AYAT 21" /></div>
+      <div><label className="label">Quotes / Kutipan Pernikahan</label><textarea className="input" rows="3" value={form.quotes} onChange={(e) => setForm({ ...form, quotes: e.target.value })} style={{ resize: 'vertical' }} placeholder="Dan di antara tanda-tanda kekuasaan-Nya..." /></div>
+      <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '4px 0' }} />
+      <div><label className="label">Teks Pembuka (Diatas Doa/Mempelai)</label><textarea className="input" rows="3" value={form.opening_text} onChange={(e) => setForm({ ...form, opening_text: e.target.value })} style={{ resize: 'vertical' }} /></div>
+      <div><label className="label">Teks Penutup (Terima Kasih)</label><textarea className="input" rows="3" value={form.closing_text} onChange={(e) => setForm({ ...form, closing_text: e.target.value })} style={{ resize: 'vertical' }} /></div>
+      <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Quotes'}</button>
+    </div>
+  );
+}
+
+function TurutTab({ invitation, onSave, saving }) {
+  const [items, setItems] = useState(() => {
+    let tm = invitation?.turut_mengundang || [];
+    if (typeof tm === 'string') { try { tm = JSON.parse(tm); } catch { tm = []; } }
+    return Array.isArray(tm) ? tm : [];
+  });
+  const handleSave = () => {
+    const fd = new FormData();
+    const validItems = items.filter(t => t.trim() !== '');
+    if (validItems.length > 0) {
+      validItems.forEach((t, i) => fd.append(`turut_mengundang[${i}]`, t.trim()));
+    } else {
+      fd.append('turut_mengundang', '');
+    }
+    onSave(fd);
+  };
+  return (
+    <div style={{ display: 'grid', gap: '20px', maxWidth: '600px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <label className="label" style={{ margin: 0 }}>Daftar Turut Mengundang</label>
+        <button type="button" className="btn btn-secondary btn-sm" onClick={() => setItems([...items, ''])} style={{ padding: '6px 12px', fontSize: '12px' }}>
+          <Plus size={14} /> Tambah
+        </button>
+      </div>
+      {items.length === 0 ? (
+        <p style={{ color: '#94a3b8', textAlign: 'center', padding: '40px 20px', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1', fontSize: '14px' }}>Belum ada daftar turut mengundang. Klik &quot;Tambah&quot; untuk menambahkan.</p>
+      ) : (
+        <div style={{ display: 'grid', gap: '8px' }}>
+          {items.map((item, i) => (
+            <div key={i} style={{ display: 'flex', gap: '8px' }}>
+              <input className="input" value={item} onChange={(e) => { const newArr = [...items]; newArr[i] = e.target.value; setItems(newArr); }} placeholder="Bpk. Budi & Ibu Siti" style={{ flex: 1 }} />
+              <button type="button" onClick={() => setItems(items.filter((_, idx) => idx !== i))} className="btn btn-ghost btn-sm" style={{ color: '#ef4444', padding: '0 8px' }}><X size={16} /></button>
+            </div>
+          ))}
+        </div>
+      )}
+      <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan'}</button>
+    </div>
+  );
+}
+
+function MusicTab({ invitation, onSave, saving }) {
   const [form, setForm] = useState({ 
     whatsapp_template: invitation?.whatsapp_template || '', 
     music_url: invitation?.music_url || '',
@@ -593,95 +803,117 @@ function SettingsTab({ invitation, onSave, saving }) {
           <code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>[eticket]</code>
         </div>
       </div>
-      <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Pengaturan'}</button>
+      <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Musik & WA'}</button>
     </div>
   );
 }
 
-function CoupleTab({ invitation, onSave, saving }) {
-  const [form, setForm] = useState({ 
-    bride_name: invitation?.bride_name || '', bride_full_name: invitation?.bride_full_name || '', bride_father: invitation?.bride_father || '', bride_mother: invitation?.bride_mother || '', bride_address: invitation?.bride_address || '', bride_photo: null, bride_photos: [],
-    groom_name: invitation?.groom_name || '', groom_full_name: invitation?.groom_full_name || '', groom_father: invitation?.groom_father || '', groom_mother: invitation?.groom_mother || '', groom_address: invitation?.groom_address || '', groom_photo: null, groom_photos: [] 
+function StreamingTab({ invitation, onSave, saving }) {
+  const [form, setForm] = useState({
+    live_streaming_link: invitation?.live_streaming_link || '',
+    background_video_url: invitation?.background_video_url || '',
   });
-
-  const [existingBrideCovers, setExistingBrideCovers] = useState(
-    invitation?.bride_photo ? (Array.isArray(invitation.bride_photo) ? invitation.bride_photo : [invitation.bride_photo]).filter(Boolean) : []
+  const handleSave = () => {
+    const fd = new FormData();
+    Object.keys(form).forEach(key => fd.append(key, form[key]));
+    onSave(fd);
+  };
+  return (
+    <div style={{ display: 'grid', gap: '20px', maxWidth: '600px' }}>
+      <div><label className="label">Live Streaming Link (Opsional, misal Youtube/Zoom)</label><input className="input" placeholder="https://..." value={form.live_streaming_link} onChange={(e) => setForm({ ...form, live_streaming_link: e.target.value })} /></div>
+      <div><label className="label">Background Video URL (Opsional, MP4/Youtube)</label><input className="input" placeholder="https://..." value={form.background_video_url} onChange={(e) => setForm({ ...form, background_video_url: e.target.value })} /></div>
+      <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan'}</button>
+    </div>
   );
-  const [existingGroomCovers, setExistingGroomCovers] = useState(
-    invitation?.groom_photo ? (Array.isArray(invitation.groom_photo) ? invitation.groom_photo : [invitation.groom_photo]).filter(Boolean) : []
+}
+
+function PersonTab({ invitation, onSave, saving, prefix, label }) {
+  const fields = [
+    { key: `${prefix}_name`, label: 'Nama Panggilan' },
+    { key: `${prefix}_full_name`, label: 'Nama Lengkap' },
+    { key: `${prefix}_instagram`, label: 'Instagram', placeholder: '@username', icon: 'instagram' },
+    { key: `${prefix}_father`, label: 'Nama Ayah' },
+    { key: `${prefix}_mother`, label: 'Nama Ibu' },
+    { key: `${prefix}_address`, label: 'Alamat' },
+  ];
+  const initForm = {};
+  fields.forEach(f => { initForm[f.key] = invitation?.[f.key] || ''; });
+  initForm[`${prefix}_photo`] = null;
+  initForm[`${prefix}_photos`] = [];
+
+  const [form, setForm] = useState(initForm);
+  const [existingPhotos, setExistingPhotos] = useState(
+    invitation?.[`${prefix}_photo`] ? (Array.isArray(invitation[`${prefix}_photo`]) ? invitation[`${prefix}_photo`] : [invitation[`${prefix}_photo`]]).filter(Boolean) : []
   );
 
   const handleSave = () => {
     const fd = new FormData();
-    Object.keys(form).forEach(key => {
-      if (key === 'bride_photos') {
-        form[key].forEach(f => fd.append('bride_photo[]', f));
-      } else if (key === 'groom_photos') {
-        form[key].forEach(f => fd.append('groom_photo[]', f));
-      } else if (form[key] !== null && form[key] !== '' && key !== 'bride_photo' && key !== 'groom_photo') {
-        fd.append(key, form[key]);
-      }
-    });
-
-    existingBrideCovers.forEach(c => fd.append('bride_photo_existing[]', c));
-    if (existingBrideCovers.length === 0) fd.append('bride_photo_existing[]', '');
-    existingGroomCovers.forEach(c => fd.append('groom_photo_existing[]', c));
-    if (existingGroomCovers.length === 0) fd.append('groom_photo_existing[]', '');
-
+    fields.forEach(f => { if (form[f.key]) fd.append(f.key, form[f.key]); });
+    form[`${prefix}_photos`].forEach(f => fd.append(`${prefix}_photo[]`, f));
+    existingPhotos.forEach(c => fd.append(`${prefix}_photo_existing[]`, c));
+    if (existingPhotos.length === 0 && form[`${prefix}_photos`].length === 0) fd.append(`${prefix}_photo_existing[]`, '');
     onSave(fd);
   };
 
-  const fields = [
-    { section: 'Mempelai Wanita', prefix: 'bride', items: [{ key: 'bride_name', label: 'Nama Panggilan' }, { key: 'bride_full_name', label: 'Nama Lengkap' }, { key: 'bride_father', label: 'Nama Ayah' }, { key: 'bride_mother', label: 'Nama Ibu' }, { key: 'bride_address', label: 'Alamat' }] },
-    { section: 'Mempelai Pria', prefix: 'groom', items: [{ key: 'groom_name', label: 'Nama Panggilan' }, { key: 'groom_full_name', label: 'Nama Lengkap' }, { key: 'groom_father', label: 'Nama Ayah' }, { key: 'groom_mother', label: 'Nama Ibu' }, { key: 'groom_address', label: 'Alamat' }] },
-  ];
   return (
-    <div style={{ display: 'grid', gap: '28px', maxWidth: '600px' }}>
-      {fields.map((section) => {
-        const existingArray = section.prefix === 'bride' ? existingBrideCovers : existingGroomCovers;
-        const setExistingArray = section.prefix === 'bride' ? setExistingBrideCovers : setExistingGroomCovers;
-        return (
-          <div key={section.section}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '600', margin: '0 0 16px', color: '#334155' }}>{section.section}</h3>
-            <div style={{ display: 'grid', gap: '14px' }}>
-              {section.items.map((item) => (<div key={item.key}><label className="label">{item.label}</label><input className="input" value={form[item.key]} onChange={(e) => setForm({ ...form, [item.key]: e.target.value })} /></div>))}
-              
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <label className="label" style={{ margin: 0 }}>Foto {section.section}</label>
-                  <label className="btn btn-secondary btn-sm" style={{ cursor: 'pointer', padding: '6px 12px' }}>
-                    <Upload size={14} /> Tambah Foto
-                    <input type="file" multiple accept="image/*" onChange={(e) => setForm({ ...form, [`${section.prefix}_photos`]: [...form[`${section.prefix}_photos`], ...Array.from(e.target.files)] })} style={{ display: 'none' }} />
-                  </label>
-                </div>
-
-                {existingArray.length === 0 && form[`${section.prefix}_photos`].length === 0 ? (
-                  <p style={{ color: '#94a3b8', textAlign: 'center', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1', fontSize: '14px' }}>Belum ada foto yang dipilih</p>
-                ) : (
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '12px' }}>
-                    {existingArray.map((photo, i) => (
-                      <div key={`exist-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
-                        <img src={photo.startsWith('http') ? photo : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${photo}`} alt="Existing" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        <button onClick={() => setExistingArray(existingArray.filter((_, idx) => idx !== i))} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
-                      </div>
-                    ))}
-                    {form[`${section.prefix}_photos`].map((file, i) => (
-                      <div key={`new-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
-                        <img src={URL.createObjectURL(file)} alt="New" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(59, 130, 246, 0.8)', color: 'white', fontSize: '10px', textAlign: 'center', padding: '2px', fontWeight: 'bold' }}>BARU</div>
-                        <button onClick={() => setForm({ ...form, [`${section.prefix}_photos`]: form[`${section.prefix}_photos`].filter((_, idx) => idx !== i) })} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
-                      </div>
-                    ))}
-                  </div>
-                )}
+    <div style={{ display: 'grid', gap: '14px', maxWidth: '600px' }}>
+      {fields.map((item) => (
+        <div key={item.key}>
+          <label className="label">{item.label}</label>
+          <div style={{ position: 'relative' }}>
+            {item.icon === 'instagram' && (
+              <div style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', display: 'flex', alignItems: 'center', pointerEvents: 'none' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
               </div>
-            </div>
+            )}
+            <input className="input" value={form[item.key]} onChange={(e) => setForm({ ...form, [item.key]: e.target.value })} placeholder={item.placeholder || ''} style={item.icon === 'instagram' ? { paddingLeft: '36px' } : {}} />
           </div>
-        );
-      })}
-      <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Mempelai'}</button>
+        </div>
+      ))}
+
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+          <label className="label" style={{ margin: 0 }}>Foto {label}</label>
+          <label className="btn btn-secondary btn-sm" style={{ cursor: 'pointer', padding: '6px 12px' }}>
+            <Upload size={14} /> Tambah Foto
+            <input type="file" multiple accept="image/*" onChange={async (e) => {
+              const files = Array.from(e.target.files);
+              const compressedFiles = await Promise.all(files.map(f => compressImage(f, { maxSizeMB: 2.5, maxWidthOrHeight: 1920 })));
+              setForm({ ...form, [`${prefix}_photos`]: [...form[`${prefix}_photos`], ...compressedFiles] });
+            }} style={{ display: 'none' }} />
+          </label>
+        </div>
+        {existingPhotos.length === 0 && form[`${prefix}_photos`].length === 0 ? (
+          <p style={{ color: '#94a3b8', textAlign: 'center', padding: '30px 20px', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1', fontSize: '14px' }}>Belum ada foto yang dipilih</p>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '12px' }}>
+            {existingPhotos.map((photo, i) => (
+              <div key={`exist-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
+                <img src={photo.startsWith('http') ? photo : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${photo}`} alt="Existing" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <button onClick={() => setExistingPhotos(existingPhotos.filter((_, idx) => idx !== i))} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
+              </div>
+            ))}
+            {form[`${prefix}_photos`].map((file, i) => (
+              <div key={`new-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
+                <img src={URL.createObjectURL(file)} alt="New" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(59, 130, 246, 0.8)', color: 'white', fontSize: '10px', textAlign: 'center', padding: '2px', fontWeight: 'bold' }}>BARU</div>
+                <button onClick={() => setForm({ ...form, [`${prefix}_photos`]: form[`${prefix}_photos`].filter((_, idx) => idx !== i) })} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : `Simpan ${label}`}</button>
     </div>
   );
+}
+
+function BrideTab(props) {
+  return <PersonTab {...props} prefix="bride" label="Mempelai Wanita" />;
+}
+
+function GroomTab(props) {
+  return <PersonTab {...props} prefix="groom" label="Mempelai Pria" />;
 }
 
 function EventsTab({ invitationId }) {
@@ -759,13 +991,29 @@ function EventsTab({ invitationId }) {
 function GalleryTab({ invitationId }) {
   const [photos, setPhotos] = useState([]); const [loading, setLoading] = useState(true); const [uploading, setUploading] = useState(false);
   useEffect(() => { gallery.list(invitationId).then((res) => setPhotos(res.data || [])).finally(() => setLoading(false)); }, [invitationId]);
-  const handleUpload = async (e) => { const files = e.target.files; if (!files.length) return; setUploading(true); try { for (const file of files) { const fd = new FormData(); fd.append('photo', file); const res = await gallery.upload(invitationId, fd); setPhotos((prev) => [...prev, res.data || res]); } toast.success('Upload berhasil'); } catch(err) { toast.error(err?.message || 'Gagal upload foto'); } finally { setUploading(false); } };
+  const handleUpload = async (e) => { 
+    const files = e.target.files; if (!files.length) return; 
+    setUploading(true); 
+    try { 
+      for (const file of files) { 
+        const compressedFile = await compressImage(file, { maxSizeMB: 3, maxWidthOrHeight: 2048 });
+        const fd = new FormData(); 
+        fd.append('photo', compressedFile); 
+        const res = await gallery.upload(invitationId, fd); 
+        setPhotos((prev) => [...prev, res.data || res]); 
+      } 
+      toast.success('Upload berhasil'); 
+    } catch(err) { toast.error(err?.message || 'Gagal upload foto'); } finally { setUploading(false); } 
+  };
   const handleDelete = (photoId) => { confirmAction('Hapus foto ini?', async () => { try { await gallery.delete(invitationId, photoId); setPhotos(prev => prev.filter((p) => (p.id || p.path || p.photo) !== photoId)); toast.success('Foto dihapus'); } catch { toast.error('Gagal menghapus foto'); } }); };
   if (loading) return <div className="page-loading"><div className="spinner" /></div>;
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '600', margin: 0 }}>Galeri Foto</h3>
+        <div>
+          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '600', margin: 0 }}>Galeri Foto</h3>
+          <div style={{ fontSize: '12px', color: '#64748b', marginTop: '4px', fontWeight: 'normal' }}>📍 Akan ditampilkan sebagai grid album foto atau slideshow gaya pre-wedding di dalam undangan.</div>
+        </div>
         <label className="btn btn-primary btn-sm" style={{ cursor: 'pointer' }}><Upload size={14} /> {uploading ? 'Uploading...' : 'Upload'}<input type="file" multiple accept="image/*" onChange={handleUpload} style={{ display: 'none' }} /></label>
       </div>
       {photos.length === 0 ? <p style={{ color: '#94a3b8', textAlign: 'center', padding: '40px' }}>Belum ada foto di galeri</p> : (
@@ -843,7 +1091,12 @@ function StoryTab({ invitationId }) {
           <div><label className="label">Deskripsi</label><textarea className="input" rows="3" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} style={{ resize: 'vertical' }} /></div>
           <div>
             <label className="label">Foto Cerita</label>
-            <input type="file" className="input" accept="image/*" onChange={(e) => setForm({ ...form, photoFile: e.target.files[0] })} />
+            <input type="file" className="input" accept="image/*" onChange={async (e) => {
+              const file = e.target.files[0];
+              if (!file) return;
+              const compressedFile = await compressImage(file, { maxSizeMB: 2.5, maxWidthOrHeight: 1920 });
+              setForm({ ...form, photoFile: compressedFile });
+            }} />
             {form.photo && !form.photoFile && <div className="mt-2 text-xs text-blue-500">Gambar saat ini: {form.photo}</div>}
           </div>
           <button className="btn btn-primary btn-sm mt-2" onClick={handleSave}><Save size={14} /> {editingId ? 'Update' : 'Simpan'}</button>

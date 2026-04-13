@@ -1,4 +1,5 @@
 'use client';
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Cormorant_Infant, Raleway } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -138,7 +139,9 @@ export default function FrostedElegance({ payload, audioController }) {
                             </div>
                         </section>
 
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 fe-rv"><div className="text-center mb-12"><h2 className={`${ci.className} text-2xl font-light tracking-[.15em] uppercase text-white`}>Wedding</h2><p className={`${ci.className} text-4xl ib font-light -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="fc rounded-2xl p-6 text-center fe-rv" data-delay={`${i+1}`}><p className={`${ci.className} text-sm font-medium tracking-widest uppercase ib mb-1`}>{a.bank_name}</p><p className="text-[10px] text-white/20 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${ci.className} text-xl font-medium text-white mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className="w-full fc py-3 text-[10px] uppercase tracking-widest text-white/50 hover:bg-white/10 transition-all duration-500 rounded-xl font-medium">Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 fe-rv"><div className="text-center mb-12"><h2 className={`${ci.className} text-2xl font-light tracking-[.15em] uppercase text-white`}>Wedding</h2><p className={`${ci.className} text-4xl ib font-light -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((acc, i) => (
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="FrostedElegance" />
+                            ))}</div></section>}
 
                         <footer className="py-20 px-8 text-center border-t border-white/5 fe-rv">
                             <p className={`${ci.className} text-[9px] tracking-[.4em] uppercase ib mb-8 font-light`}>Thank You</p>

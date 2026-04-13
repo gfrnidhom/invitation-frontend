@@ -1,4 +1,5 @@
 'use client';
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Oswald, Playfair_Display, Source_Sans_3 } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -172,7 +173,9 @@ export default function MonoChromeII({ payload, audioController }) {
                         </section>
 
                         {/* Gift */}
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 m2-rv"><div className="text-center mb-12"><h2 className={`${oswald.className} text-2xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Wedding</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="m2c rounded-2xl p-6 text-center m2-rv" data-delay={`${i+1}`}><p className={`${oswald.className} text-sm tracking-[.3em] uppercase sep mb-1`}>{a.bank_name}</p><p className="text-[10px] text-[#e8ddd0]/15 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${playfair.className} italic text-xl text-[#e8ddd0] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${oswald.className} w-full border border-[#d4c5b3]/15 py-3 text-[10px] tracking-[.3em] uppercase text-[#d4c5b3]/50 hover:bg-[#d4c5b3] hover:text-[#2c2420] transition-all duration-500 rounded-xl`}>Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 m2-rv"><div className="text-center mb-12"><h2 className={`${oswald.className} text-2xl tracking-[.2em] uppercase text-[#e8ddd0]`}>Wedding</h2><p className={`${playfair.className} italic text-4xl sep -mt-1`}>Gift</p></div><div className="space-y-4">{invitation.gift_accounts.map((acc, i) => (
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="MonoChromeII" />
+                            ))}</div></section>}
 
                         {/* Footer */}
                         <footer className="py-20 px-8 text-center border-t border-[#d4c5b3]/5 m2-rv">

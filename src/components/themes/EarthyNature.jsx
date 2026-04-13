@@ -1,5 +1,6 @@
 'use client';
 
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Cormorant_Garamond, Sacramento, Nunito_Sans } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -349,15 +350,8 @@ export default function EarthyNature({ payload, audioController }) {
                                 </div>
                                 <div className="space-y-4">
                                     {invitation.gift_accounts.map((acc, i) => (
-                                        <div key={acc.id || i} className="cream-card rounded-2xl p-6 text-center en-reveal" data-delay={`${i+1}`}>
-                                            <p className={`${cormorant.className} text-sm font-bold tracking-widest uppercase text-[#8a9a5b] mb-1`}>{acc.bank_name}</p>
-                                            <p className="text-[10px] text-[#3d2b1f]/30 uppercase tracking-widest mb-3">A.N. {acc.account_holder}</p>
-                                            <p className={`${cormorant.className} text-xl font-bold text-[#3d2b1f] mb-4`}>{acc.account_number}</p>
-                                            <button onClick={() => { navigator.clipboard.writeText(acc.account_number); toast.success('Nomor rekening disalin!'); }} className="w-full border border-[#8a9a5b]/30 py-3 text-[10px] uppercase tracking-widest text-[#8a9a5b] hover:bg-[#8a9a5b] hover:text-white transition-all duration-500 rounded-xl font-bold">
-                                                Copy Number
-                                            </button>
-                                        </div>
-                                    ))}
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="EarthyNature" />
+                            ))}
                                 </div>
                             </section>
                         )}

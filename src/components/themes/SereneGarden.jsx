@@ -1,5 +1,6 @@
 'use client';
 
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Cormorant_Infant, Poppins, Great_Vibes } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -119,6 +120,12 @@ export default function SereneGarden({ payload, audioController }) {
         return getPhoto(Array.isArray(cp) ? cp[0] : cp);
     })();
 
+    const landingPhoto = (() => {
+        const lp = invitation?.landing_photo;
+        if (!lp) return coverPhoto;
+        return getPhoto(Array.isArray(lp) ? lp[0] : lp);
+    })();
+
     const groomPhoto = getPhoto(invitation?.groom_photo);
     const bridePhoto = getPhoto(invitation?.bride_photo);
 
@@ -195,10 +202,8 @@ export default function SereneGarden({ payload, audioController }) {
                 {/* ── COVER SECTION ── */}
                 <section className={`absolute top-0 inset-x-0 h-[100dvh] lg:h-screen z-[60] flex flex-col items-center justify-between py-16 transition-all duration-[1200ms] ease-in-out ${isOpen ? 'opacity-0 pointer-events-none -translate-y-full' : 'opacity-100 bg-[#424242]'}`}>
                     <div className="absolute inset-0">
-                        {photos.length > 0 ? (
-                            <img src={getPhoto(photos[0])} alt="Cover Right" className="w-full h-full object-cover" />
-                        ) : coverPhoto ? (
-                            <img src={coverPhoto} alt="Cover Right" className="w-full h-full object-cover" />
+                        {landingPhoto ? (
+                            <img src={landingPhoto} alt="Cover Right" className="w-full h-full object-cover" />
                         ) : (
                             <video className="w-full h-full object-cover" autoPlay muted loop playsInline poster="/themes/serene-garden/garden-v2-01-fallback.jpeg">
                                 <source src={VIDEO_BG} type="video/mp4" />
@@ -596,15 +601,7 @@ export default function SereneGarden({ payload, audioController }) {
                     <div className="space-y-6 max-w-[300px] mx-auto">
                         {invitation?.gift_accounts && invitation.gift_accounts.length > 0 ? (
                             invitation.gift_accounts.map((acc, i) => (
-                                <div key={acc.id || i} className="bg-[#f4f7f4] rounded-2xl p-6 text-center g1-reveal shadow-sm border border-green-accent/10" data-delay={`${(i % 3) + 1}`}>
-                                    <h4 className="text-xs font-bold text-[#4A4A4A] tracking-widest uppercase mb-1">{acc.bank_name}</h4>
-                                    <p className="text-[10px] text-[#4A4A4A]/60 uppercase tracking-wider mb-3">A.N. {acc.account_holder}</p>
-                                    <p className={`${cormorant.className} text-xl text-green-accent font-bold tracking-wider mb-4`}>{acc.account_number}</p>
-                                    <button onClick={() => { navigator.clipboard.writeText(acc.account_number); toast.success('Nomor rekening disalin!'); }}
-                                        className="border border-[#5a7360] text-[#5a7360] hover:bg-[#5a7360] hover:text-white w-full py-2.5 rounded-full text-[10px] uppercase font-bold tracking-widest transition-colors">
-                                        Salin Nomor
-                                    </button>
-                                </div>
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="SereneGarden" />
                             ))
                         ) : (
                             <div className="bg-[#f4f7f4] rounded-2xl p-8 text-[#4A4A4A]/50 text-sm">Belum ada informasi rekening.</div>

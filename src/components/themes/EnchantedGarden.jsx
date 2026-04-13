@@ -1,5 +1,6 @@
 'use client';
 
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Playfair_Display, Great_Vibes, Jost } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -528,17 +529,8 @@ export default function EnchantedGarden({ payload, audioController }) {
                             <p className="text-sm eg-text-light max-w-sm mx-auto">Tanpa mengurangi rasa hormat, bagi Bapak/Ibu/Saudara/i yang ingin memberikan tanda kasih untuk kami, dapat melalui:</p>
                         </div>
                         <div className="grid gap-8 max-w-sm mx-auto">
-                            {invitation?.gift_accounts?.map((acc, i) => (
-                                <div key={i} className="eg-card p-8 text-center eg-reveal" data-delay={`${(i % 3) + 1}`}>
-                                    <div className="w-12 h-12 rounded-full bg-[#C9A96E]/10 flex items-center justify-center mx-auto mb-4">
-                                        <svg className="w-5 h-5 eg-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5Z" /></svg>
-                                    </div>
-                                    <p className="text-[10px] tracking-[0.2em] uppercase eg-text-muted mb-1">{acc.bank_name}</p>
-                                    <p className="text-sm font-semibold eg-text uppercase mb-1">{acc.account_holder}</p>
-                                    <p className={`${playfair.className} text-2xl font-bold eg-text mb-5`}>{acc.account_number}</p>
-                                    <button onClick={() => { navigator.clipboard.writeText(acc.account_number); toast.success('Nomor rekening disalin!'); }}
-                                        className="eg-btn-outline w-full">Salin Nomor</button>
-                                </div>
+                            {invitation.gift_accounts.map((acc, i) => (
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="EnchantedGarden" />
                             ))}
                         </div>
 

@@ -246,7 +246,7 @@ export default function TropicalParadise({ payload, audioController }) {
       {/* Gift Accounts */}
       <div id="gift"></div>
       {(invitation.giftAccounts || invitation.gift_accounts) && (invitation.giftAccounts || invitation.gift_accounts).length > 0 && (
-        <GiftAccounts 
+        <GiftAccounts variant="TropicalParadise" 
           invitation={invitation}
           sectionBg="bg-[#f0fdfa]"
           titleFont={displayFont.className}

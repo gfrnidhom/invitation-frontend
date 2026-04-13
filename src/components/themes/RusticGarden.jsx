@@ -232,7 +232,7 @@ export default function RusticGarden({ payload, audioController }) {
       {/* Gift Accounts */}
       <div id="gift"></div>
       {(invitation.giftAccounts || invitation.gift_accounts) && (invitation.giftAccounts || invitation.gift_accounts).length > 0 && (
-        <GiftAccounts 
+        <GiftAccounts variant="RusticGarden" 
           invitation={invitation}
           sectionBg="bg-[#f2f5f0]"
           titleFont={displayFont.className}

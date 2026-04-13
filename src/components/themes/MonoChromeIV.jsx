@@ -1,4 +1,5 @@
 'use client';
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Space_Grotesk, Italiana, Work_Sans } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -168,7 +169,9 @@ export default function MonoChromeIV({ payload, audioController }) {
                             </div>
                         </section>
 
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 m4-rv"><div className="text-center mb-12"><h2 className={`${italiana.className} text-3xl text-[#e4e4e7]`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="m4c p-6 text-center m4-rv" data-delay={`${i+1}`}><p className={`${spaceGrotesk.className} text-sm tracking-[.3em] uppercase stl mb-1 font-medium`}>{a.bank_name}</p><p className={`${spaceGrotesk.className} text-[9px] text-[#e4e4e7]/12 uppercase tracking-widest mb-3 font-light`}>A.N. {a.account_holder}</p><p className={`${italiana.className} text-xl text-[#e4e4e7] mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${spaceGrotesk.className} w-full border border-[#a1a1aa]/10 py-3 text-[9px] tracking-[.3em] uppercase stl font-medium hover:bg-[#e4e4e7] hover:text-[#18181b] transition-all duration-500`}>Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 m4-rv"><div className="text-center mb-12"><h2 className={`${italiana.className} text-3xl text-[#e4e4e7]`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((acc, i) => (
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="MonoChromeIV" />
+                            ))}</div></section>}
 
                         <footer className="py-20 px-8 text-center border-t border-[#e4e4e7]/5 m4-rv">
                             <p className={`${spaceGrotesk.className} text-[8px] tracking-[.5em] uppercase stl mb-8 font-medium`}>Thank You</p>

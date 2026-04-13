@@ -214,7 +214,7 @@ export default function ElegantWhite({ payload, audioController }) {
       {/* Gift Accounts */}
       <div id="gift"></div>
       {(invitation.giftAccounts || invitation.gift_accounts) && (invitation.giftAccounts || invitation.gift_accounts).length > 0 && (
-        <GiftAccounts 
+        <GiftAccounts variant="ElegantWhite" 
           invitation={invitation}
           sectionBg="bg-[#faf8f5]"
           titleFont={serif.className}

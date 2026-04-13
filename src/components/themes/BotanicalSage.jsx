@@ -1,5 +1,6 @@
 'use client';
 
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Playfair_Display, Inter, Great_Vibes } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -539,19 +540,8 @@ export default function BotanicalSage({ payload, audioController }) {
                         <div className="grid md:grid-cols-3 gap-6">
                             {invitation?.gift_accounts && invitation.gift_accounts.length > 0 ? (
                                 invitation.gift_accounts.map((acc, i) => (
-                                    <div key={acc.id || i} className="sage-glass rounded-2xl p-8 flex flex-col items-center card-hover">
-                                        <div className="w-14 h-14 mb-5 rounded-full bg-[#4a5d4e]/10 text-[#4a5d4e] flex items-center justify-center">
-                                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"/></svg>
-                                        </div>
-                                        <h4 className="text-sm font-bold text-[#334036] tracking-widest uppercase mb-1">{acc.bank_name}</h4>
-                                        <p className="text-[9px] text-[#5f7364] mb-5 uppercase tracking-[0.15em] font-medium border-b border-[#cddbcf]/50 pb-3 w-full text-center">A.N. {acc.account_holder}</p>
-                                        <p className={`${playfair.className} text-xl text-[#3a4d3e] font-bold mb-5`}>{acc.account_number}</p>
-                                        <button onClick={() => { navigator.clipboard.writeText(acc.account_number); toast.success('Nomor rekening disalin!', {icon: '🌿'}); }}
-                                            className="w-full px-6 py-3 border border-[#cddbcf] rounded-xl text-[9px] font-bold uppercase tracking-widest text-[#5f7364] hover:bg-[#4a5d4e] hover:text-white hover:border-[#4a5d4e] transition-all duration-300">
-                                            Copy Number
-                                        </button>
-                                    </div>
-                                ))
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="BotanicalSage" />
+                            ))
                             ) : (
                                 <div className="col-span-3 sage-glass rounded-2xl p-10 text-[#5f7364] text-sm">Belum ada informasi rekening yang ditambahkan.</div>
                             )}

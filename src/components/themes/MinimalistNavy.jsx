@@ -1,5 +1,6 @@
 'use client';
 
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Playfair_Display, Great_Vibes, Jost } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -443,19 +444,8 @@ export default function MinimalistNavy({ payload, audioController }) {
                         <div className="space-y-6 max-w-md mx-auto">
                             {invitation?.gift_accounts && invitation.gift_accounts.length > 0 ? (
                                 invitation.gift_accounts.map((acc, i) => (
-                                    <div key={acc.id || i} className="navy-glass rounded-2xl p-8 text-center mn-reveal border border-white/5" data-delay={`${(i % 3) + 1}`}>
-                                        <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center mx-auto mb-5">
-                                            <svg className="w-5 h-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5Z" /></svg>
-                                        </div>
-                                        <h4 className="text-sm font-medium text-white tracking-widest uppercase mb-1">{acc.bank_name}</h4>
-                                        <p className="text-[10px] text-white/30 uppercase tracking-wider mb-4">A.N. {acc.account_holder}</p>
-                                        <p className={`${playfair.className} text-xl text-white font-bold mb-5`}>{acc.account_number}</p>
-                                        <button onClick={() => { navigator.clipboard.writeText(acc.account_number); toast.success('Nomor rekening disalin!'); }}
-                                            className="navy-btn w-full py-3 rounded-full text-[10px] tracking-[0.2em] uppercase">
-                                            Salin Nomor
-                                        </button>
-                                    </div>
-                                ))
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="MinimalistNavy" />
+                            ))
                             ) : (
                                 <div className="navy-glass rounded-2xl p-10 text-white/40 text-sm">Belum ada informasi rekening.</div>
                             )}

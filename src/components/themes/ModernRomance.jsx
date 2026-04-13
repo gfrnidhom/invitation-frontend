@@ -316,7 +316,7 @@ export default function ModernRomance({ payload, audioController }) {
       {/* Gift Packages / Amplop Digital */}
       <div id="gift"></div>
       {(invitation.giftAccounts || invitation.gift_accounts) && (invitation.giftAccounts || invitation.gift_accounts).length > 0 && (
-        <GiftAccounts 
+        <GiftAccounts variant="ModernRomance" 
           invitation={invitation}
           sectionBg="bg-[#fcfaf9]"
           titleFont={scriptFont.className}

@@ -1,5 +1,6 @@
 'use client';
 
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Cinzel, Great_Vibes, Montserrat } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -462,19 +463,8 @@ export default function MinimalistBlack({ payload, audioController }) {
 
                                 <div className="space-y-4">
                                     {invitation.gift_accounts.map((acc, i) => (
-                                        <div key={acc.id || i} className="card-dark rounded-2xl p-6 text-center mb-reveal" data-delay={`${i+1}`}>
-                                            <div className="w-12 h-12 rounded-full bg-white/5 mx-auto mb-4 flex items-center justify-center">
-                                                <svg className="w-5 h-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" /></svg>
-                                            </div>
-                                            <p className={`${cinzel.className} text-sm font-bold tracking-widest uppercase text-white mb-1`}>{acc.bank_name}</p>
-                                            <p className="text-[10px] text-white/30 uppercase tracking-widest mb-3">A.N. {acc.account_holder}</p>
-                                            <p className={`${cinzel.className} text-xl font-bold text-white mb-4`}>{acc.account_number}</p>
-                                            <button onClick={() => { navigator.clipboard.writeText(acc.account_number); toast.success('Nomor rekening disalin!'); }}
-                                                className="w-full border border-white/10 py-3 text-[10px] uppercase tracking-widest text-white/50 hover:bg-white hover:text-black transition-all duration-500 rounded-xl font-bold">
-                                                Copy Number
-                                            </button>
-                                        </div>
-                                    ))}
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="MinimalistBlack" />
+                            ))}
                                 </div>
                             </section>
                         )}

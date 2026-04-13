@@ -1,4 +1,5 @@
 'use client';
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { Cinzel, Great_Vibes, Montserrat } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -485,17 +486,9 @@ export default function CinematicVow({ payload, audioController }) {
                                     <p className={`${greatVibes.className} text-4xl text-white/30 -mt-1`}>Gift</p>
                                 </div>
                                 <div className="space-y-4">
-                                    {invitation.gift_accounts.map((a, i) => (
-                                        <div key={a.id || i} className="cv-card rounded-2xl p-6 text-center cv-rv" data-delay={`${i + 1}`}>
-                                            <p className={`${cinzel.className} text-sm tracking-[.15em] text-white/40 mb-1`}>{a.bank_name}</p>
-                                            <p className="text-[9px] text-white/12 uppercase tracking-widest mb-3 font-light">A.N. {a.account_holder}</p>
-                                            <p className={`${cinzel.className} text-xl text-white mb-4`}>{a.account_number}</p>
-                                            <button onClick={() => { navigator.clipboard.writeText(a.account_number); toast.success('Nomor rekening disalin!'); }}
-                                                className={`${cinzel.className} w-full border border-white/8 py-3 text-[9px] tracking-[.15em] text-white/40 hover:bg-white hover:text-[#0a0a0f] transition-all duration-500 rounded-xl`}>
-                                                Copy Number
-                                            </button>
-                                        </div>
-                                    ))}
+                                    {invitation.gift_accounts.map((acc, i) => (
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="CinematicVow" />
+                            ))}
                                 </div>
                             </section>
                         )}

@@ -240,7 +240,7 @@ export default function ClassicJavanese({ payload, audioController }) {
       {/* Gift Accounts */}
       <div id="gift"></div>
       {(invitation.giftAccounts || invitation.gift_accounts) && (invitation.giftAccounts || invitation.gift_accounts).length > 0 && (
-        <GiftAccounts 
+        <GiftAccounts variant="ClassicJavanese" 
           invitation={invitation}
           sectionBg="bg-[#f0d5a8]/10"
           titleFont={displayFont.className}

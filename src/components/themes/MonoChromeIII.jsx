@@ -1,4 +1,5 @@
 'use client';
+import GiftAtmCard from './partials/GiftAtmCard';
 import React, { useEffect, useRef, useState } from 'react';
 import { DM_Serif_Display, Lora, DM_Sans } from 'next/font/google';
 import toast from 'react-hot-toast';
@@ -179,7 +180,9 @@ export default function MonoChromeIII({ payload, audioController }) {
                             </div>
                         </section>
 
-                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 m3-rv"><div className="text-center mb-12"><h2 className={`${dmSerif.className} text-3xl text-[#1a1a1a]`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((a,i)=>(<div key={a.id||i} className="m3c rounded-2xl p-6 text-center m3-rv" data-delay={`${i+1}`}><p className={`${dmSans.className} text-sm tracking-[.3em] uppercase text-white/50 mb-1 font-medium`}>{a.bank_name}</p><p className="text-[10px] text-white/20 uppercase tracking-widest mb-3">A.N. {a.account_holder}</p><p className={`${dmSerif.className} text-xl text-white mb-4`}>{a.account_number}</p><button onClick={()=>{navigator.clipboard.writeText(a.account_number);toast.success('Nomor rekening disalin!');}} className={`${dmSans.className} w-full border border-white/15 py-3 text-[10px] tracking-[.3em] uppercase text-white/50 font-medium hover:bg-white hover:text-[#1a1a1a] transition-all duration-500 rounded-xl`}>Copy Number</button></div>))}</div></section>}
+                        {invitation?.gift_accounts&&invitation.gift_accounts.length>0&&<section className="px-8 pb-20 m3-rv"><div className="text-center mb-12"><h2 className={`${dmSerif.className} text-3xl text-[#1a1a1a]`}>Wedding Gift</h2></div><div className="space-y-4">{invitation.gift_accounts.map((acc, i) => (
+                                <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="MonoChromeIII" />
+                            ))}</div></section>}
 
                         <footer className="py-20 px-8 text-center border-t border-[#1a1a1a]/5 m3-rv">
                             <p className={`${dmSans.className} text-[9px] tracking-[.5em] uppercase text-[#1a1a1a]/15 mb-8 font-medium`}>Thank You</p>
