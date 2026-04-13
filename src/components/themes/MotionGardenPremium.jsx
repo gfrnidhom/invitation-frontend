@@ -191,8 +191,8 @@ export default function MotionGardenPremium({ payload, audioController }) {
             {/* ══════════════════════ LEFT PANE (DESKTOP) ══════════════════════ */}
             <div className="hidden lg:block g1-split-left bg-[#9e7a4b] relative overflow-hidden">
                 <div className="absolute inset-0">
-                    {(landingPhoto || coverPhoto) ? (
-                        <img src={landingPhoto || coverPhoto} alt="Cover" className="w-full h-full object-cover object-center" />
+                    {coverPhoto ? (
+                        <img src={coverPhoto} alt="Cover" className="w-full h-full object-cover object-center" />
                     ) : (
                         <video className="w-full h-full object-cover" autoPlay muted loop playsInline poster="/themes/motion-garden-premium/garden-v2-05-fallback.jpeg">
                             <source src={VIDEO_BG} type="video/mp4" />
@@ -218,10 +218,10 @@ export default function MotionGardenPremium({ payload, audioController }) {
                 {/* ── COVER SECTION ── */}
                 <section className={`absolute top-0 inset-x-0 h-[100dvh] lg:h-screen z-[60] flex flex-col items-center justify-between py-16 transition-all duration-[1200ms] ease-in-out ${isOpen ? 'opacity-0 pointer-events-none -translate-y-full' : 'opacity-100 bg-[#42382e]'}`}>
                     <div className="absolute inset-0">
-                        {photos.length > 0 ? (
-                            <img src={getPhoto(photos[0])} alt="Cover Right" className="w-full h-full object-cover" />
-                        ) : (landingPhoto || coverPhoto) ? (
-                            <img src={landingPhoto || coverPhoto} alt="Cover Right" className="w-full h-full object-cover" />
+                        {landingPhoto ? (
+                            <img src={landingPhoto} alt="Cover Right" className="w-full h-full object-cover" />
+                        ) : coverPhoto ? (
+                            <img src={coverPhoto} alt="Cover Right" className="w-full h-full object-cover" />
                         ) : (
                             <video className="w-full h-full object-cover" autoPlay muted loop playsInline poster="/themes/motion-garden-premium/garden-v2-05-fallback.jpeg">
                                 <source src={VIDEO_BG} type="video/mp4" />
