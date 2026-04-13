@@ -279,11 +279,11 @@ function CoverTab({ invitation, onSave, saving }) {
     
     coverPhotos.forEach(f => fd.append('cover_photo[]', f));
     existingCovers.forEach(c => fd.append('cover_photo_existing[]', c));
-    if (existingCovers.length === 0 && coverPhotos.length === 0) fd.append('cover_photo_existing[]', '');
+    if (existingCovers.length === 0) fd.append('cover_photo_existing[]', '');
 
     landingPhotos.forEach(f => fd.append('landing_photo[]', f));
     existingLandings.forEach(c => fd.append('landing_photo_existing[]', c));
-    if (existingLandings.length === 0 && landingPhotos.length === 0) fd.append('landing_photo_existing[]', '');
+    if (existingLandings.length === 0) fd.append('landing_photo_existing[]', '');
 
     onSave(fd);
   };
@@ -850,8 +850,11 @@ function PersonTab({ invitation, onSave, saving, prefix, label }) {
     const fd = new FormData();
     fields.forEach(f => { if (form[f.key]) fd.append(f.key, form[f.key]); });
     form[`${prefix}_photos`].forEach(f => fd.append(`${prefix}_photo[]`, f));
-    existingPhotos.forEach(c => fd.append(`${prefix}_photo_existing[]`, c));
-    if (existingPhotos.length === 0 && form[`${prefix}_photos`].length === 0) fd.append(`${prefix}_photo_existing[]`, '');
+    const existingPhotosArray = existingPhotos ? (Array.isArray(existingPhotos) ? existingPhotos : [existingPhotos]).filter(Boolean) : [];
+    existingPhotosArray.forEach(c => fd.append(`${prefix}_photo_existing[]`, c));
+    if (existingPhotosArray.length === 0) {
+      fd.append(`${prefix}_photo_existing[]`, '');
+    }
     onSave(fd);
   };
 
