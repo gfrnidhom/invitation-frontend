@@ -190,12 +190,10 @@ export default function CheckoutPage() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                   <div style={{ fontSize: '18px', fontWeight: '600' }}>Paket {plan.name}</div>
                   <div style={{ textAlign: 'right' }}>
-                    {plan.original_price && plan.original_price > plan.price && (
-                      <div style={{ fontSize: '14px', fontWeight: '500', color: 'rgba(255,255,255,0.6)', textDecoration: 'line-through', marginBottom: '-4px' }}>
-                        Rp {Number(plan.original_price).toLocaleString('id-ID')}
-                      </div>
-                    )}
-                    <div style={{ fontSize: '18px', fontWeight: '700' }}>Rp {Number(plan.price).toLocaleString('id-ID')}</div>
+                    <div style={{ fontSize: '16px', fontWeight: '600', color: '#fb7185', textDecoration: 'line-through', marginBottom: '2px' }}>
+                      Rp {Number(plan.original_price && Number(plan.original_price) > Number(plan.price) ? plan.original_price : (Number(plan.price) === 0 ? 149000 : Number(plan.price) + 50000)).toLocaleString('id-ID')}
+                    </div>
+                    <div style={{ fontSize: '24px', fontWeight: '800', color: '#34d399' }}>Rp {Number(plan.price).toLocaleString('id-ID')}</div>
                   </div>
                 </div>
                 <div style={{ fontSize: '14px', color: '#cbd5e1' }}>Masa aktif: {plan.duration}</div>
