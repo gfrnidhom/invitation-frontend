@@ -36,6 +36,10 @@ import GardenParallax from '@/components/themes/GardenParallax';
 import EnchantedGarden from '@/components/themes/EnchantedGarden';
 import SereneGarden from '@/components/themes/SereneGarden';
 import MotionGardenPremium from '@/components/themes/MotionGardenPremium';
+import PavilionGarden from '@/components/themes/PavilionGarden';
+import MotionIslamic from '@/components/themes/MotionIslamic';
+import MakrisLulu from '@/components/themes/MakrisLulu';
+import AdatJawa from '@/components/themes/AdatJawa';
 
 export default function PublicInvitationViewer() {
   const { slug } = useParams();
@@ -214,6 +218,14 @@ export default function PublicInvitationViewer() {
         return <SereneGarden {...props} />;
       case 'motion-garden-premium':
         return <MotionGardenPremium {...props} />;
+      case 'pavilion-garden':
+        return <PavilionGarden {...props} />;
+      case 'motion-islamic':
+        return <MotionIslamic {...props} />;
+      case 'makris-lulu':
+        return <MakrisLulu {...props} />;
+      case 'adat-jawa':
+        return <AdatJawa {...props} />;
       default:
         return <ModernMinimalist {...props} />;
     }

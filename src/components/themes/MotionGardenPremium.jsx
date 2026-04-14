@@ -692,9 +692,9 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                             
                                             {/* Dynamic Bank Logo from API */}
                                             {bankLogo ? (
-                                                <img src={bankLogo} alt={bankName} className="h-6 max-w-[100px] object-contain drop-shadow-md brightness-0 invert opacity-90" />
+                                                <img src={bankLogo} alt={bankName} className="h-10 max-w-[160px] object-contain drop-shadow-md brightness-0 invert opacity-95" />
                                             ) : (
-                                                <span className={`${cormorant.className} text-xl font-bold text-white uppercase tracking-widest drop-shadow`}>{bankName}</span>
+                                                <span className={`${cormorant.className} text-2xl font-bold text-white uppercase tracking-widest drop-shadow`}>{bankName}</span>
                                             )}
                                         </div>
 

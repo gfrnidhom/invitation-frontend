@@ -189,7 +189,14 @@ export default function CheckoutPage() {
               <div style={{ paddingBottom: '24px', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                   <div style={{ fontSize: '18px', fontWeight: '600' }}>Paket {plan.name}</div>
-                  <div style={{ fontSize: '18px', fontWeight: '700' }}>Rp {Number(plan.price).toLocaleString('id-ID')}</div>
+                  <div style={{ textAlign: 'right' }}>
+                    {plan.original_price && plan.original_price > plan.price && (
+                      <div style={{ fontSize: '14px', fontWeight: '500', color: 'rgba(255,255,255,0.6)', textDecoration: 'line-through', marginBottom: '-4px' }}>
+                        Rp {Number(plan.original_price).toLocaleString('id-ID')}
+                      </div>
+                    )}
+                    <div style={{ fontSize: '18px', fontWeight: '700' }}>Rp {Number(plan.price).toLocaleString('id-ID')}</div>
+                  </div>
                 </div>
                 <div style={{ fontSize: '14px', color: '#cbd5e1' }}>Masa aktif: {plan.duration}</div>
 

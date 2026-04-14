@@ -136,9 +136,9 @@ export default function GiftAtmCard({ acc, delayData, variant = "golden" }) {
                     
                     {/* Dynamic Bank Logo from API */}
                     {bankLogo ? (
-                        <img src={bankLogo} alt={bankName} className={`h-6 max-w-[100px] object-contain drop-shadow-sm ${activeStyle.logo}`} />
+                        <img src={bankLogo} alt={bankName} className={`h-10 max-w-[160px] object-contain drop-shadow-sm ${activeStyle.logo}`} />
                     ) : (
-                        <span className={`${cormorant.className} text-xl font-bold uppercase tracking-widest ${activeStyle.textMain}`}>{bankName}</span>
+                        <span className={`${cormorant.className} text-2xl font-bold uppercase tracking-widest ${activeStyle.textMain}`}>{bankName}</span>
                     )}
                 </div>
 

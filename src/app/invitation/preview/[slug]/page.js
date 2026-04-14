@@ -33,6 +33,10 @@ import GardenParallax from '@/components/themes/GardenParallax';
 import EnchantedGarden from '@/components/themes/EnchantedGarden';
 import SereneGarden from '@/components/themes/SereneGarden';
 import MotionGardenPremium from '@/components/themes/MotionGardenPremium';
+import PavilionGarden from '@/components/themes/PavilionGarden';
+import MotionIslamic from '@/components/themes/MotionIslamic';
+import MakrisLulu from '@/components/themes/MakrisLulu';
+import AdatJawa from '@/components/themes/AdatJawa';
 
 export default function ThemePreviewPage() {
   const { slug } = useParams();
@@ -143,6 +147,14 @@ export default function ThemePreviewPage() {
         return <SereneGarden payload={data} />;
       case 'motion-garden-premium':
         return <MotionGardenPremium payload={data} />;
+      case 'pavilion-garden':
+        return <PavilionGarden payload={data} />;
+      case 'motion-islamic':
+        return <MotionIslamic payload={data} />;
+      case 'makris-lulu':
+        return <MakrisLulu payload={data} />;
+      case 'adat-jawa':
+        return <AdatJawa payload={data} />;
       default:
         return (
           <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f8fafc', padding: '24px' }}>

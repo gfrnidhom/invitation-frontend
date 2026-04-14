@@ -539,10 +539,15 @@ export default function Home() {
                       )}
                       <div className="landing-pricing-header" style={{ background: color.gradient }}>
                         <div className="landing-pricing-name">{plan.name}</div>
+                        {plan.original_price && plan.original_price > plan.price && (
+                          <div style={{ textDecoration: 'line-through', color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', marginBottom: '-5px', marginTop: '10px' }}>
+                            Rp {Number(plan.original_price).toLocaleString('id-ID')}
+                          </div>
+                        )}
                         <div className="landing-pricing-price">
                           {plan.price === 0 ? 'Gratis' : `Rp ${Number(plan.price).toLocaleString('id-ID')}`}
                         </div>
-                        <div className="landing-pricing-duration">Masa Aktif: {plan.duration}</div>
+                        <div className="landing-pricing-duration">Masa Aktif: 1 Tahun</div>
                       </div>
                       <div className="landing-pricing-body">
                         <ul className="landing-pricing-features">
