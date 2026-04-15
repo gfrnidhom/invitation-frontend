@@ -236,7 +236,10 @@ export default function SubscriptionsPage() {
                     <div style={{ padding: '40px 32px 24px' }}>
                       <div style={{ fontSize: '15px', fontWeight: '700', color: isPopular ? 'var(--color-primary-600)' : '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{plan.name}</div>
                       
-                      <div style={{ display: 'flex', alignItems: 'flex-start', marginTop: '16px', color: '#0f172a' }}>
+                      <div style={{ textDecoration: 'line-through', color: '#94a3b8', fontSize: '1.15rem', fontWeight: '500', marginBottom: '-4px', marginTop: '12px' }}>
+                        Rp {Number(plan.original_price && Number(plan.original_price) > Number(plan.price) ? plan.original_price : (Number(plan.price) === 0 ? 149000 : Number(plan.price) + 50000)).toLocaleString('id-ID')}
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'flex-start', marginTop: '8px', color: '#0f172a' }}>
                           <span style={{ fontSize: '18px', fontWeight: '700', marginTop: '6px', marginRight: '4px' }}>Rp</span>
                           <span style={{ fontFamily: 'var(--font-heading)', fontSize: '46px', fontWeight: '800', lineHeight: '1', letterSpacing: '-1px' }}>
                              {plan.price === 0 ? 'Gratis' : Number(plan.price).toLocaleString('id-ID')}
