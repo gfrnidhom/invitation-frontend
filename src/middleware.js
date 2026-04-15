@@ -40,6 +40,7 @@ export function middleware(request) {
     '',          // Halaman utama (root /)
     'login',     // Halaman login
     'register',  // Halaman register
+    'forgot-password', // Halaman lupa password
     'checkout',  // Halaman checkout/pembayaran
     'app',       // Halaman dashboard user
     'preview',   // Route internal Next.js (walaupun dicatch di atas, lebih aman dimasukkan)
