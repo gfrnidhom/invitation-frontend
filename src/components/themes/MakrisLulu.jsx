@@ -296,25 +296,29 @@ export default function MakrisLulu({ payload, audioController }) {
                     <img src="/themes/makris-lulu/monstera.png" alt="" className="absolute -bottom-16 -left-16 w-[22rem] opacity-40 pointer-events-none mix-blend-screen invert hue-rotate-[160deg] brightness-125 saturate-50 rotate-[200deg]" />
 
                     {/* Content Container */}
-                    <div className="relative z-10 w-full h-full flex flex-col pt-24 px-8 pb-12">
+                    <div className="relative z-10 w-full h-full flex flex-col pt-12 sm:pt-20 px-6 sm:px-8 pb-8 sm:pb-12 overflow-y-auto overflow-x-hidden makris-scroll">
+                        <style dangerouslySetInnerHTML={{ __html: `
+                            .makris-scroll::-webkit-scrollbar { display: none; }
+                            .makris-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+                        `}} />
                         
                         {/* Top Typography */}
-                        <div className="mb-2">
-                            <p className={`${poppins.className} text-[10px] text-white/50 tracking-wide mb-1 font-semibold`}>you're cordially invited to a</p>
-                            <div className="flex items-end gap-3 flex-wrap">
-                                <h1 className={`${cormorant.className} text-[3.8rem] leading-[0.9] text-[#CFB53B] font-bold drop-shadow-lg`}>
+                        <div className="mb-2 shrink-0 mt-auto sm:mt-0">
+                            <p className={`${poppins.className} text-[9px] sm:text-[10px] text-white/50 tracking-wide mb-1 font-semibold`}>you're cordially invited to a</p>
+                            <div className="flex items-end gap-2 sm:gap-3 flex-wrap">
+                                <h1 className={`${cormorant.className} text-5xl sm:text-[3.8rem] leading-[0.9] text-[#CFB53B] font-bold drop-shadow-lg`}>
                                     Wedding
                                 </h1>
-                                <p className={`${poppins.className} text-[10px] tracking-[0.6em] text-white/70 mb-2 font-bold uppercase`}>
+                                <p className={`${poppins.className} text-[9px] sm:text-[10px] tracking-[0.4em] sm:tracking-[0.6em] text-white/70 mb-1.5 sm:mb-2 font-bold uppercase`}>
                                     Celebration
                                 </p>
                             </div>
                         </div>
 
                         {/* Polaroid Photo Frame */}
-                        <div className="relative w-full max-w-[260px] mx-auto mt-6 z-20">
+                        <div className="relative w-[40vh] max-w-[220px] sm:max-w-[260px] mx-auto mt-6 sm:mt-8 mb-6 sm:mb-0 z-20 shrink-0 select-none">
                             {/* Polaroid Base */}
-                            <div className="bg-[#E5E5E5] p-2.5 pb-10 shadow-[0_25px_60px_-12px_rgba(0,0,0,1)] rotate-3 rounded-sm relative transition-transform duration-700 hover:rotate-1">
+                            <div className="bg-[#E5E5E5] p-2 sm:p-2.5 pb-8 sm:pb-10 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.8)] rotate-3 rounded-sm relative transition-transform duration-700 hover:rotate-1">
                                 <div className="aspect-[4/5] w-full overflow-hidden bg-slate-800">
                                     {coverPhoto ? (
                                         <img src={coverPhoto} alt="Couple" className="w-full h-full object-cover transition-transform duration-[10000ms] hover:scale-110" />
@@ -330,20 +334,20 @@ export default function MakrisLulu({ payload, audioController }) {
                         </div>
 
                         {/* Glassmorphism Guest Panel */}
-                        <div className="relative z-30 w-full mt-auto mx-auto max-w-[300px]">
-                            <div className="bg-black/30 backdrop-blur-xl border border-white/10 p-6 rounded-sm shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-center relative overflow-hidden">
+                        <div className="relative z-30 w-full mt-auto mx-auto max-w-[300px] shrink-0">
+                            <div className="bg-black/40 backdrop-blur-xl border border-white/10 p-5 sm:p-6 rounded-sm shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-center relative overflow-hidden">
                                 {/* Subtle white shine */}
-                                <div className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
+                                <div className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
                                 
-                                <p className={`${poppins.className} text-[8px] tracking-[0.2em] text-white/50 mb-1 font-semibold uppercase`}>Kepada Yth.</p>
-                                <p className={`${poppins.className} text-[8px] tracking-[0.1em] text-white/50 mb-3 font-semibold uppercase`}>Bapak/Ibu/Saudara/i</p>
+                                <p className={`${poppins.className} text-[7px] sm:text-[8px] tracking-[0.2em] text-white/50 mb-1 font-semibold uppercase`}>Kepada Yth.</p>
+                                <p className={`${poppins.className} text-[7px] sm:text-[8px] tracking-[0.1em] text-white/50 mb-2 sm:mb-3 font-semibold uppercase`}>Bapak/Ibu/Saudara/i</p>
                                 {guestName ? (
-                                    <p className={`${cormorant.className} text-xl text-[#DFB969] font-bold mb-5 tracking-wide`}>{guestName}</p>
+                                    <p className={`${cormorant.className} text-lg sm:text-xl text-[#DFB969] font-bold mb-4 sm:mb-5 tracking-wide`}>{guestName}</p>
                                 ) : (
-                                    <p className={`${cormorant.className} text-xl text-[#DFB969] font-bold mb-5 tracking-wide`}>Nama Tamu</p>
+                                    <p className={`${cormorant.className} text-lg sm:text-xl text-[#DFB969] font-bold mb-4 sm:mb-5 tracking-wide`}>Nama Tamu</p>
                                 )}
 
-                                <button onClick={handleOpen} className="bg-[#B58D45] hover:bg-[#977335] text-white w-full py-3.5 text-[10px] font-bold uppercase tracking-[0.1em] transition-all duration-300 shadow-xl flex items-center justify-center gap-2 rounded-sm active:scale-95 border border-white/10">
+                                <button onClick={handleOpen} className="bg-[#B58D45] hover:bg-[#977335] text-white w-full py-3 sm:py-3.5 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.1em] transition-all duration-300 shadow-xl flex items-center justify-center gap-2 rounded-sm active:scale-95 border border-white/10">
                                     <svg className="w-3.5 h-3.5 no-grayscale" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
                                     Open Invitation
                                 </button>
@@ -1021,29 +1025,7 @@ export default function MakrisLulu({ payload, audioController }) {
                 </footer>
 
 
-                {/* ── Floating Bottom Navigation ── */}
-                {isOpen && (
-                    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] w-[90%] max-w-[340px] animate-fade-in-up">
-                        <div className="bg-[#030907]/90 backdrop-blur-xl border border-[#CFB53B]/30 rounded-full px-6 py-3 flex justify-between items-center shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
-                            <a href="#couple" className="flex flex-col items-center gap-1 text-[#CFB53B]/40 hover:text-[#CFB53B] transition-colors">
-                                <svg className="w-5 h-5 no-grayscale" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                                <span className={`${poppins.className} text-[8px] uppercase tracking-wider font-semibold`}>Couple</span>
-                            </a>
-                            <a href="#event" className="flex flex-col items-center gap-1 text-[#CFB53B]/40 hover:text-[#CFB53B] transition-colors">
-                                <svg className="w-5 h-5 no-grayscale" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                <span className={`${poppins.className} text-[8px] uppercase tracking-wider font-semibold`}>Event</span>
-                            </a>
-                            <a href="#gallery" className="flex flex-col items-center gap-1 text-[#CFB53B]/40 hover:text-[#CFB53B] transition-colors">
-                                <svg className="w-5 h-5 no-grayscale" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                <span className={`${poppins.className} text-[8px] uppercase tracking-wider font-semibold`}>Gallery</span>
-                            </a>
-                            <a href="#gift" className="flex flex-col items-center gap-1 text-[#CFB53B]/40 hover:text-[#CFB53B] transition-colors">
-                                <svg className="w-5 h-5 no-grayscale" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>
-                                <span className={`${poppins.className} text-[8px] uppercase tracking-wider font-semibold`}>Gift</span>
-                            </a>
-                        </div>
-                    </div>
-                )}
+
                 </main>
             </div>
         </div>
