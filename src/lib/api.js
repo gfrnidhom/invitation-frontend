@@ -55,6 +55,8 @@ export const auth = {
   login: (data) => request('/login', { method: 'POST', body: JSON.stringify(data) }),
   logout: () => request('/logout', { method: 'POST' }),
   user: () => request('/user'),
+  sendOtp: (data) => request('/forgot-password/send-otp', { method: 'POST', body: JSON.stringify(data) }),
+  verifyReset: (data) => request('/forgot-password/verify-reset', { method: 'POST', body: JSON.stringify(data) }),
 };
 
 // ── Dashboard ──

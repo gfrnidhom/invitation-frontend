@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Heart, Loader2, ArrowLeft, KeySquare } from 'lucide-react';
-import api from '@/lib/api'; // Assuming you have an axios instance or similar in lib
+import { Loader2, ArrowLeft, KeySquare } from 'lucide-react';
+import { auth } from '@/lib/api';
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -28,11 +28,11 @@ export default function ForgotPasswordPage() {
     setLoading(true);
 
     try {
-      const res = await api.post('/api/forgot-password/send-otp', { email });
-      setSuccessMsg(res.data?.message || 'Kode OTP telah dikirim ke email Anda.');
+      const res = await auth.sendOtp({ email });
+      setSuccessMsg(res.message || 'Kode OTP telah dikirim ke email Anda.');
       setStep(2);
     } catch (err) {
-      setError(err.response?.data?.message || 'Terjadi kesalahan saat mengirim OTP.');
+      setError(err.message || 'Terjadi kesalahan saat mengirim OTP.');
     } finally {
       setLoading(false);
     }
@@ -48,14 +48,14 @@ export default function ForgotPasswordPage() {
     setLoading(true);
 
     try {
-      const res = await api.post('/api/forgot-password/verify-reset', { 
+      const res = await auth.verifyReset({ 
         email, 
         otp, 
         password,
         password_confirmation: passwordConfirmation 
       });
       
-      setSuccessMsg(res.data?.message || 'Kata sandi berhasil diubah.');
+      setSuccessMsg(res.message || 'Kata sandi berhasil diubah.');
       
       // Auto redirect to login after 2 seconds
       setTimeout(() => {
@@ -63,11 +63,11 @@ export default function ForgotPasswordPage() {
       }, 2000);
 
     } catch (err) {
-      setError(err.response?.data?.message || 'OTP tidak valid atau kadaluarsa.');
+      setError(err.message || 'OTP tidak valid atau kadaluarsa.');
       
       // If validation returns specific errors array
-      if (err.response?.data?.errors) {
-         const firstError = Object.values(err.response.data.errors)[0][0];
+      if (err.errors) {
+         const firstError = Object.values(err.errors)[0][0];
          setError(firstError);
       }
     } finally {
