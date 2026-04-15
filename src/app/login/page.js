@@ -81,7 +81,12 @@ function LoginContent() {
               value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
           </div>
           <div style={{ marginBottom: '28px' }}>
-            <label className="label">Password</label>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+              <label className="label" style={{ marginBottom: 0 }}>Password</label>
+              <Link href="/forgot-password" style={{ fontSize: '13px', color: 'var(--color-primary-600)', textDecoration: 'none', fontWeight: '500' }}>
+                Lupa Password?
+              </Link>
+            </div>
             <input className="input" type="password" placeholder="••••••••"
               value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
           </div>
