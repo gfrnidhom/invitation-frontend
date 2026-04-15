@@ -227,6 +227,35 @@ export default function MakrisLulu({ payload, audioController }) {
                     white-space: nowrap;
                     animation: marquee 25s linear infinite;
                 }
+
+                /* ── iPhone Responsive Overrides ── */
+                /* Small phones: iPhone SE, iPhone 8 (height <= 667px) */
+                @media (max-width: 430px) and (max-height: 700px) {
+                    .makris-cover-title h1 { font-size: 1.85rem !important; }
+                    .makris-cover-frame { width: 160px !important; height: 210px !important; border-radius: 100px 100px 16px 16px !important; }
+                    .makris-cover-guest { max-width: 240px !important; }
+                    .makris-cover-guest .guest-panel { padding: 12px !important; }
+                    .makris-cover-content { gap: 8px !important; padding-top: 2rem !important; padding-bottom: 2rem !important; }
+                }
+                /* Medium phones: iPhone 12/13/14, standard (height 700-850px) */
+                @media (max-width: 430px) and (min-height: 701px) and (max-height: 850px) {
+                    .makris-cover-frame { width: 190px !important; height: 250px !important; }
+                    .makris-cover-content { gap: 12px !important; }
+                }
+                /* Large phones: iPhone Pro Max, Plus (height > 850px) */
+                @media (max-width: 430px) and (min-height: 851px) {
+                    .makris-cover-frame { width: 220px !important; height: 290px !important; }
+                    .makris-cover-content { gap: 16px !important; }
+                }
+                /* All mobile: safe area & consistent padding */
+                @media (max-width: 430px) {
+                    .makris-cover-content {
+                        padding-left: 1rem !important;
+                        padding-right: 1rem !important;
+                        padding-top: env(safe-area-inset-top, 1.5rem) !important;
+                        padding-bottom: env(safe-area-inset-bottom, 1.5rem) !important;
+                    }
+                }
             `}} />
 
 
@@ -282,20 +311,20 @@ export default function MakrisLulu({ payload, audioController }) {
                     </video>
 
                     {/* Content Container */}
-                    <div className="relative z-10 w-full h-full flex flex-col items-center justify-center gap-4 px-6 sm:px-8 py-10 overflow-hidden">
+                    <div className="makris-cover-content relative z-10 w-full h-full flex flex-col items-center justify-center gap-3 sm:gap-4 px-4 sm:px-8 py-6 sm:py-10 overflow-hidden">
 
                         {/* Top Typography - "The Wedding Of" */}
-                        <div className="text-center shrink-0 mb-4">
-                            <p className={`${poppins.className} text-[9px] sm:text-[10px] text-white/60 tracking-[0.3em] mb-2 font-semibold uppercase`}>The Wedding Of</p>
-                            <h1 className={`${greatVibes.className} text-4xl sm:text-5xl text-[#CFB53B] drop-shadow-lg leading-tight`}>
+                        <div className="makris-cover-title text-center shrink-0 mb-2 sm:mb-4">
+                            <p className={`${poppins.className} text-[9px] sm:text-[10px] text-white/60 tracking-[0.3em] mb-1.5 sm:mb-2 font-semibold uppercase`}>The Wedding Of</p>
+                            <h1 className={`${greatVibes.className} text-[2.2rem] sm:text-5xl text-[#CFB53B] drop-shadow-lg leading-tight`}>
                                 {invitation?.groom_name?.split(' ')[0]} <span className="text-white/80 mx-1">&</span> {invitation?.bride_name?.split(' ')[0]}
                             </h1>
-                            <div className="w-16 h-px bg-[#CFB53B]/40 mx-auto mt-3" />
+                            <div className="w-12 sm:w-16 h-px bg-[#CFB53B]/40 mx-auto mt-2 sm:mt-3" />
                         </div>
 
                         {/* Photo Frame - Elegant Rounded with Gold Border */}
-                        <div className="relative mx-auto shrink-0 mb-2">
-                            <div className="w-[200px] h-[260px] sm:w-[220px] sm:h-[290px] rounded-t-[120px] rounded-b-[20px] overflow-hidden border-2 border-[#CFB53B]/50 shadow-[0_10px_40px_rgba(0,0,0,0.5)] relative">
+                        <div className="relative mx-auto shrink-0 mb-1 sm:mb-2">
+                            <div className="makris-cover-frame w-[200px] h-[260px] sm:w-[220px] sm:h-[290px] rounded-t-[120px] rounded-b-[20px] overflow-hidden border-2 border-[#CFB53B]/50 shadow-[0_10px_40px_rgba(0,0,0,0.5)] relative">
                                 {coverPhoto ? (
                                     <img src={coverPhoto} alt="Couple" className="w-full h-full object-cover" />
                                 ) : landingPhoto ? (
@@ -307,17 +336,17 @@ export default function MakrisLulu({ payload, audioController }) {
                         </div>
 
                         {/* Glassmorphism Guest Panel */}
-                        <div className="relative z-30 w-full mx-auto max-w-[280px] shrink-0 mt-6">
-                            <div className="bg-black/30 backdrop-blur-xl border border-white/10 p-4 sm:p-5 rounded-lg shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-center relative overflow-hidden">
+                        <div className="makris-cover-guest relative z-30 w-full mx-auto max-w-[280px] shrink-0 mt-3 sm:mt-6">
+                            <div className="guest-panel bg-black/30 backdrop-blur-xl border border-white/10 p-3 sm:p-5 rounded-lg shadow-[0_8px_32px_rgba(0,0,0,0.5)] text-center relative overflow-hidden">
                                 <p className={`${poppins.className} text-[7px] sm:text-[8px] tracking-[0.2em] text-white/50 mb-0.5 font-semibold uppercase`}>Kepada Yth.</p>
-                                <p className={`${poppins.className} text-[7px] sm:text-[8px] tracking-[0.1em] text-white/50 mb-2 font-semibold uppercase`}>Bapak/Ibu/Saudara/i</p>
+                                <p className={`${poppins.className} text-[7px] sm:text-[8px] tracking-[0.1em] text-white/50 mb-1.5 sm:mb-2 font-semibold uppercase`}>Bapak/Ibu/Saudara/i</p>
                                 {guestName ? (
-                                    <p className={`${cormorant.className} text-lg sm:text-xl text-[#DFB969] font-bold mb-3 tracking-wide`}>{guestName}</p>
+                                    <p className={`${cormorant.className} text-base sm:text-xl text-[#DFB969] font-bold mb-2 sm:mb-3 tracking-wide`}>{guestName}</p>
                                 ) : (
-                                    <p className={`${cormorant.className} text-lg sm:text-xl text-[#DFB969] font-bold mb-3 tracking-wide`}>Nama Tamu</p>
+                                    <p className={`${cormorant.className} text-base sm:text-xl text-[#DFB969] font-bold mb-2 sm:mb-3 tracking-wide`}>Nama Tamu</p>
                                 )}
 
-                                <button onClick={handleOpen} className="bg-[#B58D45] hover:bg-[#977335] text-white w-full py-3 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.1em] transition-all duration-300 shadow-xl flex items-center justify-center gap-2 rounded-sm active:scale-95 border border-white/10">
+                                <button onClick={handleOpen} className="bg-[#B58D45] hover:bg-[#977335] text-white w-full py-2.5 sm:py-3 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.1em] transition-all duration-300 shadow-xl flex items-center justify-center gap-2 rounded-sm active:scale-95 border border-white/10">
                                     <svg className="w-3.5 h-3.5 no-grayscale" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
                                     Open Invitation
                                 </button>
