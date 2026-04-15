@@ -233,6 +233,7 @@ export default function EditInvitationPage({ params }) {
 function InfoTab({ invitation, onSave, saving }) {
   const [form, setForm] = useState({
     title: invitation?.title || '',
+    slug: invitation?.slug || '',
     event_date: invitation?.event_date || '',
     event_time: invitation?.event_time || '',
     location: invitation?.location || '',
@@ -248,6 +249,13 @@ function InfoTab({ invitation, onSave, saving }) {
   return (
     <div style={{ display: 'grid', gap: '20px', maxWidth: '600px' }}>
       <div><label className="label">Judul Undangan (mis: Dimas & Nisa)</label><input className="input" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
+      <div>
+        <label className="label">Link Undangan (Slug Unik)</label>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#f8fafc', padding: '6px 12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+            <span style={{color: '#64748b', fontSize: '13px'}}>{process.env.NEXT_PUBLIC_APP_URL ? process.env.NEXT_PUBLIC_APP_URL.replace(/^https?:\/\//, '') : 'domain.com'}/</span>
+            <input className="input" style={{flex: 1, border: 'none', background: 'transparent', padding: 0, height: 'auto', boxShadow: 'none'}} value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '') })} placeholder="nama-pasangan" />
+        </div>
+      </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
         <div><label className="label">Tanggal Acara Utama</label><input className="input" type="date" value={form.event_date} onChange={(e) => setForm({ ...form, event_date: e.target.value })} /></div>
         <div><label className="label">Waktu (mis: 08:00 - Selesai)</label><input className="input" placeholder="08:00 - Selesai" value={form.event_time} onChange={(e) => setForm({ ...form, event_time: e.target.value })} /></div>

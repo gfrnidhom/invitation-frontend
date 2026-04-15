@@ -166,7 +166,7 @@ export default function MakrisLulu({ payload, audioController }) {
         if (!nameInput.trim() || !messageInput.trim()) return toast.error('Nama dan pesan harus diisi');
         setSubmitting(true);
         try {
-            const res = await fetch(`${API_URL}/invitations/${invitation.id}/wishes`, {
+            const res = await fetch(`${API_URL}/invitations/${invitation.id}/guestbook`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: nameInput, message: messageInput })
