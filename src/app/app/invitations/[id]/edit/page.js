@@ -274,6 +274,11 @@ function CoverTab({ invitation, onSave, saving }) {
     invitation?.landing_photo ? (Array.isArray(invitation.landing_photo) ? invitation.landing_photo : [invitation.landing_photo]).filter(Boolean) : []
   );
 
+  const [footerPhotos, setFooterPhotos] = useState([]);
+  const [existingFooters, setExistingFooters] = useState(
+    invitation?.footer_image ? (Array.isArray(invitation.footer_image) ? invitation.footer_image : [invitation.footer_image]).filter(Boolean) : []
+  );
+
   const handleSave = () => {
     const fd = new FormData();
     
@@ -284,6 +289,10 @@ function CoverTab({ invitation, onSave, saving }) {
     landingPhotos.forEach(f => fd.append('landing_photo[]', f));
     existingLandings.forEach(c => fd.append('landing_photo_existing[]', c));
     if (existingLandings.length === 0) fd.append('landing_photo_existing[]', '');
+
+    footerPhotos.forEach(f => fd.append('footer_image[]', f));
+    existingFooters.forEach(c => fd.append('footer_image_existing[]', c));
+    if (existingFooters.length === 0) fd.append('footer_image_existing[]', '');
 
     onSave(fd);
   };
@@ -361,6 +370,45 @@ function CoverTab({ invitation, onSave, saving }) {
                 <img src={URL.createObjectURL(file)} alt="New" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(59, 130, 246, 0.8)', color: 'white', fontSize: '10px', textAlign: 'center', padding: '2px', fontWeight: 'bold' }}>BARU</div>
                 <button onClick={() => setLandingPhotos(landingPhotos.filter((_, idx) => idx !== i))} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '4px 0' }} />
+
+      {/* Footer Image */}
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <div>
+            <label className="label" style={{ margin: 0 }}>Foto Footer</label>
+            <div style={{ fontSize: '12px', color: '#64748b', marginTop: '4px', fontWeight: 'normal' }}>📍 Tampil di bagian paling bawah undangan sebagai penutup visual.</div>
+          </div>
+          <label className="btn btn-secondary btn-sm" style={{ cursor: 'pointer', padding: '6px 12px' }}>
+            <Upload size={14} /> Tambah Foto
+            <input type="file" multiple accept="image/*" onChange={async (e) => {
+              const files = Array.from(e.target.files);
+              const compressedFiles = await Promise.all(files.map(f => compressImage(f, { maxSizeMB: 2.5, maxWidthOrHeight: 1920 })));
+              setFooterPhotos([...footerPhotos, ...compressedFiles]);
+            }} style={{ display: 'none' }} />
+          </label>
+        </div>
+        {existingFooters.length === 0 && footerPhotos.length === 0 ? (
+          <p style={{ color: '#94a3b8', textAlign: 'center', padding: '40px 20px', background: '#f8fafc', borderRadius: '12px', border: '1px dashed #cbd5e1', fontSize: '14px' }}>Belum ada foto footer.</p>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '12px' }}>
+            {existingFooters.map((photo, i) => (
+              <div key={`exist-footer-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
+                <img src={photo.startsWith('http') ? photo : `${process.env.NEXT_PUBLIC_STORAGE_URL}/${photo}`} alt="Existing" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <button onClick={() => setExistingFooters(existingFooters.filter((_, idx) => idx !== i))} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
+              </div>
+            ))}
+            {footerPhotos.map((file, i) => (
+              <div key={`new-footer-${i}`} style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', aspectRatio: '1' }}>
+                <img src={URL.createObjectURL(file)} alt="New" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(59, 130, 246, 0.8)', color: 'white', fontSize: '10px', textAlign: 'center', padding: '2px', fontWeight: 'bold' }}>BARU</div>
+                <button onClick={() => setFooterPhotos(footerPhotos.filter((_, idx) => idx !== i))} style={{ position: 'absolute', top: '6px', right: '6px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: 'none', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={12} /></button>
               </div>
             ))}
           </div>

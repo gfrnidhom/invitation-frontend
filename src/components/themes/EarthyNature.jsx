@@ -393,23 +393,41 @@ export default function EarthyNature({ payload, audioController }) {
                         )}
 
                         {/* Footer */}
-                        <footer className="py-20 px-8 text-center border-t border-[#f5f1eb]/5 en-reveal">
-                            <p className={`${cormorant.className} text-[9px] tracking-[0.4em] uppercase text-[#c67a5c]/40 mb-8`}>Thank You</p>
-                            <div className="w-24 h-24 rounded-full border border-[#8a9a5b]/20 mx-auto mb-8 flex items-center justify-center">
-                                <span className={`${sacramento.className} text-4xl terracotta`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span>
-                            </div>
-                            <h3 className={`${cormorant.className} text-lg font-bold tracking-[0.15em] uppercase text-[#f5f1eb] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>
-                            <p className="text-xs text-[#f5f1eb]/15 tracking-widest uppercase">{eventDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-
-                            <div className="flex items-center justify-center gap-3 mt-10 text-[#8a9a5b]/30">
-                                <div className="h-px w-12 bg-current" /><svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><div className="h-px w-12 bg-current" />
-                            </div>
-
-                            <div className="mt-12 pt-8 border-t border-[#8a9a5b]/5">
-                                <p className={`${cormorant.className} text-[10px] sage tracking-[0.3em] uppercase`}>Digivitation</p>
-                                <p className="text-[8px] text-[#f5f1eb]/10 tracking-[0.2em] uppercase mt-1">Digital Invitation</p>
-                            </div>
-                        </footer>
+                        {/* ── FOOTER ── */}
+                <footer className="bg-[#1a1a1a] text-[#c67a5c] pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                    {/* Background Image Layer */}
+                    <div className="absolute inset-0 z-0">
+                        {invitation?.footer_image ? (
+                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
+                            <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
+                            <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : (
+                            <div className="w-full h-full bg-[#1a1a1a] opacity-40"></div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-[#1a1a1a]/60 to-transparent" />
+                    </div>
+                    
+                    {/* Content Layer */}
+                    <div className="relative z-10 pt-10">
+                        <p className={`${poppins.className} text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                            Thank you for being part of our special day
+                        </p>
+                        <h2 className={`${cormorant.className} text-5xl mb-4 text-[#c67a5c] drop-shadow-sm`}>
+                            {invitation?.groom_name?.split(' ')[0]} <span className="text-black/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
+                        </h2>
+                        
+                        {/* Branding */}
+                        <div className="border-t border-[#c67a5c]/10 pt-8 mt-12">
+                            <p className="text-[9px] text-[#c67a5c]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-black/80 hover:text-black transition-colors">
+                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                            </a>
+                            <p className="text-[8px] text-[#c67a5c]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
+                        </div>
+                    </div>
+                </footer>
                     </div>
                 </div>
             </div>

@@ -203,14 +203,41 @@ export default function MonoChromeIV({ payload, audioController }) {
                                 <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="MonoChromeIV" />
                             ))}</div></section>}
 
-                        <footer className="py-20 px-8 text-center border-t border-[#e4e4e7]/5 m4-rv">
-                            <p className={`${spaceGrotesk.className} text-[8px] tracking-[.5em] uppercase stl mb-8 font-medium`}>Thank You</p>
-                            <div className="w-20 h-20 border border-[#a1a1aa]/10 mx-auto mb-8 flex items-center justify-center"><span className={`${italiana.className} text-3xl stl`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span></div>
-                            <h3 className={`${italiana.className} text-lg text-[#e4e4e7] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>
-                            <p className={`${spaceGrotesk.className} text-[9px] text-[#e4e4e7]/8 tracking-[.3em] uppercase font-light`}>{ed.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</p>
-                            <div className="flex items-center justify-center gap-3 mt-10 text-[#a1a1aa]/8"><div className="h-px w-12 bg-current"/><div className="w-2 h-2 border border-current rotate-45"/><div className="h-px w-12 bg-current"/></div>
-                            <div className="mt-12 pt-8 border-t border-[#e4e4e7]/3"><p className={`${spaceGrotesk.className} text-[9px] stl tracking-[.4em] uppercase font-medium`}>Digivitation</p><p className={`${spaceGrotesk.className} text-[7px] text-[#e4e4e7]/6 tracking-[.2em] uppercase mt-1 font-light`}>Digital Invitation</p></div>
-                        </footer>
+                        {/* ── FOOTER ── */}
+                <footer className="bg-[#1a1a1a] text-[#e4e4e7] pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                    {/* Background Image Layer */}
+                    <div className="absolute inset-0 z-0">
+                        {invitation?.footer_image ? (
+                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
+                            <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
+                            <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : (
+                            <div className="w-full h-full bg-[#1a1a1a] opacity-40"></div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-[#1a1a1a]/60 to-transparent" />
+                    </div>
+                    
+                    {/* Content Layer */}
+                    <div className="relative z-10 pt-10">
+                        <p className={`${spaceGrotesk.className} text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                            Thank you for being part of our special day
+                        </p>
+                        <h2 className={`${cormorant.className} text-5xl mb-4 text-[#e4e4e7] drop-shadow-sm`}>
+                            {invitation?.groom_name?.split(' ')[0]} <span className="text-white/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
+                        </h2>
+                        
+                        {/* Branding */}
+                        <div className="border-t border-[#e4e4e7]/10 pt-8 mt-12">
+                            <p className="text-[9px] text-[#e4e4e7]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-white/80 hover:text-white transition-colors">
+                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                            </a>
+                            <p className="text-[8px] text-[#e4e4e7]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
+                        </div>
+                    </div>
+                </footer>
                     </div>
                 </div>
             </div>

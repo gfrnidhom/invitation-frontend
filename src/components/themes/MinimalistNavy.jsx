@@ -536,32 +536,40 @@ export default function MinimalistNavy({ payload, audioController }) {
                     </section>
 
                     {/* ── FOOTER ── */}
-                    <footer className="bg-[#0B1D35] py-24 px-8 text-center">
-                        <div className="mn-reveal">
-                            <p className="text-[9px] uppercase tracking-[0.4em] text-white/20 mb-8">Thank you for being part of our story</p>
-
-                            <div className="w-24 h-24 rounded-full border border-white/5 flex items-center justify-center mx-auto mb-8 bg-white/5">
-                                <p className={`${greatVibes.className} text-3xl text-white/40`}>
-                                    {invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}
-                                </p>
-                            </div>
-
-                            <p className={`${playfair.className} text-xl font-bold tracking-wider text-white mb-2`}>
-                                {invitation?.groom_name} & {invitation?.bride_name}
-                            </p>
-                            <p className="text-xs text-[#C9A96E] tracking-widest uppercase mb-10">
-                                {eventDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
-                            </p>
-
-                            <div className="flex items-center justify-center gap-4 text-white/10 mb-8">
-                                <div className="h-px w-16 bg-current" />
-                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
-                                <div className="h-px w-16 bg-current" />
-                            </div>
-
-                            <p className="text-[9px] text-white/10 tracking-[0.3em] uppercase">Minimalist Navy Theme</p>
+                <footer className="bg-[#0B1D35] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                    {/* Background Image Layer */}
+                    <div className="absolute inset-0 z-0">
+                        {invitation?.footer_image ? (
+                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
+                            <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
+                            <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : (
+                            <div className="w-full h-full bg-[#0B1D35] opacity-40"></div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1D35] via-[#0B1D35]/60 to-transparent" />
+                    </div>
+                    
+                    {/* Content Layer */}
+                    <div className="relative z-10 pt-10">
+                        <p className={`${poppins.className} text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                            Thank you for being part of our special day
+                        </p>
+                        <h2 className={`${greatVibes.className} text-5xl mb-4 text-white drop-shadow-sm`}>
+                            {invitation?.groom_name?.split(' ')[0]} <span className="text-white/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
+                        </h2>
+                        
+                        {/* Branding */}
+                        <div className="border-t border-white/10 pt-8 mt-12">
+                            <p className="text-[9px] text-white/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-white/80 hover:text-white transition-colors">
+                                <span className={`${playfair.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                            </a>
+                            <p className="text-[8px] text-white/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>
-                    </footer>
+                    </div>
+                </footer>
 
                 </div>
             </main>

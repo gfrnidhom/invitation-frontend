@@ -477,23 +477,39 @@ export default function AureliaLuxe({ payload, audioController }) {
                 </section>
 
                 {/* 10. FOOTER */}
-                <footer className="bg-gray-100 py-20 px-6 text-center reveal">
-                    <p className="text-[9px] uppercase tracking-widest text-gray-400 font-bold mb-12">Thank you for joining our special day</p>
-                    
-                    <div className={`${playfair.className} text-6xl md:text-8xl text-gray-300 font-bold italic mb-6 leading-none tracking-tight`}>
-                       {invitation?.groom_name?.charAt(0) || 'B'}{invitation?.bride_name?.charAt(0) || 'M'}
+                {/* ── FOOTER ── */}
+                <footer className="bg-gray-100 text-gray-400 pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                    {/* Background Image Layer */}
+                    <div className="absolute inset-0 z-0">
+                        {invitation?.footer_image ? (
+                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
+                            <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
+                            <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : (
+                            <div className="w-full h-full bg-gray-100 opacity-40"></div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-gray via-gray/60 to-transparent" />
                     </div>
                     
-                    <p className="text-[10px] uppercase font-bold tracking-[0.4em] text-gray-500 mb-8">{invitation?.groom_name} &amp; {invitation?.bride_name}</p>
-
-                    <div className="flex items-center justify-center gap-4 text-gray-300 mb-16">
-                           <span>♦</span>
-                           <div className="h-px w-24 bg-gray-300"></div>
-                           <span>♦</span>
-                    </div>
-
-                    <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                        AureliaLuxe Monokrom Edition
+                    {/* Content Layer */}
+                    <div className="relative z-10 pt-10">
+                        <p className={`${poppins.className} text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                            Thank you for being part of our special day
+                        </p>
+                        <h2 className={`${cormorant.className} text-5xl mb-4 text-gray-400 drop-shadow-sm`}>
+                            {invitation?.groom_name?.split(' ')[0]} <span className="text-black/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
+                        </h2>
+                        
+                        {/* Branding */}
+                        <div className="border-t border-gray-400/10 pt-8 mt-12">
+                            <p className="text-[9px] text-gray-400/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-black/80 hover:text-black transition-colors">
+                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                            </a>
+                            <p className="text-[8px] text-gray-400/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
+                        </div>
                     </div>
                 </footer>
 

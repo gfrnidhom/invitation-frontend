@@ -761,36 +761,37 @@ export default function AdatJawa({ payload, audioController }) {
                 </section>
 
                 {/* ── FOOTER ── */}
-                <footer className="bg-[#0C0B0A] text-white py-32 px-8 text-center relative overflow-hidden">
-                    <div className="absolute inset-0">
-                        {landingPhoto ? (
-                            <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-20 sepia-[0.3]" />
-                        ) : coverPhoto ? (
-                            <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-20 sepia-[0.3]" />
+                <footer className="bg-[#0C0B0A] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                    {/* Background Image Layer */}
+                    <div className="absolute inset-0 z-0">
+                        {invitation?.footer_image ? (
+                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
+                            <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
+                            <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : (
-                            <img src={ASSETS.background} alt="Footer BG" className="w-full h-full object-cover opacity-20 sepia-[0.3]" />
+                            <div className="w-full h-full bg-[#0C0B0A] opacity-40"></div>
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0C0B0A] via-[#0C0B0A]/80 to-[#0C0B0A]/90" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0C0B0A] via-[#0C0B0A]/60 to-transparent" />
                     </div>
                     
-                    <img src={ASSETS.motifAtas} alt="" className="absolute -top-10 inset-x-0 w-[200px] mx-auto z-10 opacity-20 mix-blend-screen scale-y-[-1]" />
-                    <div className="absolute inset-0 opacity-[0.05] mix-blend-screen pointer-events-none z-0" style={{ backgroundImage: `url('${ASSETS.pattern}')`, backgroundSize: '150px' }} />
-                    
-                    <div className="relative z-10 pg-reveal pt-10">
-                        <h2 className={`${cormorant.className} text-sm text-[#D8B67D] tracking-[0.4em] uppercase font-bold mb-4`}>
-                            Matur Nuwun
+                    {/* Content Layer */}
+                    <div className="relative z-10 pt-10">
+                        <p className={`${poppins.className} text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                            Thank you for being part of our special day
+                        </p>
+                        <h2 className={`${greatVibes.className} text-5xl mb-4 text-white drop-shadow-sm`}>
+                            {invitation?.groom_name?.split(' ')[0]} <span className="text-white/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
                         </h2>
-                        <h1 className={`${cormorant.className} text-[2.5rem] font-bold text-white tracking-widest uppercase mb-10`}>
-                            {invitation?.groom_name?.split(' ')[0]}
-                            <span className="text-[#D8B67D] font-light mx-3">&</span>
-                            {invitation?.bride_name?.split(' ')[0]}
-                        </h1>
                         
-                        <div className="border-t border-[#D8B67D]/20 pt-8 mt-12">
-                            <p className="text-[8px] text-white/40 tracking-[0.3em] uppercase mb-2">Designed digitally by</p>
-                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-[#D8B67D] hover:text-white transition-colors">
-                                <span className={`${poppins.className} text-xs font-bold tracking-[0.2em] uppercase`}>Digivitation</span>
+                        {/* Branding */}
+                        <div className="border-t border-white/10 pt-8 mt-12">
+                            <p className="text-[9px] text-white/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-white/80 hover:text-white transition-colors">
+                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
                             </a>
+                            <p className="text-[8px] text-white/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>
                     </div>
                 </footer>

@@ -12,8 +12,8 @@ const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitatio
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://digitvitation.my.id/api';
 
 const ASSETS = {
-    video: '/themes/motion-islamic/Motion-Islamic-01-Compress.mp4',
-    fallback: '/themes/motion-islamic/Islamic-01-Fallback.webp',
+    video: '/themes/serene-garden/motion-serene-garden.mp4',
+    fallback: '/themes/serene-garden/garden-v2-01-fallback.jpeg',
     ayat: '/themes/motion-islamic/Islamic-01-Background.webp',
     bouquet: '/themes/motion-islamic/ISLAMIC-01-Bouquet-1000x1024.webp',
     couple1: '/themes/motion-islamic/ISLAMIC-01-Couple-Depan.webp',
@@ -896,26 +896,39 @@ export default function MakrisLulu({ payload, audioController }) {
                 </section>
 
                 {/* ── FOOTER ── */}
-                <footer className="bg-black text-white py-16 px-8 text-center relative overflow-hidden">
-                    <div className="relative z-10 pg-reveal">
-                        <h2 className={`${greatVibes.className} text-5xl mb-4 text-white drop-shadow-md`}>
-                            {invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}
-                        </h2>
-                        <p className="text-xs text-slate-500 tracking-widest uppercase mb-10">
-                            Thank you for being part of our special day
-                        </p>
-                        
-                        <div className="border-t border-white/5 pt-6">
-                            <p className="text-[10px] text-white/30 tracking-[0.15em] uppercase mb-1">Powered by</p>
-                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-white/50 hover:text-white transition-colors">
-                                <span className={`${cormorant.className} text-lg font-bold tracking-wider`}>Digivitation</span>
-                            </a>
-                        </div>
+                <footer className="bg-black text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                    {/* Background Image Layer */}
+                    <div className="absolute inset-0 z-0">
+                        {invitation?.footer_image ? (
+                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
+                            <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
+                            <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : (
+                            <div className="w-full h-full bg-black opacity-40"></div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
                     </div>
                     
-                    {/* Abstract monochrome design elements in footer */}
-                    <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
-                    <div className="absolute -right-20 -top-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
+                    {/* Content Layer */}
+                    <div className="relative z-10 pt-10">
+                        <p className={`${poppins.className} text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                            Thank you for being part of our special day
+                        </p>
+                        <h2 className={`${greatVibes.className} text-5xl mb-4 text-white drop-shadow-sm`}>
+                            {invitation?.groom_name?.split(' ')[0]} <span className="text-white/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
+                        </h2>
+                        
+                        {/* Branding */}
+                        <div className="border-t border-white/10 pt-8 mt-12">
+                            <p className="text-[9px] text-white/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-white/80 hover:text-white transition-colors">
+                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                            </a>
+                            <p className="text-[8px] text-white/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
+                        </div>
+                    </div>
                 </footer>
 
                 </main>

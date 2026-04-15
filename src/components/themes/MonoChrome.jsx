@@ -184,14 +184,41 @@ export default function MonoChrome({ payload, audioController }) {
                                 <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="MonoChrome" />
                             ))}</div></section>}
 
-                        <footer className="py-20 px-8 text-center border-t border-white/5 mc-rv">
-                            <p className={`${bebas.className} text-xs tracking-[.5em] uppercase text-white/15 mb-8`}>Thank You</p>
-                            <div className="w-20 h-20 border border-white/8 mx-auto mb-8 flex items-center justify-center"><span className={`${bebas.className} text-3xl text-white/30`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span></div>
-                            <h3 className={`${bebas.className} text-xl tracking-[.2em] uppercase text-white mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>
-                            <p className="text-[10px] text-white/10 tracking-[.3em] uppercase">{ed.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</p>
-                            <div className="flex items-center justify-center gap-4 mt-10 text-white/8"><div className="h-px w-16 bg-current"/><div className="w-1.5 h-1.5 bg-current"/><div className="h-px w-16 bg-current"/></div>
-                            <div className="mt-12 pt-8 border-t border-white/3"><p className={`${bebas.className} text-sm text-white/20 tracking-[.4em] uppercase`}>Digivitation</p><p className="text-[8px] text-white/8 tracking-[.3em] uppercase mt-1">Digital Invitation</p></div>
-                        </footer>
+                        {/* ── FOOTER ── */}
+                <footer className="bg-[#1a1a1a] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                    {/* Background Image Layer */}
+                    <div className="absolute inset-0 z-0">
+                        {invitation?.footer_image ? (
+                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
+                            <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
+                            <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : (
+                            <div className="w-full h-full bg-[#1a1a1a] opacity-40"></div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-[#1a1a1a]/60 to-transparent" />
+                    </div>
+                    
+                    {/* Content Layer */}
+                    <div className="relative z-10 pt-10">
+                        <p className={`${poppins.className} text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                            Thank you for being part of our special day
+                        </p>
+                        <h2 className={`${cormorant.className} text-5xl mb-4 text-white drop-shadow-sm`}>
+                            {invitation?.groom_name?.split(' ')[0]} <span className="text-white/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
+                        </h2>
+                        
+                        {/* Branding */}
+                        <div className="border-t border-white/10 pt-8 mt-12">
+                            <p className="text-[9px] text-white/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-white/80 hover:text-white transition-colors">
+                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                            </a>
+                            <p className="text-[8px] text-white/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
+                        </div>
+                    </div>
+                </footer>
                     </div>
                 </div>
             </div>

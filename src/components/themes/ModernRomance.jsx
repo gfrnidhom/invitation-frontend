@@ -365,13 +365,41 @@ export default function ModernRomance({ payload, audioController }) {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 text-center bg-[#fcfaf9] border-t border-[#e6dacd]">
-        <h2 className={`${serifFont.className} text-3xl md:text-4xl text-gray-800 mb-6`}>
-          {invitation.groom_name?.split(' ')[0]} & {invitation.bride_name?.split(' ')[0]}
-        </h2>
-        <svg className="w-6 h-6 mx-auto text-[#c5a587] mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-        <p className="text-[10px] uppercase tracking-widest text-gray-400">Thank you for being part of our special day</p>
-      </footer>
+      {/* ── FOOTER ── */}
+                <footer className="bg-[#fcfaf9] text-gray-800 pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                    {/* Background Image Layer */}
+                    <div className="absolute inset-0 z-0">
+                        {invitation?.footer_image ? (
+                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
+                            <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
+                            <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : (
+                            <div className="w-full h-full bg-[#fcfaf9] opacity-40"></div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#fcfaf9] via-[#fcfaf9]/60 to-transparent" />
+                    </div>
+                    
+                    {/* Content Layer */}
+                    <div className="relative z-10 pt-10">
+                        <p className={`${poppins.className} text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                            Thank you for being part of our special day
+                        </p>
+                        <h2 className={`${cormorant.className} text-5xl mb-4 text-gray-800 drop-shadow-sm`}>
+                            {invitation?.groom_name?.split(' ')[0]} <span className="text-black/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
+                        </h2>
+                        
+                        {/* Branding */}
+                        <div className="border-t border-gray-800/10 pt-8 mt-12">
+                            <p className="text-[9px] text-gray-800/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-black/80 hover:text-black transition-colors">
+                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                            </a>
+                            <p className="text-[8px] text-gray-800/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
+                        </div>
+                    </div>
+                </footer>
 
       {/* Bottom Navigation */}
       <BottomNav 

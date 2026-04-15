@@ -193,14 +193,41 @@ export default function MonoChromeV({ payload, audioController }) {
                                 <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="MonoChromeV" />
                             ))}</div></section>}
 
-                        <footer className="py-20 px-8 text-center border-t border-[#d1d1d6]/5 m5-rv">
-                            <p className={`${cinzel.className} text-[8px] tracking-[.4em] ch mb-8`}>Thank You</p>
-                            <div className="w-24 h-24 rounded-full border border-[#d1d1d6]/8 mx-auto mb-8 flex items-center justify-center"><span className={`${bodoni.className} italic text-3xl text-[#d1d1d6]/25`}>{invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}</span></div>
-                            <h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#f2f2f7] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h3>
-                            <p className={`${montserrat.className} text-[9px] text-[#d1d1d6]/8 tracking-[.3em] uppercase font-light`}>{ed.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</p>
-                            <div className="flex items-center justify-center gap-3 mt-10 ch opacity-20"><div className="h-px w-12 bg-current"/><span className={`${cinzel.className} text-[8px]`}>✦</span><div className="h-px w-12 bg-current"/></div>
-                            <div className="mt-12 pt-8 border-t border-[#d1d1d6]/3"><p className={`${cinzel.className} text-[9px] ch tracking-[.3em]`}>Digivitation</p><p className={`${montserrat.className} text-[7px] text-[#d1d1d6]/6 tracking-[.2em] uppercase mt-1 font-light`}>Digital Invitation</p></div>
-                        </footer>
+                        {/* ── FOOTER ── */}
+                <footer className="bg-[#1a1a1a] text-[#d1d1d6] pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                    {/* Background Image Layer */}
+                    <div className="absolute inset-0 z-0">
+                        {invitation?.footer_image ? (
+                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
+                            <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
+                            <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : (
+                            <div className="w-full h-full bg-[#1a1a1a] opacity-40"></div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-[#1a1a1a]/60 to-transparent" />
+                    </div>
+                    
+                    {/* Content Layer */}
+                    <div className="relative z-10 pt-10">
+                        <p className={`${montserrat.className} text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                            Thank you for being part of our special day
+                        </p>
+                        <h2 className={`${cormorant.className} text-5xl mb-4 text-[#d1d1d6] drop-shadow-sm`}>
+                            {invitation?.groom_name?.split(' ')[0]} <span className="text-black/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
+                        </h2>
+                        
+                        {/* Branding */}
+                        <div className="border-t border-[#d1d1d6]/10 pt-8 mt-12">
+                            <p className="text-[9px] text-[#d1d1d6]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-black/80 hover:text-black transition-colors">
+                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                            </a>
+                            <p className="text-[8px] text-[#d1d1d6]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
+                        </div>
+                    </div>
+                </footer>
                     </div>
                 </div>
             </div>

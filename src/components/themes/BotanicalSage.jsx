@@ -593,38 +593,39 @@ export default function BotanicalSage({ payload, audioController }) {
                 </section>
 
                 {/* ── 10. FOOTER ── */}
-                <footer className="bg-[#3a4d3e] py-24 px-6 text-center bs-reveal text-white relative overflow-hidden">
-                    <LeafOrnament className="absolute -top-20 -left-10 w-48 opacity-10 invert" flip />
-                    <LeafOrnament className="absolute -top-20 -right-10 w-48 opacity-10 invert" />
+                {/* ── FOOTER ── */}
+                <footer className="bg-[#3a4d3e] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                    {/* Background Image Layer */}
+                    <div className="absolute inset-0 z-0">
+                        {invitation?.footer_image ? (
+                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
+                            <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
+                            <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                        ) : (
+                            <div className="w-full h-full bg-[#3a4d3e] opacity-40"></div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#3a4d3e] via-[#3a4d3e]/60 to-transparent" />
+                    </div>
                     
-                    <div className="relative z-10 flex flex-col items-center">
-                        <p className="text-[9px] uppercase tracking-[0.4em] text-[#cddbcf] font-bold mb-10">Thank you for joining our special day</p>
-
-                        <div className="border-2 border-[#cddbcf]/20 w-36 h-36 rounded-full flex items-center justify-center mb-8 relative">
-                            <div className="absolute inset-2 border border-[#cddbcf]/10 rounded-full" />
-                            <div className={`${greatVibes.className} text-6xl text-white font-normal relative top-1`}>
-                                {invitation?.groom_name?.charAt(0) || 'B'}{invitation?.bride_name?.charAt(0) || 'M'}
-                            </div>
-                        </div>
-
-                        <WeddingRings className="w-16 h-10 mb-6 opacity-30" />
+                    {/* Content Layer */}
+                    <div className="relative z-10 pt-10">
+                        <p className={`${poppins.className} text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                            Thank you for being part of our special day
+                        </p>
+                        <h2 className={`${greatVibes.className} text-5xl mb-4 text-white drop-shadow-sm`}>
+                            {invitation?.groom_name?.split(' ')[0]} <span className="text-white/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
+                        </h2>
                         
-                        <p className={`${playfair.className} text-2xl font-bold tracking-wider text-white mb-2`}>
-                            {invitation?.groom_name} & {invitation?.bride_name}
-                        </p>
-                        <p className="text-xs text-[#8ba891] tracking-widest uppercase mb-12">
-                            {eventDate.toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'})}
-                        </p>
-
-                        <div className="flex items-center gap-4 text-[#cddbcf]/30 mb-10">
-                            <div className="h-px w-20 bg-current" />
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                            <div className="h-px w-20 bg-current" />
+                        {/* Branding */}
+                        <div className="border-t border-white/10 pt-8 mt-12">
+                            <p className="text-[9px] text-white/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-white/80 hover:text-white transition-colors">
+                                <span className={`${playfair.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                            </a>
+                            <p className="text-[8px] text-white/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>
-
-                        <p className="text-[9px] text-[#8ba891]/60 font-medium uppercase tracking-[0.3em]">
-                            Botanical Sage Theme
-                        </p>
                     </div>
                 </footer>
             </main>
