@@ -27,27 +27,27 @@ export async function generateMetadata({ params, searchParams }) {
         const title = `${guestNameText}${inv.groom_name} & ${inv.bride_name} | Wedding Invitation`;
         const description = inv.description || 'Anda diundang ke acara pernikahan kami!';
 
-        // Cover Photo extracting
-        let coverPhotoUrl = null;
-        if (Array.isArray(inv.cover_photo) && inv.cover_photo.length > 0) {
-          coverPhotoUrl = inv.cover_photo[0];
-        } else if (typeof inv.cover_photo === 'string' && inv.cover_photo.trim() !== '') {
+        // Landing Photo extracting for SEO
+        let landingPhotoUrl = null;
+        if (Array.isArray(inv.landing_photo) && inv.landing_photo.length > 0) {
+          landingPhotoUrl = inv.landing_photo[0];
+        } else if (typeof inv.landing_photo === 'string' && inv.landing_photo.trim() !== '') {
           // It might be a JSON string if the backend didn't cast it
           try {
-            const parsed = JSON.parse(inv.cover_photo);
-            if (Array.isArray(parsed) && parsed.length > 0) coverPhotoUrl = parsed[0];
+            const parsed = JSON.parse(inv.landing_photo);
+            if (Array.isArray(parsed) && parsed.length > 0) landingPhotoUrl = parsed[0];
           } catch(e) {
-            coverPhotoUrl = inv.cover_photo;
+            landingPhotoUrl = inv.landing_photo;
           }
         }
 
         // Resolving URL
         const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://app.digitvitation.my.id/storage';
-        if (coverPhotoUrl && !coverPhotoUrl.startsWith('http')) {
+        if (landingPhotoUrl && !landingPhotoUrl.startsWith('http')) {
           // If it lacks a leading slash, the backend usually stores 'images/...', append it properly
-          coverPhotoUrl = coverPhotoUrl.startsWith('/') 
-            ? `${storageUrl}${coverPhotoUrl}`
-            : `${storageUrl}/${coverPhotoUrl}`;
+          landingPhotoUrl = landingPhotoUrl.startsWith('/') 
+            ? `${storageUrl}${landingPhotoUrl}`
+            : `${storageUrl}/${landingPhotoUrl}`;
         }
 
         return {
@@ -56,14 +56,14 @@ export async function generateMetadata({ params, searchParams }) {
           openGraph: {
             title,
             description,
-            images: coverPhotoUrl ? [{ url: coverPhotoUrl }] : [],
+            images: landingPhotoUrl ? [{ url: landingPhotoUrl }] : [],
             type: 'website',
           },
           twitter: {
             card: 'summary_large_image',
             title,
             description,
-            images: coverPhotoUrl ? [coverPhotoUrl] : [],
+            images: landingPhotoUrl ? [landingPhotoUrl] : [],
           }
         };
       }
