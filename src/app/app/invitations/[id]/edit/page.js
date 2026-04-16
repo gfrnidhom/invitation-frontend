@@ -887,6 +887,7 @@ function PersonTab({ invitation, onSave, saving, prefix, label }) {
   const fields = [
     { key: `${prefix}_name`, label: 'Nama Panggilan' },
     { key: `${prefix}_full_name`, label: 'Nama Lengkap' },
+    { key: `${prefix}_child_order`, label: 'Anak Keberapa (misal: Tunggal, Pertama, Kedua)' },
     { key: `${prefix}_instagram`, label: 'Instagram', placeholder: '@username', icon: 'instagram' },
     { key: `${prefix}_father`, label: 'Nama Ayah' },
     { key: `${prefix}_mother`, label: 'Nama Ibu' },
@@ -977,7 +978,7 @@ function GroomTab(props) {
 
 function EventsTab({ invitationId }) {
   const [items, setItems] = useState([]); const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({ name: '', date: '', time_start: '', time_end: '', location: '', latitude: '', longitude: '', sort_order: '' }); 
+  const [form, setForm] = useState({ name: '', date: '', time_start: '', time_end: '', location: '', address: '', latitude: '', longitude: '', sort_order: '' }); 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
@@ -1002,7 +1003,7 @@ function EventsTab({ invitationId }) {
         setItems(prev => [...prev, res.data || res]); 
         toast.success('Acara ditambahkan');
       }
-      setForm({ name: '', date: '', time_start: '', time_end: '', location: '', latitude: '', longitude: '', sort_order: '' }); 
+      setForm({ name: '', date: '', time_start: '', time_end: '', location: '', address: '', latitude: '', longitude: '', sort_order: '' }); 
       setShowForm(false); 
       setEditingId(null);
     } catch (err) { 
@@ -1011,7 +1012,7 @@ function EventsTab({ invitationId }) {
   };
 
   const handleEdit = (event) => {
-    setForm({ name: event.name || '', date: event.date || '', time_start: event.time_start || '', time_end: event.time_end || '', location: event.location || '', latitude: event.latitude || '', longitude: event.longitude || '', sort_order: event.sort_order || '' });
+    setForm({ name: event.name || '', date: event.date || '', time_start: event.time_start || '', time_end: event.time_end || '', location: event.location || '', address: event.address || '', latitude: event.latitude || '', longitude: event.longitude || '', sort_order: event.sort_order || '' });
     setEditingId(event.id);
     setShowForm(true);
   };
@@ -1022,11 +1023,11 @@ function EventsTab({ invitationId }) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '600', margin: 0 }}>Daftar Acara</h3>
-        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ name: '', date: '', time_start: '', time_end: '', location: '', latitude: '', longitude: '', sort_order: '' }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ name: '', date: '', time_start: '', time_end: '', location: '', address: '', latitude: '', longitude: '', sort_order: '' }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
       </div>
       {showForm && (
         <div style={{ display: 'grid', gap: '12px', marginBottom: '20px', padding: '20px', background: '#f8fafc', borderRadius: '12px' }}>
-          {[{ key: 'name', label: 'Nama Acara', placeholder: 'Akad Nikah' }, { key: 'date', label: 'Tanggal', type: 'date' }, { key: 'time_start', label: 'Waktu Mulai', type: 'time' }, { key: 'time_end', label: 'Waktu Selesai (Opsional)', type: 'time' }, { key: 'location', label: 'Tempat/Lokasi', placeholder: 'Masjid Al-Ikhlas' }, { key: 'latitude', label: 'Latitude Peta', placeholder: '-6.200000' }, { key: 'longitude', label: 'Longitude Peta', placeholder: '106.816666' }, { key: 'sort_order', label: 'Urutan (Makin kecil makin awal)', type: 'number' }].map((f) => (
+          {[{ key: 'name', label: 'Nama Acara', placeholder: 'Akad Nikah' }, { key: 'date', label: 'Tanggal', type: 'date' }, { key: 'time_start', label: 'Waktu Mulai', type: 'time' }, { key: 'time_end', label: 'Waktu Selesai (Opsional)', type: 'time' }, { key: 'location', label: 'Nama Tempat/Lokasi', placeholder: 'Masjid Al-Ikhlas' }, { key: 'address', label: 'Alamat Lengkap', placeholder: 'Jl. Merdeka No. 1' }, { key: 'latitude', label: 'Latitude Peta', placeholder: '-6.200000' }, { key: 'longitude', label: 'Longitude Peta', placeholder: '106.816666' }, { key: 'sort_order', label: 'Urutan (Makin kecil makin awal)', type: 'number' }].map((f) => (
             <div key={f.key}><label className="label">{f.label}</label><input className="input" type={f.type || 'text'} placeholder={f.placeholder || ''} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} /></div>
           ))}
           <button className="btn btn-primary btn-sm" onClick={handleSave}><Save size={14} /> {editingId ? 'Update Acara' : 'Simpan Acara'}</button>

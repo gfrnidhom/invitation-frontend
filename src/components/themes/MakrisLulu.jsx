@@ -504,9 +504,9 @@ export default function MakrisLulu({ payload, audioController }) {
                                     <img src={ASSETS.couple2} alt="" className="absolute right-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl opacity-60 mix-blend-screen invert hue-rotate-[160deg]" />
                                 </div>
                                 <p className={`${greatVibes.className} text-[2.5rem] text-[#CFB53B] mb-1 tracking-wide drop-shadow-sm`}>{invitation?.bride_nickname || invitation?.bride_name?.split(' ')[0]}</p>
-                                <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-white mb-2`}>{invitation?.bride_name}</h3>
+                                <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-white mb-2`}>{invitation?.bride_full_name}</h3>
                                 <p className="text-[10px] text-white/50 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
-                                    Putri dari Bapak {invitation?.bride_father || '...'} <br /> & Ibu {invitation?.bride_mother || '...'}
+                                    Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ''}dari Bapak {invitation?.bride_father || '...'} <br /> & Ibu {invitation?.bride_mother || '...'}
                                 </p>
                                 {invitation?.bride_instagram && (
                                     <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[#CFB53B] text-black px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#b89f30] transition-all shadow-md">
@@ -531,9 +531,9 @@ export default function MakrisLulu({ payload, audioController }) {
                                     <img src={ASSETS.couple1} alt="" className="absolute left-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl scale-x-[-1] opacity-60 mix-blend-screen invert hue-rotate-[160deg]" />
                                 </div>
                                 <p className={`${greatVibes.className} text-[2.5rem] text-[#CFB53B] mb-1 tracking-wide`}>{invitation?.groom_nickname || invitation?.groom_name?.split(' ')[0]}</p>
-                                <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-white mb-2`}>{invitation?.groom_name}</h3>
+                                <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-white mb-2`}>{invitation?.groom_full_name}</h3>
                                 <p className="text-[10px] text-white/50 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
-                                    Putra dari Bapak {invitation?.groom_father || '...'} <br /> & Ibu {invitation?.groom_mother || '...'}
+                                    Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ''}dari Bapak {invitation?.groom_father || '...'} <br /> & Ibu {invitation?.groom_mother || '...'}
                                 </p>
                                 {invitation?.groom_instagram && (
                                     <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[#CFB53B] text-black px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#b89f30] transition-all shadow-md">

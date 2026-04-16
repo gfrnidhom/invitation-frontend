@@ -409,7 +409,7 @@ export default function EnchantedGarden({ payload, audioController }) {
                             </div>
                             <p className={`${greatVibes.className} text-3xl eg-gold mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
                             <h4 className={`${playfair.className} text-xl font-bold tracking-wider uppercase eg-text mb-2`}>{invitation?.groom_name}</h4>
-                            {invitation?.groom_father && <p className="text-xs eg-text-muted">Putra dari Bpk {invitation.groom_father} & Ibu {invitation.groom_mother}</p>}
+                            {invitation?.groom_father && <p className="text-xs eg-text-muted">Putra {invitation.groom_child_order ? `${invitation.groom_child_order} ` : ''}dari Bpk {invitation.groom_father} & Ibu {invitation.groom_mother}</p>}
                         </div>
 
                         <div className="flex justify-center items-center h-16 eg-reveal" data-delay="2">
@@ -428,7 +428,7 @@ export default function EnchantedGarden({ payload, audioController }) {
                             </div>
                             <p className={`${greatVibes.className} text-3xl eg-gold mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
                             <h4 className={`${playfair.className} text-xl font-bold tracking-wider uppercase eg-text mb-2`}>{invitation?.bride_name}</h4>
-                            {invitation?.bride_father && <p className="text-xs eg-text-muted">Putri dari Bpk {invitation.bride_father} & Ibu {invitation.bride_mother}</p>}
+                            {invitation?.bride_father && <p className="text-xs eg-text-muted">Putri {invitation.bride_child_order ? `${invitation.bride_child_order} ` : ''}dari Bpk {invitation.bride_father} & Ibu {invitation.bride_mother}</p>}
                         </div>
                     </section>
 
