@@ -415,7 +415,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                                                 <div className="space-y-1">
                                                     <span>{event.location}</span>
                                                     <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
-                                                        {event.address ||  +  + }
+                                                        {event.address || ''}
                                                     </p>
                                                 </div>
                                             </div>

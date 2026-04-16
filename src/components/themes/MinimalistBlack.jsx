@@ -388,7 +388,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                                                     <div className="space-y-1">
                                                         <p className="text-sm text-white/60">{event.location}</p>
                                                         <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
-                                                            {event.address ||  +  + }
+                                                            {event.address || ''}
                                                         </p>
                                                     </div>
                                                 </div>

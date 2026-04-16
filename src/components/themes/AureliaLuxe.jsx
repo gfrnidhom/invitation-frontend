@@ -269,7 +269,7 @@ export default function AureliaLuxe({ payload, audioController }) {
                                             <div className="space-y-1">
                                                 <p className="text-[11px] text-gray-400 capitalize max-w-[200px] text-center">{event.location}</p>
                                                 <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
-                                                    {event.address ||  +  + }
+                                                    {event.address || ''}
                                                 </p>
                                             </div>
                                         </div>
