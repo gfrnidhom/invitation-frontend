@@ -406,15 +406,15 @@ export default function MakrisLulu({ payload, audioController }) {
                             </p>
 
                             <div className={`flex flex-col items-center gap-0 mb-6 transition-all duration-1000 delay-500 ease-out ${showMotionText ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'}`}>
-                                <h1 className={`${cormorant.className} text-3xl md:text-4xl text-black uppercase tracking-[0.2em] leading-none`}>
+                                <h1 className={`${cormorant.className} text-3xl md:text-4xl text-black font-bold uppercase tracking-[0.2em] leading-none`}>
                                     {invitation?.groom_nickname || invitation?.groom_name?.split(' ')[0]}
-                                </h1>
+                               </h1>
 
                                 <span className={`${greatVibes.className} text-2xl md:text-3xl text-black my-0.5`}>
                                     &
                                 </span>
 
-                                <h1 className={`${cormorant.className} text-3xl md:text-4xl text-black uppercase tracking-[0.2em] leading-none`}>
+                                <h1 className={`${cormorant.className} text-3xl md:text-4xl text-black font-bold uppercase tracking-[0.2em] leading-none`}>
                                     {invitation?.bride_nickname || invitation?.bride_name?.split(' ')[0]}
                                 </h1>
                             </div>
