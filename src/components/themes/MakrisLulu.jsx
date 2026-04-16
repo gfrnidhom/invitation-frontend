@@ -747,11 +747,11 @@ export default function MakrisLulu({ payload, audioController }) {
                                 <h2 className={`${cormorant.className} text-4xl text-[#CFB53B] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
                                 <p className="text-sm text-[#D5E5DF]/50">Moments to remember</p>
                             </div>
-                            <div className="columns-2 gap-2 max-w-[360px] mx-auto">
+                            <div className="grid grid-cols-2 gap-2 max-w-[360px] mx-auto">
                                 {photos.map((img, i) => (
-                                    <div key={i} className="break-inside-avoid mb-2 rounded-xl overflow-hidden pg-reveal relative group" data-delay={`${(i % 3) + 1}`}>
+                                    <div key={i} className="aspect-square rounded-xl overflow-hidden pg-reveal relative group" data-delay={`${(i % 3) + 1}`}>
                                         <div className="absolute inset-0 bg-[#061510]/30 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none"></div>
-                                        <img src={getPhoto(img)} className="w-full h-auto object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 align-middle no-grayscale" alt={`Gallery ${i}`} loading="lazy" />
+                                        <img src={getPhoto(img)} className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 align-middle no-grayscale" alt={`Gallery ${i}`} loading="lazy" />
                                     </div>
                                 ))}
                             </div>
