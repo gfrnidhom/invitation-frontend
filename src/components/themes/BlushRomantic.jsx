@@ -134,7 +134,7 @@ export default function BlushRomantic({ payload, audioController }) {
                                         <p className={`${dancing.className} text-3xl rg-txt mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
                                         <h3 className={`${marcellus.className} text-xl tracking-wider text-[#8b3a4a] mb-3`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
                                         <div className="w-10 h-px bg-[#b76e79]/25 mb-3 mx-auto"/>
-                                        <p className="text-sm text-[#8b3a4a]/45 font-light">Putri dari</p>
+                                        <p className="text-sm text-[#8b3a4a]/45 font-light">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari</p>
                                         <p className="text-sm text-[#8b3a4a]/65 font-medium">{invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p>
                                     </div>
                                 </div>
@@ -148,7 +148,7 @@ export default function BlushRomantic({ payload, audioController }) {
                                         <p className={`${dancing.className} text-3xl rg-txt mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
                                         <h3 className={`${marcellus.className} text-xl tracking-wider text-[#8b3a4a] mb-3`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
                                         <div className="w-10 h-px bg-[#b76e79]/25 mb-3 mx-auto"/>
-                                        <p className="text-sm text-[#8b3a4a]/45 font-light">Putra dari</p>
+                                        <p className="text-sm text-[#8b3a4a]/45 font-light">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari</p>
                                         <p className="text-sm text-[#8b3a4a]/65 font-medium">{invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p>
                                     </div>
                                 </div>

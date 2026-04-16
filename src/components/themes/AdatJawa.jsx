@@ -439,7 +439,7 @@ export default function AdatJawa({ payload, audioController }) {
                                     {invitation?.bride_name}
                                 </h3>
                                 <p className={`${poppins.className} text-[10px] text-[#2C1E16]/70 leading-[2] uppercase tracking-[0.1em] font-medium`}>
-                                    Putri dari <br/> {invitation?.bride_father || '...'} & {invitation?.bride_mother || '...'}
+                                    Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari <br/> {invitation?.bride_father || '...'} & {invitation?.bride_mother || '...'}
                                 </p>
                                 {invitation?.bride_instagram && (
                                     <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 mt-5 bg-[#2C1E16] text-[#D8B67D] px-6 py-2 rounded-full text-[10px] tracking-wider uppercase font-semibold shadow-md">
@@ -481,7 +481,7 @@ export default function AdatJawa({ payload, audioController }) {
                                     {invitation?.groom_name}
                                 </h3>
                                 <p className={`${poppins.className} text-[10px] text-[#2C1E16]/70 leading-[2] uppercase tracking-[0.1em] font-medium`}>
-                                    Putra dari <br/> {invitation?.groom_father || '...'} & {invitation?.groom_mother || '...'}
+                                    Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari <br/> {invitation?.groom_father || '...'} & {invitation?.groom_mother || '...'}
                                 </p>
                                 {invitation?.groom_instagram && (
                                     <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 mt-5 bg-[#2C1E16] text-[#D8B67D] px-6 py-2 rounded-full text-[10px] tracking-wider uppercase font-semibold shadow-md">
@@ -574,7 +574,17 @@ export default function AdatJawa({ payload, audioController }) {
                                             {event.time_start?.substring(0, 5) || 'TBA'} WIB — {event.time_end ? event.time_end.substring(0, 5) + ' WIB' : 'Selesai'}
                                         </p>
 
-                                        <h4 className={`${cormorant.className} text-2xl font-bold mb-2`}>{event.location}</h4>
+                                        <div className="space-y-1">
+
+                                            <h4 className={`${cormorant.className} text-2xl font-bold mb-2`}>{event.location}</h4>
+
+                                            <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
+
+                                                {event.address ||  +  + }
+
+                                            </p>
+
+                                        </div>
                                         <p className="text-xs text-[#2C1E16]/60 leading-relaxed mx-auto mb-8 font-medium">
                                             {event.address || ''}
                                         </p>

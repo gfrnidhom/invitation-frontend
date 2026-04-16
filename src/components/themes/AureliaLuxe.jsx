@@ -266,7 +266,12 @@ export default function AureliaLuxe({ payload, audioController }) {
                                             <p className="text-xs text-gray-600 font-medium uppercase tracking-widest mb-1">
                                                 {event.date ? new Date(event.date).toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'}) : ''}
                                             </p>
-                                            <p className="text-[11px] text-gray-400 capitalize max-w-[200px] text-center">{event.location}</p>
+                                            <div className="space-y-1">
+                                                <p className="text-[11px] text-gray-400 capitalize max-w-[200px] text-center">{event.location}</p>
+                                                <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
+                                                    {event.address ||  +  + }
+                                                </p>
+                                            </div>
                                         </div>
                                         <div className="md:w-1/4 flex flex-col items-center md:items-end md:justify-center h-full pt-4">
                                            {event.latitude && event.longitude ? (

@@ -336,7 +336,7 @@ export default function BotanicalSage({ payload, audioController }) {
                                 <div className="text-center">
                                     <h3 className={`${playfair.className} text-3xl md:text-4xl olive-text font-bold mb-1`}>{invitation?.bride_name}</h3>
                                     <p className="text-xs text-[#5f7364] tracking-widest uppercase">The Bride</p>
-                                    {invitation?.bride_father && <p className="text-xs text-[#5f7364] mt-2">Putri dari {invitation.bride_father} & {invitation.bride_mother}</p>}
+                                    {invitation?.bride_father && <p className="text-xs text-[#5f7364] mt-2">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari {invitation.bride_father} & {invitation.bride_mother}</p>}
                                 </div>
                             </div>
 
@@ -357,7 +357,7 @@ export default function BotanicalSage({ payload, audioController }) {
                                 <div className="text-center">
                                     <h3 className={`${playfair.className} text-3xl md:text-4xl olive-text font-bold mb-1`}>{invitation?.groom_name}</h3>
                                     <p className="text-xs text-[#5f7364] tracking-widest uppercase">The Groom</p>
-                                    {invitation?.groom_father && <p className="text-xs text-[#5f7364] mt-2">Putra dari {invitation.groom_father} & {invitation.groom_mother}</p>}
+                                    {invitation?.groom_father && <p className="text-xs text-[#5f7364] mt-2">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari {invitation.groom_father} & {invitation.groom_mother}</p>}
                                 </div>
                             </div>
                         </div>
@@ -426,6 +426,7 @@ export default function BotanicalSage({ payload, audioController }) {
                                             <p className="flex items-center justify-center gap-2 mt-2">
                                                 <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
                                                 {event.location}
+                                                <span className="block text-[9px] opacity-70 max-w-[200px] mx-auto text-center mt-1">{event.address || }</span>
                                             </p>
                                         </div>
                                         {(event.latitude && event.longitude) && (

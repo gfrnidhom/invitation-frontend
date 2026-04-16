@@ -363,7 +363,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                             </div>
                             <p className={`${greatVibes.className} text-3xl gold-accent mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
                             <h3 className={`${playfair.className} text-xl font-bold uppercase tracking-wider text-[#0B1D35] mb-2`}>{invitation?.bride_name}</h3>
-                            {invitation?.bride_father && <p className="text-xs text-[#0B1D35]/50">Putri dari Bpk {invitation.bride_father} & Ibu {invitation.bride_mother}</p>}
+                            {invitation?.bride_father && <p className="text-xs text-[#0B1D35]/50">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bpk {invitation.bride_father} & Ibu {invitation.bride_mother}</p>}
                         </div>
 
                         <div className="flex justify-center my-8">
@@ -376,7 +376,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                             </div>
                             <p className={`${greatVibes.className} text-3xl gold-accent mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
                             <h3 className={`${playfair.className} text-xl font-bold uppercase tracking-wider text-[#0B1D35] mb-2`}>{invitation?.groom_name}</h3>
-                            {invitation?.groom_father && <p className="text-xs text-[#0B1D35]/50">Putra dari Bpk {invitation.groom_father} & Ibu {invitation.groom_mother}</p>}
+                            {invitation?.groom_father && <p className="text-xs text-[#0B1D35]/50">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bpk {invitation.groom_father} & Ibu {invitation.groom_mother}</p>}
                         </div>
                     </section>
 
@@ -412,7 +412,12 @@ export default function MinimalistNavy({ payload, audioController }) {
                                             </div>
                                             <div className="flex items-start gap-3">
                                                 <svg className="w-4 h-4 text-white/40 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0Z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0Z" /></svg>
-                                                <span>{event.location}</span>
+                                                <div className="space-y-1">
+                                                    <span>{event.location}</span>
+                                                    <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
+                                                        {event.address ||  +  + }
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                         {(event.latitude && event.longitude) && (

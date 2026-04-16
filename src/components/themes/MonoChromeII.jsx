@@ -144,7 +144,7 @@ export default function MonoChromeII({ payload, audioController }) {
                                 {brP&&<div className="hex-frame w-44 h-52 mx-auto mb-6 bg-[#d4c5b3]/10"><img src={brP} alt="Bride" className="w-full h-full object-cover sepia hover:sepia-0 transition-all duration-700"/></div>}
                                 <p className={`${playfair.className} italic text-3xl sep mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
                                 <h3 className={`${oswald.className} text-xl tracking-[.1em] uppercase text-[#e8ddd0] mb-3`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
-                                <p className="text-sm text-[#e8ddd0]/30 font-light">Putri dari</p>
+                                <p className="text-sm text-[#e8ddd0]/30 font-light">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari</p>
                                 <p className="text-sm text-[#e8ddd0]/50">{invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p>
                             </div>
                             <div className="text-center my-5 m2-rv"><div className="w-px h-10 bg-[#d4c5b3]/15 mx-auto"/><span className={`${playfair.className} italic text-4xl text-[#d4c5b3]/20 my-2 block`}>&</span><div className="w-px h-10 bg-[#d4c5b3]/15 mx-auto"/></div>
@@ -153,7 +153,7 @@ export default function MonoChromeII({ payload, audioController }) {
                                 {grP&&<div className="hex-frame w-44 h-52 mx-auto mb-6 bg-[#d4c5b3]/10"><img src={grP} alt="Groom" className="w-full h-full object-cover sepia hover:sepia-0 transition-all duration-700"/></div>}
                                 <p className={`${playfair.className} italic text-3xl sep mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
                                 <h3 className={`${oswald.className} text-xl tracking-[.1em] uppercase text-[#e8ddd0] mb-3`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
-                                <p className="text-sm text-[#e8ddd0]/30 font-light">Putra dari</p>
+                                <p className="text-sm text-[#e8ddd0]/30 font-light">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari</p>
                                 <p className="text-sm text-[#e8ddd0]/50">{invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p>
                             </div>
                         </section>

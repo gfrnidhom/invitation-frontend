@@ -337,7 +337,7 @@ export default function MidnightGold({ payload, audioController }) {
                                             {invitation?.bride_full_name || invitation?.bride_name}
                                         </h3>
                                         <div className="w-10 h-px bg-[#c9a84c]/30 mb-3 mx-auto" />
-                                        <p className="text-sm text-white/40">Putri dari</p>
+                                        <p className="text-sm text-white/40">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari</p>
                                         <p className="text-sm text-white/60 font-medium">{invitation?.bride_father || 'Bapak'} & {invitation?.bride_mother || 'Ibu'}</p>
                                     </div>
                                 </div>
@@ -362,7 +362,7 @@ export default function MidnightGold({ payload, audioController }) {
                                             {invitation?.groom_full_name || invitation?.groom_name}
                                         </h3>
                                         <div className="w-10 h-px bg-[#c9a84c]/30 mb-3 mx-auto" />
-                                        <p className="text-sm text-white/40">Putra dari</p>
+                                        <p className="text-sm text-white/40">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari</p>
                                         <p className="text-sm text-white/60 font-medium">{invitation?.groom_father || 'Bapak'} & {invitation?.groom_mother || 'Ibu'}</p>
                                     </div>
                                 </div>
@@ -398,7 +398,12 @@ export default function MidnightGold({ payload, audioController }) {
                                             {event.location && (
                                                 <div className="pt-3 border-t border-[#c9a84c]/10">
                                                     <p className="text-xs gold-text-soft mb-1">Lokasi Acara :</p>
-                                                    <p className="text-sm text-white/50">{event.location}</p>
+                                                    <div className="space-y-1">
+                                                        <p className="text-sm text-white/50">{event.location}</p>
+                                                        <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
+                                                            {event.address || ''}
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             )}
                                             {(event.latitude && event.longitude) && (

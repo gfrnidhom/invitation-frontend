@@ -205,7 +205,7 @@ export default function ModernRomance({ payload, audioController }) {
               </div>
               <h3 className={`${serifFont.className} text-3xl text-gray-800 mb-2`}>{invitation.groom_full_name ?? invitation.groom_name}</h3>
               <p className="text-sm text-gray-500 tracking-widest uppercase mb-4">The Groom</p>
-              <p className="text-sm text-gray-500">Putra dari<br/><span className={`${serifFont.className} italic text-gray-700`}>{invitation.groom_father} & {invitation.groom_mother}</span></p>
+              <p className="text-sm text-gray-500">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari<br/><span className={`${serifFont.className} italic text-gray-700`}>{invitation.groom_father} & {invitation.groom_mother}</span></p>
             </div>
 
             {/* Bride */}
@@ -222,7 +222,7 @@ export default function ModernRomance({ payload, audioController }) {
               </div>
               <h3 className={`${serifFont.className} text-3xl text-gray-800 mb-2`}>{invitation.bride_full_name ?? invitation.bride_name}</h3>
               <p className="text-sm text-gray-500 tracking-widest uppercase mb-4">The Bride</p>
-              <p className="text-sm text-gray-500">Putri dari<br/><span className={`${serifFont.className} italic text-gray-700`}>{invitation.bride_father} & {invitation.bride_mother}</span></p>
+              <p className="text-sm text-gray-500">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari<br/><span className={`${serifFont.className} italic text-gray-700`}>{invitation.bride_father} & {invitation.bride_mother}</span></p>
             </div>
           </div>
         </div>
@@ -259,6 +259,7 @@ export default function ModernRomance({ payload, audioController }) {
                   <p className="flex items-center justify-center gap-2">
                     <svg className="w-4 h-4 text-[#c5a587] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     {event.location}
+                    <span className="block text-[9px] opacity-70 max-w-[200px] mx-auto text-center mt-1">{event.address || }</span>
                   </p>
                 </div>
 

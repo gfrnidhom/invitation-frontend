@@ -260,7 +260,7 @@ export default function EarthyNature({ payload, audioController }) {
                                 )}
                                 <p className={`${sacramento.className} text-3xl text-[#c67a5c] mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
                                 <h3 className={`${cormorant.className} text-xl font-bold tracking-wider text-[#3d2b1f] mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
-                                <p className="text-sm text-[#3d2b1f]/50">Putri dari</p>
+                                <p className="text-sm text-[#3d2b1f]/50">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari</p>
                                 <p className="text-sm text-[#3d2b1f]/70 font-medium">{invitation?.bride_father || 'Bapak'} & {invitation?.bride_mother || 'Ibu'}</p>
                             </div>
 
@@ -275,7 +275,7 @@ export default function EarthyNature({ payload, audioController }) {
                                 )}
                                 <p className={`${sacramento.className} text-3xl text-[#c67a5c] mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
                                 <h3 className={`${cormorant.className} text-xl font-bold tracking-wider text-[#3d2b1f] mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
-                                <p className="text-sm text-[#3d2b1f]/50">Putra dari</p>
+                                <p className="text-sm text-[#3d2b1f]/50">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari</p>
                                 <p className="text-sm text-[#3d2b1f]/70 font-medium">{invitation?.groom_father || 'Bapak'} & {invitation?.groom_mother || 'Ibu'}</p>
                             </div>
                         </section>

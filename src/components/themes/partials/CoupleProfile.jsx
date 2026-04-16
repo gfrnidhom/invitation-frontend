@@ -45,7 +45,7 @@ export default function CoupleProfile({ invitation, sectionBg = 'bg-gray-50', ac
 
                     {(invitation.groom_father || invitation.groom_mother) && (
                         <div className={`mt-4 pt-4 border-t ${borderColor}`}>
-                            <p className={`text-xs uppercase tracking-widest ${subtitleText} mb-2`}>Putra dari</p>
+                            <p className={`text-xs uppercase tracking-widest ${subtitleText} mb-2`}>Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ''}dari</p>
                             {invitation.groom_father && <p className={`text-sm ${accentText} font-medium`}>Bapak {invitation.groom_father}</p>}
                             {invitation.groom_mother && <p className={`text-sm ${accentText} font-medium`}>& Ibu {invitation.groom_mother}</p>}
                         </div>
@@ -80,7 +80,7 @@ export default function CoupleProfile({ invitation, sectionBg = 'bg-gray-50', ac
 
                     {(invitation.bride_father || invitation.bride_mother) && (
                         <div className={`mt-4 pt-4 border-t ${borderColor}`}>
-                            <p className={`text-xs uppercase tracking-widest ${subtitleText} mb-2`}>Putri dari</p>
+                            <p className={`text-xs uppercase tracking-widest ${subtitleText} mb-2`}>Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ''}dari</p>
                             {invitation.bride_father && <p className={`text-sm ${accentText} font-medium`}>Bapak {invitation.bride_father}</p>}
                             {invitation.bride_mother && <p className={`text-sm ${accentText} font-medium`}>& Ibu {invitation.bride_mother}</p>}
                         </div>

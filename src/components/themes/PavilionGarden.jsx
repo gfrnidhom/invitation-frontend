@@ -396,7 +396,7 @@ export default function PavilionGarden({ payload, audioController }) {
                             <p className={`${greatVibes.className} text-[2.5rem] text-[#2D3A3A] mb-1 tracking-wide`}>{invitation?.bride_name?.split(' ')[0]}</p>
                             <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.bride_name}</h3>
                             <p className="text-[10px] text-[#2D3A3A]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
-                                Putri dari Bapak {invitation?.bride_father || '...'} <br/> & Ibu {invitation?.bride_mother || '...'}
+                                Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bapak {invitation?.bride_father || '...'} <br/> & Ibu {invitation?.bride_mother || '...'}
                             </p>
                             {invitation?.bride_instagram && (
                                 <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[#86968B] text-white px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#6b7d70] transition-all shadow-md">
@@ -423,7 +423,7 @@ export default function PavilionGarden({ payload, audioController }) {
                             <p className={`${greatVibes.className} text-[2.5rem] text-[#2D3A3A] mb-1 tracking-wide`}>{invitation?.groom_name?.split(' ')[0]}</p>
                             <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.groom_name}</h3>
                             <p className="text-[10px] text-[#2D3A3A]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
-                                Putra dari Bapak {invitation?.groom_father || '...'} <br/> & Ibu {invitation?.groom_mother || '...'}
+                                Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bapak {invitation?.groom_father || '...'} <br/> & Ibu {invitation?.groom_mother || '...'}
                             </p>
                             {invitation?.groom_instagram && (
                                 <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[#86968B] text-white px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#6b7d70] transition-all shadow-md">
@@ -503,7 +503,17 @@ export default function PavilionGarden({ payload, audioController }) {
                                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 384 512"><path d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"></path></svg>
                                     </div>
 
-                                    <h4 className={`${cormorant.className} text-xl font-bold text-[#4A4A4A] mb-2`}>{event.location}</h4>
+                                    <div className="space-y-1">
+
+                                        <h4 className={`${cormorant.className} text-xl font-bold text-[#4A4A4A] mb-2`}>{event.location}</h4>
+
+                                        <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
+
+                                            {event.address ||  +  + }
+
+                                        </p>
+
+                                    </div>
                                     <p className="text-xs text-[#4A4A4A]/60 leading-relaxed max-w-[200px] mx-auto mb-6">
                                         {event.address || ''}
                                     </p>

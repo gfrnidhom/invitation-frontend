@@ -128,7 +128,7 @@ export default function MonoChrome({ payload, audioController }) {
                             <div className="mb-8 mc-rv" data-delay="1">
                                 {brP&&<div className="photo-overlay rounded-2xl mb-4 aspect-[4/5]"><img src={brP} alt="Bride" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/><div className="absolute bottom-6 left-6 right-6 z-10"><p className={`${allura.className} text-3xl text-white/80 mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p><h3 className={`${bebas.className} text-2xl tracking-[.15em] uppercase text-white`}>{invitation?.bride_full_name||invitation?.bride_name}</h3></div></div>}
                                 {!brP&&<div className="text-center"><p className={`${allura.className} text-3xl text-white/60 mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p><h3 className={`${bebas.className} text-2xl tracking-[.15em] uppercase text-white`}>{invitation?.bride_full_name||invitation?.bride_name}</h3></div>}
-                                <div className="text-center mt-3"><p className="text-[10px] text-white/25 font-light">Putri dari {invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p></div>
+                                <div className="text-center mt-3"><p className="text-[10px] text-white/25 font-light">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari {invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p></div>
                             </div>
 
                             <div className="text-center my-6 mc-rv"><div className="w-px h-12 bg-white/10 mx-auto"/><span className={`${bebas.className} text-4xl text-white/15 my-3 block`}>&</span><div className="w-px h-12 bg-white/10 mx-auto"/></div>
@@ -137,7 +137,7 @@ export default function MonoChrome({ payload, audioController }) {
                             <div className="mc-rv" data-delay="2">
                                 {grP&&<div className="photo-overlay rounded-2xl mb-4 aspect-[4/5]"><img src={grP} alt="Groom" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/><div className="absolute bottom-6 left-6 right-6 z-10"><p className={`${allura.className} text-3xl text-white/80 mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p><h3 className={`${bebas.className} text-2xl tracking-[.15em] uppercase text-white`}>{invitation?.groom_full_name||invitation?.groom_name}</h3></div></div>}
                                 {!grP&&<div className="text-center"><p className={`${allura.className} text-3xl text-white/60 mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p><h3 className={`${bebas.className} text-2xl tracking-[.15em] uppercase text-white`}>{invitation?.groom_full_name||invitation?.groom_name}</h3></div>}
-                                <div className="text-center mt-3"><p className="text-[10px] text-white/25 font-light">Putra dari {invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p></div>
+                                <div className="text-center mt-3"><p className="text-[10px] text-white/25 font-light">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari {invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p></div>
                             </div>
                         </section>
 

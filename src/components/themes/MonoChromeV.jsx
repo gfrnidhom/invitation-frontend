@@ -138,14 +138,14 @@ export default function MonoChromeV({ payload, audioController }) {
                                 {brP&&<div className="oval-frame w-40 mx-auto mb-6 border-2 border-[#d1d1d6]/10"><img src={brP} alt="Bride" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/></div>}
                                 <p className={`${bodoni.className} italic text-3xl text-[#d1d1d6]/60 mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
                                 <h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#f2f2f7] mb-3`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
-                                <p className={`${montserrat.className} text-[10px] text-[#d1d1d6]/20 font-light`}>Putri dari {invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p>
+                                <p className={`${montserrat.className} text-[10px] text-[#d1d1d6]/20 font-light`}>Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari {invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p>
                             </div>
                             <div className="text-center my-5 m5-rv"><p className={`${cinzel.className} text-sm ch`}>✦ & ✦</p></div>
                             <div className="text-center m5-rv" data-delay="2">
                                 {grP&&<div className="oval-frame w-40 mx-auto mb-6 border-2 border-[#d1d1d6]/10"><img src={grP} alt="Groom" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"/></div>}
                                 <p className={`${bodoni.className} italic text-3xl text-[#d1d1d6]/60 mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
                                 <h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#f2f2f7] mb-3`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
-                                <p className={`${montserrat.className} text-[10px] text-[#d1d1d6]/20 font-light`}>Putra dari {invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p>
+                                <p className={`${montserrat.className} text-[10px] text-[#d1d1d6]/20 font-light`}>Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari {invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p>
                             </div>
                         </section>
 

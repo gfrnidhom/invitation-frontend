@@ -147,7 +147,7 @@ export default function MonoChromeIII({ payload, audioController }) {
                                         <p className={`${lora.className} italic text-3xl text-white/80 mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
                                         <h3 className={`${dmSerif.className} text-xl text-white mb-3`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
                                         <div className="w-10 h-px bg-white/15 mb-3 mx-auto"/>
-                                        <p className="text-sm text-white/30 font-light">Putri dari</p>
+                                        <p className="text-sm text-white/30 font-light">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari</p>
                                         <p className="text-sm text-white/50">{invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p>
                                     </div>
                                 </div>
@@ -161,7 +161,7 @@ export default function MonoChromeIII({ payload, audioController }) {
                                         <p className={`${lora.className} italic text-3xl text-white/80 mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
                                         <h3 className={`${dmSerif.className} text-xl text-white mb-3`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
                                         <div className="w-10 h-px bg-white/15 mb-3 mx-auto"/>
-                                        <p className="text-sm text-white/30 font-light">Putra dari</p>
+                                        <p className="text-sm text-white/30 font-light">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari</p>
                                         <p className="text-sm text-white/50">{invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p>
                                     </div>
                                 </div>

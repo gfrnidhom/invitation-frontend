@@ -143,7 +143,7 @@ export default function MonoChromeIV({ payload, audioController }) {
                                     <div className="text-center flex-1 line-accent pl-5">
                                         <p className={`${italiana.className} text-3xl stl mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
                                         <h3 className={`${spaceGrotesk.className} text-lg tracking-[.05em] text-[#e4e4e7] mb-3 font-medium`}>{invitation?.bride_full_name||invitation?.bride_name}</h3>
-                                        <p className="text-xs text-[#e4e4e7]/25 font-light">Putri dari {invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p>
+                                        <p className="text-xs text-[#e4e4e7]/25 font-light">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari {invitation?.bride_father||'Bapak'} & {invitation?.bride_mother||'Ibu'}</p>
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@ export default function MonoChromeIV({ payload, audioController }) {
                                     <div className="text-center flex-1">
                                         <p className={`${italiana.className} text-3xl stl mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
                                         <h3 className={`${spaceGrotesk.className} text-lg tracking-[.05em] text-[#e4e4e7] mb-3 font-medium`}>{invitation?.groom_full_name||invitation?.groom_name}</h3>
-                                        <p className="text-xs text-[#e4e4e7]/25 font-light">Putra dari {invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p>
+                                        <p className="text-xs text-[#e4e4e7]/25 font-light">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari {invitation?.groom_father||'Bapak'} & {invitation?.groom_mother||'Ibu'}</p>
                                     </div>
                                 </div>
                             </div>

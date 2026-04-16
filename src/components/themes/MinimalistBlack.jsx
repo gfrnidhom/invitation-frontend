@@ -326,7 +326,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                                 )}
                                 <p className={`${greatVibes.className} text-3xl text-[#1a1a1a] mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
                                 <h3 className={`${cinzel.className} text-xl font-bold tracking-wider mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
-                                <p className="text-sm text-gray-500">Putri dari</p>
+                                <p className="text-sm text-gray-500">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari</p>
                                 <p className="text-sm text-gray-600 font-medium">{invitation?.bride_father || 'Bapak Mempelai'} & {invitation?.bride_mother || 'Ibu Mempelai'}</p>
                             </div>
 
@@ -344,7 +344,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                                 )}
                                 <p className={`${greatVibes.className} text-3xl text-[#1a1a1a] mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
                                 <h3 className={`${cinzel.className} text-xl font-bold tracking-wider mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
-                                <p className="text-sm text-gray-500">Putra dari</p>
+                                <p className="text-sm text-gray-500">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari</p>
                                 <p className="text-sm text-gray-600 font-medium">{invitation?.groom_father || 'Bapak Mempelai'} & {invitation?.groom_mother || 'Ibu Mempelai'}</p>
                             </div>
                         </section>
@@ -385,7 +385,12 @@ export default function MinimalistBlack({ payload, audioController }) {
                                                         <svg className="w-4 h-4 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
                                                         <p className="text-xs text-white/40">Lokasi Acara :</p>
                                                     </div>
-                                                    <p className="text-sm text-white/60">{event.location}</p>
+                                                    <div className="space-y-1">
+                                                        <p className="text-sm text-white/60">{event.location}</p>
+                                                        <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
+                                                            {event.address ||  +  + }
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             )}
 

@@ -54,7 +54,14 @@ export default function Events({
                                 ) : (
                                     <p>TBA</p>
                                 )}
-                                <p className="pt-1">{event.location}</p>
+                                <div className="space-y-1 pt-1">
+                                    <p>{event.location}</p>
+                                    {event.address && (
+                                        <p className="text-[10px] leading-relaxed max-w-[200px] mx-auto opacity-70">
+                                            {event.address}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
 
                             {(event.latitude && event.longitude) && (
