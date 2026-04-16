@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { confirmAction } from '@/lib/toast-confirm';
 import { invitations, events as eventsApi, loveStories, giftAccounts, gallery, music as musicApi, banks } from '@/lib/api';
 import { compressImage } from '@/lib/image-compressor';
+import { APP_CONFIG } from '@/lib/constants';
 
 const tabGroups = [
   { 
@@ -252,7 +253,7 @@ function InfoTab({ invitation, onSave, saving }) {
       <div>
         <label className="label">Link Undangan (Slug Unik)</label>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#f8fafc', padding: '6px 12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-            <span style={{color: '#64748b', fontSize: '13px'}}>{process.env.NEXT_PUBLIC_APP_URL ? process.env.NEXT_PUBLIC_APP_URL.replace(/^https?:\/\//, '') : 'domain.com'}/</span>
+            <span style={{color: '#64748b', fontSize: '13px'}}>https://{APP_CONFIG.DOMAIN}/</span>
             <input className="input" style={{flex: 1, border: 'none', background: 'transparent', padding: 0, height: 'auto', boxShadow: 'none'}} value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '') })} placeholder="nama-pasangan" />
         </div>
       </div>
