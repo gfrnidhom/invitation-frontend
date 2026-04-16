@@ -478,7 +478,7 @@ export default function SereneGarden({ payload, audioController }) {
 
                                         <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
 
-                                            {event.address ||  +  + }
+                                            {event.address || ''}
 
                                         </p>
 
