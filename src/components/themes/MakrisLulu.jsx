@@ -40,6 +40,7 @@ export default function MakrisLulu({ payload, audioController }) {
     const [submitting, setSubmitting] = useState(false);
     const heroVideoRef = useRef(null);
     const [showMotionText, setShowMotionText] = useState(false);
+    const [selectedPhoto, setSelectedPhoto] = useState(null);
 
     const eventDate = (() => {
         if (!invitation?.event_date) return new Date();
@@ -749,13 +750,27 @@ export default function MakrisLulu({ payload, audioController }) {
                             </div>
                             <div className="grid grid-cols-2 gap-2 max-w-[360px] mx-auto">
                                 {photos.map((img, i) => (
-                                    <div key={i} className="aspect-square rounded-xl overflow-hidden pg-reveal relative group" data-delay={`${(i % 3) + 1}`}>
+                                    <div key={i} onClick={() => setSelectedPhoto(getPhoto(img))} className="aspect-square rounded-xl overflow-hidden pg-reveal relative group cursor-pointer" data-delay={`${(i % 3) + 1}`}>
                                         <div className="absolute inset-0 bg-[#061510]/30 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none"></div>
-                                        <img src={getPhoto(img)} className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 align-middle no-grayscale" alt={`Gallery ${i}`} loading="lazy" />
+                                        <img src={getPhoto(img)} className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out scale-105 group-hover:scale-110 align-middle no-grayscale" alt={`Gallery ${i}`} loading="lazy" />
                                     </div>
                                 ))}
                             </div>
                         </section>
+                    )}
+
+                    {/* Lightbox */}
+                    {selectedPhoto && (
+                        <div 
+                            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 cursor-pointer backdrop-blur-sm transition-opacity duration-300"
+                            onClick={() => setSelectedPhoto(null)}
+                        >
+                            <img 
+                                src={selectedPhoto} 
+                                alt="Fullscreen" 
+                                className="max-w-[95vw] max-h-[95vh] object-contain transition-transform duration-300 scale-100" 
+                            />
+                        </div>
                     )}
 
                     {/* ── Section 6: Love Story (Editorial Magazine Layout) ── */}
@@ -913,7 +928,7 @@ export default function MakrisLulu({ payload, audioController }) {
                                                     </svg>
 
                                                     {bankLogo ? (
-                                                        <img src={bankLogo} alt={bankName} className="h-10 max-w-[160px] object-contain drop-shadow-md brightness-0 invert opacity-95 no-grayscale" />
+                                                        <img src={bankLogo} alt={bankName} className="h-10 max-w-[160px] object-contain drop-shadow-md brightness-0 invert opacity-95" />
                                                     ) : (
                                                         <span className={`${cormorant.className} text-2xl font-bold text-[#CFB53B] uppercase tracking-widest drop-shadow`}>{bankName}</span>
                                                     )}
