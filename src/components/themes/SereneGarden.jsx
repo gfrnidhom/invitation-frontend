@@ -609,8 +609,8 @@ export default function SereneGarden({ payload, audioController }) {
                                 Tunjukkan QR Code ini pada saat registrasi di meja buku tamu
                             </p>
                             <div className="bg-white p-6 rounded-[2rem] shadow-xl inline-block border-[6px] border-[#5a7360]/10 max-w-[220px]">
-                                {guest.qr_code_url ? (
-                                    <img src={guest.qr_code_url} alt="QR Code" className="w-full h-auto" />
+                                {guest.qr_code ? (
+                                    <img src={guest.qr_code.startsWith('http') ? guest.qr_code : `${STORAGE_URL}/${guest.qr_code}`} alt="QR Code" className="w-full h-auto" />
                                 ) : (
                                     <div className="w-40 h-40 bg-gray-100 flex items-center justify-center flex-col">
                                         <svg className="w-10 h-10 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path></svg>
