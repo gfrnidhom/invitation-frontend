@@ -540,7 +540,7 @@ export default function MidnightGold({ payload, audioController }) {
                     
                     {/* Content Layer */}
                     <div className="relative z-10 pt-10">
-                        <p className={`${poppins.className} text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                        <p className={`${lato.className} text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
                             Thank you for being part of our special day
                         </p>
                         <h2 className={`${greatVibes.className} text-5xl mb-4 text-white drop-shadow-sm`}>
