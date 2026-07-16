@@ -201,7 +201,8 @@ export default function AureliaLuxe({ payload, audioController }) {
                             
                             {/* Bride */}
                             <div className="flex flex-col items-center flex-1">
-                                <h3 className={`${playfair.className} text-3xl md:text-4xl text-gray-900 mb-6 font-bold`}>{invitation?.bride_name}</h3>
+                                <p className={`${playfair.className} text-3xl md:text-4xl text-gray-900 mb-1 font-bold`}>{invitation?.bride_name?.split(' ')[0] || invitation?.bride_name}</p>
+                                <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-600 mb-4">{invitation?.bride_full_name || invitation?.bride_name}</h3>
                                 <div className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden filter grayscale contrast-125 bg-gray-100 shadow-md">
                                     {bridePhoto ? <img src={bridePhoto} className="w-full h-full object-cover" alt="Bride" /> : <div className="w-full h-full bg-gray-200" />}
                                 </div>
@@ -223,7 +224,8 @@ export default function AureliaLuxe({ payload, audioController }) {
                                 <div className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden filter grayscale contrast-125 bg-gray-100 shadow-md">
                                     {groomPhoto ? <img src={groomPhoto} className="w-full h-full object-cover" alt="Groom" /> : <div className="w-full h-full bg-gray-200" />}
                                 </div>
-                                <h3 className={`${playfair.className} text-3xl md:text-4xl text-gray-900 mt-6 font-bold`}>{invitation?.groom_name}</h3>
+                                <p className={`${playfair.className} text-3xl md:text-4xl text-gray-900 mt-6 mb-1 font-bold`}>{invitation?.groom_name?.split(' ')[0] || invitation?.groom_name}</p>
+                                <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-600">{invitation?.groom_full_name || invitation?.groom_name}</h3>
                             </div>
                         </div>
                     </div>
