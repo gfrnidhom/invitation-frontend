@@ -49,8 +49,6 @@ export default function CoupleProfile({ invitation, sectionBg = 'bg-gray-50', ac
                         </div>
                     )}
 
-                    )}
-
                     {invitation.groom_address && (
                         <div className={`mt-4 pt-4 border-t ${borderColor}`}>
                             <div className="flex items-start justify-center gap-2">
