@@ -91,18 +91,20 @@ export default function PublicInvitationViewer() {
           if (inv?.id) {
             try {
               const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://app.digitvitation.my.id/api';
-              const gbRes = await fetch(`${API_URL}/invitations/${inv.id}/guestbook`, {
+              const gbRes = await fetch(`${API_URL}/invitations/${inv.id}/guestbook?all=1`, {
                 headers: { 'Accept': 'application/json' }
               });
               if (gbRes.ok) {
                 const gbData = await gbRes.json();
                 // Support both paginated (data.data) and flat (data) array responses
-                inv.guestMessages = Array.isArray(gbData.data) ? gbData.data
-                  : Array.isArray(gbData) ? gbData : [];
+                const fetchedMessages = Array.isArray(gbData.data) ? gbData.data
+                  : Array.isArray(gbData) ? gbData : null;
+                if (fetchedMessages !== null) {
+                  inv.guestMessages = fetchedMessages;
+                }
               }
             } catch (e) {
               console.warn('Failed to fetch guestbook:', e);
-              inv.guestMessages = [];
             }
           }
           setData(res.data);

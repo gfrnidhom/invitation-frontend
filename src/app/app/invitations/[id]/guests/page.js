@@ -25,6 +25,7 @@ export default function GuestsPage({ params }) {
   const [lastPage, setLastPage] = useState(1);
   const [totalGuests, setTotalGuests] = useState(0);
   const [perPage, setPerPage] = useState(15);
+  const [summaryStats, setSummaryStats] = useState({ total: 0, confirmed: 0, declined: 0, pending: 0 });
 
   const [showImportModal, setShowImportModal] = useState(false);
   const [importFile, setImportFile] = useState(null);
@@ -34,9 +35,9 @@ export default function GuestsPage({ params }) {
   const fileInputRef = useRef(null);
   const [dragOver, setDragOver] = useState(false);
 
-  const fetchGuests = async (page = 1) => {
+  const fetchGuests = async (page = 1, searchQuery = search) => {
     try {
-      const res = await guests.list(id, page);
+      const res = await guests.list(id, page, searchQuery);
       setGuestList(res.data || []);
       if (res.meta) {
         setCurrentPage(res.meta.current_page || page);
@@ -49,6 +50,9 @@ export default function GuestsPage({ params }) {
         setTotalGuests(res.total || 0);
         setPerPage(res.per_page || 15);
       }
+      if (res.stats) {
+        setSummaryStats(res.stats);
+      }
     } catch {
       setGuestList([]);
     }
@@ -56,15 +60,24 @@ export default function GuestsPage({ params }) {
 
   useEffect(() => { 
     Promise.all([
-      fetchGuests(1),
+      fetchGuests(1, ''),
       invitations.get(id).then((res) => setInvitation(res.data || res)).catch(() => {})
     ]).finally(() => setLoading(false)); 
   }, [id]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!loading) {
+        fetchGuests(1, search);
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search, loading]);
+
   const handlePageChange = (page) => {
     if (page < 1 || page > lastPage) return;
     setCurrentPage(page);
-    fetchGuests(page);
+    fetchGuests(page, search);
   };
 
   const handleSave = async () => { 
@@ -77,7 +90,7 @@ export default function GuestsPage({ params }) {
       } else {
         const res = await guests.create(id, form); 
         // Refresh current page to get accurate data
-        await fetchGuests(currentPage);
+        await fetchGuests(currentPage, search);
         toast.success('Tamu berhasil ditambahkan'); 
       }
       setForm({ name: '', phone: '', email: '', address: '', group: '' }); 
@@ -96,7 +109,7 @@ export default function GuestsPage({ params }) {
     setShowModal(true);
   };
   
-  const handleDelete = (guestId) => { confirmAction('Hapus tamu ini?', async () => { try { await guests.delete(id, guestId); await fetchGuests(currentPage); toast.success('Tamu dihapus'); } catch { toast.error('Gagal menghapus tamu'); } }); };
+  const handleDelete = (guestId) => { confirmAction('Hapus tamu ini?', async () => { try { await guests.delete(id, guestId); await fetchGuests(currentPage, search); toast.success('Tamu dihapus'); } catch { toast.error('Gagal menghapus tamu'); } }); };
   const handleCheckIn = async (guestId) => { try { await guests.checkIn(guestId); setGuestList(prev => prev.map((g) => g.id === guestId ? { ...g, is_checked_in: true, rsvp_status: 'attending' } : g)); toast.success('Tamu berhasil check-in'); } catch { toast.error('Gagal check-in'); } };
 
   const getInviteText = (guest) => {
@@ -150,12 +163,12 @@ export default function GuestsPage({ params }) {
     return `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(text)}`;
   };
 
-  const filtered = guestList.filter((g) => g.name?.toLowerCase().includes(search.toLowerCase()));
+  const filtered = guestList;
   const rsvpStats = {
-    total: totalGuests || guestList.length,
-    confirmed: guestList.filter((g) => ['confirmed', 'hadir', 'attending'].includes(g.rsvp_status?.toLowerCase())).length,
-    declined: guestList.filter((g) => ['declined', 'tidak_hadir'].includes(g.rsvp_status?.toLowerCase())).length,
-    pending: guestList.filter((g) => !g.rsvp_status || g.rsvp_status?.toLowerCase() === 'pending').length,
+    total: summaryStats.total || totalGuests || guestList.length,
+    confirmed: summaryStats.confirmed || guestList.filter((g) => ['confirmed', 'hadir', 'attending'].includes(g.rsvp_status?.toLowerCase())).length,
+    declined: summaryStats.declined || guestList.filter((g) => ['declined', 'tidak_hadir'].includes(g.rsvp_status?.toLowerCase())).length,
+    pending: summaryStats.pending || guestList.filter((g) => !g.rsvp_status || g.rsvp_status?.toLowerCase() === 'pending').length,
   };
 
   const getRsvpBadge = (status) => {
@@ -222,7 +235,7 @@ export default function GuestsPage({ params }) {
       toast.success(res.message || 'Berhasil mengimport tamu');
       
       // Refresh guest list
-      await fetchGuests(1);
+      await fetchGuests(1, search);
       setCurrentPage(1);
     } catch (err) {
       toast.error('Gagal mengimport tamu. Pastikan format benar.');

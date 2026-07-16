@@ -95,7 +95,11 @@ export const invitations = {
 
 // ── Guests ──
 export const guests = {
-  list: (invitationId, page = 1) => request(`/invitations/${invitationId}/guests?page=${page}`),
+  list: (invitationId, page = 1, search = '') => {
+    let url = `/invitations/${invitationId}/guests?page=${page}`;
+    if (search) url += `&search=${encodeURIComponent(search)}`;
+    return request(url);
+  },
   get: (invitationId, guestId) => request(`/invitations/${invitationId}/guests/${guestId}`),
   create: (invitationId, data) => request(`/invitations/${invitationId}/guests`, { method: 'POST', body: JSON.stringify(data) }),
   update: (invitationId, guestId, data) => request(`/guests/${guestId}`, { method: 'PUT', body: JSON.stringify(data) }),
