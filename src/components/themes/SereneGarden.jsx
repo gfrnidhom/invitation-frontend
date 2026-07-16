@@ -363,7 +363,9 @@ export default function SereneGarden({ payload, audioController }) {
                                     {bridePhoto ? <img src={bridePhoto} className="w-full h-full object-cover" alt="Bride" /> : <div className="w-full h-full bg-[#e8ebe8]" />}
                                 </div>
 
-                                     <p className={`${greatVibes.className} text-[2.5rem] text-[#1a1a1a] mb-1 tracking-wide`}>{invitation?.bride_name?.split(' ')[0]}</p>
+                                <img src="/themes/serene-garden/garden-v2-05-couple-depan.png" alt="" className="absolute right-[-20%] -bottom-6 w-48 h-auto z-20 pointer-events-none drop-shadow-xl" />
+                            </div>
+                            <p className={`${greatVibes.className} text-[2.5rem] text-[#1a1a1a] mb-1 tracking-wide`}>{invitation?.bride_name?.split(' ')[0]}</p>
                             <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-[#1a1a1a] mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
                             <p className="text-[10px] text-[#1a1a1a]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                 Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bapak {invitation?.bride_father || '...'} <br/> & Ibu {invitation?.bride_mother || '...'}
