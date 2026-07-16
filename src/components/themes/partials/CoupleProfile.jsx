@@ -38,10 +38,8 @@ export default function CoupleProfile({ invitation, sectionBg = 'bg-gray-50', ac
                         </div>
                     )}
 
-                    <h3 className={`font-serif text-2xl ${accentText} mb-1`}>{invitation.groom_name}</h3>
-                    {invitation.groom_full_name && (
-                        <p className={`text-sm ${subtitleText} mb-4`}>{invitation.groom_full_name}</p>
-                    )}
+                    <p className={`font-serif text-3xl italic ${accentText} mb-1`}>{invitation.groom_name?.split(' ')[0] || invitation.groom_name}</p>
+                    <h3 className={`font-serif text-lg md:text-xl font-bold uppercase tracking-wider ${accentText} mb-3`}>{invitation.groom_full_name || invitation.groom_name}</h3>
 
                     {(invitation.groom_father || invitation.groom_mother) && (
                         <div className={`mt-4 pt-4 border-t ${borderColor}`}>
@@ -73,10 +71,8 @@ export default function CoupleProfile({ invitation, sectionBg = 'bg-gray-50', ac
                         </div>
                     )}
 
-                    <h3 className={`font-serif text-2xl ${accentText} mb-1`}>{invitation.bride_name}</h3>
-                    {invitation.bride_full_name && (
-                        <p className={`text-sm ${subtitleText} mb-4`}>{invitation.bride_full_name}</p>
-                    )}
+                    <p className={`font-serif text-3xl italic ${accentText} mb-1`}>{invitation.bride_name?.split(' ')[0] || invitation.bride_name}</p>
+                    <h3 className={`font-serif text-lg md:text-xl font-bold uppercase tracking-wider ${accentText} mb-3`}>{invitation.bride_full_name || invitation.bride_name}</h3>
 
                     {(invitation.bride_father || invitation.bride_mother) && (
                         <div className={`mt-4 pt-4 border-t ${borderColor}`}>

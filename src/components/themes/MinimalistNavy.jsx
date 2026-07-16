@@ -362,7 +362,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                                 {bridePhoto ? <img src={bridePhoto} className="w-full h-full object-cover" alt="Bride" /> : <div className="w-full h-full bg-gradient-to-b from-[#c5cfd8] to-[#a8b5c2]" />}
                             </div>
                             <p className={`${greatVibes.className} text-3xl gold-accent mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                            <h3 className={`${playfair.className} text-xl font-bold uppercase tracking-wider text-[#0B1D35] mb-2`}>{invitation?.bride_name}</h3>
+                            <h3 className={`${playfair.className} text-xl font-bold uppercase tracking-wider text-[#0B1D35] mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
                             {invitation?.bride_father && <p className="text-xs text-[#0B1D35]/50">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bpk {invitation.bride_father} & Ibu {invitation.bride_mother}</p>}
                         </div>
 
@@ -375,7 +375,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                                 {groomPhoto ? <img src={groomPhoto} className="w-full h-full object-cover" alt="Groom" /> : <div className="w-full h-full bg-gradient-to-b from-[#c5cfd8] to-[#a8b5c2]" />}
                             </div>
                             <p className={`${greatVibes.className} text-3xl gold-accent mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                            <h3 className={`${playfair.className} text-xl font-bold uppercase tracking-wider text-[#0B1D35] mb-2`}>{invitation?.groom_name}</h3>
+                            <h3 className={`${playfair.className} text-xl font-bold uppercase tracking-wider text-[#0B1D35] mb-2`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
                             {invitation?.groom_father && <p className="text-xs text-[#0B1D35]/50">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bpk {invitation.groom_father} & Ibu {invitation.groom_mother}</p>}
                         </div>
                     </section>

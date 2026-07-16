@@ -334,7 +334,8 @@ export default function BotanicalSage({ payload, audioController }) {
                                     </div>
                                 </div>
                                 <div className="text-center">
-                                    <h3 className={`${playfair.className} text-3xl md:text-4xl olive-text font-bold mb-1`}>{invitation?.bride_name}</h3>
+                                    <p className={`${playfair.className} text-3xl md:text-4xl olive-text font-bold mb-1`}>{invitation?.bride_name?.split(' ')[0] || invitation?.bride_name}</p>
+                                    <h3 className="text-base font-semibold uppercase tracking-wider olive-text mb-1">{invitation?.bride_full_name || invitation?.bride_name}</h3>
                                     <p className="text-xs text-[#5f7364] tracking-widest uppercase">The Bride</p>
                                     {invitation?.bride_father && <p className="text-xs text-[#5f7364] mt-2">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari {invitation.bride_father} & {invitation.bride_mother}</p>}
                                 </div>
@@ -355,7 +356,8 @@ export default function BotanicalSage({ payload, audioController }) {
                                     </div>
                                 </div>
                                 <div className="text-center">
-                                    <h3 className={`${playfair.className} text-3xl md:text-4xl olive-text font-bold mb-1`}>{invitation?.groom_name}</h3>
+                                    <p className={`${playfair.className} text-3xl md:text-4xl olive-text font-bold mb-1`}>{invitation?.groom_name?.split(' ')[0] || invitation?.groom_name}</p>
+                                    <h3 className="text-base font-semibold uppercase tracking-wider olive-text mb-1">{invitation?.groom_full_name || invitation?.groom_name}</h3>
                                     <p className="text-xs text-[#5f7364] tracking-widest uppercase">The Groom</p>
                                     {invitation?.groom_father && <p className="text-xs text-[#5f7364] mt-2">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari {invitation.groom_father} & {invitation.groom_mother}</p>}
                                 </div>

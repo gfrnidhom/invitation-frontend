@@ -203,6 +203,7 @@ export const payments = {
   get: (id) => request(`/payment/${id}`),
   charge: (id, data) => request(`/payment/${id}/charge`, { method: 'POST', body: JSON.stringify(data) }),
   checkStatus: (orderId) => request(`/payment/${orderId}/status`),
+  syncStatus: (orderId, transactionStatus) => request('/payment/sync-status', { method: 'POST', body: JSON.stringify({ order_id: orderId, transaction_status: transactionStatus }) }),
 };
 
 // ── Guestbook / Wishes ──

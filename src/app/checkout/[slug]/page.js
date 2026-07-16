@@ -82,24 +82,36 @@ export default function CheckoutPage() {
         toast.success('Pesanan dibuat. Silakan selesaikan pembayaran.');
         if (typeof window !== 'undefined' && window.snap) {
           window.snap.pay(snapToken, {
-            onSuccess: async function() {
-              if (orderId) await payments.checkStatus(orderId).catch(() => {});
+            onSuccess: async function(result) {
+              const oid = result.order_id || orderId;
+              try {
+                await payments.checkStatus(oid);
+              } catch {
+                try { await payments.syncStatus(oid, result.transaction_status || 'settlement'); } catch {}
+              }
               toast.success('Pembayaran berhasil!');
-              router.push('/app/subscriptions');
+              setTimeout(() => router.push('/app/subscriptions'), 500);
             },
-            onPending: async function() {
-              if (orderId) await payments.checkStatus(orderId).catch(() => {});
+            onPending: async function(result) {
+              const oid = result.order_id || orderId;
+              try {
+                await payments.checkStatus(oid);
+              } catch {
+                try { await payments.syncStatus(oid, result.transaction_status || 'pending'); } catch {}
+              }
               toast('Menunggu pembayaran Anda...');
-              router.push('/app/subscriptions');
+              setTimeout(() => router.push('/app/subscriptions'), 500);
             },
             onError: function() {
               toast.error('Gagal memproses pembayaran di Midtrans');
               router.push('/app/subscriptions');
             },
             onClose: async function() {
-              if (orderId) await payments.checkStatus(orderId).catch(() => {});
+              try {
+                await payments.checkStatus(orderId);
+              } catch {}
               toast('Pembayaran belum diselesaikan.');
-              router.push('/app/subscriptions');
+              setTimeout(() => router.push('/app/subscriptions'), 500);
             }
           });
         } else {

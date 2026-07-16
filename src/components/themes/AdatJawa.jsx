@@ -435,8 +435,11 @@ export default function AdatJawa({ payload, audioController }) {
                             </div>
                             
                             <div className="mt-14 relative z-20 bg-[#F6F4EE] shadow-[0_-15px_15px_#F6F4EE]">
-                                <h3 className={`${cormorant.className} text-4xl font-bold tracking-widest text-[#2C1E16] mb-3`}>
-                                    {invitation?.bride_name}
+                                <p className={`${greatVibes.className} text-4xl text-[#D8B67D] mb-1`}>
+                                    {invitation?.bride_name?.split(' ')[0] || invitation?.bride_name}
+                                </p>
+                                <h3 className={`${cormorant.className} text-2xl font-bold uppercase tracking-widest text-[#2C1E16] mb-3`}>
+                                    {invitation?.bride_full_name || invitation?.bride_name}
                                 </h3>
                                 <p className={`${poppins.className} text-[10px] text-[#2C1E16]/70 leading-[2] uppercase tracking-[0.1em] font-medium`}>
                                     Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari <br/> {invitation?.bride_father || '...'} & {invitation?.bride_mother || '...'}
@@ -477,8 +480,11 @@ export default function AdatJawa({ payload, audioController }) {
                             </div>
                             
                             <div className="mt-14 relative z-20 bg-[#F6F4EE] shadow-[0_-15px_15px_#F6F4EE]">
-                                <h3 className={`${cormorant.className} text-4xl font-bold tracking-widest text-[#2C1E16] mb-3`}>
-                                    {invitation?.groom_name}
+                                <p className={`${greatVibes.className} text-4xl text-[#D8B67D] mb-1`}>
+                                    {invitation?.groom_name?.split(' ')[0] || invitation?.groom_name}
+                                </p>
+                                <h3 className={`${cormorant.className} text-2xl font-bold uppercase tracking-widest text-[#2C1E16] mb-3`}>
+                                    {invitation?.groom_full_name || invitation?.groom_name}
                                 </h3>
                                 <p className={`${poppins.className} text-[10px] text-[#2C1E16]/70 leading-[2] uppercase tracking-[0.1em] font-medium`}>
                                     Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari <br/> {invitation?.groom_father || '...'} & {invitation?.groom_mother || '...'}

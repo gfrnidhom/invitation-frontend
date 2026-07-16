@@ -394,7 +394,7 @@ export default function MotionIslamic({ payload, audioController }) {
                                 <img src={ASSETS.couple2} alt="" className="absolute right-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl" />
                             </div>
                             <p className={`${greatVibes.className} text-[2.5rem] text-[#2D3A3A] mb-1 tracking-wide`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                            <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.bride_name}</h3>
+                            <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
                             <p className="text-[10px] text-[#2D3A3A]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                 Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bapak {invitation?.bride_father || '...'} <br/> & Ibu {invitation?.bride_mother || '...'}
                             </p>
@@ -421,7 +421,7 @@ export default function MotionIslamic({ payload, audioController }) {
                                 <img src={ASSETS.couple1} alt="" className="absolute left-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl scale-x-[-1]" />
                             </div>
                             <p className={`${greatVibes.className} text-[2.5rem] text-[#2D3A3A] mb-1 tracking-wide`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                            <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.groom_name}</h3>
+                            <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
                             <p className="text-[10px] text-[#2D3A3A]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                 Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bapak {invitation?.groom_father || '...'} <br/> & Ibu {invitation?.groom_mother || '...'}
                             </p>

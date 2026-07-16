@@ -36,17 +36,23 @@ export default function SubscriptionsPage() {
     if (snapToken && window.snap) {
       window.snap.pay(snapToken, {
         onSuccess: async (result) => { 
-          await payments.checkStatus(result.order_id || transaction.order_id).catch(() => {});
-          toast.success('Pembayaran berhasil!'); setTimeout(() => window.location.reload(), 1500); 
+          const oid = result.order_id || transaction.order_id;
+          try { await payments.checkStatus(oid); } catch {
+            try { await payments.syncStatus(oid, result.transaction_status || 'settlement'); } catch {}
+          }
+          toast.success('Pembayaran berhasil!'); setTimeout(() => window.location.reload(), 1000); 
         },
         onPending: async (result) => { 
-          await payments.checkStatus(result.order_id || transaction.order_id).catch(() => {});
-          toast.success('Pembayaran sedang diproses.'); setTimeout(() => window.location.reload(), 1500); 
+          const oid = result.order_id || transaction.order_id;
+          try { await payments.checkStatus(oid); } catch {
+            try { await payments.syncStatus(oid, result.transaction_status || 'pending'); } catch {}
+          }
+          toast.success('Pembayaran sedang diproses.'); setTimeout(() => window.location.reload(), 1000); 
         },
         onError: () => { toast.error('Pembayaran gagal.'); },
         onClose: async () => { 
-          await payments.checkStatus(transaction.order_id).catch(() => {});
-          window.location.reload(); 
+          try { await payments.checkStatus(transaction.order_id); } catch {}
+          setTimeout(() => window.location.reload(), 500); 
         },
       });
     } else {
