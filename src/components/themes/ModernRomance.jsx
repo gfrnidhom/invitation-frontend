@@ -13,6 +13,7 @@ import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import CountdownTimer from './partials/CountdownTimer';
 import MusicPlayer from './partials/MusicPlayer';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 import TurutMengundang from './partials/TurutMengundang';
 
 const scriptFont = Alex_Brush({ 
@@ -275,10 +276,12 @@ export default function ModernRomance({ payload, audioController }) {
                   </p>
                 </div>
 
-                {event.latitude && event.longitude && (
-                  <a href={`https://maps.google.com/?q=${event.latitude},${event.longitude}`} target="_blank" rel="noreferrer" className="inline-block border border-[#a3714b] text-[#a3714b] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[#a3714b] hover:text-white transition-colors">
-                    Buka di Google Maps
-                  </a>
+                {getMapUrl(event) && (
+                  <MapLocationButton
+                    item={event}
+                    className="inline-block border border-[#a3714b] text-[#a3714b] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[#a3714b] hover:text-white transition-colors"
+                    buttonText="Buka di Google Maps"
+                  />
                 )}
               </div>
             )) : (
@@ -288,10 +291,12 @@ export default function ModernRomance({ payload, audioController }) {
                   {new Date(invitation.event_date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
                 </p>
                 <p className="text-sm text-gray-600 mb-8">{invitation.location}</p>
-                {invitation.latitude && invitation.longitude && (
-                  <a href={`https://maps.google.com/?q=${invitation.latitude},${invitation.longitude}`} target="_blank" rel="noreferrer" className="inline-block border border-[#a3714b] text-[#a3714b] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[#a3714b] hover:text-white transition-colors">
-                    Buka di Maps
-                  </a>
+                {getMapUrl(invitation) && (
+                  <MapLocationButton
+                    item={invitation}
+                    className="inline-block border border-[#a3714b] text-[#a3714b] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[#a3714b] hover:text-white transition-colors"
+                    buttonText="Buka di Maps"
+                  />
                 )}
               </div>
             )}

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { MapLocationButton, getMapUrl } from './MapLocation';
 
 export default function Events({ 
   invitation, 
@@ -64,11 +65,12 @@ export default function Events({
                                 </div>
                             </div>
 
-                            {(event.latitude && event.longitude) && (
-                                <a href={`https://maps.google.com/?q=${event.latitude},${event.longitude}`} target="_blank" rel="noreferrer" className={`inline-flex items-center gap-1.5 mt-5 px-5 py-2 rounded-full border ${btnBorder} ${accentText} text-xs font-medium hover:${btnHoverBg} transition-colors`}>
-                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
-                                    Google Maps
-                                </a>
+                            {getMapUrl(event) && (
+                                <MapLocationButton
+                                  item={event}
+                                  className={`inline-flex items-center gap-1.5 mt-5 px-5 py-2 rounded-full border ${btnBorder} ${accentText} text-xs font-medium hover:${btnHoverBg} transition-colors`}
+                                  buttonText="Google Maps"
+                                />
                             )}
                         </div>
                     );

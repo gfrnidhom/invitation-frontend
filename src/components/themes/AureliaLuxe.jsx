@@ -8,6 +8,7 @@ import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
 import MusicPlayer from './partials/MusicPlayer';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 
 // Google Fonts for Modern Minimalist Look
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
@@ -288,14 +289,12 @@ export default function AureliaLuxe({ payload, audioController }) {
                                             </div>
                                         </div>
                                         <div className="md:w-1/4 flex flex-col items-center md:items-end md:justify-center h-full pt-4">
-                                           {event.latitude && event.longitude ? (
-                                               <a href={`https://maps.google.com/?q=${event.latitude},${event.longitude}`} target="_blank" rel="noreferrer" className="w-full text-center px-4 py-2 border border-gray-300 text-[9px] uppercase tracking-widest font-bold text-gray-600 hover:bg-black hover:text-white transition-colors bg-white">
-                                                   Google Maps
-                                               </a>
-                                           ) : (
-                                               <span className="w-full text-center px-4 py-2 border border-dashed border-gray-300 text-[9px] uppercase tracking-widest font-bold text-gray-400">
-                                                   Lokasi Tertutup
-                                               </span>
+                                           {getMapUrl(event) && (
+                                               <MapLocationButton
+                                                   item={event}
+                                                   className="w-full text-center px-4 py-2 border border-gray-300 text-[9px] uppercase tracking-widest font-bold text-gray-600 hover:bg-black hover:text-white transition-colors bg-white"
+                                                   buttonText="Google Maps"
+                                               />
                                            )}
                                         </div>
                                     </div>

@@ -7,6 +7,7 @@ import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
 import MusicPlayer from './partials/MusicPlayer';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400','500','600','700','800','900'] });
 const bodoni = Bodoni_Moda({ subsets: ['latin'], weight: ['400','500','600','700','800','900'], style: ['normal','italic'] });
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['200','300','400','500','600','700','800'] });
@@ -169,7 +170,7 @@ export default function MonoChromeV({ payload, audioController }) {
                                     <p className={`${montserrat.className} text-sm text-[#1c1c1e]/40 font-light mb-1`}>{ev.date?new Date(ev.date).toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'}):''}</p>
                                     <p className={`${montserrat.className} text-sm text-[#1c1c1e]/40 font-light mb-3`}>Pukul : {ev.time_start?.substring(0,5)||'TBA'} {ev.time_end?`- ${ev.time_end.substring(0,5)}`:'- Selesai'} WIB</p>
                                     {ev.location&&<p className={`${montserrat.className} text-sm text-[#1c1c1e]/55 pt-3 border-t border-[#1c1c1e]/5`}>{ev.location}</p>}
-                                    {(ev.latitude&&ev.longitude)&&<a href={`https://maps.google.com/?q=${ev.latitude},${ev.longitude}`} target="_blank" rel="noreferrer" className={`${cinzel.className} inline-flex items-center gap-2 bg-[#1c1c1e] text-[#f2f2f7] px-6 py-3 text-[9px] tracking-[.15em] hover:bg-[#2c2c2e] transition-all duration-500 mt-4 rounded-lg`}><svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>Lihat Lokasi</a>}
+                                    {getMapUrl(ev)&&<MapLocationButton item={ev} className={`${cinzel.className} inline-flex items-center gap-2 bg-[#1c1c1e] text-[#f2f2f7] px-6 py-3 text-[9px] tracking-[.15em] hover:bg-[#2c2c2e] transition-all duration-500 mt-4 rounded-lg`} buttonText="Lihat Lokasi"><svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg><span>Lihat Lokasi</span></MapLocationButton>}
                                 </div>
                             )):<div className="m5cw rounded-3xl p-10 text-center"><h3 className={`${cinzel.className} text-lg tracking-[.1em] text-[#1c1c1e] mb-2`}>Acara Pernikahan</h3></div>}
                         </section>

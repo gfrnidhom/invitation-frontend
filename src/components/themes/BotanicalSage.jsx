@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import Gallery from './partials/Gallery';
 import MusicPlayer from './partials/MusicPlayer';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500'] });
@@ -185,10 +186,10 @@ export default function BotanicalSage({ payload, audioController }) {
     const groomPhoto = getPhoto(invitation?.groom_photo);
     const bridePhoto = getPhoto(invitation?.bride_photo);
 
-    // Background video URL
-    const bgVideoUrl = invitation?.background_video_url || null;
+    // Background video / live streaming URL
+    const bgVideoUrl = invitation?.live_streaming_link || invitation?.background_video_url || null;
     const isYoutube = bgVideoUrl && (bgVideoUrl.includes('youtube.com') || bgVideoUrl.includes('youtu.be'));
-    const youtubeEmbedUrl = bgVideoUrl ? (bgVideoUrl.includes('watch?v=') ? bgVideoUrl.replace('watch?v=', 'embed/').split('&')[0] : bgVideoUrl.replace('youtu.be/', 'www.youtube.com/embed/').split('?')[0]) : '';
+    const youtubeEmbedUrl = bgVideoUrl && isYoutube ? (bgVideoUrl.includes('watch?v=') ? bgVideoUrl.replace('watch?v=', 'embed/').split('&')[0] : bgVideoUrl.replace('youtu.be/', 'www.youtube.com/embed/').split('?')[0]) : '';
     const videoSrc = bgVideoUrl && !isYoutube ? (bgVideoUrl.startsWith('http') ? bgVideoUrl : `${STORAGE_URL}/${bgVideoUrl}`) : null;
 
     return (
@@ -443,11 +444,15 @@ export default function BotanicalSage({ payload, audioController }) {
                                                 <span className="block text-[9px] opacity-70 max-w-[200px] mx-auto text-center mt-1">{event.address || ''}</span>
                                             </p>
                                         </div>
-                                        {(event.latitude && event.longitude) && (
-                                            <a href={`https://maps.google.com/?q=${event.latitude},${event.longitude}`} target="_blank" rel="noreferrer" className="sage-btn inline-flex items-center gap-2 px-8 py-3 rounded-full text-[10px] uppercase tracking-widest font-bold">
+                                        {getMapUrl(event) && (
+                                            <MapLocationButton
+                                                item={event}
+                                                className="sage-btn inline-flex items-center gap-2 px-8 py-3 rounded-full text-[10px] uppercase tracking-widest font-bold"
+                                                buttonText="View on Map"
+                                            >
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z"/></svg>
-                                                View on Map
-                                            </a>
+                                                <span>View on Map</span>
+                                            </MapLocationButton>
                                         )}
                                     </div>
                                 ))
@@ -459,26 +464,17 @@ export default function BotanicalSage({ payload, audioController }) {
                 </section>
 
                 {/* ── 5. BACKGROUND VIDEO / CINEMATIC SECTION ── */}
-                <section className="relative w-full bs-reveal">
-                    <div className="w-full h-[60vh] md:h-[80vh] relative bg-[#2a362c] flex items-center justify-center overflow-hidden">
-                        {bgVideoUrl ? (
-                            isYoutube ? (
+                {bgVideoUrl && (
+                    <section className="relative w-full bs-reveal">
+                        <div className="w-full h-[60vh] md:h-[80vh] relative bg-[#2a362c] flex items-center justify-center overflow-hidden">
+                            {isYoutube ? (
                                 <iframe className="absolute inset-0 w-full h-full" src={`${youtubeEmbedUrl}?autoplay=0&controls=1&modestbranding=1`} title="Wedding Video" frameBorder="0" allowFullScreen />
                             ) : (
                                 <video controls className="absolute inset-0 w-full h-full object-cover" src={videoSrc} />
-                            )
-                        ) : (
-                            <>
-                                {activeCover && <img src={activeCover} alt="Cinematic" className="absolute inset-0 w-full h-full object-cover opacity-50" />}
-                                <div className="absolute inset-0 bg-[#2a362c]/60" />
-                                <div className="relative z-10 text-center px-6">
-                                    <WeddingRings className="w-24 h-14 mx-auto mb-4 opacity-40" />
-                                    <p className={`${playfair.className} text-2xl md:text-3xl text-white/80 italic`}>Our Love Story</p>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                </section>
+                            )}
+                        </div>
+                    </section>
+                )}
 
                 {/* ── 6. OUR MOMENTS GALLERY ── */}
                 <Gallery 

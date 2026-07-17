@@ -8,6 +8,7 @@ import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
 import MusicPlayer from './partials/MusicPlayer';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] });
 const greatVibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
@@ -406,12 +407,15 @@ export default function MinimalistBlack({ payload, audioController }) {
                                                 </div>
                                             )}
 
-                                            {(event.latitude && event.longitude) && (
-                                                <a href={`https://maps.google.com/?q=${event.latitude},${event.longitude}`} target="_blank" rel="noreferrer"
-                                                    className={`${cinzel.className} inline-flex items-center gap-2 border border-white/20 px-6 py-3 text-[10px] tracking-[0.2em] uppercase text-white/60 hover:bg-white hover:text-black transition-all duration-500 mt-4`}>
+                                            {getMapUrl(event) && (
+                                                <MapLocationButton
+                                                    item={event}
+                                                    className={`${cinzel.className} inline-flex items-center gap-2 border border-white/20 px-6 py-3 text-[10px] tracking-[0.2em] uppercase text-white/60 hover:bg-white hover:text-black transition-all duration-500 mt-4`}
+                                                    buttonText="Lihat Lokasi"
+                                                >
                                                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
-                                                    Lihat Lokasi
-                                                </a>
+                                                    <span>Lihat Lokasi</span>
+                                                </MapLocationButton>
                                             )}
                                         </div>
                                     </div>

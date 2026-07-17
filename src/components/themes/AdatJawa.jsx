@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Cormorant_Infant, Poppins, Great_Vibes } from 'next/font/google';
 import toast from 'react-hot-toast';
 import GiftAtmCard from './partials/GiftAtmCard';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 
 const cormorant = Cormorant_Infant({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
 const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
@@ -595,11 +596,12 @@ export default function AdatJawa({ payload, audioController }) {
                                             {event.address || ''}
                                         </p>
 
-                                        {(event.latitude && event.longitude) && (
-                                            <a href={`https://maps.google.com/?q=${event.latitude},${event.longitude}`} target="_blank" rel="noreferrer"
-                                                className="bg-[#2C1E16] hover:bg-black text-[#D8B67D] py-3.5 px-8 rounded-sm text-[9px] font-bold tracking-[0.2em] uppercase inline-block shadow-md transition-colors border border-[#2C1E16]">
-                                                Petunjuk Arah Map
-                                            </a>
+                                        {getMapUrl(event) && (
+                                            <MapLocationButton
+                                                item={event}
+                                                className="bg-[#2C1E16] hover:bg-black text-[#D8B67D] py-3.5 px-8 rounded-sm text-[9px] font-bold tracking-[0.2em] uppercase inline-block shadow-md transition-colors border border-[#2C1E16]"
+                                                buttonText="Petunjuk Arah Map"
+                                            />
                                         )}
                                     </div>
                                 </div>

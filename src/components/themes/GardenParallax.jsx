@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import Gallery from './partials/Gallery';
 import MusicPlayer from './partials/MusicPlayer';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 
 const pinyon = Pinyon_Script({ subsets: ['latin'], weight: ['400'] });
 const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
@@ -358,9 +359,13 @@ export default function GardenParallax({ payload, audioController }) {
                                         <p>{ev.time_start} - {ev.time_end || 'Selesai'}</p>
                                         <p className="pt-4 text-[#34495e] font-medium">{ev.location}</p>
                                     </div>
-                                    <a href={`https://maps.google.com/?q=${ev.latitude},${ev.longitude}`} target="_blank" rel="noreferrer" className="garden-btn inline-block text-[8px] py-3">
-                                        Open Location
-                                    </a>
+                                    {getMapUrl(ev) && (
+                                        <MapLocationButton
+                                            item={ev}
+                                            className="garden-btn inline-block text-[8px] py-3"
+                                            buttonText="Open Location"
+                                        />
+                                    )}
                                 </div>
                             ))}
                         </div>

@@ -13,6 +13,7 @@ import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import CountdownTimer from './partials/CountdownTimer';
 import MusicPlayer from './partials/MusicPlayer';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 import TurutMengundang from './partials/TurutMengundang';
 
 const headingFont = Playfair_Display({ 
@@ -213,11 +214,15 @@ export default function EksklusifModern({ payload, audioController }) {
               </div>
               <p className="text-xs text-[#d79e60] uppercase tracking-[0.3em] mb-2">Where</p>
               <p className={`${headingFont.className} text-2xl text-white mb-4 leading-tight`}>{invitation.location}</p>
-              {invitation.latitude && invitation.longitude && (
-                <a href={`https://maps.google.com/?q=${invitation.latitude},${invitation.longitude}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 text-[#e1b984] hover:text-[#edd5af] transition-colors mt-4 group">
+              {getMapUrl(invitation) && (
+                <MapLocationButton
+                  item={invitation}
+                  className="inline-flex items-center gap-3 text-[#e1b984] hover:text-[#edd5af] transition-colors mt-4 group"
+                  buttonText="Open Map"
+                >
                   <span className="text-sm uppercase tracking-wider font-medium">Open Map</span>
                   <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-                </a>
+                </MapLocationButton>
               )}
             </div>
           </div>

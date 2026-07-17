@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import QrCheckin from './partials/QrCheckin';
 import Gallery from './partials/Gallery';
 import MusicPlayer from './partials/MusicPlayer';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] });
 const greatVibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
@@ -432,11 +433,12 @@ export default function MinimalistNavy({ payload, audioController }) {
                                                 </div>
                                             </div>
                                         </div>
-                                        {(event.latitude && event.longitude) && (
-                                            <a href={`https://maps.google.com/?q=${event.latitude},${event.longitude}`} target="_blank" rel="noreferrer"
-                                                className="navy-btn mt-6 w-full py-3 rounded-full text-[10px] tracking-[0.2em] uppercase text-center block">
-                                                Lihat Lokasi
-                                            </a>
+                                        {getMapUrl(event) && (
+                                            <MapLocationButton
+                                                item={event}
+                                                className="navy-btn mt-6 w-full py-3 rounded-full text-[10px] tracking-[0.2em] uppercase text-center block"
+                                                buttonText="Lihat Lokasi"
+                                            />
                                         )}
                                     </div>
                                 </div>

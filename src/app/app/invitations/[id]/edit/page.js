@@ -238,8 +238,7 @@ function InfoTab({ invitation, onSave, saving }) {
     event_date: invitation?.event_date || '',
     event_time: invitation?.event_time || '',
     location: invitation?.location || '',
-    latitude: invitation?.latitude || '',
-    longitude: invitation?.longitude || '',
+    map_url: invitation?.map_url || (invitation?.latitude && invitation?.longitude ? `https://maps.google.com/?q=${invitation.latitude},${invitation.longitude}` : ''),
     description: invitation?.description || '',
   });
   const handleSave = () => {
@@ -262,9 +261,55 @@ function InfoTab({ invitation, onSave, saving }) {
         <div><label className="label">Waktu (mis: 08:00 - Selesai)</label><input className="input" placeholder="08:00 - Selesai" value={form.event_time} onChange={(e) => setForm({ ...form, event_time: e.target.value })} /></div>
       </div>
       <div><label className="label">Lokasi Utama (mis: Gedung Pancasila)</label><input className="input" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} /></div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-        <div><label className="label">Latitude Peta</label><input className="input" placeholder="-6.200000" value={form.latitude} onChange={(e) => setForm({ ...form, latitude: e.target.value })} /></div>
-        <div><label className="label">Longitude Peta</label><input className="input" placeholder="106.816666" value={form.longitude} onChange={(e) => setForm({ ...form, longitude: e.target.value })} /></div>
+      <div>
+        <label className="label">Link Google Maps (Alamat / URL Maps)</label>
+        <input 
+          className="input" 
+          placeholder="https://maps.app.goo.gl/... atau https://www.google.com/maps/..." 
+          value={form.map_url} 
+          onChange={(e) => setForm({ ...form, map_url: e.target.value })} 
+        />
+        <p style={{ fontSize: '12px', color: '#64748b', marginTop: '4px' }}>
+          Tempel alamat link dari Google Maps. QR Code untuk peta akan otomatis dibuat.
+        </p>
+        {form.map_url && form.map_url.trim() !== '' && (
+          <div style={{ marginTop: '12px', padding: '16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+            <img 
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=4&data=${encodeURIComponent(form.map_url.trim())}`} 
+              alt="QR Code Peta" 
+              style={{ width: '90px', height: '90px', borderRadius: '8px', background: '#fff', border: '1px solid #cbd5e1', objectFit: 'contain' }} 
+            />
+            <div style={{ flex: 1, minWidth: '200px' }}>
+              <div style={{ fontWeight: '600', fontSize: '13px', color: '#1e293b', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span>✨ Auto-generated QR Code Lokasi</span>
+              </div>
+              <div style={{ fontSize: '12px', color: '#64748b', marginTop: '4px', lineHeight: '1.4' }}>
+                QR Code ini otomatis terbuat dari alamat maps dan langsung aktif di semua tema undangan.
+              </div>
+              <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
+                <a 
+                  href={`https://api.qrserver.com/v1/create-qr-code/?size=500x500&margin=10&data=${encodeURIComponent(form.map_url.trim())}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  download="QRCode-Lokasi-Undangan.png"
+                  className="btn btn-ghost btn-sm"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', color: '#3b82f6', padding: '4px 10px', fontSize: '12px', border: '1px solid #bfdbfe', borderRadius: '6px', background: '#eff6ff' }}
+                >
+                  Download QR Code
+                </a>
+                <a 
+                  href={form.map_url.trim()}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-ghost btn-sm"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', color: '#64748b', padding: '4px 10px', fontSize: '12px' }}
+                >
+                  Buka Maps
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <div><label className="label">Deskripsi / Detail Tambahan Acara</label><textarea className="input" rows="2" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} style={{ resize: 'vertical' }} /></div>
       <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Info'}</button>
@@ -979,7 +1024,7 @@ function GroomTab(props) {
 
 function EventsTab({ invitationId }) {
   const [items, setItems] = useState([]); const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({ name: '', date: '', time_start: '', time_end: '', location: '', address: '', latitude: '', longitude: '', sort_order: '' }); 
+  const [form, setForm] = useState({ name: '', date: '', time_start: '', time_end: '', location: '', address: '', map_url: '', sort_order: '' }); 
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
@@ -992,8 +1037,6 @@ function EventsTab({ invitationId }) {
       if (payload.time_start) payload.time_start = payload.time_start.substring(0, 5);
       if (payload.time_end) payload.time_end = payload.time_end.substring(0, 5);
       if (payload.sort_order === '' || payload.sort_order === null) payload.sort_order = 0;
-      if (payload.latitude === '') payload.latitude = null;
-      if (payload.longitude === '') payload.longitude = null;
 
       if (editingId) {
         const res = await eventsApi.update(invitationId, editingId, payload);
@@ -1004,7 +1047,7 @@ function EventsTab({ invitationId }) {
         setItems(prev => [...prev, res.data || res]); 
         toast.success('Acara ditambahkan');
       }
-      setForm({ name: '', date: '', time_start: '', time_end: '', location: '', address: '', latitude: '', longitude: '', sort_order: '' }); 
+      setForm({ name: '', date: '', time_start: '', time_end: '', location: '', address: '', map_url: '', sort_order: '' }); 
       setShowForm(false); 
       setEditingId(null);
     } catch (err) { 
@@ -1013,7 +1056,7 @@ function EventsTab({ invitationId }) {
   };
 
   const handleEdit = (event) => {
-    setForm({ name: event.name || '', date: event.date || '', time_start: event.time_start || '', time_end: event.time_end || '', location: event.location || '', address: event.address || '', latitude: event.latitude || '', longitude: event.longitude || '', sort_order: event.sort_order || '' });
+    setForm({ name: event.name || '', date: event.date || '', time_start: event.time_start || '', time_end: event.time_end || '', location: event.location || '', address: event.address || '', map_url: event.map_url || (event.latitude && event.longitude ? `https://maps.google.com/?q=${event.latitude},${event.longitude}` : ''), sort_order: event.sort_order || '' });
     setEditingId(event.id);
     setShowForm(true);
   };
@@ -1024,13 +1067,38 @@ function EventsTab({ invitationId }) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '600', margin: 0 }}>Daftar Acara</h3>
-        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ name: '', date: '', time_start: '', time_end: '', location: '', address: '', latitude: '', longitude: '', sort_order: '' }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
+        <button className="btn btn-primary btn-sm" onClick={() => { setForm({ name: '', date: '', time_start: '', time_end: '', location: '', address: '', map_url: '', sort_order: '' }); setEditingId(null); setShowForm(!showForm); }}>{showForm ? 'Batal' : <><Plus size={14} /> Tambah</>}</button>
       </div>
       {showForm && (
         <div style={{ display: 'grid', gap: '12px', marginBottom: '20px', padding: '20px', background: '#f8fafc', borderRadius: '12px' }}>
-          {[{ key: 'name', label: 'Nama Acara', placeholder: 'Akad Nikah' }, { key: 'date', label: 'Tanggal', type: 'date' }, { key: 'time_start', label: 'Waktu Mulai', type: 'time' }, { key: 'time_end', label: 'Waktu Selesai (Opsional)', type: 'time' }, { key: 'location', label: 'Nama Tempat/Lokasi', placeholder: 'Masjid Al-Ikhlas' }, { key: 'address', label: 'Alamat Lengkap', placeholder: 'Jl. Merdeka No. 1' }, { key: 'latitude', label: 'Latitude Peta', placeholder: '-6.200000' }, { key: 'longitude', label: 'Longitude Peta', placeholder: '106.816666' }, { key: 'sort_order', label: 'Urutan (Makin kecil makin awal)', type: 'number' }].map((f) => (
-            <div key={f.key}><label className="label">{f.label}</label><input className="input" type={f.type || 'text'} placeholder={f.placeholder || ''} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} /></div>
+          {[{ key: 'name', label: 'Nama Acara', placeholder: 'Akad Nikah' }, { key: 'date', label: 'Tanggal', type: 'date' }, { key: 'time_start', label: 'Waktu Mulai', type: 'time' }, { key: 'time_end', label: 'Waktu Selesai (Opsional)', type: 'time' }, { key: 'location', label: 'Nama Tempat/Lokasi', placeholder: 'Masjid Al-Ikhlas' }, { key: 'address', label: 'Alamat Lengkap', placeholder: 'Jl. Merdeka No. 1' }, { key: 'map_url', label: 'Link Google Maps (Alamat / URL Maps)', placeholder: 'https://maps.app.goo.gl/... atau https://www.google.com/maps/...' }, { key: 'sort_order', label: 'Urutan (Makin kecil makin awal)', type: 'number' }].map((f) => (
+            <div key={f.key}><label className="label">{f.label}</label><input className="input" type={f.type || 'text'} placeholder={f.placeholder || ''} value={form[f.key] || ''} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} /></div>
           ))}
+          {form.map_url && form.map_url.trim() !== '' && (
+            <div style={{ marginTop: '4px', padding: '14px', background: '#fff', borderRadius: '10px', border: '1px solid #cbd5e1', display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+              <img 
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=4&data=${encodeURIComponent(form.map_url.trim())}`} 
+                alt="QR Code Peta Acara" 
+                style={{ width: '76px', height: '76px', borderRadius: '8px', background: '#fff', border: '1px solid #cbd5e1', objectFit: 'contain' }} 
+              />
+              <div style={{ flex: 1, minWidth: '180px' }}>
+                <div style={{ fontWeight: '600', fontSize: '13px', color: '#1e293b' }}>✨ Auto-generated QR Code Lokasi Acara</div>
+                <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>QR Code otomatis dari link maps untuk acara ini.</div>
+                <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+                  <a 
+                    href={`https://api.qrserver.com/v1/create-qr-code/?size=500x500&margin=10&data=${encodeURIComponent(form.map_url.trim())}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    download="QRCode-Acara.png"
+                    className="btn btn-ghost btn-sm"
+                    style={{ color: '#3b82f6', padding: '3px 8px', fontSize: '12px', border: '1px solid #bfdbfe', borderRadius: '6px', background: '#eff6ff' }}
+                  >
+                    Download QR Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
           <button className="btn btn-primary btn-sm" onClick={handleSave}><Save size={14} /> {editingId ? 'Update Acara' : 'Simpan Acara'}</button>
         </div>
       )}

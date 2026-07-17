@@ -8,6 +8,7 @@ import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
 import MusicPlayer from './partials/MusicPlayer';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 
 const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
 const sacramento = Sacramento({ subsets: ['latin'], weight: ['400'] });
@@ -305,11 +306,15 @@ export default function EarthyNature({ payload, audioController }) {
                                         <p className="text-sm text-[#3d2b1f]/50 mb-1">{event.date ? new Date(event.date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) : ''}</p>
                                         <p className="text-sm text-[#3d2b1f]/50 mb-3">Pukul : {event.time_start?.substring(0, 5) || 'TBA'} {event.time_end ? `- ${event.time_end.substring(0, 5)}` : '- Selesai'} WIB</p>
                                         {event.location && <p className="text-sm text-[#3d2b1f]/60 font-medium pt-3 border-t border-[#3d2b1f]/10">{event.location}</p>}
-                                        {(event.latitude && event.longitude) && (
-                                            <a href={`https://maps.google.com/?q=${event.latitude},${event.longitude}`} target="_blank" rel="noreferrer" className={`${cormorant.className} inline-flex items-center gap-2 border border-[#8a9a5b]/40 px-6 py-3 text-[10px] tracking-[0.2em] uppercase text-[#8a9a5b] hover:bg-[#8a9a5b] hover:text-white transition-all duration-500 mt-4 rounded-lg`}>
+                                        {getMapUrl(event) && (
+                                            <MapLocationButton
+                                                item={event}
+                                                className={`${cormorant.className} inline-flex items-center gap-2 border border-[#8a9a5b]/40 px-6 py-3 text-[10px] tracking-[0.2em] uppercase text-[#8a9a5b] hover:bg-[#8a9a5b] hover:text-white transition-all duration-500 mt-4 rounded-lg`}
+                                                buttonText="Lihat Lokasi"
+                                            >
                                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
-                                                Lihat Lokasi
-                                            </a>
+                                                <span>Lihat Lokasi</span>
+                                            </MapLocationButton>
                                         )}
                                     </div>
                                 ))

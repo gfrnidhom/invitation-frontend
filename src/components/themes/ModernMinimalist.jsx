@@ -12,6 +12,7 @@ import Guestbook from './partials/Guestbook';
 import QrCheckin from './partials/QrCheckin';
 import BottomNav from './partials/BottomNav';
 import MusicPlayer from './partials/MusicPlayer';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 import TurutMengundang from './partials/TurutMengundang';
 
 const storageUrl = process.env.NEXT_PUBLIC_STORAGE_URL || 'https://app.digitvitation.my.id/storage';
@@ -204,11 +205,15 @@ export default function ModernMinimalist({ payload, audioController }) {
                         <div className="bg-white/5 rounded-2xl p-8 backdrop-blur-sm border border-white/10">
                             <p className="font-body text-[10px] tracking-[0.3em] uppercase text-gray-500 mb-4">Where</p>
                             <p className="font-heading text-2xl font-semibold">{invitation?.location || 'Venue'}</p>
-                            {(invitation?.latitude && invitation?.longitude) && (
-                                <a href={`https://maps.google.com/?q=${invitation.latitude},${invitation.longitude}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-white/60 text-sm mt-4 hover:text-white transition-colors">
+                            {getMapUrl(invitation) && (
+                                <MapLocationButton
+                                  item={invitation}
+                                  className="inline-flex items-center gap-2 text-white/60 text-sm mt-4 hover:text-white transition-colors"
+                                  buttonText="View on Maps"
+                                >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
-                                    View on Maps
-                                </a>
+                                    <span>View on Maps</span>
+                                </MapLocationButton>
                             )}
                         </div>
                     </div>

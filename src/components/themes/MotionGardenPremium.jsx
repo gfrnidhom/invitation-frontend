@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Cormorant_Infant, Poppins, Great_Vibes } from 'next/font/google';
 import toast from 'react-hot-toast';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 
 const cormorant = Cormorant_Infant({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
 const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
@@ -497,11 +498,12 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                         {event.address || ''}
                                     </p>
 
-                                    {(event.latitude && event.longitude) && (
-                                        <a href={`https://maps.google.com/?q=${event.latitude},${event.longitude}`} target="_blank" rel="noreferrer"
-                                            className="bg-green-accent hover:bg-[#465b4b] text-white py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-block shadow-md transition-colors">
-                                            Google Map
-                                        </a>
+                                    {getMapUrl(event) && (
+                                        <MapLocationButton
+                                            item={event}
+                                            className="bg-green-accent hover:bg-[#465b4b] text-white py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-block shadow-md transition-colors"
+                                            buttonText="Google Map"
+                                        />
                                     )}
                                 </div>
                             ))}

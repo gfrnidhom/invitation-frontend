@@ -7,6 +7,7 @@ import QrCheckin from './partials/QrCheckin';
 import VideoEmbed from './partials/VideoEmbed';
 import Gallery from './partials/Gallery';
 import MusicPlayer from './partials/MusicPlayer';
+import { MapLocationButton, getMapUrl } from './partials/MapLocation';
 
 const cinzel = Cinzel({ subsets: ['latin'], weight: ['400','500','600','700','800','900'] });
 const greatVibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
@@ -87,8 +88,8 @@ export default function CinematicVow({ payload, audioController }) {
 
     // Parse video URL — support YouTube, direct MP4, and storage paths
     const getVideoSrc = () => {
-        const url = invitation?.background_video_url;
-        if (!url) return null;
+        const url = invitation?.live_streaming_link || invitation?.background_video_url;
+        if (!url || (typeof url === 'string' && url.trim() === '')) return null;
         // YouTube
         if (url.includes('youtube.com') || url.includes('youtu.be')) {
             let vid = '';
@@ -434,11 +435,15 @@ export default function CinematicVow({ payload, audioController }) {
                                         <p className="text-sm text-white/30 font-light mb-1">{ev.date ? new Date(ev.date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) : ''}</p>
                                         <p className="text-sm text-white/30 font-light mb-3">Pukul : {ev.time_start?.substring(0, 5) || 'TBA'} {ev.time_end ? `- ${ev.time_end.substring(0, 5)}` : '- Selesai'} WIB</p>
                                         {ev.location && <p className="text-sm text-white/40 pt-3 border-t border-white/5">{ev.location}</p>}
-                                        {(ev.latitude && ev.longitude) && (
-                                            <a href={`https://maps.google.com/?q=${ev.latitude},${ev.longitude}`} target="_blank" rel="noreferrer" className={`${cinzel.className} inline-flex items-center gap-2 cv-card px-6 py-3 text-[9px] tracking-[.15em] text-white/50 hover:bg-white/10 transition-all duration-500 mt-4 rounded-lg`}>
+                                        {getMapUrl(ev) && (
+                                            <MapLocationButton
+                                                item={ev}
+                                                className={`${cinzel.className} inline-flex items-center gap-2 cv-card px-6 py-3 text-[9px] tracking-[.15em] text-white/50 hover:bg-white/10 transition-all duration-500 mt-4 rounded-lg`}
+                                                buttonText="Lihat Lokasi"
+                                            >
                                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
-                                                Lihat Lokasi
-                                            </a>
+                                                <span>Lihat Lokasi</span>
+                                            </MapLocationButton>
                                         )}
                                     </div>
                                 ))
