@@ -5,7 +5,7 @@ import React from 'react';
 const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL || 'http://127.0.0.1:8000/storage';
 
 export default function VideoEmbed({ invitation, sectionBg = 'bg-transparent', textColor = 'text-current', borderColor = 'border-white/10' }) {
-    const videoUrl = invitation?.live_streaming_link || invitation?.background_video_url || invitation?.video_url;
+    const videoUrl = invitation?.live_streaming_link || invitation?.live_stream_url || invitation?.video_url;
 
     if (!videoUrl || (typeof videoUrl === 'string' && videoUrl.trim() === '')) return null;
 
