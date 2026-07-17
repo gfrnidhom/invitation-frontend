@@ -76,14 +76,17 @@ export function MapLocationButton({
             setShowQrModal(true);
           }}
           className={
-            className ||
-            'inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-slate-900 text-white font-medium text-xs shadow-md hover:bg-black transition-all cursor-pointer'
+            className
+              ? `${className.replace(/\bfc\b|\bflex-col\b/g, '')} !flex-row inline-flex items-center justify-center gap-2`
+              : 'inline-flex !flex-row items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-slate-900 text-white font-medium text-xs shadow-md hover:bg-black transition-all cursor-pointer'
           }
           style={style}
           title="Lihat E-Ticket QR Code Peta Lokasi"
         >
-          <QrCode className="w-4 h-4 flex-shrink-0" />
-          <span>QR Peta</span>
+          <span className="inline-flex flex-row items-center justify-center gap-2">
+            <QrCode className="w-4 h-4 flex-shrink-0" />
+            <span>QR Peta</span>
+          </span>
         </button>
       </div>
 
