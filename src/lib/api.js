@@ -85,7 +85,11 @@ export const invitations = {
       if (!data.has('_method')) data.append('_method', 'PUT');
       return request(`/invitations/${id}`, { method: 'POST', body: data });
     }
-    return request(`/invitations/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+    return request(`/invitations/${id}`, {
+      method: 'POST',
+      body: JSON.stringify({ ...data, _method: 'PUT' }),
+      headers: { 'X-HTTP-Method-Override': 'PUT' }
+    });
   },
   delete: (id) => request(`/invitations/${id}`, { method: 'DELETE' }),
   publish: (id) => request(`/invitations/${id}/publish`, { method: 'POST' }),
@@ -115,7 +119,11 @@ export const guests = {
 export const events = {
   list: (invitationId) => request(`/invitations/${invitationId}/events`),
   create: (invitationId, data) => request(`/invitations/${invitationId}/events`, { method: 'POST', body: JSON.stringify(data) }),
-  update: (invitationId, eventId, data) => request(`/events/${eventId}`, { method: 'PUT', body: JSON.stringify(data) }),
+  update: (invitationId, eventId, data) => request(`/events/${eventId}`, {
+    method: 'POST',
+    body: JSON.stringify({ ...data, _method: 'PUT' }),
+    headers: { 'X-HTTP-Method-Override': 'PUT' }
+  }),
   delete: (invitationId, eventId) => request(`/events/${eventId}`, { method: 'DELETE' }),
 };
 

@@ -243,7 +243,16 @@ function InfoTab({ invitation, onSave, saving }) {
   });
   const handleSave = () => {
     const fd = new FormData();
-    Object.keys(form).forEach(key => { if (form[key] !== null && form[key] !== '') fd.append(key, form[key]); });
+    Object.keys(form).forEach(key => {
+      let val = form[key];
+      if (key === 'map_url' && typeof val === 'string') {
+        let clean = val.trim();
+        const match = clean.match(/src=["']([^"']+)["']/i);
+        if (match && match[1]) clean = match[1];
+        val = clean;
+      }
+      if (val !== null && val !== '') fd.append(key, val);
+    });
     onSave(fd);
   };
   return (
@@ -917,7 +926,16 @@ function StreamingTab({ invitation, onSave, saving }) {
   });
   const handleSave = () => {
     const fd = new FormData();
-    Object.keys(form).forEach(key => fd.append(key, form[key]));
+    Object.keys(form).forEach(key => {
+      let val = form[key];
+      if (key === 'live_streaming_link' && typeof val === 'string') {
+        let clean = val.trim();
+        const match = clean.match(/src=["']([^"']+)["']/i);
+        if (match && match[1]) clean = match[1];
+        val = clean;
+      }
+      if (val !== null && val !== '') fd.append(key, val);
+    });
     onSave(fd);
   };
   return (
@@ -1034,9 +1052,21 @@ function EventsTab({ invitationId }) {
     try { 
       // Format time safely and omit empty strings for nullable numbers
       const payload = { ...form };
-      if (payload.time_start) payload.time_start = payload.time_start.substring(0, 5);
-      if (payload.time_end) payload.time_end = payload.time_end.substring(0, 5);
+      if (payload.time_start) payload.time_start = payload.time_start.substring(0, 5) || null;
+      if (payload.time_end) payload.time_end = payload.time_end.substring(0, 5) || null;
       if (payload.sort_order === '' || payload.sort_order === null) payload.sort_order = 0;
+      if (payload.address === '') payload.address = null;
+
+      if (payload.map_url) {
+        let cleanMap = payload.map_url.trim();
+        const iframeMatch = cleanMap.match(/src=["']([^"']+)["']/i);
+        if (iframeMatch && iframeMatch[1]) {
+          cleanMap = iframeMatch[1];
+        }
+        payload.map_url = cleanMap || null;
+      } else {
+        payload.map_url = null;
+      }
 
       if (editingId) {
         const res = await eventsApi.update(invitationId, editingId, payload);
