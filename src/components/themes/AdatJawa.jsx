@@ -611,7 +611,7 @@ export default function AdatJawa({ payload, audioController }) {
                 </section>
 
                 {/* ── Section 4: Live Streaming ── */}
-                {invitation?.live_stream_url && (
+                {(invitation?.live_streaming_link || invitation?.live_stream_url) && (
                 <section className="py-20 px-8 text-center bg-[#110e0c] relative">
                     <div className="absolute inset-0 opacity-[0.05] mix-blend-screen pointer-events-none" style={{ backgroundImage: `url('${ASSETS.pattern}')`, backgroundSize: '150px' }} />
                     <div className="pg-reveal relative z-10">
@@ -620,7 +620,7 @@ export default function AdatJawa({ payload, audioController }) {
                         <p className="text-[11px] leading-relaxed text-white/60 max-w-[280px] mx-auto mb-10 font-medium">
                             Saksikan momen sakral kami secara virtual melalui tautan siaran langsung berikut.
                         </p>
-                        <a href={invitation?.live_stream_url || '#'} target="_blank" rel="noreferrer"
+                        <a href={invitation?.live_streaming_link || invitation?.live_stream_url || '#'} target="_blank" rel="noreferrer"
                             className="bg-[#D8B67D] text-[#0C0B0A] py-3 px-8 rounded-sm text-[10px] font-bold tracking-[0.2em] uppercase inline-flex items-center gap-2 transition-colors hover:bg-white">
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
                             Gabung Siaran
