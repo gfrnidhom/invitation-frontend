@@ -203,7 +203,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
             )}
 
             {/* ══════════════════════ LEFT PANE (DESKTOP) ══════════════════════ */}
-            <div className="hidden lg:block g1-split-left bg-[#9e7a4b] relative overflow-hidden">
+            <div className="hidden lg:block g1-split-left bg-[var(--theme-accent,#9e7a4b)] relative overflow-hidden">
                 <div className="absolute inset-0">
                     {coverPhoto ? (
                         <img src={coverPhoto} alt="Cover" className="w-full h-full object-cover object-center" />
@@ -230,7 +230,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
             <div className="g1-split-right relative min-h-screen shadow-2xl">
                 
                 {/* ── COVER SECTION ── */}
-                <section className={`absolute top-0 inset-x-0 h-[100dvh] lg:h-screen z-[60] flex flex-col items-center justify-between py-16 transition-all duration-[1200ms] ease-in-out ${isOpen ? 'opacity-0 pointer-events-none -translate-y-full' : 'opacity-100 bg-[#42382e]'}`}>
+                <section className={`absolute top-0 inset-x-0 h-[100dvh] lg:h-screen z-[60] flex flex-col items-center justify-between py-16 transition-all duration-[1200ms] ease-in-out ${isOpen ? 'opacity-0 pointer-events-none -translate-y-full' : 'opacity-100 bg-[var(--theme-accent,#42382e)]'}`}>
                     <div className="absolute inset-0">
                         {landingPhoto ? (
                             <img src={landingPhoto} alt="Cover Right" className="w-full h-full object-cover" />
@@ -259,7 +259,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                             </div>
                         )}
 
-                        <button onClick={handleOpen} className="bg-[#bda57b] hover:bg-[#a68f68] text-[#2a2a2a] px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 shadow-xl inline-flex items-center gap-2">
+                        <button onClick={handleOpen} className="bg-[var(--theme-accent,#bda57b)] hover:bg-[#a68f68] text-[#2a2a2a] px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 shadow-xl inline-flex items-center gap-2">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
                             Buka Undangan
                         </button>
@@ -270,7 +270,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                 <main className={`transition-all duration-[1000ms] w-full bg-white relative ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
 
                 {/* ── Section 0: Motion Hero ── */}
-                <section className="relative w-full h-screen overflow-hidden bg-[#2a2a2a]">
+                <section className="relative w-full h-screen overflow-hidden bg-[var(--theme-accent,#2a2a2a)]">
                     <video 
                         ref={heroVideoRef}
                         className="absolute inset-0 w-full h-full object-cover"
@@ -283,31 +283,31 @@ export default function MotionGardenPremium({ payload, audioController }) {
                     <div className={`absolute inset-0 bg-black/10 transition-opacity duration-1000 ${isOpen ? 'opacity-100' : 'opacity-0'}`} />
                     
                     <div className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none`}>
-                        <p className={`font-serif text-sm md:text-base text-[#1a1a1a] tracking-[0.25em] uppercase mb-6 font-medium drop-shadow-sm transition-all duration-1000 delay-300 ease-out ${showMotionText ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+                        <p className={`font-serif text-sm md:text-base text-[var(--theme-text,#1a1a1a)] tracking-[0.25em] uppercase mb-6 font-medium drop-shadow-sm transition-all duration-1000 delay-300 ease-out ${showMotionText ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                             The Wedding Of
                         </p>
                         
                         <div className={`flex flex-col items-center gap-1 mb-8 transition-all duration-1000 delay-500 ease-out ${showMotionText ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'}`}>
-                            <h1 className={`font-serif text-5xl md:text-6xl text-[#c5a059] uppercase tracking-widest leading-none drop-shadow-sm`}>
+                            <h1 className={`font-serif text-5xl md:text-6xl text-[var(--theme-text,#c5a059)] uppercase tracking-widest leading-none drop-shadow-sm`}>
                                 {invitation?.groom_name?.split(' ')[0]}
                             </h1>
                             
-                            <span className={`${greatVibes.className} text-4xl md:text-5xl text-[#c5a059] drop-shadow-sm my-1`}>
+                            <span className={`${greatVibes.className} text-4xl md:text-5xl text-[var(--theme-text,#c5a059)] drop-shadow-sm my-1`}>
                                 &
                             </span>
                             
-                            <h1 className={`font-serif text-5xl md:text-6xl text-[#c5a059] uppercase tracking-widest leading-none drop-shadow-sm`}>
+                            <h1 className={`font-serif text-5xl md:text-6xl text-[var(--theme-text,#c5a059)] uppercase tracking-widest leading-none drop-shadow-sm`}>
                                 {invitation?.bride_name?.split(' ')[0]}
                             </h1>
                         </div>
 
-                        <p className={`font-serif text-base md:text-lg font-bold text-[#1a1a1a] tracking-[0.4em] mb-12 drop-shadow-sm transition-all duration-1000 delay-700 ease-out ${showMotionText ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+                        <p className={`font-serif text-base md:text-lg font-bold text-[var(--theme-text,#1a1a1a)] tracking-[0.4em] mb-12 drop-shadow-sm transition-all duration-1000 delay-700 ease-out ${showMotionText ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                             {`${String(eventDate.getDate()).padStart(2, '0')} . ${String(eventDate.getMonth() + 1).padStart(2, '0')} . ${String(eventDate.getFullYear()).slice(2)}`}
                         </p>
 
                         <div className={`transition-all duration-1000 delay-1000 ease-out ${showMotionText ? 'opacity-100' : 'opacity-0'}`}>
                             <div className="animate-bounce border border-[#1a1a1a] rounded-[20px] w-[26px] h-[40px] flex items-center justify-center shadow-sm">
-                                <svg className="w-3 h-3 text-[#1a1a1a]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                                <svg className="w-3 h-3 text-[var(--theme-text,#1a1a1a)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                                 </svg>
                             </div>
@@ -350,13 +350,13 @@ export default function MotionGardenPremium({ payload, audioController }) {
                     <div className="relative z-10 w-full max-w-[360px] mx-auto border-2 border-[#bd9a5f] rounded-t-[250px] rounded-b-[250px] py-16 px-4">
                         <div className="g1-reveal mb-12 mt-4">
                             <img src={ORNAMENT_BOUQUET} alt="Bouquet" className="w-48 mx-auto mb-10 drop-shadow-xl hover:scale-105 transition-transform duration-700" />
-                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[#1a1a1a] leading-none mb-1`}>
+                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[var(--theme-text,#1a1a1a)] leading-none mb-1`}>
                                 We Are
                             </h2>
-                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[#1a1a1a] leading-none mb-8`}>
+                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[var(--theme-text,#1a1a1a)] leading-none mb-8`}>
                                 Getting Married!
                             </h2>
-                            <p className="text-[11px] leading-[1.8] text-[#1a1a1a] max-w-[260px] mx-auto font-medium">
+                            <p className="text-[11px] leading-[1.8] text-[var(--theme-text,#1a1a1a)] max-w-[260px] mx-auto font-medium">
                                 Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami:
                             </p>
                         </div>
@@ -372,9 +372,9 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                 <img src="/themes/motion-garden-premium/garden-v2-05-couple-depan-1.png" alt="" className="absolute right-[-20%] -bottom-6 w-48 h-auto z-20 pointer-events-none drop-shadow-xl" />
                             </div>
 
-                            <p className={`${greatVibes.className} text-[2.5rem] text-[#1a1a1a] mb-1 tracking-wide`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[#1a1a1a] mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
-                            <p className="text-[10px] text-[#1a1a1a]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
+                            <p className={`${greatVibes.className} text-[2.5rem] text-[var(--theme-text,#1a1a1a)] mb-1 tracking-wide`}>{invitation?.bride_name?.split(' ')[0]}</p>
+                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[var(--theme-text,#1a1a1a)] mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
+                            <p className="text-[10px] text-[var(--theme-text,#1a1a1a)]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                 Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bapak {invitation?.bride_father || '...'} <br/> & Ibu {invitation?.bride_mother || '...'}
                             </p>
                             {invitation?.bride_instagram && (
@@ -386,7 +386,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                         </div>
 
                         <div className="flex justify-center my-12 g1-reveal">
-                            <span className={`${greatVibes.className} text-6xl text-[#1a1a1a] drop-shadow-sm`}>&</span>
+                            <span className={`${greatVibes.className} text-6xl text-[var(--theme-text,#1a1a1a)] drop-shadow-sm`}>&</span>
                         </div>
 
                         <div className="g1-reveal" data-delay="2" style={{ paddingBottom: '2rem' }}>
@@ -399,9 +399,9 @@ export default function MotionGardenPremium({ payload, audioController }) {
 
                                 <img src="/themes/motion-garden-premium/garden-v2-05-couple-depan-flip-1.png" alt="" className="absolute left-[-20%] -bottom-6 w-48 h-auto z-20 pointer-events-none drop-shadow-xl" />
                             </div>
-                            <p className={`${greatVibes.className} text-[2.5rem] text-[#1a1a1a] mb-1 tracking-wide`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[#1a1a1a] mb-2`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
-                            <p className="text-[10px] text-[#1a1a1a]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
+                            <p className={`${greatVibes.className} text-[2.5rem] text-[var(--theme-text,#1a1a1a)] mb-1 tracking-wide`}>{invitation?.groom_name?.split(' ')[0]}</p>
+                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[var(--theme-text,#1a1a1a)] mb-2`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
+                            <p className="text-[10px] text-[var(--theme-text,#1a1a1a)]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                 Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bapak {invitation?.groom_father || '...'} <br/> & Ibu {invitation?.groom_mother || '...'}
                             </p>
                             {invitation?.groom_instagram && (
@@ -600,7 +600,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                             </div>
                                         )}
                                         <div className="p-6 text-center">
-                                            <h4 className={`font-serif text-2xl font-bold text-[#1a1a1a] mb-3 leading-tight`}>{story.title}</h4>
+                                            <h4 className={`font-serif text-2xl font-bold text-[var(--theme-text,#1a1a1a)] mb-3 leading-tight`}>{story.title}</h4>
                                             <p className="text-xs text-[var(--theme-text,#4A4A4A)]/70 leading-[1.9]">{story.description}</p>
                                         </div>
                                     </div>
