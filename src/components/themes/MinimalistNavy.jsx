@@ -155,7 +155,7 @@ export default function MinimalistNavy({ payload, audioController }) {
     const circularText = `${invitation?.groom_name || 'Groom'} & ${invitation?.bride_name || 'Bride'} · ${eventDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })} · Happy Wedding · `;
 
     return (
-        <div className={`min-h-screen bg-[#0B1D35] text-white ${jost.className} ${isOpen ? 'overflow-visible' : 'overflow-hidden'} minimalist-navy-theme`}>
+        <div className={`min-h-screen bg-[var(--theme-bg,#0B1D35)] text-white ${jost.className} ${isOpen ? 'overflow-visible' : 'overflow-hidden'} minimalist-navy-theme`}>
             <style dangerouslySetInnerHTML={{ __html: `
                 .minimalist-navy-theme .mn-reveal { opacity: 0; transform: translateY(35px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
                 .minimalist-navy-theme .mn-reveal.active { opacity: 1; transform: translateY(0); }
@@ -216,7 +216,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                     ) : (
                         <div className="w-full h-full bg-gradient-to-br from-[#0B1D35] via-[#162d4d] to-[#0B1D35]" />
                     )}
-                    <div className="absolute inset-0 bg-[#0B1D35]/65" />
+                    <div className="absolute inset-0 bg-[var(--theme-bg,#0B1D35)]/65" />
                 </div>
 
                 <div className="relative z-10 text-center px-8">
@@ -246,7 +246,7 @@ export default function MinimalistNavy({ payload, audioController }) {
             <main className={`transition-all duration-[1000ms] ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
 
                 {/* ─── LEFT PANEL (Fixed on Desktop, Hidden on Mobile) ─── */}
-                <div className="mn-split-left bg-[#0B1D35] relative hidden lg:flex flex-col justify-center px-8 md:px-12 lg:px-16 py-24 lg:py-0 min-h-screen lg:min-h-0">
+                <div className="mn-split-left bg-[var(--theme-bg,#0B1D35)] relative hidden lg:flex flex-col justify-center px-8 md:px-12 lg:px-16 py-24 lg:py-0 min-h-screen lg:min-h-0">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#0B1D35] via-[#112642] to-[#0B1D35] opacity-90" />
                     {coverPhoto && <img src={coverPhoto} alt="" className="absolute inset-0 w-full h-full object-cover opacity-10" />}
                     
@@ -258,7 +258,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                             {invitation?.groom_name} <span className="text-white/30">&</span> {invitation?.bride_name}
                         </h2>
 
-                        <p className="text-sm text-[#C9A96E] tracking-[0.2em] mb-12 font-medium mn-reveal" data-delay="2">
+                        <p className="text-sm text-[var(--theme-text,#C9A96E)] tracking-[0.2em] mb-12 font-medium mn-reveal" data-delay="2">
                             {eventDate.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })}
                         </p>
 
@@ -279,7 +279,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                 <div ref={rightPanelRef} className="mn-split-right">
 
                     {/* ── Section 1: Circular Text + Countdown ── */}
-                    <section className="bg-[#0B1D35] min-h-screen flex flex-col items-center justify-center px-8 py-24 relative overflow-hidden">
+                    <section className="bg-[var(--theme-bg,#0B1D35)] min-h-screen flex flex-col items-center justify-center px-8 py-24 relative overflow-hidden">
                         {/* Background for mobile */}
                         <div className="absolute inset-0 lg:hidden">
                             {coverPhoto && <img src={coverPhoto} alt="" className="w-full h-full object-cover opacity-20" />}
@@ -350,7 +350,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                 </section>
 
                     {/* ── Section 2: Greeting + Couple ── */}
-                    <section className="bg-[#f8f6f3] text-[#0B1D35] py-24 px-8">
+                    <section className="bg-[var(--theme-accent,#f8f6f3)] text-[#0B1D35] py-24 px-8">
                         <div className="text-center mb-16 mn-reveal">
                             <p className={`${playfair.className} text-sm tracking-widest uppercase text-[#0B1D35]/40 mb-4`}>Assalamualaikum Wr. Wb.</p>
                             <p className="text-sm text-[#0B1D35]/60 leading-[2] max-w-sm mx-auto">
@@ -394,7 +394,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                     </section>
 
                     {/* ── Section 3: Save The Date / Events ── */}
-                    <section className="bg-[#0B1D35] py-24 px-8 text-center">
+                    <section className="bg-[var(--theme-bg,#0B1D35)] py-24 px-8 text-center">
                         <div className="mn-reveal">
                             <p className={`${playfair.className} text-2xl text-white mb-0`}>Save The</p>
                             <p className={`${greatVibes.className} text-5xl gold-accent -mt-2 mb-12`}>Date</p>
@@ -452,7 +452,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                     <Gallery
                         layout="masonry"
                         invitation={invitation}
-                        sectionBg="bg-[#f8f6f3]"
+                        sectionBg="bg-[var(--theme-accent,#f8f6f3)]"
                         titleFont={playfair.className}
                         titleSize="text-3xl font-bold"
                         accentText="text-[#0B1D35]"
@@ -462,7 +462,7 @@ export default function MinimalistNavy({ payload, audioController }) {
 
                     {/* ── Section 5: Love Story ── */}
                     {invitation?.love_stories && invitation.love_stories.length > 0 && (
-                        <section className="bg-[#0B1D35] py-24 px-8">
+                        <section className="bg-[var(--theme-bg,#0B1D35)] py-24 px-8">
                             <div className="text-center mb-16 mn-reveal">
                                 <p className={`${playfair.className} text-2xl text-white`}>Our</p>
                                 <p className={`${greatVibes.className} text-5xl gold-accent -mt-2`}>Love Story</p>
@@ -487,10 +487,10 @@ export default function MinimalistNavy({ payload, audioController }) {
                     )}
 
                     {/* ── Section 6: QR Checkin ── */}
-                    <QrCheckin guest={guest} sectionBg="bg-[#f8f6f3]" titleFont={playfair.className} textColor="text-[#0B1D35]" borderStyle="border-[#0B1D35]/10" />
+                    <QrCheckin guest={guest} sectionBg="bg-[var(--theme-accent,#f8f6f3)]" titleFont={playfair.className} textColor="text-[#0B1D35]" borderStyle="border-[#0B1D35]/10" />
 
                     {/* ── Section 7: Wedding Gift ── */}
-                    <section className="bg-[#0B1D35] py-24 px-8 text-center">
+                    <section className="bg-[var(--theme-bg,#0B1D35)] py-24 px-8 text-center">
                         <div className="mn-reveal">
                             <p className={`${playfair.className} text-2xl text-white`}>Wedding</p>
                             <p className={`${greatVibes.className} text-5xl gold-accent -mt-2 mb-12`}>Gift</p>
@@ -515,7 +515,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                     </section>
 
                     {/* ── Section 8: Wishes ── */}
-                    <section className="bg-[#f8f6f3] py-24 px-8">
+                    <section className="bg-[var(--theme-accent,#f8f6f3)] py-24 px-8">
                         <div className="text-center mb-12 mn-reveal">
                             <p className={`${playfair.className} text-2xl text-[#0B1D35]`}>Wedding</p>
                             <p className={`${greatVibes.className} text-5xl gold-accent -mt-2`}>Wishes</p>
@@ -555,7 +555,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                     </section>
 
                     {/* ── FOOTER ── */}
-                <footer className="bg-[#0B1D35] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                <footer className="bg-[var(--theme-bg,#0B1D35)] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
@@ -565,7 +565,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
                             <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : (
-                            <div className="w-full h-full bg-[#0B1D35] opacity-40"></div>
+                            <div className="w-full h-full bg-[var(--theme-bg,#0B1D35)] opacity-40"></div>
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1D35] via-[#0B1D35]/60 to-transparent" />
                     </div>

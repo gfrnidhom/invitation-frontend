@@ -186,7 +186,7 @@ export default function MonoChrome({ payload, audioController }) {
                             ))}</div></section>}
 
                         {/* ── FOOTER ── */}
-                <footer className="bg-[#1a1a1a] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                <footer className="bg-[var(--theme-bg,#1a1a1a)] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
@@ -196,7 +196,7 @@ export default function MonoChrome({ payload, audioController }) {
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
                             <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : (
-                            <div className="w-full h-full bg-[#1a1a1a] opacity-40"></div>
+                            <div className="w-full h-full bg-[var(--theme-bg,#1a1a1a)] opacity-40"></div>
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-[#1a1a1a]/60 to-transparent" />
                     </div>

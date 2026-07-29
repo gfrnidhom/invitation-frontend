@@ -68,7 +68,7 @@ export default function TropicalParadise({ payload, audioController }) {
   }, []);
 
   return (
-    <div className={`min-h-screen bg-[#fffbf0] text-gray-800 antialiased ${bodyFont.className}`}>
+    <div className={`min-h-screen bg-[var(--theme-bg,#fffbf0)] text-gray-800 antialiased ${bodyFont.className}`}>
       
       <style jsx global>{`
         .reveal { opacity: 0; transform: translateY(25px); transition: all 0.7s ease-out; }
@@ -83,11 +83,11 @@ export default function TropicalParadise({ payload, audioController }) {
           setIsOpened(true);
           audioController?.play();
         }}
-        overlayBg="bg-[#fffbf0]" // sand-50
+        overlayBg="bg-[var(--theme-bg,#fffbf0)]" // sand-50
         titleFont={displayFont.className}
         subtitleFont={bodyFont.className}
-        accentColor="text-[#0f766e]" // tropic-700
-        btnBg="bg-[#14b8a6] shadow-lg shadow-[#14b8a6]/30 hover:bg-[#0d9488] text-white"
+        accentColor="text-[var(--theme-text,#0f766e)]" // tropic-700
+        btnBg="bg-[#14b8a6] shadow-lg shadow-[#14b8a6]/30 hover:bg-[var(--theme-accent,#0d9488)] text-white"
         coverGreeting="Aloha,"
       />
 
@@ -118,14 +118,14 @@ export default function TropicalParadise({ payload, audioController }) {
         <div className="relative z-10 w-full flex flex-col items-center justify-center reveal">
           {guestName && (
             <>
-              <p className={`font-sans text-sm uppercase tracking-widest ${coverPhotoUrl ? 'text-white/80' : 'text-[#0d9488]'} mb-2`}>Aloha,</p>
-              <p className={`${displayFont.className} text-xl font-semibold ${coverPhotoUrl ? 'text-white' : 'text-[#0f766e]'} mb-10`}>{guestName}</p>
+              <p className={`font-sans text-sm uppercase tracking-widest ${coverPhotoUrl ? 'text-white/80' : 'text-[var(--theme-accent,#0d9488)]'} mb-2`}>Aloha,</p>
+              <p className={`${displayFont.className} text-xl font-semibold ${coverPhotoUrl ? 'text-white' : 'text-[var(--theme-text,#0f766e)]'} mb-10`}>{guestName}</p>
             </>
           )}
 
           <p className={`text-xs tracking-[0.4em] uppercase ${coverPhotoUrl ? 'text-white/60' : 'text-[#2dd4bf]'} mb-6`}>You Are Invited To</p>
 
-          <h1 className={`${displayFont.className} text-6xl md:text-8xl font-bold ${coverPhotoUrl ? 'text-white drop-shadow-lg' : 'text-[#0f766e]'} leading-tight tracking-tight`}>
+          <h1 className={`${displayFont.className} text-6xl md:text-8xl font-bold ${coverPhotoUrl ? 'text-white drop-shadow-lg' : 'text-[var(--theme-text,#0f766e)]'} leading-tight tracking-tight`}>
             {invitation.groom_name}
           </h1>
           
@@ -135,7 +135,7 @@ export default function TropicalParadise({ payload, audioController }) {
             <div className="w-14 h-0.5 bg-gradient-to-l from-[#2dd4bf] to-[#fb7185] rounded-full"></div>
           </div>
           
-          <h1 className={`${displayFont.className} text-6xl md:text-8xl font-bold ${coverPhotoUrl ? 'text-white drop-shadow-lg' : 'text-[#0f766e]'} leading-tight tracking-tight`}>
+          <h1 className={`${displayFont.className} text-6xl md:text-8xl font-bold ${coverPhotoUrl ? 'text-white drop-shadow-lg' : 'text-[var(--theme-text,#0f766e)]'} leading-tight tracking-tight`}>
             {invitation.bride_name}
           </h1>
 
@@ -151,7 +151,7 @@ export default function TropicalParadise({ payload, audioController }) {
         sectionBg="bg-[#f0fdfa]" // tropic-50
         titleFont={bodyFont.className} 
         nameFont={displayFont.className}
-        accentText="text-[#0f766e]"
+        accentText="text-[var(--theme-text,#0f766e)]"
         subtitleText="text-[#2dd4bf]"
         borderColor="border-[#ccfbf1]"
       />
@@ -159,9 +159,9 @@ export default function TropicalParadise({ payload, audioController }) {
       {/* Turut Mengundang */}
       <TurutMengundang 
         invitation={invitation}
-        sectionBg="bg-[#fffbf0]"
+        sectionBg="bg-[var(--theme-bg,#fffbf0)]"
         accentText="text-gray-700"
-        subtitleText="text-[#0d9488]"
+        subtitleText="text-[var(--theme-accent,#0d9488)]"
         borderColor="border-[#2dd4bf]"
       />
 
@@ -172,7 +172,7 @@ export default function TropicalParadise({ payload, audioController }) {
           <p className="text-lg leading-relaxed text-gray-500">
             &quot;{invitation.quotes}&quot;
           </p>
-          {invitation.quotes_name && <p className="text-[10px] text-[#0d9488] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
+          {invitation.quotes_name && <p className="text-[10px] text-[var(--theme-accent,#0d9488)] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
         </section>
       )}
 
@@ -226,9 +226,9 @@ export default function TropicalParadise({ payload, audioController }) {
       <Gallery 
         layout="masonry" 
         invitation={invitation}
-        sectionBg="bg-[#fffbf0]"
+        sectionBg="bg-[var(--theme-bg,#fffbf0)]"
         titleFont={displayFont.className}
-        accentText="text-[#0f766e]"
+        accentText="text-[var(--theme-text,#0f766e)]"
         borderColor="border-[#fef7e6]"
       />
 
@@ -239,20 +239,20 @@ export default function TropicalParadise({ payload, audioController }) {
         cardBg="bg-white"
         titleFont={bodyFont.className}
         nameFont={displayFont.className}
-        accentText="text-[#0d9488]"
+        accentText="text-[var(--theme-accent,#0d9488)]"
         btnBg="bg-[#14b8a6]"
-        btnHoverBg="hover:bg-[#0d9488]"
+        btnHoverBg="hover:bg-[var(--theme-accent,#0d9488)]"
         btnBorder="border-[#2dd4bf]"
-        iconBg="bg-[#ccfbf1] text-[#0f766e]"
+        iconBg="bg-[#ccfbf1] text-[var(--theme-text,#0f766e)]"
       />
 
       {/* Love Story Timeline */}
       {(invitation.loveStories || invitation.love_stories) && (invitation.loveStories || invitation.love_stories).length > 0 && (
         <LoveStory 
           invitation={invitation}
-          sectionBg="bg-[#fffbf0]"
+          sectionBg="bg-[var(--theme-bg,#fffbf0)]"
           titleFont={displayFont.className}
-          accentText="text-[#0f766e]"
+          accentText="text-[var(--theme-text,#0f766e)]"
           borderColor="border-[#2dd4bf]/40"
           cardBg="bg-white border border-[#ccfbf1]"
         />
@@ -265,9 +265,9 @@ export default function TropicalParadise({ payload, audioController }) {
           invitation={invitation}
           sectionBg="bg-[#f0fdfa]"
           titleFont={displayFont.className}
-          accentText="text-[#0f766e]"
+          accentText="text-[var(--theme-text,#0f766e)]"
           cardBg="bg-white border border-[#ccfbf1]"
-          btnBg="bg-[#14b8a6] hover:bg-[#0d9488] text-white"
+          btnBg="bg-[#14b8a6] hover:bg-[var(--theme-accent,#0d9488)] text-white"
         />
       )}
 
@@ -296,7 +296,7 @@ export default function TropicalParadise({ payload, audioController }) {
 
       {/* Footer */}
       {/* ── FOOTER ── */}
-                <footer className="bg-[#f0fdfa] text-[#0f766e] pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                <footer className="bg-[#f0fdfa] text-[var(--theme-text,#0f766e)] pt-64 pb-24 px-8 text-center relative overflow-hidden">
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
@@ -316,26 +316,26 @@ export default function TropicalParadise({ payload, audioController }) {
                         <p className={`font-sans text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
                             Thank you for being part of our special day
                         </p>
-                        <h2 className={`font-serif text-5xl mb-4 text-[#0f766e] drop-shadow-sm`}>
+                        <h2 className={`font-serif text-5xl mb-4 text-[var(--theme-text,#0f766e)] drop-shadow-sm`}>
                             {invitation?.groom_name?.split(' ')[0]} <span className="text-black/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
                         </h2>
                         
                         {/* Branding */}
                         <div className="border-t border-[#0f766e]/10 pt-8 mt-12">
-                            <p className="text-[9px] text-[#0f766e]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <p className="text-[9px] text-[var(--theme-text,#0f766e)]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
                             <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-black/80 hover:text-black transition-colors">
                                 <span className={`font-serif text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
                             </a>
-                            <p className="text-[8px] text-[#0f766e]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
+                            <p className="text-[8px] text-[var(--theme-text,#0f766e)]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>
                     </div>
                 </footer>
 
       {/* Bottom Navigation */}
       <BottomNav 
-        navBg="bg-[#fffbf0]/95 border-t border-[#fef7e6]"
-        navActive="text-[#0f766e]"
-        navInactive="text-[#2dd4bf] hover:text-[#0f766e]"
+        navBg="bg-[var(--theme-bg,#fffbf0)]/95 border-t border-[#fef7e6]"
+        navActive="text-[var(--theme-text,#0f766e)]"
+        navInactive="text-[#2dd4bf] hover:text-[var(--theme-text,#0f766e)]"
         navBorder="border-none"
       />
 

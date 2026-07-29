@@ -164,7 +164,7 @@ export default function GardenParallax({ payload, audioController }) {
     const photos = invitation?.gallery?.length > 0 ? invitation.gallery.map(g => g.photo) : (invitation?.photos || []);
 
     return (
-        <div className={`min-h-screen bg-[#fcfbf7] text-[#2c3e50] ${jost.className} ${isOpen ? 'overflow-visible' : 'overflow-hidden'} garden-parallax-theme`}>
+        <div className={`min-h-screen bg-[var(--theme-bg,#fcfbf7)] text-[var(--theme-text,#2c3e50)] ${jost.className} ${isOpen ? 'overflow-visible' : 'overflow-hidden'} garden-parallax-theme`}>
             <style dangerouslySetInnerHTML={{ __html: `
                 .garden-parallax-theme .gp-reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
                 .garden-parallax-theme .gp-reveal.active { opacity: 1; transform: translateY(0); }
@@ -198,7 +198,7 @@ export default function GardenParallax({ payload, audioController }) {
 
             {/* ══════════════════════ COVER SECTION ══════════════════════ */}
             <section className={`fixed inset-0 z-[60] flex flex-col items-center justify-center transition-all duration-[1200ms] ease-in-out ${isOpen ? 'opacity-0 pointer-events-none -translate-y-full' : 'opacity-100'}`}>
-                <div className="absolute inset-0 bg-[#fcfbf7]">
+                <div className="absolute inset-0 bg-[var(--theme-bg,#fcfbf7)]">
                     {/* Background Parallax Layer */}
                     <div className="absolute inset-0 grayscale opacity-10" style={{ transform: `scale(1.1) translate(${mousePos.x * 20}px, ${mousePos.y * 20}px)` }}>
                         <img src={ASSETS.hero} alt="" className="w-full h-full object-cover" />
@@ -211,10 +211,10 @@ export default function GardenParallax({ payload, audioController }) {
 
                 <div className="relative z-10 text-center px-8">
                     <p className={`font-serif text-sm tracking-[0.4em] uppercase text-[#7f8c8d] mb-6`}>Wedding Invitation</p>
-                    <h1 className={`${pinyon.className} text-6xl md:text-8xl text-[#2c3e50] mb-8`}>
+                    <h1 className={`${pinyon.className} text-6xl md:text-8xl text-[var(--theme-text,#2c3e50)] mb-8`}>
                         {invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}
                     </h1>
-                    <div className="w-12 h-px bg-[#cbd5e0] mx-auto mb-10" />
+                    <div className="w-12 h-px bg-[var(--theme-accent,#cbd5e0)] mx-auto mb-10" />
                     
                     {guestName && (
                         <div className="mb-12">
@@ -257,7 +257,7 @@ export default function GardenParallax({ payload, audioController }) {
                         <div className="arch-image aspect-[4/5] shadow-2xl mb-12 border-[12px] border-[#fcfbf7]">
                             <img src={coverPhoto || ASSETS.hero} alt="" className="w-full h-full object-cover" />
                         </div>
-                        <h2 className={`${pinyon.className} text-6xl text-[#2c3e50] text-center`}>
+                        <h2 className={`${pinyon.className} text-6xl text-[var(--theme-text,#2c3e50)] text-center`}>
                             {invitation?.groom_name} & {invitation?.bride_name}
                         </h2>
                         <p className="text-center mt-6 text-[11px] tracking-[0.4em] uppercase text-[#95a5a6]">
@@ -283,7 +283,7 @@ export default function GardenParallax({ payload, audioController }) {
                     {/* Verse Section */}
                     <section className="py-24 px-8 text-center bg-white/30">
                         <div className="gp-reveal max-w-md mx-auto">
-                            <span className="text-3xl text-[#cbd5e0]">“</span>
+                            <span className="text-3xl text-[var(--theme-accent,#cbd5e0)]">“</span>
                             <p className={`font-serif text-lg leading-relaxed text-[#5d6d7e] italic`}>
                                 {invitation?.quotes || 'Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati.'}
                             </p>
@@ -300,17 +300,17 @@ export default function GardenParallax({ payload, audioController }) {
                                     <img src={groomPhoto || ASSETS.hero} alt="" className="w-full h-full object-cover" />
                                 </div>
                                 <p className={`${pinyon.className} text-5xl mb-1`}>{invitation?.groom_name?.split(' ')[0] || invitation?.groom_name}</p>
-                                <h3 className={`font-serif text-xl font-bold uppercase tracking-wider text-[#2c3e50] mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
+                                <h3 className={`font-serif text-xl font-bold uppercase tracking-wider text-[var(--theme-text,#2c3e50)] mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
                                 {invitation?.groom_father && <p className="text-xs text-[#7f8c8d] mb-1">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bpk {invitation.groom_father} & Ibu {invitation.groom_mother}</p>}
                                 {invitation?.groom_instagram && (
-                                    <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="text-[#cbd5e0] hover:text-[#5d6d7e] transition-colors mt-4">
+                                    <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="text-[var(--theme-accent,#cbd5e0)] hover:text-[#5d6d7e] transition-colors mt-4">
                                         <svg className="w-5 h-5 mx-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.981 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                     </a>
                                 )}
                             </div>
 
                             <div className="flex justify-center items-center h-20">
-                                <span className={`${pinyon.className} text-6xl text-[#cbd5e0]`}>&</span>
+                                <span className={`${pinyon.className} text-6xl text-[var(--theme-accent,#cbd5e0)]`}>&</span>
                             </div>
 
                             {/* Bride */}
@@ -319,10 +319,10 @@ export default function GardenParallax({ payload, audioController }) {
                                     <img src={bridePhoto || ASSETS.hero} alt="" className="w-full h-full object-cover" />
                                 </div>
                                 <p className={`${pinyon.className} text-5xl mb-1`}>{invitation?.bride_name?.split(' ')[0] || invitation?.bride_name}</p>
-                                <h3 className={`font-serif text-xl font-bold uppercase tracking-wider text-[#2c3e50] mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
+                                <h3 className={`font-serif text-xl font-bold uppercase tracking-wider text-[var(--theme-text,#2c3e50)] mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
                                 {invitation?.bride_father && <p className="text-xs text-[#7f8c8d] mb-1">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bpk {invitation.bride_father} & Ibu {invitation.bride_mother}</p>}
                                 {invitation?.bride_instagram && (
-                                    <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="text-[#cbd5e0] hover:text-[#5d6d7e] transition-colors mt-4">
+                                    <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="text-[var(--theme-accent,#cbd5e0)] hover:text-[#5d6d7e] transition-colors mt-4">
                                         <svg className="w-5 h-5 mx-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.981 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                     </a>
                                 )}
@@ -379,14 +379,14 @@ export default function GardenParallax({ payload, audioController }) {
                             sectionBg="bg-transparent"
                             titleFont={cormorant.className}
                             titleSize="text-4xl uppercase tracking-widest"
-                            accentText="text-[#2c3e50]"
+                            accentText="text-[var(--theme-text,#2c3e50)]"
                             subtitleText="text-[#95a5a6]"
-                            borderColor="border-[#cbd5e0]/30"
+                            borderColor="border-[var(--theme-accent,#cbd5e0)]/30"
                         />
                     </div>
 
                     {/* QR Checkin */}
-                    <QrCheckin guest={guest} sectionBg="bg-white/30" titleFont={cormorant.className} textColor="text-[#34495e]" borderStyle="border-[#cbd5e0]/20" />
+                    <QrCheckin guest={guest} sectionBg="bg-white/30" titleFont={cormorant.className} textColor="text-[#34495e]" borderStyle="border-[var(--theme-accent,#cbd5e0)]/20" />
 
                     {/* Wedding Gift */}
                     <section className="py-24 px-8 text-center bg-white/50">
@@ -410,9 +410,9 @@ export default function GardenParallax({ payload, audioController }) {
                         <div className="max-w-md mx-auto">
                              <form onSubmit={submitWish} className="space-y-6 gp-reveal">
                                 <input type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
-                                    className="w-full bg-white/80 border-b border-[#cbd5e0] p-4 text-sm focus:outline-none focus:border-[#5d6d7e] transition-colors" placeholder="YOUR NAME" />
+                                    className="w-full bg-white/80 border-b border-[var(--theme-accent,#cbd5e0)] p-4 text-sm focus:outline-none focus:border-[#5d6d7e] transition-colors" placeholder="YOUR NAME" />
                                 <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)}
-                                    className="w-full bg-white/80 border-b border-[#cbd5e0] p-4 text-sm h-32 resize-none focus:outline-none focus:border-[#5d6d7e] transition-colors" placeholder="YOUR MESSAGE" />
+                                    className="w-full bg-white/80 border-b border-[var(--theme-accent,#cbd5e0)] p-4 text-sm h-32 resize-none focus:outline-none focus:border-[#5d6d7e] transition-colors" placeholder="YOUR MESSAGE" />
                                 <button type="submit" disabled={submitting} className="garden-btn w-full">
                                     {submitting ? 'Sending...' : 'Send Wishes'}
                                 </button>

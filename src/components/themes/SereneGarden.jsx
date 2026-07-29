@@ -160,7 +160,7 @@ export default function SereneGarden({ payload, audioController }) {
     const VIDEO_BG = 'https://hiialfivitation.com/wp-content/uploads/2025/11/motion-garden-v2-01-compress.mp4';
     
     return (
-        <div className={`min-h-screen bg-[#FDFBF7] text-[#4A4A4A] font-sans ${isOpen ? 'overflow-visible' : 'h-[100dvh] overflow-hidden'} serene-garden-theme`}>
+        <div className={`min-h-screen bg-[var(--theme-bg,#FDFBF7)] text-[var(--theme-text,#4A4A4A)] font-sans ${isOpen ? 'overflow-visible' : 'h-[100dvh] overflow-hidden'} serene-garden-theme`}>
             <style dangerouslySetInnerHTML={{ __html: `
                 .serene-garden-theme .g1-reveal { opacity: 0; transform: translateY(35px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
                 .serene-garden-theme .g1-reveal.active { opacity: 1; transform: translateY(0); }
@@ -189,7 +189,7 @@ export default function SereneGarden({ payload, audioController }) {
             {invitation?.music_url && (
                 <button 
                     onClick={() => audioController?.toggle()}
-                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-[#5a7360]/20 flex items-center justify-center text-[#5a7360] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
+                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-[var(--theme-accent,#5a7360)]/20 flex items-center justify-center text-[var(--theme-accent,#5a7360)] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
                 >
                     {audioController?.isPlaying ? (
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
@@ -331,10 +331,10 @@ export default function SereneGarden({ payload, audioController }) {
                             <span className={`${greatVibes.className} text-3xl text-green-accent`}>&</span>
                             <h2 className={`font-serif text-4xl text-green-accent uppercase font-bold`}>{invitation?.bride_name?.charAt(0)}</h2>
                         </div>
-                        <p className="text-sm leading-[2] text-[#4A4A4A]/80 italic max-w-[280px] mx-auto">
+                        <p className="text-sm leading-[2] text-[var(--theme-text,#4A4A4A)]/80 italic max-w-[280px] mx-auto">
                             "{invitation?.quotes || 'Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.'}"
                         </p>
-                        <p className="text-xs text-[#4A4A4A]/60 mt-4 tracking-widest font-semibold uppercase">{invitation?.quotes_name || '- QS. Ar-Rum : 21 -'}</p>
+                        <p className="text-xs text-[var(--theme-text,#4A4A4A)]/60 mt-4 tracking-widest font-semibold uppercase">{invitation?.quotes_name || '- QS. Ar-Rum : 21 -'}</p>
                     </div>
                 </section>
 
@@ -424,7 +424,7 @@ export default function SereneGarden({ payload, audioController }) {
                                 <div className="w-10 h-px bg-green-accent/30 mx-auto mb-8" />
                                 <div className="space-y-2">
                                     {tmItems.map((name, i) => (
-                                        <p key={i} className={`font-serif text-lg text-[#4A4A4A] font-medium`}>{name}</p>
+                                        <p key={i} className={`font-serif text-lg text-[var(--theme-text,#4A4A4A)] font-medium`}>{name}</p>
                                     ))}
                                 </div>
                             </div>
@@ -448,12 +448,12 @@ export default function SereneGarden({ payload, audioController }) {
                             ].map((item, i) => (
                                 <div key={i} className="text-center bg-white py-3 rounded-lg shadow-sm border border-black/5">
                                     <p className={`font-serif text-2xl font-bold text-green-accent leading-none`}>{item.val}</p>
-                                    <p className="text-[9px] text-[#4A4A4A]/60 tracking-wider uppercase mt-1">{item.label}</p>
+                                    <p className="text-[9px] text-[var(--theme-text,#4A4A4A)]/60 tracking-wider uppercase mt-1">{item.label}</p>
                                 </div>
                             ))}
                         </div>
 
-                        <p className="text-sm leading-relaxed text-[#4A4A4A]/70 max-w-[280px] mx-auto">
+                        <p className="text-sm leading-relaxed text-[var(--theme-text,#4A4A4A)]/70 max-w-[280px] mx-auto">
                             Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i, untuk menghadiri acara pernikahan kami:
                         </p>
                     </div>
@@ -461,15 +461,15 @@ export default function SereneGarden({ payload, audioController }) {
                     {invitation?.events && invitation.events.length > 0 && (
                         <div className="space-y-6">
                             {[...invitation.events].sort((a, b) => a.sort_order - b.sort_order).map((event, idx) => (
-                                <div key={idx} className="bg-white rounded-[40px] p-8 shadow-xl border border-[#5a7360]/10 g1-reveal mx-auto text-center" data-delay={`${(idx % 3) + 1}`}>
+                                <div key={idx} className="bg-white rounded-[40px] p-8 shadow-xl border border-[var(--theme-accent,#5a7360)]/10 g1-reveal mx-auto text-center" data-delay={`${(idx % 3) + 1}`}>
                                     <h3 className={`font-serif text-3xl font-bold text-green-accent mb-6 leading-tight`}>{event.name.split(' ').map((word,i) => <React.Fragment key={i}>{word}<br/></React.Fragment>)}</h3>
                                     
-                                    <div className={`font-serif text-[#4A4A4A] font-bold text-lg mb-2 capitalize`}>
+                                    <div className={`font-serif text-[var(--theme-text,#4A4A4A)] font-bold text-lg mb-2 capitalize`}>
                                         {event.date ? new Date(event.date).toLocaleDateString('id-ID', { weekday: 'long' }) : ''} <br/>
                                         <span className="text-2xl mt-1 block">{event.date ? new Date(event.date).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' }) : ''}</span>
                                     </div>
                                     
-                                    <p className="text-sm text-[#4A4A4A]/70 font-medium mb-6">
+                                    <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70 font-medium mb-6">
                                         {event.time_start?.substring(0, 5) || 'TBA'} WIB - {event.time_end ? event.time_end.substring(0, 5) + ' WIB' : 'Selesai'}
                                     </p>
 
@@ -479,7 +479,7 @@ export default function SereneGarden({ payload, audioController }) {
 
                                     <div className="space-y-1">
 
-                                        <h4 className={`font-serif text-xl font-bold text-[#4A4A4A] mb-2`}>{event.location}</h4>
+                                        <h4 className={`font-serif text-xl font-bold text-[var(--theme-text,#4A4A4A)] mb-2`}>{event.location}</h4>
 
                                         <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
 
@@ -488,7 +488,7 @@ export default function SereneGarden({ payload, audioController }) {
                                         </p>
 
                                     </div>
-                                    <p className="text-xs text-[#4A4A4A]/60 leading-relaxed max-w-[200px] mx-auto mb-6">
+                                    <p className="text-xs text-[var(--theme-text,#4A4A4A)]/60 leading-relaxed max-w-[200px] mx-auto mb-6">
                                         {event.address || ''}
                                     </p>
 
@@ -524,10 +524,10 @@ export default function SereneGarden({ payload, audioController }) {
 
                 {/* ── Section 4: Live Streaming ── */}
                 {(Boolean(invitation?.live_streaming_link?.trim()) || Boolean(invitation?.live_stream_url?.trim())) && (
-                    <section className="py-20 px-8 text-center bg-[#FDFBF7]">
+                    <section className="py-20 px-8 text-center bg-[var(--theme-bg,#FDFBF7)]">
                         <div className="g1-reveal">
                             <h2 className={`font-serif text-4xl text-green-accent font-bold uppercase tracking-widest mb-6`}>Live Streaming</h2>
-                            <p className="text-sm leading-relaxed text-[#4A4A4A]/70 max-w-[280px] mx-auto mb-8">
+                            <p className="text-sm leading-relaxed text-[var(--theme-text,#4A4A4A)]/70 max-w-[280px] mx-auto mb-8">
                                 Temui kami secara virtual untuk menyaksikan acara pernikahan kami melalui tautan di bawah ini:
                             </p>
                             <a href={invitation?.live_streaming_link?.trim() || invitation?.live_stream_url?.trim() || '#'} target="_blank" rel="noreferrer"
@@ -544,8 +544,8 @@ export default function SereneGarden({ payload, audioController }) {
                 {invitation?.gallery && invitation.gallery.length > 0 && (
                     <section className="bg-white py-20 px-8 relative">
                         <div className="text-center mb-12 g1-reveal">
-                            <h2 className={`font-serif text-4xl text-[#5a7360] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
-                            <p className="text-sm text-[#4A4A4A]/70">Moments to remember</p>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#5a7360)] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
+                            <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70">Moments to remember</p>
                         </div>
                         <div className="grid grid-cols-2 gap-4 max-w-[300px] mx-auto">
                             {invitation.gallery.map((img, i) => (
@@ -562,7 +562,7 @@ export default function SereneGarden({ payload, audioController }) {
                     <section className="bg-gradient-to-b from-[#f4f7f4] to-[#FDFBF7] py-24 px-6 relative overflow-hidden">
                         <div className="text-center mb-16 g1-reveal">
                             <p className={`${greatVibes.className} text-2xl text-[#bd9a5f] mb-2`}>Our Journey</p>
-                            <h2 className={`font-serif text-4xl text-[#5a7360] font-bold uppercase tracking-widest`}>Love Story</h2>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#5a7360)] font-bold uppercase tracking-widest`}>Love Story</h2>
                         </div>
                         
                         {/* Timeline */}
@@ -579,13 +579,13 @@ export default function SereneGarden({ payload, audioController }) {
                                     
                                     {/* Date Badge */}
                                     <div className="text-center mb-4 pt-8">
-                                        <span className="inline-block bg-[#5a7360] text-white text-[9px] font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full shadow-sm">
+                                        <span className="inline-block bg-[var(--theme-accent,#5a7360)] text-white text-[9px] font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full shadow-sm">
                                             {story.date ? new Date(story.date).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }) : `Chapter ${i + 1}`}
                                         </span>
                                     </div>
                                     
                                     {/* Card */}
-                                    <div className="bg-white/90 backdrop-blur-sm rounded-[1.5rem] overflow-hidden shadow-xl border border-[#5a7360]/10 mx-2">
+                                    <div className="bg-white/90 backdrop-blur-sm rounded-[1.5rem] overflow-hidden shadow-xl border border-[var(--theme-accent,#5a7360)]/10 mx-2">
                                         {story.photo && (
                                             <div className="relative w-full h-48 overflow-hidden">
                                                 <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(story.photo)} alt={story.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
@@ -594,7 +594,7 @@ export default function SereneGarden({ payload, audioController }) {
                                         )}
                                         <div className="p-6 text-center">
                                             <h4 className={`font-serif text-2xl font-bold text-[#1a1a1a] mb-3 leading-tight`}>{story.title}</h4>
-                                            <p className="text-xs text-[#4A4A4A]/70 leading-[1.9]">{story.description}</p>
+                                            <p className="text-xs text-[var(--theme-text,#4A4A4A)]/70 leading-[1.9]">{story.description}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -610,13 +610,13 @@ export default function SereneGarden({ payload, audioController }) {
 
                 {/* ── Section 7: QR Checkin ── */}
                 {guest && (
-                    <section className="bg-[#FDFBF7] py-20 px-8 text-center relative border-t border-b border-[#5a7360]/10">
+                    <section className="bg-[var(--theme-bg,#FDFBF7)] py-20 px-8 text-center relative border-t border-b border-[var(--theme-accent,#5a7360)]/10">
                         <div className="g1-reveal">
-                            <h2 className={`font-serif text-4xl text-[#5a7360] font-bold uppercase tracking-widest mb-6`}>QR Check-in</h2>
-                            <p className="text-sm text-[#4A4A4A]/70 leading-relaxed max-w-[280px] mx-auto mb-8">
+                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#5a7360)] font-bold uppercase tracking-widest mb-6`}>QR Check-in</h2>
+                            <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70 leading-relaxed max-w-[280px] mx-auto mb-8">
                                 Tunjukkan QR Code ini pada saat registrasi di meja buku tamu
                             </p>
-                            <div className="bg-white p-6 rounded-[2rem] shadow-xl inline-block border-[6px] border-[#5a7360]/10 max-w-[220px]">
+                            <div className="bg-white p-6 rounded-[2rem] shadow-xl inline-block border-[6px] border-[var(--theme-accent,#5a7360)]/10 max-w-[220px]">
                                 {guest.qr_code ? (
                                     <img src={guest.qr_code.startsWith('http') ? guest.qr_code : `${STORAGE_URL}/${guest.qr_code}`} alt="QR Code" className="w-full h-auto" />
                                 ) : (
@@ -627,7 +627,7 @@ export default function SereneGarden({ payload, audioController }) {
                                 )}
                             </div>
                             <p className={`font-serif text-2xl font-bold mt-6 text-[#1a1a1a] drop-shadow-sm`}>{guest.name}</p>
-                            <p className="text-xs font-semibold text-[#5a7360] uppercase tracking-widest mt-1">E-Ticket Access</p>
+                            <p className="text-xs font-semibold text-[var(--theme-accent,#5a7360)] uppercase tracking-widest mt-1">E-Ticket Access</p>
                         </div>
                     </section>
                 )}
@@ -637,7 +637,7 @@ export default function SereneGarden({ payload, audioController }) {
                     <div className="g1-reveal mb-12">
                         <img src={ORNAMENT_BOUQUET} alt="Bouquet" className="w-32 mx-auto mb-6 opacity-60" />
                         <h2 className={`font-serif text-4xl text-green-accent font-bold uppercase tracking-widest mb-4`}>Wedding Gift</h2>
-                        <p className="text-sm text-[#4A4A4A]/70 leading-relaxed max-w-[280px] mx-auto">
+                        <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70 leading-relaxed max-w-[280px] mx-auto">
                             Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado secara cashless.
                         </p>
                     </div>
@@ -648,7 +648,7 @@ export default function SereneGarden({ payload, audioController }) {
                                 <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="SereneGarden" />
                             ))
                         ) : (
-                            <div className="bg-[#f4f7f4] rounded-2xl p-8 text-[#4A4A4A]/50 text-sm">Belum ada informasi rekening.</div>
+                            <div className="bg-[#f4f7f4] rounded-2xl p-8 text-[var(--theme-text,#4A4A4A)]/50 text-sm">Belum ada informasi rekening.</div>
                         )}
                     </div>
                 </section>
@@ -657,18 +657,18 @@ export default function SereneGarden({ payload, audioController }) {
                 <section className="bg-gradient-to-b from-white to-[#f4f7f4] py-20 px-8 relative">
                     <div className="text-center mb-10 g1-reveal">
                         <h2 className={`font-serif text-4xl text-green-accent font-bold uppercase tracking-widest mb-4`}>Kirim Ucapan</h2>
-                        <p className="text-sm text-[#4A4A4A]/70">Tuliskan doa & ucapan untuk kedua mempelai</p>
+                        <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70">Tuliskan doa & ucapan untuk kedua mempelai</p>
                     </div>
 
                     <div className="max-w-[300px] mx-auto">
                         <form onSubmit={submitWish} className="space-y-4 mb-10 g1-reveal" data-delay="1">
                             <div>
                                 <input type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
-                                    className="w-full bg-white border border-green-accent/20 rounded-xl px-4 py-3 text-sm text-[#4A4A4A] focus:outline-none focus:border-green-accent shadow-sm transition-colors" placeholder="Nama Anda" />
+                                    className="w-full bg-white border border-green-accent/20 rounded-xl px-4 py-3 text-sm text-[var(--theme-text,#4A4A4A)] focus:outline-none focus:border-green-accent shadow-sm transition-colors" placeholder="Nama Anda" />
                             </div>
                             <div>
                                 <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)}
-                                    className="w-full bg-white border border-green-accent/20 rounded-xl px-4 py-3 text-sm text-[#4A4A4A] focus:outline-none focus:border-green-accent shadow-sm transition-colors h-28 resize-none" placeholder="Berikan ucapan dan doa" />
+                                    className="w-full bg-white border border-green-accent/20 rounded-xl px-4 py-3 text-sm text-[var(--theme-text,#4A4A4A)] focus:outline-none focus:border-green-accent shadow-sm transition-colors h-28 resize-none" placeholder="Berikan ucapan dan doa" />
                             </div>
                             <button type="submit" disabled={submitting}
                                 className="bg-green-accent hover:bg-[#465b4b] text-white w-full py-3.5 rounded-full text-xs tracking-widest uppercase font-bold shadow-lg disabled:opacity-50 transition-colors">
@@ -682,8 +682,8 @@ export default function SereneGarden({ payload, audioController }) {
                                 {wishes.map((w, i) => (
                                     <div key={i} className="bg-white rounded-xl p-4 shadow-sm border border-black/5">
                                         <p className={`font-serif text-lg font-bold text-green-accent mb-0 leading-none`}>{w.name}</p>
-                                        <p className="text-[10px] text-[#4A4A4A]/40 mb-2">{new Date(w.created_at).toLocaleDateString('id-ID')}</p>
-                                        <p className="text-xs text-[#4A4A4A]/80 leading-relaxed">{w.message}</p>
+                                        <p className="text-[10px] text-[var(--theme-text,#4A4A4A)]/40 mb-2">{new Date(w.created_at).toLocaleDateString('id-ID')}</p>
+                                        <p className="text-xs text-[var(--theme-text,#4A4A4A)]/80 leading-relaxed">{w.message}</p>
                                     </div>
                                 ))}
                             </div>

@@ -151,7 +151,7 @@ export default function MidnightGold({ payload, audioController }) {
     const photos = invitation?.gallery?.length > 0 ? invitation.gallery.map(g => g.photo) : (invitation?.photos || []);
 
     return (
-        <div className={`min-h-screen bg-[#0c1220] text-white ${lato.className} overflow-hidden midnight-gold-theme`}>
+        <div className={`min-h-screen bg-[var(--theme-bg,#0c1220)] text-white ${lato.className} overflow-hidden midnight-gold-theme`}>
             <style dangerouslySetInnerHTML={{ __html: `
                 .midnight-gold-theme .mg-reveal { opacity: 0; transform: translateY(35px); transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
                 .midnight-gold-theme .mg-reveal.active { opacity: 1; transform: translateY(0); }
@@ -210,7 +210,7 @@ export default function MidnightGold({ payload, audioController }) {
                             </div>
                         )}
 
-                        <button onClick={handleOpen} className={`${playfair.className} gold-border-strong px-10 py-4 text-[10px] tracking-[0.3em] uppercase gold-text hover:bg-[#c9a84c] hover:text-[#0a0e1a] transition-all duration-500`}>
+                        <button onClick={handleOpen} className={`${playfair.className} gold-border-strong px-10 py-4 text-[10px] tracking-[0.3em] uppercase gold-text hover:bg-[var(--theme-accent,#c9a84c)] hover:text-[var(--theme-text,#0a0e1a)] transition-all duration-500`}>
                             Buka Undangan
                         </button>
                         <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/60 to-transparent mt-8" />
@@ -223,14 +223,14 @@ export default function MidnightGold({ payload, audioController }) {
                 <div className="flex flex-col lg:flex-row min-h-screen">
 
                     {/* ───── LEFT PANEL (Sticky hero) ───── */}
-                    <div className="split-left-mg w-full lg:w-[70%] bg-[#0c1220] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
+                    <div className="split-left-mg w-full lg:w-[70%] bg-[var(--theme-bg,#0c1220)] relative flex flex-col justify-end p-8 md:p-12 lg:p-16">
                         {coverPhoto && <img src={coverPhoto} alt="Hero" className="absolute inset-0 w-full h-full object-cover opacity-60" />}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0c1220] via-[#0c1220]/50 to-transparent" />
                         <div className="gold-glow" style={{ top: '5%', right: '10%' }} />
 
                         <div className="relative z-10">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="w-12 h-px bg-[#c9a84c]/40" />
+                                <div className="w-12 h-px bg-[var(--theme-accent,#c9a84c)]/40" />
                                 <p className={`${playfair.className} text-[10px] tracking-[0.4em] uppercase gold-text-soft`}>Our Wedding</p>
                             </div>
 
@@ -257,12 +257,12 @@ export default function MidnightGold({ payload, audioController }) {
                         </div>
 
                         {invitation?.music_url && (
-                            <MusicPlayer audioController={audioController} btnBg="bg-[#0c1220]" btnColor="gold-text" btnBorder="gold-border shadow-2xl" />
+                            <MusicPlayer audioController={audioController} btnBg="bg-[var(--theme-bg,#0c1220)]" btnColor="gold-text" btnBorder="gold-border shadow-2xl" />
                         )}
                     </div>
 
                     {/* ───── RIGHT PANEL (Scrollable) ───── */}
-                    <div ref={rightPanelRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto scrollbar-hide bg-[#0c1220]">
+                    <div ref={rightPanelRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto scrollbar-hide bg-[var(--theme-bg,#0c1220)]">
 
                         {/* ── Countdown ── */}
                         <section className="py-20 px-8 text-center mg-reveal">
@@ -337,7 +337,7 @@ export default function MidnightGold({ payload, audioController }) {
                                         <h3 className={`${playfair.className} text-xl font-bold tracking-wider text-white mb-3`}>
                                             {invitation?.bride_full_name || invitation?.bride_name}
                                         </h3>
-                                        <div className="w-10 h-px bg-[#c9a84c]/30 mb-3 mx-auto" />
+                                        <div className="w-10 h-px bg-[var(--theme-accent,#c9a84c)]/30 mb-3 mx-auto" />
                                         <p className="text-sm text-white/40">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari</p>
                                         <p className="text-sm text-white/60 font-medium">{invitation?.bride_father || 'Bapak'} & {invitation?.bride_mother || 'Ibu'}</p>
                                         {invitation?.bride_instagram && (
@@ -368,7 +368,7 @@ export default function MidnightGold({ payload, audioController }) {
                                         <h3 className={`${playfair.className} text-xl font-bold tracking-wider text-white mb-3`}>
                                             {invitation?.groom_full_name || invitation?.groom_name}
                                         </h3>
-                                        <div className="w-10 h-px bg-[#c9a84c]/30 mb-3 mx-auto" />
+                                        <div className="w-10 h-px bg-[var(--theme-accent,#c9a84c)]/30 mb-3 mx-auto" />
                                         <p className="text-sm text-white/40">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari</p>
                                         <p className="text-sm text-white/60 font-medium">{invitation?.groom_father || 'Bapak'} & {invitation?.groom_mother || 'Ibu'}</p>
                                         {invitation?.groom_instagram && (
@@ -409,7 +409,7 @@ export default function MidnightGold({ payload, audioController }) {
                                                 Pukul : {event.time_start?.substring(0, 5) || 'TBA'} {event.time_end ? `- ${event.time_end.substring(0, 5)}` : '- Selesai'} WIB
                                             </p>
                                             {event.location && (
-                                                <div className="pt-3 border-t border-[#c9a84c]/10">
+                                                <div className="pt-3 border-t border-[var(--theme-accent,#c9a84c)]/10">
                                                     <p className="text-xs gold-text-soft mb-1">Lokasi Acara :</p>
                                                     <div className="space-y-1">
                                                         <p className="text-sm text-white/50">{event.location}</p>
@@ -422,7 +422,7 @@ export default function MidnightGold({ payload, audioController }) {
                                             {getMapUrl(event) && (
                                                 <MapLocationButton
                                                     item={event}
-                                                    className={`${playfair.className} inline-flex items-center gap-2 gold-border-strong px-6 py-3 text-[10px] tracking-[0.2em] uppercase gold-text hover:bg-[#c9a84c] hover:text-[#0c1220] transition-all duration-500 mt-4`}
+                                                    className={`${playfair.className} inline-flex items-center gap-2 gold-border-strong px-6 py-3 text-[10px] tracking-[0.2em] uppercase gold-text hover:bg-[var(--theme-accent,#c9a84c)] hover:text-[#0c1220] transition-all duration-500 mt-4`}
                                                     buttonText="Lihat Lokasi"
                                                 >
                                                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
@@ -473,12 +473,12 @@ export default function MidnightGold({ payload, audioController }) {
                             titleSize="text-2xl font-bold tracking-[0.15em] uppercase"
                             accentText="text-white"
                             subtitleText="gold-text"
-                            borderColor="border-[#c9a84c]/30"
+                            borderColor="border-[var(--theme-accent,#c9a84c)]/30"
                         />
 
                         {/* ── QR CHECKIN ── */}
                         <div className="px-8">
-                            <QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={playfair.className} textColor="text-white" borderStyle="border-[#c9a84c]/20" />
+                            <QrCheckin guest={guest} sectionBg="bg-transparent" titleFont={playfair.className} textColor="text-white" borderStyle="border-[var(--theme-accent,#c9a84c)]/20" />
                         </div>
 
                         {/* ── WISHES ── */}
@@ -493,14 +493,14 @@ export default function MidnightGold({ payload, audioController }) {
                                     <div>
                                         <label className={`${playfair.className} block text-[9px] tracking-[0.2em] uppercase gold-text-soft mb-2 font-bold`}>Nama</label>
                                         <input type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
-                                            className="w-full bg-white/5 gold-border rounded-xl px-5 py-3.5 text-sm text-white focus:outline-none focus:border-[#c9a84c]/50 transition-colors placeholder-white/20" placeholder="Nama Anda..." />
+                                            className="w-full bg-white/5 gold-border rounded-xl px-5 py-3.5 text-sm text-white focus:outline-none focus:border-[var(--theme-accent,#c9a84c)]/50 transition-colors placeholder-white/20" placeholder="Nama Anda..." />
                                     </div>
                                     <div>
                                         <label className={`${playfair.className} block text-[9px] tracking-[0.2em] uppercase gold-text-soft mb-2 font-bold`}>Ucapan</label>
                                         <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)}
-                                            className="w-full bg-white/5 gold-border rounded-xl px-5 py-3.5 text-sm text-white h-28 resize-none focus:outline-none focus:border-[#c9a84c]/50 transition-colors placeholder-white/20" placeholder="Tulis ucapan..." />
+                                            className="w-full bg-white/5 gold-border rounded-xl px-5 py-3.5 text-sm text-white h-28 resize-none focus:outline-none focus:border-[var(--theme-accent,#c9a84c)]/50 transition-colors placeholder-white/20" placeholder="Tulis ucapan..." />
                                     </div>
-                                    <button type="submit" disabled={submitting} className={`${playfair.className} w-full bg-[#c9a84c] text-[#0c1220] py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-[#d4b85c] transition-colors disabled:opacity-50`}>
+                                    <button type="submit" disabled={submitting} className={`${playfair.className} w-full bg-[var(--theme-accent,#c9a84c)] text-[#0c1220] py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-[#d4b85c] transition-colors disabled:opacity-50`}>
                                         {submitting ? 'Mengirim...' : 'Kirim Ucapan'}
                                     </button>
                                 </form>
@@ -511,7 +511,7 @@ export default function MidnightGold({ payload, audioController }) {
                                             <div key={i} className="bg-white/3 rounded-2xl p-4 gold-border">
                                                 <p className="text-sm text-white/60">{msg.message}</p>
                                                 <div className="flex items-center gap-2 mt-2">
-                                                    <div className="w-6 h-6 rounded-full bg-[#c9a84c]/20 flex items-center justify-center">
+                                                    <div className="w-6 h-6 rounded-full bg-[var(--theme-accent,#c9a84c)]/20 flex items-center justify-center">
                                                         <span className="gold-text text-[10px] font-bold">{msg.name?.charAt(0)?.toUpperCase()}</span>
                                                     </div>
                                                     <p className="text-xs gold-text-soft">{msg.name}</p>

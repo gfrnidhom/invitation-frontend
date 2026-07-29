@@ -167,7 +167,7 @@ export default function AdatJawa({ payload, audioController }) {
     const bridePhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.bride_photo);
 
     return (
-        <div className={`min-h-screen bg-[#110e0c] text-[#D8B67D] font-sans ${isOpen ? 'overflow-visible' : 'h-[100dvh] overflow-hidden'} adat-jawa-theme`}>
+        <div className={`min-h-screen bg-[var(--theme-bg,#110e0c)] text-[var(--theme-text,#D8B67D)] font-sans ${isOpen ? 'overflow-visible' : 'h-[100dvh] overflow-hidden'} adat-jawa-theme`}>
             {/* Pattern base applied to root wrapper */}
             {isOpen && (
                 <div 
@@ -206,7 +206,7 @@ export default function AdatJawa({ payload, audioController }) {
             {invitation?.music_url && (
                 <button 
                     onClick={() => audioController?.toggle()}
-                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-black/60 backdrop-blur-md rounded-full shadow-lg border border-[#D8B67D]/40 flex items-center justify-center text-[#D8B67D] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
+                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-black/60 backdrop-blur-md rounded-full shadow-lg border border-[#D8B67D]/40 flex items-center justify-center text-[var(--theme-text,#D8B67D)] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
                 >
                     {audioController?.isPlaying ? (
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
@@ -217,7 +217,7 @@ export default function AdatJawa({ payload, audioController }) {
             )}
 
             {/* ══════════════════════ LEFT PANE (DESKTOP) ══════════════════════ */}
-            <div className="hidden lg:block pg-split-left bg-[#110e0c] relative overflow-hidden">
+            <div className="hidden lg:block pg-split-left bg-[var(--theme-bg,#110e0c)] relative overflow-hidden">
                 <div className="absolute inset-0">
                     {coverPhoto ? (
                         <img src={coverPhoto} alt="Cover" className="w-full h-full object-cover object-center" />
@@ -239,14 +239,14 @@ export default function AdatJawa({ payload, audioController }) {
                 {/* Gunungan Accent at bottom right of the left pane */}
                 <img src={ASSETS.gunungan} alt="" className="absolute bottom-[-15vh] right-20 w-[45vh] h-auto object-cover pointer-events-none opacity-40 mix-blend-screen" />
                 
-                <div className="absolute bottom-16 left-16 text-left text-[#D8B67D] drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] z-10 w-full max-w-2xl">
-                    <p className={`${greatVibes.className} text-6xl mb-2 text-[#D8B67D]`}>Paugeran Tresna</p>
+                <div className="absolute bottom-16 left-16 text-left text-[var(--theme-text,#D8B67D)] drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] z-10 w-full max-w-2xl">
+                    <p className={`${greatVibes.className} text-6xl mb-2 text-[var(--theme-text,#D8B67D)]`}>Paugeran Tresna</p>
                     <h1 className={`font-serif text-7xl font-bold uppercase tracking-wider mb-4`}>
                         {invitation?.groom_name?.split(' ')[0]} <span className="text-outline">&</span> {invitation?.bride_name?.split(' ')[0]}
                     </h1>
                     <div className="flex items-center gap-4">
                         <div className="w-16 h-[1px] bg-[#D8B67D]" />
-                        <p className={`font-sans text-base font-medium tracking-[0.2em] uppercase text-[#D8B67D]/80`}>
+                        <p className={`font-sans text-base font-medium tracking-[0.2em] uppercase text-[var(--theme-text,#D8B67D)]/80`}>
                             {eventDate.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
                         </p>
                     </div>
@@ -257,7 +257,7 @@ export default function AdatJawa({ payload, audioController }) {
             <div className="pg-split-right relative min-h-screen shadow-2xl bg-[#F6F4EE]">
                 
                 {/* ── COVER SECTION (Envelope) ── */}
-                <section className={`absolute top-0 inset-x-0 h-[100dvh] lg:h-screen z-[60] flex flex-col items-center justify-between transition-all duration-[1200ms] ease-in-out bg-[#110e0c] ${isOpen ? 'opacity-0 pointer-events-none -translate-y-full' : 'opacity-100'}`}>
+                <section className={`absolute top-0 inset-x-0 h-[100dvh] lg:h-screen z-[60] flex flex-col items-center justify-between transition-all duration-[1200ms] ease-in-out bg-[var(--theme-bg,#110e0c)] ${isOpen ? 'opacity-0 pointer-events-none -translate-y-full' : 'opacity-100'}`}>
                     
                     {/* Background Layer with Pattern */}
                     <div className="absolute inset-0 bg-[#0C0B0A]" />
@@ -280,10 +280,10 @@ export default function AdatJawa({ payload, audioController }) {
 
                     {/* TOP: "The Wedding of" + Names */}
                     <div className="relative z-10 text-center px-8 w-full pt-20">
-                        <p className={`${greatVibes.className} text-4xl text-[#D8B67D] mb-4`}>Paugeran Tresna</p>
+                        <p className={`${greatVibes.className} text-4xl text-[var(--theme-text,#D8B67D)] mb-4`}>Paugeran Tresna</p>
                         <h1 className={`font-serif text-[2.5rem] font-bold text-[#fcfbfa] tracking-widest uppercase`}>
                             {invitation?.groom_name?.split(' ')[0]}
-                            <span className="block text-2xl my-1 text-[#D8B67D] font-light">&</span>
+                            <span className="block text-2xl my-1 text-[var(--theme-text,#D8B67D)] font-light">&</span>
                             {invitation?.bride_name?.split(' ')[0]}
                         </h1>
                     </div>
@@ -297,7 +297,7 @@ export default function AdatJawa({ payload, audioController }) {
 
                     {/* BOTTOM: "Kepada Yth" + Button */}
                     <div className="relative z-20 text-center px-8 w-full pb-16">
-                        <p className={`font-sans text-[9px] tracking-[0.3em] uppercase text-[#D8B67D]/70 mb-2`}>Kepada Yth:</p>
+                        <p className={`font-sans text-[9px] tracking-[0.3em] uppercase text-[var(--theme-text,#D8B67D)]/70 mb-2`}>Kepada Yth:</p>
                         {guestName && (
                             <p className={`font-serif text-2xl text-white font-bold mb-8 tracking-wider`}>{guestName}</p>
                         )}
@@ -334,14 +334,14 @@ export default function AdatJawa({ payload, audioController }) {
                     <div className="absolute inset-0 bg-gradient-to-b from-[#0C0B0A]/60 via-transparent to-[#0C0B0A]/80 pointer-events-none" />
                     
                     <div className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10`}>
-                        <p className={`font-sans text-[9px] text-[#D8B67D] tracking-[0.5em] uppercase mb-6 font-semibold transition-all duration-1000 delay-300 ease-out ${showMotionText ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+                        <p className={`font-sans text-[9px] text-[var(--theme-text,#D8B67D)] tracking-[0.5em] uppercase mb-6 font-semibold transition-all duration-1000 delay-300 ease-out ${showMotionText ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                             The Wedding Of
                         </p>
                         
                         <div className={`flex flex-col items-center gap-0 mb-8 transition-all duration-1000 delay-500 ease-out ${showMotionText ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'}`}>
                             <h1 className={`font-serif text-[2.5rem] md:text-5xl text-white uppercase tracking-[0.1em] leading-none drop-shadow-xl text-center`}>
                                 {invitation?.groom_name?.split(' ')[0]} <br/>
-                                <span className={`${greatVibes.className} text-4xl text-[#D8B67D] leading-[0.5] py-2 inline-block`}>&</span> <br/>
+                                <span className={`${greatVibes.className} text-4xl text-[var(--theme-text,#D8B67D)] leading-[0.5] py-2 inline-block`}>&</span> <br/>
                                 {invitation?.bride_name?.split(' ')[0]}
                             </h1>
                         </div>
@@ -352,7 +352,7 @@ export default function AdatJawa({ payload, audioController }) {
 
                         <div className={`transition-all duration-1000 delay-1000 ease-out ${showMotionText ? 'opacity-100' : 'opacity-0'}`}>
                             <div className="animate-bounce border border-[#D8B67D]/50 rounded-[16px] w-[24px] h-[38px] flex items-center justify-center bg-black/20 backdrop-blur-sm">
-                                <svg className="w-3 h-3 text-[#D8B67D]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                                <svg className="w-3 h-3 text-[var(--theme-text,#D8B67D)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                                 </svg>
                             </div>
@@ -361,7 +361,7 @@ export default function AdatJawa({ payload, audioController }) {
                 </section>
 
                 {/* ── Section 0.5: Cinematic Slideshow Cover Image ── */}
-                <section className="relative w-full bg-[#110e0c] overflow-hidden">
+                <section className="relative w-full bg-[var(--theme-bg,#110e0c)] overflow-hidden">
                     <div className="relative w-full h-[60vh] pg-reveal overflow-hidden">
                         {photos.length > 0 ? (
                             photos.map((photo, i) => (
@@ -397,10 +397,10 @@ export default function AdatJawa({ payload, audioController }) {
                     <div className="relative z-10 pg-reveal">
                         <img src={ASSETS.gunungan} alt="Gunungan outline" className="w-20 mx-auto mb-8 opacity-20 invert" />
                         
-                        <p className="text-[13px] leading-[2.2] text-[#2C1E16]/80 max-w-[300px] mx-auto font-medium">
+                        <p className="text-[13px] leading-[2.2] text-[var(--theme-accent,#2C1E16)]/80 max-w-[300px] mx-auto font-medium">
                             "{invitation?.quotes || 'Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami.'}"
                         </p>
-                        <p className={`font-sans text-[9px] text-[#D8B67D] mt-8 tracking-[0.2em] font-semibold uppercase`}>
+                        <p className={`font-sans text-[9px] text-[var(--theme-text,#D8B67D)] mt-8 tracking-[0.2em] font-semibold uppercase`}>
                             {invitation?.quotes_name || '- Doa Pernikahan -'}
                         </p>
                     </div>
@@ -410,8 +410,8 @@ export default function AdatJawa({ payload, audioController }) {
                 <section className="pt-16 pb-32 px-6 text-center relative bg-[#F6F4EE] border-t border-[#D8B67D]/20">
                     <div className="relative z-10 max-w-[360px] mx-auto">
                         <div className="pg-reveal mb-20 text-center">
-                            <p className={`${greatVibes.className} text-4xl text-[#D8B67D] mb-4`}>Sang Mempelai</p>
-                            <h2 className={`font-serif text-3xl font-bold uppercase tracking-[0.15em] text-[#2C1E16]`}>
+                            <p className={`${greatVibes.className} text-4xl text-[var(--theme-text,#D8B67D)] mb-4`}>Sang Mempelai</p>
+                            <h2 className={`font-serif text-3xl font-bold uppercase tracking-[0.15em] text-[var(--theme-accent,#2C1E16)]`}>
                                 Dua Jiwa, <br/> Satu Tujuan
                             </h2>
                         </div>
@@ -421,7 +421,7 @@ export default function AdatJawa({ payload, audioController }) {
                             <div className="relative w-full max-w-[280px] mx-auto">
                                 <div className="w-full aspect-[4/5] mx-auto relative bg-[#EAE5D9] group">
                                     <div className="absolute inset-0 border-[6px] border-[#D8B67D] opacity-30 transform translate-x-3 translate-y-3 pointer-events-none transition-transform duration-700 group-hover:translate-x-4 group-hover:translate-y-4" />
-                                    <div className="w-full h-full border-4 border-[#2C1E16] relative overflow-hidden z-10 shadow-[5px_5px_15px_rgba(44,30,22,0.15)]">
+                                    <div className="w-full h-full border-4 border-[var(--theme-accent,#2C1E16)] relative overflow-hidden z-10 shadow-[5px_5px_15px_rgba(44,30,22,0.15)]">
                                         {bridePhoto ? (
                                             <img src={bridePhoto} className="w-full h-full object-cover sepia-[0.3] transition-all duration-1000 group-hover:scale-105 group-hover:sepia-0" alt="Bride" />
                                         ) : (
@@ -436,17 +436,17 @@ export default function AdatJawa({ payload, audioController }) {
                             </div>
                             
                             <div className="mt-14 relative z-20 bg-[#F6F4EE] shadow-[0_-15px_15px_#F6F4EE]">
-                                <p className={`${greatVibes.className} text-4xl text-[#D8B67D] mb-1`}>
+                                <p className={`${greatVibes.className} text-4xl text-[var(--theme-text,#D8B67D)] mb-1`}>
                                     {invitation?.bride_name?.split(' ')[0] || invitation?.bride_name}
                                 </p>
-                                <h3 className={`font-serif text-2xl font-bold uppercase tracking-widest text-[#2C1E16] mb-3`}>
+                                <h3 className={`font-serif text-2xl font-bold uppercase tracking-widest text-[var(--theme-accent,#2C1E16)] mb-3`}>
                                     {invitation?.bride_full_name || invitation?.bride_name}
                                 </h3>
-                                <p className={`font-sans text-[10px] text-[#2C1E16]/70 leading-[2] uppercase tracking-[0.1em] font-medium`}>
+                                <p className={`font-sans text-[10px] text-[var(--theme-accent,#2C1E16)]/70 leading-[2] uppercase tracking-[0.1em] font-medium`}>
                                     Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari <br/> {invitation?.bride_father || '...'} & {invitation?.bride_mother || '...'}
                                 </p>
                                 {invitation?.bride_instagram && (
-                                    <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 mt-5 bg-[#2C1E16] text-[#D8B67D] px-6 py-2 rounded-full text-[10px] tracking-wider uppercase font-semibold shadow-md">
+                                    <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 mt-5 bg-[var(--theme-accent,#2C1E16)] text-[var(--theme-text,#D8B67D)] px-6 py-2 rounded-full text-[10px] tracking-wider uppercase font-semibold shadow-md">
                                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204... (truncated for clarity, reuse insta icon) ... 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                         @{invitation.bride_instagram}
                                     </a>
@@ -457,7 +457,7 @@ export default function AdatJawa({ payload, audioController }) {
                         <div className="flex justify-center my-20 pg-reveal pt-8 relative">
                             <div className="absolute inset-x-0 top-1/2 h-px bg-[#D8B67D]/30" />
                             <span className="relative z-10 bg-[#F6F4EE] px-6">
-                                <span className={`${greatVibes.className} text-5xl text-[#2C1E16]`}>&</span>
+                                <span className={`${greatVibes.className} text-5xl text-[var(--theme-accent,#2C1E16)]`}>&</span>
                             </span>
                         </div>
 
@@ -466,7 +466,7 @@ export default function AdatJawa({ payload, audioController }) {
                             <div className="relative w-full max-w-[280px] mx-auto">
                                 <div className="w-full aspect-[4/5] mx-auto relative bg-[#EAE5D9] group">
                                     <div className="absolute inset-0 border-[6px] border-[#D8B67D] opacity-30 transform -translate-x-3 translate-y-3 pointer-events-none transition-transform duration-700 group-hover:-translate-x-4 group-hover:translate-y-4" />
-                                    <div className="w-full h-full border-4 border-[#2C1E16] relative overflow-hidden z-10 shadow-[-5px_5px_15px_rgba(44,30,22,0.15)]">
+                                    <div className="w-full h-full border-4 border-[var(--theme-accent,#2C1E16)] relative overflow-hidden z-10 shadow-[-5px_5px_15px_rgba(44,30,22,0.15)]">
                                         {groomPhoto ? (
                                             <img src={groomPhoto} className="w-full h-full object-cover sepia-[0.3] transition-all duration-1000 group-hover:scale-105 group-hover:sepia-0" alt="Groom" />
                                         ) : (
@@ -481,17 +481,17 @@ export default function AdatJawa({ payload, audioController }) {
                             </div>
                             
                             <div className="mt-14 relative z-20 bg-[#F6F4EE] shadow-[0_-15px_15px_#F6F4EE]">
-                                <p className={`${greatVibes.className} text-4xl text-[#D8B67D] mb-1`}>
+                                <p className={`${greatVibes.className} text-4xl text-[var(--theme-text,#D8B67D)] mb-1`}>
                                     {invitation?.groom_name?.split(' ')[0] || invitation?.groom_name}
                                 </p>
-                                <h3 className={`font-serif text-2xl font-bold uppercase tracking-widest text-[#2C1E16] mb-3`}>
+                                <h3 className={`font-serif text-2xl font-bold uppercase tracking-widest text-[var(--theme-accent,#2C1E16)] mb-3`}>
                                     {invitation?.groom_full_name || invitation?.groom_name}
                                 </h3>
-                                <p className={`font-sans text-[10px] text-[#2C1E16]/70 leading-[2] uppercase tracking-[0.1em] font-medium`}>
+                                <p className={`font-sans text-[10px] text-[var(--theme-accent,#2C1E16)]/70 leading-[2] uppercase tracking-[0.1em] font-medium`}>
                                     Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari <br/> {invitation?.groom_father || '...'} & {invitation?.groom_mother || '...'}
                                 </p>
                                 {invitation?.groom_instagram && (
-                                    <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 mt-5 bg-[#2C1E16] text-[#D8B67D] px-6 py-2 rounded-full text-[10px] tracking-wider uppercase font-semibold shadow-md">
+                                    <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 mt-5 bg-[var(--theme-accent,#2C1E16)] text-[var(--theme-text,#D8B67D)] px-6 py-2 rounded-full text-[10px] tracking-wider uppercase font-semibold shadow-md">
                                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                         @{invitation.groom_instagram}
                                     </a>
@@ -511,12 +511,12 @@ export default function AdatJawa({ payload, audioController }) {
                     tmItems = tmItems.filter(t => t && String(t).trim() !== '');
                     if (tmItems.length === 0) return null;
                     return (
-                        <section className="py-20 px-8 text-center bg-[#110e0c] relative">
+                        <section className="py-20 px-8 text-center bg-[var(--theme-bg,#110e0c)] relative">
                             {/* Texture */}
                             <div className="absolute inset-0 opacity-[0.05] mix-blend-screen pointer-events-none" style={{ backgroundImage: `url('${ASSETS.pattern}')`, backgroundSize: '200px' }} />
                             
                             <div className="pg-reveal relative z-10">
-                                <p className="text-[10px] tracking-[0.4em] uppercase text-[#D8B67D] font-bold mb-6">Turut Mengundang</p>
+                                <p className="text-[10px] tracking-[0.4em] uppercase text-[var(--theme-text,#D8B67D)] font-bold mb-6">Turut Mengundang</p>
                                 <div className="w-10 h-px bg-[#D8B67D]/40 mx-auto mb-10" />
                                 <div className="space-y-4">
                                     {tmItems.map((name, i) => (
@@ -534,13 +534,13 @@ export default function AdatJawa({ payload, audioController }) {
                     
                     <div className="pg-reveal mb-16 relative z-10">
                         <img src={ASSETS.gunungan} alt="Gunungan" className="w-28 mx-auto mb-6 opacity-30 invert" />
-                        <h2 className={`font-serif text-[2.5rem] text-[#2C1E16] font-bold uppercase tracking-[0.15em] mb-4`}>Rangkaian Acara</h2>
-                        <p className="text-[11px] leading-relaxed text-[#2C1E16]/70 max-w-[280px] mx-auto uppercase tracking-widest font-medium mb-12">
+                        <h2 className={`font-serif text-[2.5rem] text-[var(--theme-accent,#2C1E16)] font-bold uppercase tracking-[0.15em] mb-4`}>Rangkaian Acara</h2>
+                        <p className="text-[11px] leading-relaxed text-[var(--theme-accent,#2C1E16)]/70 max-w-[280px] mx-auto uppercase tracking-widest font-medium mb-12">
                             Pahargyan & Resepsi
                         </p>
                         
                         {/* Boxed Countdown */}
-                        <div className="bg-[#110e0c] text-[#D8B67D] p-6 rounded-2xl shadow-xl max-w-[320px] mx-auto border border-[#D8B67D]/30 relative overflow-hidden">
+                        <div className="bg-[var(--theme-bg,#110e0c)] text-[var(--theme-text,#D8B67D)] p-6 rounded-2xl shadow-xl max-w-[320px] mx-auto border border-[#D8B67D]/30 relative overflow-hidden">
                             <div className="absolute inset-0 opacity-[0.05] mix-blend-screen" style={{ backgroundImage: `url('${ASSETS.pattern}')`, backgroundSize: '150px' }} />
                             <div className="flex justify-between items-center relative z-10">
                                 {[
@@ -565,11 +565,11 @@ export default function AdatJawa({ payload, audioController }) {
                         <div className="space-y-16 mt-20 relative z-10">
                             {[...invitation.events].sort((a, b) => a.sort_order - b.sort_order).map((event, idx) => (
                                 <div key={idx} className="relative pg-reveal mx-auto text-center max-w-[320px]" data-delay={`${(idx % 3) + 1}`}>
-                                    {idx > 0 && <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-[#2C1E16]/20" />}
+                                    {idx > 0 && <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-[var(--theme-accent,#2C1E16)]/20" />}
                                     
-                                    <h3 className={`${greatVibes.className} text-4xl text-[#D8B67D] mb-4`}>{event.name}</h3>
+                                    <h3 className={`${greatVibes.className} text-4xl text-[var(--theme-text,#D8B67D)] mb-4`}>{event.name}</h3>
                                     
-                                    <div className="bg-white border text-[#2C1E16] rounded-t-full rounded-b-lg pt-12 pb-8 px-8 shadow-lg relative border-[#2C1E16]/10">
+                                    <div className="bg-white border text-[var(--theme-accent,#2C1E16)] rounded-t-full rounded-b-lg pt-12 pb-8 px-8 shadow-lg relative border-[var(--theme-accent,#2C1E16)]/10">
                                         <div className={`font-serif font-bold text-lg mb-2 capitalize tracking-wider`}>
                                             {event.date ? new Date(event.date).toLocaleDateString('id-ID', { weekday: 'long' }) : ''}
                                             <span className="text-3xl mt-1 block tracking-wider">{event.date ? new Date(event.date).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' }) : ''}</span>
@@ -577,7 +577,7 @@ export default function AdatJawa({ payload, audioController }) {
                                         
                                         <div className="w-12 h-[1px] bg-[#D8B67D]/60 mx-auto my-5" />
                                         
-                                        <p className={`font-sans text-[10px] text-[#2C1E16]/70 uppercase font-semibold tracking-widest mb-6`}>
+                                        <p className={`font-sans text-[10px] text-[var(--theme-accent,#2C1E16)]/70 uppercase font-semibold tracking-widest mb-6`}>
                                             {event.time_start?.substring(0, 5) || 'TBA'} WIB — {event.time_end ? event.time_end.substring(0, 5) + ' WIB' : 'Selesai'}
                                         </p>
 
@@ -592,14 +592,14 @@ export default function AdatJawa({ payload, audioController }) {
                                             </p>
 
                                         </div>
-                                        <p className="text-xs text-[#2C1E16]/60 leading-relaxed mx-auto mb-8 font-medium">
+                                        <p className="text-xs text-[var(--theme-accent,#2C1E16)]/60 leading-relaxed mx-auto mb-8 font-medium">
                                             {event.address || ''}
                                         </p>
 
                                         {getMapUrl(event) && (
                                             <MapLocationButton
                                                 item={event}
-                                                className="bg-[#2C1E16] hover:bg-black text-[#D8B67D] py-3.5 px-8 rounded-sm text-[9px] font-bold tracking-[0.2em] uppercase inline-block shadow-md transition-colors border border-[#2C1E16]"
+                                                className="bg-[var(--theme-accent,#2C1E16)] hover:bg-black text-[var(--theme-text,#D8B67D)] py-3.5 px-8 rounded-sm text-[9px] font-bold tracking-[0.2em] uppercase inline-block shadow-md transition-colors border border-[var(--theme-accent,#2C1E16)]"
                                                 buttonText="Petunjuk Arah Map"
                                             />
                                         )}
@@ -612,7 +612,7 @@ export default function AdatJawa({ payload, audioController }) {
 
                 {/* ── Section 4: Live Streaming ── */}
                 {(Boolean(invitation?.live_streaming_link?.trim()) || Boolean(invitation?.live_stream_url?.trim())) && (
-                <section className="py-20 px-8 text-center bg-[#110e0c] relative">
+                <section className="py-20 px-8 text-center bg-[var(--theme-bg,#110e0c)] relative">
                     <div className="absolute inset-0 opacity-[0.05] mix-blend-screen pointer-events-none" style={{ backgroundImage: `url('${ASSETS.pattern}')`, backgroundSize: '150px' }} />
                     <div className="pg-reveal relative z-10">
                         <h2 className={`font-serif text-3xl text-white font-bold uppercase tracking-[0.1em] mb-4`}>Live Streaming</h2>
@@ -635,11 +635,11 @@ export default function AdatJawa({ payload, audioController }) {
                         <img src={ASSETS.motifBawah} alt="" className="absolute left-[-20%] bottom-[-10%] w-64 opacity-10 mix-blend-multiply pointer-events-none rotate-45" />
                         
                         <div className="text-center mb-16 pg-reveal relative z-10">
-                            <h2 className={`${greatVibes.className} text-4xl text-[#D8B67D] mb-3`}>Kisah Cinta</h2>
-                            <h3 className={`font-serif text-3xl font-bold uppercase tracking-[0.1em] text-[#2C1E16]`}>
+                            <h2 className={`${greatVibes.className} text-4xl text-[var(--theme-text,#D8B67D)] mb-3`}>Kisah Cinta</h2>
+                            <h3 className={`font-serif text-3xl font-bold uppercase tracking-[0.1em] text-[var(--theme-accent,#2C1E16)]`}>
                                 Perjalanan <br/> Kasih Kami
                             </h3>
-                            <div className="w-12 h-[1px] bg-[#2C1E16]/20 mx-auto mt-6" />
+                            <div className="w-12 h-[1px] bg-[var(--theme-accent,#2C1E16)]/20 mx-auto mt-6" />
                         </div>
 
                         <div className="max-w-[320px] mx-auto space-y-12 relative z-10">
@@ -647,15 +647,15 @@ export default function AdatJawa({ payload, audioController }) {
                                 <div key={i} className="relative pl-8 pg-reveal border-l-[1.5px] border-[#D8B67D]" data-delay={`${(i % 3) + 1}`}>
                                     <div className="absolute -left-[5px] top-1 w-[9px] h-[9px] bg-[#F6F4EE] border-[1.5px] border-[#D8B67D] rotate-45" />
                                     
-                                    <span className={`font-sans text-[9px] font-bold tracking-[0.3em] bg-[#2C1E16] text-[#D8B67D] px-3 py-1 uppercase rounded-sm inline-block mb-3`}>
+                                    <span className={`font-sans text-[9px] font-bold tracking-[0.3em] bg-[var(--theme-accent,#2C1E16)] text-[var(--theme-text,#D8B67D)] px-3 py-1 uppercase rounded-sm inline-block mb-3`}>
                                         {story.year}
                                     </span>
                                     
-                                    <h4 className={`font-serif text-xl text-[#2C1E16] font-bold mb-2 tracking-wider`}>
+                                    <h4 className={`font-serif text-xl text-[var(--theme-accent,#2C1E16)] font-bold mb-2 tracking-wider`}>
                                         {story.title}
                                     </h4>
                                     
-                                    <p className="text-[11px] text-[#2C1E16]/70 leading-relaxed font-medium text-justify">
+                                    <p className="text-[11px] text-[var(--theme-accent,#2C1E16)]/70 leading-relaxed font-medium text-justify">
                                         {story.story}
                                     </p>
                                 </div>
@@ -666,10 +666,10 @@ export default function AdatJawa({ payload, audioController }) {
 
                 {/* ── Section 5: Gallery Masonry ── */}
                 {photos && photos.length > 0 && (
-                    <section className="bg-[#2C1E16] py-24 px-4 relative overflow-hidden">
+                    <section className="bg-[var(--theme-accent,#2C1E16)] py-24 px-4 relative overflow-hidden">
                         <div className="absolute inset-0 opacity-[0.05] mix-blend-screen pointer-events-none" style={{ backgroundImage: `url('${ASSETS.pattern}')`, backgroundSize: '150px' }} />
                         <div className="text-center mb-16 pg-reveal relative z-10">
-                            <h2 className={`${greatVibes.className} text-5xl text-[#D8B67D] font-bold mb-2`}>Kenangan</h2>
+                            <h2 className={`${greatVibes.className} text-5xl text-[var(--theme-text,#D8B67D)] font-bold mb-2`}>Kenangan</h2>
                             <p className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-semibold">Masa Indah Bersama</p>
                             <div className="w-10 h-px bg-[#D8B67D]/40 mx-auto mt-6" />
                         </div>
@@ -677,7 +677,7 @@ export default function AdatJawa({ payload, audioController }) {
                         <div className="max-w-[400px] mx-auto relative z-10">
                             <div className="pg-reveal columns-2 gap-4 space-y-4">
                                 {photos.map((img, i) => (
-                                    <div key={i} className="break-inside-avoid rounded-sm overflow-hidden border border-[#D8B67D]/20 p-1 bg-[#110e0c]" style={{ animationDelay: `${i * 150}ms` }}>
+                                    <div key={i} className="break-inside-avoid rounded-sm overflow-hidden border border-[#D8B67D]/20 p-1 bg-[var(--theme-bg,#110e0c)]" style={{ animationDelay: `${i * 150}ms` }}>
                                         <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(img)} className="w-full h-auto object-cover sepia-[0.3] hover:sepia-0 transition-all duration-500 hover:scale-105" alt={`Masonry ${i}`} />
                                     </div>
                                 ))}
@@ -688,31 +688,31 @@ export default function AdatJawa({ payload, audioController }) {
 
                 {/* ── Section 7: QR Checkin (VIP PASS) ── */}
                 {guest && (
-                    <section className="bg-[#F6F4EE] py-28 px-8 text-center relative border-y border-[#2C1E16]/10 overflow-hidden">
+                    <section className="bg-[#F6F4EE] py-28 px-8 text-center relative border-y border-[var(--theme-accent,#2C1E16)]/10 overflow-hidden">
                         <img src={ASSETS.motifBawah} alt="" className="absolute right-[-40px] top-1/2 -translate-y-1/2 w-64 opacity-10 mix-blend-multiply pointer-events-none -rotate-90" />
                         
                         <div className="pg-reveal relative z-10 max-w-[320px] mx-auto">
-                            <h2 className={`font-serif text-4xl text-[#2C1E16] font-bold uppercase tracking-[0.1em] mb-3`}>Akses Masuk</h2>
-                            <p className="text-[9px] text-[#2C1E16]/60 font-semibold mb-12 tracking-[0.3em] uppercase">
+                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#2C1E16)] font-bold uppercase tracking-[0.1em] mb-3`}>Akses Masuk</h2>
+                            <p className="text-[9px] text-[var(--theme-accent,#2C1E16)]/60 font-semibold mb-12 tracking-[0.3em] uppercase">
                                 Tunjukkan QR ini saat resepsi
                             </p>
                             
-                            <div className="bg-white rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-[#2C1E16]/5 relative">
+                            <div className="bg-white rounded-3xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-[var(--theme-accent,#2C1E16)]/5 relative">
                                 <div className="absolute -top-4 -left-4 w-12 h-12 border-t-2 border-l-2 border-[#D8B67D] rounded-tl-xl" />
                                 <div className="absolute -bottom-4 -right-4 w-12 h-12 border-b-2 border-r-2 border-[#D8B67D] rounded-br-xl" />
                                 
-                                <div className="bg-[#F6F4EE] rounded-2xl p-6 border border-[#2C1E16]/5 mb-6 shadow-inner mx-auto w-fit">
+                                <div className="bg-[#F6F4EE] rounded-2xl p-6 border border-[var(--theme-accent,#2C1E16)]/5 mb-6 shadow-inner mx-auto w-fit">
                                     {guest.qr_code ? (
                                         <img src={guest.qr_code.startsWith('http') ? guest.qr_code : `${STORAGE_URL}/${guest.qr_code}`} alt="QR Code" className="w-[180px] h-[180px] object-contain mix-blend-multiply" />
                                     ) : (
-                                        <div className="w-[180px] h-[180px] flex items-center justify-center flex-col border-2 border-dashed border-[#2C1E16]/20 rounded-xl">
-                                            <span className="text-[10px] text-[#2C1E16]/40 font-bold uppercase tracking-widest">Unavailable</span>
+                                        <div className="w-[180px] h-[180px] flex items-center justify-center flex-col border-2 border-dashed border-[var(--theme-accent,#2C1E16)]/20 rounded-xl">
+                                            <span className="text-[10px] text-[var(--theme-accent,#2C1E16)]/40 font-bold uppercase tracking-widest">Unavailable</span>
                                         </div>
                                     )}
                                 </div>
-                                <div className="border-t border-dashed border-[#2C1E16]/20 pt-6 pb-2">
-                                    <p className={`font-serif text-2xl font-bold text-[#2C1E16] uppercase tracking-wider truncate`}>{guest.name}</p>
-                                    <p className="text-[9px] text-[#D8B67D] uppercase tracking-[0.2em] font-bold mt-1">Undangan VIP</p>
+                                <div className="border-t border-dashed border-[var(--theme-accent,#2C1E16)]/20 pt-6 pb-2">
+                                    <p className={`font-serif text-2xl font-bold text-[var(--theme-accent,#2C1E16)] uppercase tracking-wider truncate`}>{guest.name}</p>
+                                    <p className="text-[9px] text-[var(--theme-text,#D8B67D)] uppercase tracking-[0.2em] font-bold mt-1">Undangan VIP</p>
                                 </div>
                             </div>
                         </div>
@@ -720,12 +720,12 @@ export default function AdatJawa({ payload, audioController }) {
                 )}
 
                 {/* ── Section 8: Wedding Gift ── */}
-                <section className="bg-[#110e0c] py-28 px-6 text-center relative overflow-hidden">
+                <section className="bg-[var(--theme-bg,#110e0c)] py-28 px-6 text-center relative overflow-hidden">
                     <div className="absolute inset-0 opacity-[0.05] mix-blend-screen pointer-events-none" style={{ backgroundImage: `url('${ASSETS.pattern}')`, backgroundSize: '200px' }} />
                     <div className="pg-reveal mb-16 relative z-10">
                         <img src={ASSETS.gunungan} alt="Icon" className="w-16 mx-auto mb-6 opacity-40 invert drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]" />
                         <h2 className={`font-serif text-[2.5rem] text-white font-bold uppercase tracking-[0.1em] mb-4`}>Tanda Kasih</h2>
-                        <p className="text-[11px] text-[#D8B67D]/80 leading-relaxed max-w-[280px] mx-auto font-medium">
+                        <p className="text-[11px] text-[var(--theme-text,#D8B67D)]/80 leading-relaxed max-w-[280px] mx-auto font-medium">
                             Doa restu Anda tak ternilai harganya. Namun jika Anda bermaksud memberikan tanda kasih, dapat mengirimkan melalui opsi di bawah ini.
                         </p>
                     </div>
@@ -736,15 +736,15 @@ export default function AdatJawa({ payload, audioController }) {
                                 <GiftAtmCard key={acc.id || i} acc={acc} delayData={(i % 3) + 1} variant="golden" />
                             ))
                         ) : (
-                            <div className="bg-[#2C1E16]/40 border border-white/10 rounded-xl p-8 text-white/50 text-xs">Belum ada informasi.</div>
+                            <div className="bg-[var(--theme-accent,#2C1E16)]/40 border border-white/10 rounded-xl p-8 text-white/50 text-xs">Belum ada informasi.</div>
                         )}
                     </div>
                 </section>
 
                 {/* ── Section 9: Wishes ── */}
-                <section className="bg-[#F6F4EE] py-24 px-8 relative border-t border-[#2C1E16]/10">
+                <section className="bg-[#F6F4EE] py-24 px-8 relative border-t border-[var(--theme-accent,#2C1E16)]/10">
                     <div className="text-center mb-12 pg-reveal">
-                        <h2 className={`font-serif text-3xl text-[#2C1E16] font-bold uppercase tracking-[0.1em] mb-4`}>Kirim Doa Restu</h2>
+                        <h2 className={`font-serif text-3xl text-[var(--theme-accent,#2C1E16)] font-bold uppercase tracking-[0.1em] mb-4`}>Kirim Doa Restu</h2>
                         <div className="w-8 h-[1px] bg-[#D8B67D] mx-auto mb-4" />
                     </div>
 
@@ -752,14 +752,14 @@ export default function AdatJawa({ payload, audioController }) {
                         <form onSubmit={submitWish} className="space-y-5 mb-12 pg-reveal" data-delay="1">
                             <div>
                                 <input type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
-                                    className="w-full bg-white border border-[#2C1E16]/20 rounded-md px-5 py-3.5 text-xs text-[#2C1E16] focus:outline-none focus:border-[#D8B67D] shadow-sm transition-colors" placeholder="Nama Lengkap Anda" />
+                                    className="w-full bg-white border border-[var(--theme-accent,#2C1E16)]/20 rounded-md px-5 py-3.5 text-xs text-[var(--theme-accent,#2C1E16)] focus:outline-none focus:border-[#D8B67D] shadow-sm transition-colors" placeholder="Nama Lengkap Anda" />
                             </div>
                             <div>
                                 <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)}
-                                    className="w-full bg-white border border-[#2C1E16]/20 rounded-md px-5 py-3.5 text-xs text-[#2C1E16] focus:outline-none focus:border-[#D8B67D] shadow-sm transition-colors h-32 resize-none leading-relaxed" placeholder="Tuliskan doa dan restu..." />
+                                    className="w-full bg-white border border-[var(--theme-accent,#2C1E16)]/20 rounded-md px-5 py-3.5 text-xs text-[var(--theme-accent,#2C1E16)] focus:outline-none focus:border-[#D8B67D] shadow-sm transition-colors h-32 resize-none leading-relaxed" placeholder="Tuliskan doa dan restu..." />
                             </div>
                             <button type="submit" disabled={submitting}
-                                className="bg-[#2C1E16] hover:bg-[#110e0c] text-[#D8B67D] w-full py-4 rounded-md text-[10px] tracking-[0.2em] uppercase font-bold shadow-xl disabled:opacity-50 transition-colors">
+                                className="bg-[var(--theme-accent,#2C1E16)] hover:bg-[var(--theme-bg,#110e0c)] text-[var(--theme-text,#D8B67D)] w-full py-4 rounded-md text-[10px] tracking-[0.2em] uppercase font-bold shadow-xl disabled:opacity-50 transition-colors">
                                 {submitting ? 'Mengirim...' : 'Kirim Sekarang'}
                             </button>
                         </form>
@@ -767,10 +767,10 @@ export default function AdatJawa({ payload, audioController }) {
                         {wishes.length > 0 && (
                             <div className="space-y-4 max-h-[400px] overflow-y-auto pr-1 pg-reveal" data-delay="2">
                                 {wishes.map((w, i) => (
-                                    <div key={i} className="bg-white rounded-lg p-5 shadow-sm border border-[#2C1E16]/5 relative">
-                                        <h4 className={`font-serif text-xl font-bold text-[#2C1E16] mb-1 leading-none uppercase tracking-wide`}>{w.name}</h4>
-                                        <p className="text-[9px] text-[#D8B67D] font-bold uppercase tracking-widest mb-3">{new Date(w.created_at).toLocaleDateString('id-ID')}</p>
-                                        <p className="text-[11px] text-[#2C1E16]/70 leading-[1.8] font-medium">{w.message}</p>
+                                    <div key={i} className="bg-white rounded-lg p-5 shadow-sm border border-[var(--theme-accent,#2C1E16)]/5 relative">
+                                        <h4 className={`font-serif text-xl font-bold text-[var(--theme-accent,#2C1E16)] mb-1 leading-none uppercase tracking-wide`}>{w.name}</h4>
+                                        <p className="text-[9px] text-[var(--theme-text,#D8B67D)] font-bold uppercase tracking-widest mb-3">{new Date(w.created_at).toLocaleDateString('id-ID')}</p>
+                                        <p className="text-[11px] text-[var(--theme-accent,#2C1E16)]/70 leading-[1.8] font-medium">{w.message}</p>
                                     </div>
                                 ))}
                             </div>

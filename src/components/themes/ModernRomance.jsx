@@ -75,7 +75,7 @@ export default function ModernRomance({ payload, audioController }) {
     : dividerImage;
 
   return (
-    <div className={`min-h-screen bg-[#fcfaf9] text-gray-800 antialiased overflow-x-hidden ${sansFont.className}`}>
+    <div className={`min-h-screen bg-[var(--theme-bg,#fcfaf9)] text-gray-800 antialiased overflow-x-hidden ${sansFont.className}`}>
       
       <style jsx global>{`
         .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -98,11 +98,11 @@ export default function ModernRomance({ payload, audioController }) {
           setIsOpened(true);
           audioController?.play();
         }}
-        overlayBg="bg-[#fcfaf9]" // romance-50
+        overlayBg="bg-[var(--theme-bg,#fcfaf9)]" // romance-50
         titleFont={serifFont.className}
         subtitleFont={sansFont.className}
-        accentColor="text-[#875b3d]" // romance-700
-        btnBg="bg-[#c5a587] text-white shadow-lg hover:bg-[#a3714b]" // romance-400
+        accentColor="text-[var(--theme-text,#875b3d)]" // romance-700
+        btnBg="bg-[#c5a587] text-white shadow-lg hover:bg-[var(--theme-accent,#a3714b)]" // romance-400
       />
 
       {/* Music Player */}
@@ -110,7 +110,7 @@ export default function ModernRomance({ payload, audioController }) {
         <MusicPlayer 
           audioController={audioController} 
           btnBg="glass-light backdrop-blur-md border border-[#e6dacd]" 
-          btnColor="text-[#a3714b]" 
+          btnColor="text-[var(--theme-accent,#a3714b)]" 
           btnBorder="" 
         />
       )}
@@ -156,10 +156,10 @@ export default function ModernRomance({ payload, audioController }) {
       {/* Turut Mengundang */}
       <TurutMengundang 
         invitation={invitation}
-        sectionBg="bg-[#fcfaf9]"
+        sectionBg="bg-[var(--theme-bg,#fcfaf9)]"
         titleFont={serifFont.className}
         accentText="text-gray-700"
-        subtitleText="text-[#a3714b]"
+        subtitleText="text-[var(--theme-accent,#a3714b)]"
         borderColor="border-[#d7c4af]"
       />
 
@@ -176,18 +176,18 @@ export default function ModernRomance({ payload, audioController }) {
             <p className={`${serifFont.className} text-xl md:text-2xl leading-loose text-gray-600 italic`}>
               &quot;{invitation.quotes}&quot;
             </p>
-            {invitation.quotes_name && <p className="text-[10px] text-[#a3714b] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
+            {invitation.quotes_name && <p className="text-[10px] text-[var(--theme-accent,#a3714b)] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
           </div>
         </section>
       )}
 
       {/* Couple Profiles */}
-      <section className="py-24 px-6 bg-[#fcfaf9] relative reveal overflow-hidden">
+      <section className="py-24 px-6 bg-[var(--theme-bg,#fcfaf9)] relative reveal overflow-hidden">
         <svg className="absolute top-0 right-0 w-64 h-64 text-[#e6dacd] opacity-20 transform translate-x-1/3 -translate-y-1/3" viewBox="0 0 100 100"><path fill="currentColor" d="M50 0 C77.6 0 100 22.4 100 50 C100 77.6 77.6 100 50 100 C22.4 100 0 77.6 0 50 C0 22.4 22.4 0 50 0 Z M50 5 C25.1 5 5 25.1 5 50 C5 74.9 25.1 95 50 95 C74.9 95 95 74.9 95 50 C95 25.1 74.9 5 50 5 Z"/></svg>
 
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className={`${scriptFont.className} text-5xl md:text-6xl text-[#a3714b] mb-4`}>Groom & Bride</h2>
+            <h2 className={`${scriptFont.className} text-5xl md:text-6xl text-[var(--theme-accent,#a3714b)] mb-4`}>Groom & Bride</h2>
             <div className="h-px w-20 bg-[#d7c4af] mx-auto"></div>
           </div>
 
@@ -208,7 +208,7 @@ export default function ModernRomance({ payload, audioController }) {
               <p className="text-sm text-gray-500 tracking-widest uppercase mb-4">The Groom</p>
               <p className="text-sm text-gray-500">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari<br/><span className={`${serifFont.className} italic text-gray-700`}>{invitation.groom_father} & {invitation.groom_mother}</span></p>
               {invitation?.groom_instagram && (
-                <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-xs text-[#a3714b] hover:text-[#825636] transition-colors font-medium">
+                <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-xs text-[var(--theme-accent,#a3714b)] hover:text-[#825636] transition-colors font-medium">
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                   @{invitation.groom_instagram}
                 </a>
@@ -231,7 +231,7 @@ export default function ModernRomance({ payload, audioController }) {
               <p className="text-sm text-gray-500 tracking-widest uppercase mb-4">The Bride</p>
               <p className="text-sm text-gray-500">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari<br/><span className={`${serifFont.className} italic text-gray-700`}>{invitation.bride_father} & {invitation.bride_mother}</span></p>
               {invitation?.bride_instagram && (
-                <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-xs text-[#a3714b] hover:text-[#825636] transition-colors font-medium">
+                <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-xs text-[var(--theme-accent,#a3714b)] hover:text-[#825636] transition-colors font-medium">
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                   @{invitation.bride_instagram}
                 </a>
@@ -255,12 +255,12 @@ export default function ModernRomance({ payload, audioController }) {
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
             {invitation.events?.length > 0 ? invitation.events.map((event, idx) => (
-              <div key={idx} className="border border-[#e6dacd] p-10 text-center relative bg-[#fcfaf9]/30">
+              <div key={idx} className="border border-[#e6dacd] p-10 text-center relative bg-[var(--theme-bg,#fcfaf9)]/30">
                 <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#d7c4af] to-transparent"></div>
                 <svg className="w-10 h-10 mx-auto text-[#c5a587] mb-6" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
                 
                 <h3 className={`${serifFont.className} text-2xl text-gray-800 mb-2`}>{event.name}</h3>
-                <p className="text-xs uppercase tracking-widest text-[#a3714b] mb-6">
+                <p className="text-xs uppercase tracking-widest text-[var(--theme-accent,#a3714b)] mb-6">
                   {new Date(event.date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
                 </p>
                 
@@ -279,22 +279,22 @@ export default function ModernRomance({ payload, audioController }) {
                 {getMapUrl(event) && (
                   <MapLocationButton
                     item={event}
-                    className="inline-block border border-[#a3714b] text-[#a3714b] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[#a3714b] hover:text-white transition-colors"
+                    className="inline-block border border-[var(--theme-accent,#a3714b)] text-[var(--theme-accent,#a3714b)] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[var(--theme-accent,#a3714b)] hover:text-white transition-colors"
                     buttonText="Buka di Google Maps"
                   />
                 )}
               </div>
             )) : (
-              <div className="col-span-full border border-[#e6dacd] p-10 text-center bg-[#fcfaf9]/30">
+              <div className="col-span-full border border-[#e6dacd] p-10 text-center bg-[var(--theme-bg,#fcfaf9)]/30">
                 <h3 className={`${serifFont.className} text-2xl text-gray-800 mb-2`}>Acara Pernikahan</h3>
-                <p className="text-xs uppercase tracking-widest text-[#a3714b] mb-6">
+                <p className="text-xs uppercase tracking-widest text-[var(--theme-accent,#a3714b)] mb-6">
                   {new Date(invitation.event_date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
                 </p>
                 <p className="text-sm text-gray-600 mb-8">{invitation.location}</p>
                 {getMapUrl(invitation) && (
                   <MapLocationButton
                     item={invitation}
-                    className="inline-block border border-[#a3714b] text-[#a3714b] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[#a3714b] hover:text-white transition-colors"
+                    className="inline-block border border-[var(--theme-accent,#a3714b)] text-[var(--theme-accent,#a3714b)] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[var(--theme-accent,#a3714b)] hover:text-white transition-colors"
                     buttonText="Buka di Maps"
                   />
                 )}
@@ -320,10 +320,10 @@ export default function ModernRomance({ payload, audioController }) {
       <Gallery 
         layout="abstract" 
         invitation={invitation}
-        sectionBg="bg-[#fcfaf9]"
+        sectionBg="bg-[var(--theme-bg,#fcfaf9)]"
         titleFont={scriptFont.className}
         titleSize="text-5xl md:text-6xl"
-        accentText="text-[#a3714b]"
+        accentText="text-[var(--theme-accent,#a3714b)]"
         borderColor="border-[#d7c4af]"
         imgClasses="bg-white p-2 shadow-md filter contrast-[0.95]"
       />
@@ -335,9 +335,9 @@ export default function ModernRomance({ payload, audioController }) {
           sectionBg="bg-white"
           titleFont={scriptFont.className}
           titleSize="text-5xl md:text-6xl"
-          accentText="text-[#a3714b]"
+          accentText="text-[var(--theme-accent,#a3714b)]"
           borderColor="border-[#c5a587]/40"
-          cardBg="bg-[#fcfaf9] border border-[#e6dacd]"
+          cardBg="bg-[var(--theme-bg,#fcfaf9)] border border-[#e6dacd]"
         />
       )}
 
@@ -346,12 +346,12 @@ export default function ModernRomance({ payload, audioController }) {
       {(invitation.giftAccounts || invitation.gift_accounts) && (invitation.giftAccounts || invitation.gift_accounts).length > 0 && (
         <GiftAccounts variant="ModernRomance" 
           invitation={invitation}
-          sectionBg="bg-[#fcfaf9]"
+          sectionBg="bg-[var(--theme-bg,#fcfaf9)]"
           titleFont={scriptFont.className}
           titleSize="text-5xl md:text-6xl"
-          accentText="text-[#a3714b]"
+          accentText="text-[var(--theme-accent,#a3714b)]"
           cardBg="bg-white border border-[#e6dacd]"
-          btnBg="border border-[#a3714b] text-[#a3714b] hover:bg-[#a3714b] hover:text-white bg-transparent"
+          btnBg="border border-[var(--theme-accent,#a3714b)] text-[var(--theme-accent,#a3714b)] hover:bg-[var(--theme-accent,#a3714b)] hover:text-white bg-transparent"
         />
       )}
 
@@ -384,7 +384,7 @@ export default function ModernRomance({ payload, audioController }) {
 
       {/* Footer */}
       {/* ── FOOTER ── */}
-                <footer className="bg-[#fcfaf9] text-gray-800 pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                <footer className="bg-[var(--theme-bg,#fcfaf9)] text-gray-800 pt-64 pb-24 px-8 text-center relative overflow-hidden">
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
@@ -394,7 +394,7 @@ export default function ModernRomance({ payload, audioController }) {
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
                             <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : (
-                            <div className="w-full h-full bg-[#fcfaf9] opacity-40"></div>
+                            <div className="w-full h-full bg-[var(--theme-bg,#fcfaf9)] opacity-40"></div>
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#fcfaf9] via-[#fcfaf9]/60 to-transparent" />
                     </div>
@@ -421,8 +421,8 @@ export default function ModernRomance({ payload, audioController }) {
 
       {/* Bottom Navigation */}
       <BottomNav 
-        navBg="bg-[#fcfaf9]/95 border-t border-[#e6dacd] shadow-[0_-4px_25px_rgba(0,0,0,0.03)]"
-        navActive="text-[#a3714b]"
+        navBg="bg-[var(--theme-bg,#fcfaf9)]/95 border-t border-[#e6dacd] shadow-[0_-4px_25px_rgba(0,0,0,0.03)]"
+        navActive="text-[var(--theme-accent,#a3714b)]"
         navInactive="text-gray-400 hover:text-[#b68b64]"
         navBorder="border-none"
       />

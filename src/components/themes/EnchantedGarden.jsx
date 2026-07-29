@@ -228,7 +228,7 @@ export default function EnchantedGarden({ payload, audioController }) {
             {/* ═══════════════════ COVER ═══════════════════ */}
             <section className={`fixed inset-0 z-[60] flex items-center justify-center transition-all duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? 'opacity-0 pointer-events-none scale-110' : 'opacity-100 scale-100'}`}>
                 {/* Background layers */}
-                <div className="absolute inset-0 bg-[#f4f1ec]">
+                <div className="absolute inset-0 bg-[var(--theme-bg,#f4f1ec)]">
                     {/* Conservatory scene — deepest layer */}
                     <div className="absolute inset-0 flex items-center justify-center"
                         style={{ transform: `translate(${mousePos.x * 8}px, ${mousePos.y * 8}px) scale(1.05)` }}>
@@ -319,11 +319,11 @@ export default function EnchantedGarden({ payload, audioController }) {
                                 {invitation?.bride_name}
                             </h2>
                             <div className="flex items-center justify-center gap-4 mt-6">
-                                <div className="h-px w-10 bg-[#C9A96E]/30" />
+                                <div className="h-px w-10 bg-[var(--theme-accent,#C9A96E)]/30" />
                                 <p className="text-[10px] tracking-[0.3em] eg-text-muted uppercase">
                                     {eventDate.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}
                                 </p>
-                                <div className="h-px w-10 bg-[#C9A96E]/30" />
+                                <div className="h-px w-10 bg-[var(--theme-accent,#C9A96E)]/30" />
                             </div>
                         </div>
                     </div>
@@ -362,11 +362,11 @@ export default function EnchantedGarden({ payload, audioController }) {
                             </div>
 
                             <div className="flex items-center justify-center gap-6 mb-6">
-                                <div className="h-px w-12 bg-[#C9A96E]/40" />
+                                <div className="h-px w-12 bg-[var(--theme-accent,#C9A96E)]/40" />
                                 <p className={`${playfair.className} text-[11px] tracking-[0.35em] eg-text-light uppercase`}>
                                     {eventDate.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: '2-digit' }).replace(/\//g, ' . ')}
                                 </p>
-                                <div className="h-px w-12 bg-[#C9A96E]/40" />
+                                <div className="h-px w-12 bg-[var(--theme-accent,#C9A96E)]/40" />
                             </div>
 
                             {/* Scroll indicator */}
@@ -492,7 +492,7 @@ export default function EnchantedGarden({ payload, audioController }) {
                                             <p className="text-xs tracking-widest">{ev.time_start?.substring(0, 5) || ''} WIB - {ev.time_end?.substring(0, 5) || 'Selesai'} WIB</p>
 
                                             <div className="pt-4">
-                                                <div className="w-8 h-8 rounded-full bg-[#C9A96E]/10 flex items-center justify-center mx-auto mb-3">
+                                                <div className="w-8 h-8 rounded-full bg-[var(--theme-accent,#C9A96E)]/10 flex items-center justify-center mx-auto mb-3">
                                                     <svg className="w-4 h-4 eg-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0Z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0Z" /></svg>
                                                 </div>
                                                 <p className={`${playfair.className} text-sm font-bold eg-text mb-1`}>{ev.location}</p>
@@ -533,7 +533,7 @@ export default function EnchantedGarden({ payload, audioController }) {
                             titleSize="text-3xl font-bold uppercase tracking-widest"
                             accentText="eg-text"
                             subtitleText="eg-gold"
-                            borderColor="border-[#C9A96E]/20"
+                            borderColor="border-[var(--theme-accent,#C9A96E)]/20"
                         />
                     </section>
 
@@ -550,7 +550,7 @@ export default function EnchantedGarden({ payload, audioController }) {
                                 <div className="space-y-10">
                                     {[...invitation.love_stories].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)).map((story, i) => (
                                         <div key={story.id || i} className="relative pl-16 eg-reveal" data-delay={`${(i % 3) + 1}`}>
-                                            <div className="absolute left-3.5 top-2 w-5 h-5 rounded-full bg-[#C9A96E] border-4 border-[#f4f1ec] z-10" />
+                                            <div className="absolute left-3.5 top-2 w-5 h-5 rounded-full bg-[var(--theme-accent,#C9A96E)] border-4 border-[#f4f1ec] z-10" />
                                             <div className="eg-card p-8">
                                                 <p className="text-[10px] tracking-[0.2em] uppercase eg-gold font-semibold mb-3">
                                                     {story.date ? new Date(story.date).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }) : story.title}
@@ -571,7 +571,7 @@ export default function EnchantedGarden({ payload, audioController }) {
                     )}
 
                     {/* §7 — QR */}
-                    <QrCheckin guest={guest} sectionBg="eg-cream-bg" titleFont={playfair.className} textColor="eg-text" borderStyle="border-[#C9A96E]/20" />
+                    <QrCheckin guest={guest} sectionBg="eg-cream-bg" titleFont={playfair.className} textColor="eg-text" borderStyle="border-[var(--theme-accent,#C9A96E)]/20" />
 
                     {/* §8 — Gift */}
                     <section className="py-24 px-8 eg-sage-bg text-center">
@@ -605,12 +605,12 @@ export default function EnchantedGarden({ payload, audioController }) {
                                 <div>
                                     <label className="block text-[10px] tracking-[0.2em] uppercase eg-text-muted mb-2">Nama</label>
                                     <input type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
-                                        className="w-full bg-transparent border-b border-[#C9A96E]/30 py-3 text-sm eg-text focus:outline-none focus:border-[#C9A96E] transition-colors" placeholder="Nama Anda..." />
+                                        className="w-full bg-transparent border-b border-[var(--theme-accent,#C9A96E)]/30 py-3 text-sm eg-text focus:outline-none focus:border-[var(--theme-accent,#C9A96E)] transition-colors" placeholder="Nama Anda..." />
                                 </div>
                                 <div>
                                     <label className="block text-[10px] tracking-[0.2em] uppercase eg-text-muted mb-2">Ucapan</label>
                                     <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)}
-                                        className="w-full bg-transparent border-b border-[#C9A96E]/30 py-3 text-sm eg-text h-28 resize-none focus:outline-none focus:border-[#C9A96E] transition-colors" placeholder="Tulis ucapan..." />
+                                        className="w-full bg-transparent border-b border-[var(--theme-accent,#C9A96E)]/30 py-3 text-sm eg-text h-28 resize-none focus:outline-none focus:border-[var(--theme-accent,#C9A96E)] transition-colors" placeholder="Tulis ucapan..." />
                                 </div>
                                 <button type="submit" disabled={submitting} className="eg-btn w-full disabled:opacity-50">
                                     {submitting ? 'Mengirim...' : 'Kirim Ucapan'}

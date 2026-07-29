@@ -145,7 +145,7 @@ export default function CinematicVow({ payload, audioController }) {
     const phs = invitation?.gallery?.length > 0 ? invitation.gallery.map(g => g.photo) : (invitation?.photos || []);
 
     return (
-        <div className={`min-h-screen bg-[#0a0a0f] text-white ${montserrat.className} overflow-hidden`}>
+        <div className={`min-h-screen bg-[var(--theme-bg,#0a0a0f)] text-white ${montserrat.className} overflow-hidden`}>
             <style dangerouslySetInnerHTML={{ __html: `
                 html,body{margin:0;padding:0;overflow-x:hidden}
                 .cv-rv{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.16,1,.3,1)}.cv-rv.active{opacity:1;transform:translateY(0)}.cv-rv[data-delay="1"]{transition-delay:.15s}.cv-rv[data-delay="2"]{transition-delay:.3s}
@@ -179,7 +179,7 @@ export default function CinematicVow({ payload, audioController }) {
 
             {/* ═══════ COVER OVERLAY ═══════ */}
             <div className={`co-cv ${isOpen ? 'open' : ''}`}>
-                <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#0a0a0f] film-grain">
+                <div className="relative w-full h-full flex flex-col items-center justify-center bg-[var(--theme-bg,#0a0a0f)] film-grain">
                     {/* Video BG on cover */}
                     {videoSrc ? (
                         <div className="vid-bg">
@@ -240,7 +240,7 @@ export default function CinematicVow({ payload, audioController }) {
                 <div className="flex flex-col lg:flex-row min-h-screen">
 
                     {/* ───── LEFT PANEL: Always Cover Photo Slideshow ───── */}
-                    <div className="sl-cv w-full lg:w-[70%] bg-[#0a0a0f] relative flex flex-col justify-between film-grain">
+                    <div className="sl-cv w-full lg:w-[70%] bg-[var(--theme-bg,#0a0a0f)] relative flex flex-col justify-between film-grain">
                         {/* Cover Photo Slideshow — always visible */}
                         {coverPhotos.length > 0 ? (
                             <>
@@ -301,7 +301,7 @@ export default function CinematicVow({ payload, audioController }) {
 
                         {/* Music button */}
                         {invitation?.music_url && (
-                            <MusicPlayer audioController={audioController} btnBg="bg-[#0a0a0f]/80" btnColor="text-white/60" btnBorder="border-white/10 shadow-2xl backdrop-blur-xl" />
+                            <MusicPlayer audioController={audioController} btnBg="bg-[var(--theme-bg,#0a0a0f)]/80" btnColor="text-white/60" btnBorder="border-white/10 shadow-2xl backdrop-blur-xl" />
                         )}
                     </div>
 
@@ -326,7 +326,7 @@ export default function CinematicVow({ payload, audioController }) {
                                     ))}
                                 </>
                             ) : null}
-                            <div className="absolute inset-0 bg-[#0a0a0f]/60" style={{zIndex:5}} />
+                            <div className="absolute inset-0 bg-[var(--theme-bg,#0a0a0f)]/60" style={{zIndex:5}} />
                         </div>
                         {/* Scrollable content layer */}
                         <div className="rp-content">
@@ -505,7 +505,7 @@ export default function CinematicVow({ payload, audioController }) {
                                         <label className={`${cinzel.className} block text-[8px] tracking-[.15em] text-white/20 mb-2`}>Ucapan</label>
                                         <textarea value={mi} onChange={e => setMi(e.target.value)} className="w-full bg-white/5 border border-white/8 rounded-xl px-5 py-3.5 text-sm text-white h-28 resize-none focus:outline-none focus:border-white/20 transition-colors placeholder-white/15" placeholder="Tulis ucapan..." />
                                     </div>
-                                    <button type="submit" disabled={sub} className={`${cinzel.className} w-full bg-white text-[#0a0a0f] py-4 rounded-xl text-[9px] tracking-[.2em] uppercase hover:bg-white/90 transition-colors disabled:opacity-50 font-medium`}>{sub ? 'Mengirim...' : 'Kirim Ucapan'}</button>
+                                    <button type="submit" disabled={sub} className={`${cinzel.className} w-full bg-white text-[var(--theme-text,#0a0a0f)] py-4 rounded-xl text-[9px] tracking-[.2em] uppercase hover:bg-white/90 transition-colors disabled:opacity-50 font-medium`}>{sub ? 'Mengirim...' : 'Kirim Ucapan'}</button>
                                 </form>
                                 {ws.length > 0 && (
                                     <div className="mt-8 space-y-3 max-h-[300px] overflow-y-auto sh">

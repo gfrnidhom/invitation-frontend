@@ -59,7 +59,7 @@ export default function FloralDream({ payload, audioController }) {
   }, []);
 
   return (
-    <div className={`min-h-screen bg-[#fef7f7] text-gray-700 antialiased ${bodyFont.className}`}>
+    <div className={`min-h-screen bg-[var(--theme-bg,#fef7f7)] text-gray-700 antialiased ${bodyFont.className}`}>
       
       <style jsx global>{`
         .reveal { opacity: 0; transform: translateY(25px); transition: all 0.7s ease-out; }
@@ -76,16 +76,16 @@ export default function FloralDream({ payload, audioController }) {
           setIsOpened(true);
           audioController?.play();
         }}
-        overlayBg="bg-[#fef7f7]"
+        overlayBg="bg-[var(--theme-bg,#fef7f7)]"
         titleFont={script.className}
         subtitleFont={bodyFont.className}
-        accentColor="text-[#db2777]"
-        btnBg="bg-[#f472b6] shadow-lg shadow-[#f472b6]/30 hover:bg-[#db2777]"
+        accentColor="text-[var(--theme-text,#db2777)]"
+        btnBg="bg-[var(--theme-accent,#f472b6)] shadow-lg shadow-[#f472b6]/30 hover:bg-[#db2777]"
       />
 
       {/* Music Player */}
       {invitation.music_url && (
-        <MusicPlayer audioController={audioController} btnBg="bg-[#f472b6]" btnColor="text-white" btnBorder="border-none shadow-lg shadow-[#f472b6]/30" />
+        <MusicPlayer audioController={audioController} btnBg="bg-[var(--theme-accent,#f472b6)]" btnColor="text-white" btnBorder="border-none shadow-lg shadow-[#f472b6]/30" />
       )}
 
       {/* Hero Section */}
@@ -97,8 +97,8 @@ export default function FloralDream({ payload, audioController }) {
         <div className="relative z-10 w-full flex flex-col items-center justify-center">
           {guestName && (
             <>
-              <p className="text-sm text-[#f472b6] tracking-wider mb-1">Kepada Yth.</p>
-              <p className="text-lg font-semibold text-[#db2777] mb-6">{guestName}</p>
+              <p className="text-sm text-[var(--theme-accent,#f472b6)] tracking-wider mb-1">Kepada Yth.</p>
+              <p className="text-lg font-semibold text-[var(--theme-text,#db2777)] mb-6">{guestName}</p>
             </>
           )}
 
@@ -116,15 +116,15 @@ export default function FloralDream({ payload, audioController }) {
 
           <p className="text-xs tracking-[0.4em] uppercase text-[#f48a8a] mb-4">The Wedding Of</p>
 
-          <h1 className={`${script.className} text-6xl md:text-8xl text-[#db2777] leading-tight drop-shadow-sm`}>
+          <h1 className={`${script.className} text-6xl md:text-8xl text-[var(--theme-text,#db2777)] leading-tight drop-shadow-sm`}>
             {invitation.groom_name}
           </h1>
           <div className="my-4 flex items-center justify-center gap-4">
             <div className="w-12 h-px bg-[#fbcfe8]"></div>
-            <svg className="w-6 h-6 text-[#f472b6]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <svg className="w-6 h-6 text-[var(--theme-accent,#f472b6)]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
             <div className="w-12 h-px bg-[#fbcfe8]"></div>
           </div>
-          <h1 className={`${script.className} text-6xl md:text-8xl text-[#db2777] leading-tight drop-shadow-sm`}>
+          <h1 className={`${script.className} text-6xl md:text-8xl text-[var(--theme-text,#db2777)] leading-tight drop-shadow-sm`}>
             {invitation.bride_name}
           </h1>
 
@@ -137,19 +137,19 @@ export default function FloralDream({ payload, audioController }) {
       {/* Couple Profile */}
       <CoupleProfile 
         invitation={invitation}
-        sectionBg="bg-[#fef7f7]"
+        sectionBg="bg-[var(--theme-bg,#fef7f7)]"
         titleFont={bodyFont.className} 
         nameFont={script.className}
-        accentText="text-[#f472b6]"
+        accentText="text-[var(--theme-accent,#f472b6)]"
         borderColor="border-[#fce7f3]"
       />
 
       {/* Turut Mengundang */}
       <TurutMengundang 
         invitation={invitation}
-        sectionBg="bg-[#fef7f7]"
+        sectionBg="bg-[var(--theme-bg,#fef7f7)]"
         accentText="text-gray-600"
-        subtitleText="text-[#f472b6]"
+        subtitleText="text-[var(--theme-accent,#f472b6)]"
         borderColor="border-[#fce7f3]"
       />
 
@@ -160,7 +160,7 @@ export default function FloralDream({ payload, audioController }) {
           <p className={`text-lg leading-relaxed text-gray-500 italic`}>
             &quot;{invitation.quotes}&quot;
           </p>
-          {invitation.quotes_name && <p className="text-[10px] text-[#f472b6] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
+          {invitation.quotes_name && <p className="text-[10px] text-[var(--theme-accent,#f472b6)] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
         </section>
       )}
 
@@ -169,14 +169,14 @@ export default function FloralDream({ payload, audioController }) {
       <Events 
         invitation={invitation}
         sectionBg="bg-white"
-        cardBg="bg-[#fef7f7]" /* blush-50 */
+        cardBg="bg-[var(--theme-bg,#fef7f7)]" /* blush-50 */
         titleFont={bodyFont.className}
         nameFont={script.className}
-        accentText="text-[#f472b6]"
-        btnBg="bg-[#f472b6]"
+        accentText="text-[var(--theme-accent,#f472b6)]"
+        btnBg="bg-[var(--theme-accent,#f472b6)]"
         btnHoverBg="hover:bg-[#db2777]"
         btnBorder="border-[#fbcfe8]"
-        iconBg="text-[#f472b6]"
+        iconBg="text-[var(--theme-accent,#f472b6)]"
       />
 
       {/* Countdown Timer Overrides */}
@@ -186,8 +186,8 @@ export default function FloralDream({ payload, audioController }) {
           eventTime={invitation.event_time}
           numberFont={bodyFont.className}
           labelFont={bodyFont.className}
-          textColor="text-[#db2777] font-bold text-3xl"
-          accentColor="text-[#db2777]"
+          textColor="text-[var(--theme-text,#db2777)] font-bold text-3xl"
+          accentColor="text-[var(--theme-text,#db2777)]"
         />
       </section>
 
@@ -195,9 +195,9 @@ export default function FloralDream({ payload, audioController }) {
       <Gallery 
         layout="masonry" 
         invitation={invitation}
-        sectionBg="bg-[#fef7f7]"
+        sectionBg="bg-[var(--theme-bg,#fef7f7)]"
         titleFont={script.className}
-        accentText="text-[#f472b6]"
+        accentText="text-[var(--theme-accent,#f472b6)]"
         borderColor="border-[#fce7f3]"
       />
 
@@ -207,9 +207,9 @@ export default function FloralDream({ payload, audioController }) {
           invitation={invitation}
           sectionBg="bg-white"
           titleFont={script.className}
-          accentText="text-[#f472b6]"
+          accentText="text-[var(--theme-accent,#f472b6)]"
           borderColor="border-[#fce7f3]"
-          cardBg="bg-[#fef7f7] border border-[#fce7f3]"
+          cardBg="bg-[var(--theme-bg,#fef7f7)] border border-[#fce7f3]"
         />
       )}
 
@@ -218,11 +218,11 @@ export default function FloralDream({ payload, audioController }) {
       {(invitation.giftAccounts || invitation.gift_accounts) && (invitation.giftAccounts || invitation.gift_accounts).length > 0 && (
         <GiftAccounts variant="FloralDream" 
           invitation={invitation}
-          sectionBg="bg-[#fef7f7]"
+          sectionBg="bg-[var(--theme-bg,#fef7f7)]"
           titleFont={script.className}
-          accentText="text-[#f472b6]"
+          accentText="text-[var(--theme-accent,#f472b6)]"
           cardBg="bg-white border border-[#fce7f3]"
-          btnBg="bg-[#f472b6] shadow-md shadow-[#f472b6]/20 hover:bg-[#db2777]"
+          btnBg="bg-[var(--theme-accent,#f472b6)] shadow-md shadow-[#f472b6]/20 hover:bg-[#db2777]"
         />
       )}
 
@@ -237,8 +237,8 @@ export default function FloralDream({ payload, audioController }) {
             invitation={invitation}
             guestName={guestName}
             guestToken={guest?.token}
-            btnClasses="w-full bg-[#f472b6] text-white py-3 rounded-full text-sm font-semibold hover:bg-[#db2777] transition-colors shadow-md shadow-[#f472b6]/20"
-            inputClasses="w-full border border-[#fce7f3] rounded-full px-5 py-3 text-sm focus:border-[#f472b6] outline-none bg-white mb-3"
+            btnClasses="w-full bg-[var(--theme-accent,#f472b6)] text-white py-3 rounded-full text-sm font-semibold hover:bg-[#db2777] transition-colors shadow-md shadow-[#f472b6]/20"
+            inputClasses="w-full border border-[#fce7f3] rounded-full px-5 py-3 text-sm focus:border-[var(--theme-accent,#f472b6)] outline-none bg-white mb-3"
             msgCardClasses="bg-white rounded-2xl p-5 border border-[#fce7f3] mb-3"
             nameFont={bodyFont.className}
             msgFont={bodyFont.className}
@@ -248,7 +248,7 @@ export default function FloralDream({ payload, audioController }) {
 
       {/* Footer */}
       {/* ── FOOTER ── */}
-                <footer className="bg-white text-[#db2777] pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                <footer className="bg-white text-[var(--theme-text,#db2777)] pt-64 pb-24 px-8 text-center relative overflow-hidden">
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
@@ -268,26 +268,26 @@ export default function FloralDream({ payload, audioController }) {
                         <p className={`font-sans text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
                             Thank you for being part of our special day
                         </p>
-                        <h2 className={`font-serif text-5xl mb-4 text-[#db2777] drop-shadow-sm`}>
+                        <h2 className={`font-serif text-5xl mb-4 text-[var(--theme-text,#db2777)] drop-shadow-sm`}>
                             {invitation?.groom_name?.split(' ')[0]} <span className="text-black/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
                         </h2>
                         
                         {/* Branding */}
                         <div className="border-t border-[#db2777]/10 pt-8 mt-12">
-                            <p className="text-[9px] text-[#db2777]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <p className="text-[9px] text-[var(--theme-text,#db2777)]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
                             <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-black/80 hover:text-black transition-colors">
                                 <span className={`font-serif text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
                             </a>
-                            <p className="text-[8px] text-[#db2777]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
+                            <p className="text-[8px] text-[var(--theme-text,#db2777)]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>
                     </div>
                 </footer>
 
       {/* Bottom Navigation */}
       <BottomNav 
-        navBg="bg-[#fef7f7]/95"
-        navActive="text-[#db2777]"
-        navInactive="text-[#f48a8a] hover:text-[#f472b6]"
+        navBg="bg-[var(--theme-bg,#fef7f7)]/95"
+        navActive="text-[var(--theme-text,#db2777)]"
+        navInactive="text-[#f48a8a] hover:text-[var(--theme-accent,#f472b6)]"
         navBorder="border-[#fce7f3]"
       />
 

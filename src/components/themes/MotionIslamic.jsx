@@ -164,7 +164,7 @@ export default function MotionIslamic({ payload, audioController }) {
     const bridePhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.bride_photo);
 
     return (
-        <div className={`min-h-screen bg-[#FDFBF7] text-[#4A4A4A] font-sans ${isOpen ? 'overflow-visible' : 'h-[100dvh] overflow-hidden'} motion-islamic-theme`}>
+        <div className={`min-h-screen bg-[var(--theme-bg,#FDFBF7)] text-[var(--theme-text,#4A4A4A)] font-sans ${isOpen ? 'overflow-visible' : 'h-[100dvh] overflow-hidden'} motion-islamic-theme`}>
             <style dangerouslySetInnerHTML={{ __html: `
                 .motion-islamic-theme .pg-reveal { opacity: 0; transform: translateY(35px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
                 .motion-islamic-theme .pg-reveal.active { opacity: 1; transform: translateY(0); }
@@ -195,7 +195,7 @@ export default function MotionIslamic({ payload, audioController }) {
             {invitation?.music_url && (
                 <button 
                     onClick={() => audioController?.toggle()}
-                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-[#86968B]/20 flex items-center justify-center text-[#2D3A3A] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
+                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-[#86968B]/20 flex items-center justify-center text-[var(--theme-accent,#2D3A3A)] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
                 >
                     {audioController?.isPlaying ? (
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
@@ -206,7 +206,7 @@ export default function MotionIslamic({ payload, audioController }) {
             )}
 
             {/* ══════════════════════ LEFT PANE (DESKTOP) ══════════════════════ */}
-            <div className="hidden lg:block pg-split-left bg-[#2D3A3A] relative overflow-hidden">
+            <div className="hidden lg:block pg-split-left bg-[var(--theme-accent,#2D3A3A)] relative overflow-hidden">
                 <div className="absolute inset-0">
                     {coverPhoto ? (
                         <img src={coverPhoto} alt="Cover" className="w-full h-full object-cover object-center" />
@@ -280,7 +280,7 @@ export default function MotionIslamic({ payload, audioController }) {
                 <main className={`transition-all duration-[1000ms] w-full bg-white relative ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
 
                 {/* ── Section 0: Motion Hero (Video) ── */}
-                <section className="relative w-full h-screen overflow-hidden bg-[#2D3A3A]">
+                <section className="relative w-full h-screen overflow-hidden bg-[var(--theme-accent,#2D3A3A)]">
                     <video 
                         ref={heroVideoRef}
                         className="absolute inset-0 w-full h-full object-cover"
@@ -327,10 +327,10 @@ export default function MotionIslamic({ payload, audioController }) {
                 </section>
                 
                 {/* ── Section 0.5: Cover Image ── */}
-                <section className="relative w-full bg-[#FDFBF7] pt-12 px-6">
+                <section className="relative w-full bg-[var(--theme-bg,#FDFBF7)] pt-12 px-6">
                     <div className="relative w-full h-[65vh] md:h-[80vh] mx-auto pg-reveal">
                         {/* ── Card Body (Overflow Hidden) ── */}
-                        <div className="absolute inset-0 p-2.5 rounded-[40px] overflow-hidden bg-[#2D3A3A]">
+                        <div className="absolute inset-0 p-2.5 rounded-[40px] overflow-hidden bg-[var(--theme-accent,#2D3A3A)]">
                             <div className="absolute inset-0 z-0 opacity-60 bg-cover bg-center" style={{ backgroundImage: `url('${ASSETS.overlay}')` }}></div>
                             
                             <div className="relative z-10 w-full h-full rounded-[32px] overflow-hidden border border-[#86968B]/30 bg-[#EBEDE7]">
@@ -359,10 +359,10 @@ export default function MotionIslamic({ payload, audioController }) {
                             <span className={`${greatVibes.className} text-3xl text-pg-accent`}>&</span>
                             <h2 className={`font-serif text-4xl text-pg-accent uppercase font-bold`}>{invitation?.bride_name?.charAt(0)}</h2>
                         </div>
-                        <p className="text-sm leading-[2] text-[#4A4A4A]/80 italic max-w-[280px] mx-auto">
+                        <p className="text-sm leading-[2] text-[var(--theme-text,#4A4A4A)]/80 italic max-w-[280px] mx-auto">
                             "{invitation?.quotes || 'Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.'}"
                         </p>
-                        <p className="text-xs text-[#4A4A4A]/60 mt-4 tracking-widest font-semibold uppercase">{invitation?.quotes_name || '- QS. Ar-Rum : 21 -'}</p>
+                        <p className="text-xs text-[var(--theme-text,#4A4A4A)]/60 mt-4 tracking-widest font-semibold uppercase">{invitation?.quotes_name || '- QS. Ar-Rum : 21 -'}</p>
                     </div>
                 </section>
 
@@ -373,13 +373,13 @@ export default function MotionIslamic({ payload, audioController }) {
                     <div className="relative z-10 w-full max-w-[360px] mx-auto border-2 border-[#86968B] rounded-t-[250px] rounded-b-[250px] py-16 px-4">
                         <div className="pg-reveal mb-12 mt-4">
                             <img src={ASSETS.bouquet} alt="Bouquet" className="w-48 mx-auto mb-10 drop-shadow-xl hover:scale-105 transition-transform duration-700" />
-                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[#2D3A3A] leading-none mb-1`}>
+                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[var(--theme-accent,#2D3A3A)] leading-none mb-1`}>
                                 We Are
                             </h2>
-                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[#2D3A3A] leading-none mb-8`}>
+                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[var(--theme-accent,#2D3A3A)] leading-none mb-8`}>
                                 Getting Married!
                             </h2>
-                            <p className="text-[11px] leading-[1.8] text-[#2D3A3A] max-w-[260px] mx-auto font-medium">
+                            <p className="text-[11px] leading-[1.8] text-[var(--theme-accent,#2D3A3A)] max-w-[260px] mx-auto font-medium">
                                 Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami:
                             </p>
                         </div>
@@ -394,9 +394,9 @@ export default function MotionIslamic({ payload, audioController }) {
 
                                 <img src={ASSETS.couple2} alt="" className="absolute right-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl" />
                             </div>
-                            <p className={`${greatVibes.className} text-[2.5rem] text-[#2D3A3A] mb-1 tracking-wide`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
-                            <p className="text-[10px] text-[#2D3A3A]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
+                            <p className={`${greatVibes.className} text-[2.5rem] text-[var(--theme-accent,#2D3A3A)] mb-1 tracking-wide`}>{invitation?.bride_name?.split(' ')[0]}</p>
+                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[var(--theme-accent,#2D3A3A)] mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
+                            <p className="text-[10px] text-[var(--theme-accent,#2D3A3A)]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                 Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bapak {invitation?.bride_father || '...'} <br/> & Ibu {invitation?.bride_mother || '...'}
                             </p>
                             {invitation?.bride_instagram && (
@@ -408,7 +408,7 @@ export default function MotionIslamic({ payload, audioController }) {
                         </div>
 
                         <div className="flex justify-center my-10 pg-reveal">
-                            <span className={`${greatVibes.className} text-6xl text-[#2D3A3A] drop-shadow-sm`}>&</span>
+                            <span className={`${greatVibes.className} text-6xl text-[var(--theme-accent,#2D3A3A)] drop-shadow-sm`}>&</span>
                         </div>
 
                         <div className="pg-reveal" data-delay="2" style={{ paddingBottom: '2rem' }}>
@@ -421,9 +421,9 @@ export default function MotionIslamic({ payload, audioController }) {
 
                                 <img src={ASSETS.couple1} alt="" className="absolute left-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl scale-x-[-1]" />
                             </div>
-                            <p className={`${greatVibes.className} text-[2.5rem] text-[#2D3A3A] mb-1 tracking-wide`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
-                            <p className="text-[10px] text-[#2D3A3A]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
+                            <p className={`${greatVibes.className} text-[2.5rem] text-[var(--theme-accent,#2D3A3A)] mb-1 tracking-wide`}>{invitation?.groom_name?.split(' ')[0]}</p>
+                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[var(--theme-accent,#2D3A3A)] mb-2`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
+                            <p className="text-[10px] text-[var(--theme-accent,#2D3A3A)]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                 Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bapak {invitation?.groom_father || '...'} <br/> & Ibu {invitation?.groom_mother || '...'}
                             </p>
                             {invitation?.groom_instagram && (
@@ -452,7 +452,7 @@ export default function MotionIslamic({ payload, audioController }) {
                                 <div className="w-10 h-px bg-[#86968B]/30 mx-auto mb-8" />
                                 <div className="space-y-2">
                                     {tmItems.map((name, i) => (
-                                        <p key={i} className={`font-serif text-lg text-[#4A4A4A] font-medium`}>{name}</p>
+                                        <p key={i} className={`font-serif text-lg text-[var(--theme-text,#4A4A4A)] font-medium`}>{name}</p>
                                     ))}
                                 </div>
                             </div>
@@ -475,12 +475,12 @@ export default function MotionIslamic({ payload, audioController }) {
                             ].map((item, i) => (
                                 <div key={i} className="text-center bg-white py-3 rounded-lg shadow-sm border border-black/5">
                                     <p className={`font-serif text-2xl font-bold text-pg-accent leading-none`}>{item.val}</p>
-                                    <p className="text-[9px] text-[#4A4A4A]/60 tracking-wider uppercase mt-1">{item.label}</p>
+                                    <p className="text-[9px] text-[var(--theme-text,#4A4A4A)]/60 tracking-wider uppercase mt-1">{item.label}</p>
                                 </div>
                             ))}
                         </div>
 
-                        <p className="text-sm leading-relaxed text-[#4A4A4A]/70 max-w-[280px] mx-auto">
+                        <p className="text-sm leading-relaxed text-[var(--theme-text,#4A4A4A)]/70 max-w-[280px] mx-auto">
                             Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i, untuk menghadiri acara pernikahan kami:
                         </p>
                     </div>
@@ -490,17 +490,17 @@ export default function MotionIslamic({ payload, audioController }) {
                             {[...invitation.events].sort((a, b) => a.sort_order - b.sort_order).map((event, idx) => {
                                 const isEven = idx % 2 === 0;
                                 return (
-                                <div key={idx} className={`relative p-2.5 rounded-[40px] shadow-xl pg-reveal mx-auto overflow-hidden ${isEven ? 'bg-[#2D3A3A]' : 'bg-[#DCD1BA]'}`} data-delay={`${(idx % 3) + 1}`}>
+                                <div key={idx} className={`relative p-2.5 rounded-[40px] shadow-xl pg-reveal mx-auto overflow-hidden ${isEven ? 'bg-[var(--theme-accent,#2D3A3A)]' : 'bg-[#DCD1BA]'}`} data-delay={`${(idx % 3) + 1}`}>
                                     <div className="absolute inset-0 z-0 opacity-60 bg-cover bg-center" style={{ backgroundImage: `url('${ASSETS.overlay}')`, filter: isEven ? 'invert(0)' : 'brightness(0.9)' }}></div>
-                                    <div className={`relative z-10 ${isEven ? 'bg-[#FDFBF7]/95' : 'bg-white/95'} rounded-[32px] p-8 text-center flex flex-col h-full border border-[#86968B]/30 backdrop-blur-sm`}>
+                                    <div className={`relative z-10 ${isEven ? 'bg-[var(--theme-bg,#FDFBF7)]/95' : 'bg-white/95'} rounded-[32px] p-8 text-center flex flex-col h-full border border-[#86968B]/30 backdrop-blur-sm`}>
                                         <h3 className={`font-serif text-3xl font-bold text-pg-accent mb-6 leading-tight`}>{event.name.split(' ').map((word,i) => <React.Fragment key={i}>{word}<br/></React.Fragment>)}</h3>
                                         
-                                        <div className={`font-serif text-[#4A4A4A] font-bold text-lg mb-2 capitalize`}>
+                                        <div className={`font-serif text-[var(--theme-text,#4A4A4A)] font-bold text-lg mb-2 capitalize`}>
                                             {event.date ? new Date(event.date).toLocaleDateString('id-ID', { weekday: 'long' }) : ''} <br/>
                                             <span className="text-2xl mt-1 block">{event.date ? new Date(event.date).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' }) : ''}</span>
                                         </div>
                                         
-                                        <p className="text-sm text-[#4A4A4A]/70 font-medium mb-6">
+                                        <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70 font-medium mb-6">
                                             {event.time_start?.substring(0, 5) || 'TBA'} WIB - {event.time_end ? event.time_end.substring(0, 5) + ' WIB' : 'Selesai'}
                                         </p>
 
@@ -510,7 +510,7 @@ export default function MotionIslamic({ payload, audioController }) {
 
                                         <div className="space-y-1">
 
-                                            <h4 className={`font-serif text-xl font-bold text-[#4A4A4A] mb-2`}>{event.location}</h4>
+                                            <h4 className={`font-serif text-xl font-bold text-[var(--theme-text,#4A4A4A)] mb-2`}>{event.location}</h4>
 
                                             <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
 
@@ -519,7 +519,7 @@ export default function MotionIslamic({ payload, audioController }) {
                                             </p>
 
                                         </div>
-                                        <p className="text-xs text-[#4A4A4A]/60 leading-relaxed max-w-[200px] mx-auto mb-6">
+                                        <p className="text-xs text-[var(--theme-text,#4A4A4A)]/60 leading-relaxed max-w-[200px] mx-auto mb-6">
                                             {event.address || ''}
                                         </p>
 
@@ -556,10 +556,10 @@ export default function MotionIslamic({ payload, audioController }) {
 
                 {/* ── Section 4: Live Streaming ── */}
                 {(Boolean(invitation?.live_streaming_link?.trim()) || Boolean(invitation?.live_stream_url?.trim())) && (
-                <section className="py-20 px-8 text-center bg-[#FDFBF7]">
+                <section className="py-20 px-8 text-center bg-[var(--theme-bg,#FDFBF7)]">
                     <div className="pg-reveal">
                         <h2 className={`font-serif text-4xl text-pg-accent font-bold uppercase tracking-widest mb-6`}>Live Streaming</h2>
-                        <p className="text-sm leading-relaxed text-[#4A4A4A]/70 max-w-[280px] mx-auto mb-8">
+                        <p className="text-sm leading-relaxed text-[var(--theme-text,#4A4A4A)]/70 max-w-[280px] mx-auto mb-8">
                             Temui kami secara virtual untuk menyaksikan acara pernikahan kami melalui tautan di bawah ini:
                         </p>
                         <a href={invitation?.live_streaming_link?.trim() || invitation?.live_stream_url?.trim() || '#'} target="_blank" rel="noreferrer"
@@ -575,8 +575,8 @@ export default function MotionIslamic({ payload, audioController }) {
                 {invitation?.gallery && invitation.gallery.length > 0 && (
                     <section className="bg-white py-20 px-8 relative">
                         <div className="text-center mb-12 pg-reveal">
-                            <h2 className={`font-serif text-4xl text-[#2D3A3A] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
-                            <p className="text-sm text-[#4A4A4A]/70">Moments to remember</p>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#2D3A3A)] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
+                            <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70">Moments to remember</p>
                         </div>
                         <div className="columns-2 gap-2 max-w-[360px] mx-auto">
                             {invitation.gallery.map((img, i) => (
@@ -594,7 +594,7 @@ export default function MotionIslamic({ payload, audioController }) {
                     <section className="bg-gradient-to-b from-[#f4f2ec] to-[#FDFBF7] py-24 px-6 relative overflow-hidden">
                         <div className="text-center mb-16 pg-reveal">
                             <p className={`${greatVibes.className} text-2xl text-[#86968B] mb-2`}>Our Journey</p>
-                            <h2 className={`font-serif text-4xl text-[#2D3A3A] font-bold uppercase tracking-widest`}>Love Story</h2>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#2D3A3A)] font-bold uppercase tracking-widest`}>Love Story</h2>
                         </div>
                         
                         <div className="relative max-w-[340px] mx-auto">
@@ -607,12 +607,12 @@ export default function MotionIslamic({ payload, audioController }) {
                                     </div>
                                     
                                     <div className="text-center mb-4 pt-8">
-                                        <span className="inline-block bg-[#2D3A3A] text-white text-[9px] font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full shadow-sm">
+                                        <span className="inline-block bg-[var(--theme-accent,#2D3A3A)] text-white text-[9px] font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full shadow-sm">
                                             {story.date ? new Date(story.date).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }) : `Chapter ${i + 1}`}
                                         </span>
                                     </div>
                                     
-                                    <div className="relative p-2 rounded-[1.5rem] overflow-hidden shadow-xl mx-2 bg-[#2D3A3A]">
+                                    <div className="relative p-2 rounded-[1.5rem] overflow-hidden shadow-xl mx-2 bg-[var(--theme-accent,#2D3A3A)]">
                                         <div className="absolute inset-0 z-0 opacity-60 bg-cover bg-center" style={{ backgroundImage: `url('${ASSETS.overlay}')` }}></div>
                                         <div className="relative z-10 bg-white/95 backdrop-blur-sm rounded-[1rem] overflow-hidden border border-[#86968B]/30">
                                             {story.photo && (
@@ -622,8 +622,8 @@ export default function MotionIslamic({ payload, audioController }) {
                                                 </div>
                                             )}
                                             <div className="p-6 text-center">
-                                                <h4 className={`font-serif text-2xl font-bold text-[#2D3A3A] mb-3 leading-tight`}>{story.title}</h4>
-                                                <p className="text-xs text-[#4A4A4A]/70 leading-[1.9]">{story.description}</p>
+                                                <h4 className={`font-serif text-2xl font-bold text-[var(--theme-accent,#2D3A3A)] mb-3 leading-tight`}>{story.title}</h4>
+                                                <p className="text-xs text-[var(--theme-text,#4A4A4A)]/70 leading-[1.9]">{story.description}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -641,15 +641,15 @@ export default function MotionIslamic({ payload, audioController }) {
                 {guest && (
                     <section className="bg-gradient-to-b from-[#FDFBF7] to-[#EBEDE7] py-24 px-8 text-center relative border-y border-[#86968B]/20">
                         <div className="pg-reveal relative z-10">
-                            <h2 className={`font-serif text-4xl text-[#2D3A3A] font-bold uppercase tracking-widest mb-4 drop-shadow-sm`}>Access Pass</h2>
-                            <p className="text-xs text-[#4A4A4A]/70 leading-relaxed max-w-[260px] mx-auto mb-10 tracking-widest uppercase">
+                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#2D3A3A)] font-bold uppercase tracking-widest mb-4 drop-shadow-sm`}>Access Pass</h2>
+                            <p className="text-xs text-[var(--theme-text,#4A4A4A)]/70 leading-relaxed max-w-[260px] mx-auto mb-10 tracking-widest uppercase">
                                 Please present this pass at the reception
                             </p>
                             
                             <div className="relative mx-auto w-full max-w-[280px]">
                                 <div className="absolute -inset-1 bg-gradient-to-r from-[#86968B] via-[#DCD1BA] to-[#86968B] rounded-[2rem] blur opacity-40"></div>
                                 
-                                <div className="relative bg-[#2D3A3A] rounded-[2rem] shadow-2xl border flex flex-col overflow-hidden" style={{ borderColor: 'rgba(134, 150, 139, 0.4)' }}>
+                                <div className="relative bg-[var(--theme-accent,#2D3A3A)] rounded-[2rem] shadow-2xl border flex flex-col overflow-hidden" style={{ borderColor: 'rgba(134, 150, 139, 0.4)' }}>
                                     <div className="h-6 w-full bg-gradient-to-r from-[#86968B] via-[#DCD1BA] to-[#86968B]"></div>
                                     
                                     <div className="p-8 pb-4">
@@ -659,8 +659,8 @@ export default function MotionIslamic({ payload, audioController }) {
                                         </div>
                                         
                                         <div className="bg-white p-3 rounded-2xl mx-auto shadow-[0_0_20px_rgba(134,150,139,0.15)] inline-block relative">
-                                            <div className="absolute top-1/2 -left-3 w-6 h-6 bg-[#2D3A3A] rounded-full -translate-y-1/2"></div>
-                                            <div className="absolute top-1/2 -right-3 w-6 h-6 bg-[#2D3A3A] rounded-full -translate-y-1/2"></div>
+                                            <div className="absolute top-1/2 -left-3 w-6 h-6 bg-[var(--theme-accent,#2D3A3A)] rounded-full -translate-y-1/2"></div>
+                                            <div className="absolute top-1/2 -right-3 w-6 h-6 bg-[var(--theme-accent,#2D3A3A)] rounded-full -translate-y-1/2"></div>
                                             
                                             {guest.qr_code ? (
                                                 <img src={guest.qr_code.startsWith('http') ? guest.qr_code : `${STORAGE_URL}/${guest.qr_code}`} alt="QR Code" className="w-[160px] h-[160px] object-contain relative z-10 mix-blend-multiply" />
@@ -694,7 +694,7 @@ export default function MotionIslamic({ payload, audioController }) {
                     <div className="pg-reveal mb-12">
                         <img src={ASSETS.bouquet} alt="Bouquet" className="w-32 mx-auto mb-6 opacity-60" />
                         <h2 className={`font-serif text-4xl text-pg-accent font-bold uppercase tracking-widest mb-4`}>Wedding Gift</h2>
-                        <p className="text-sm text-[#4A4A4A]/70 leading-relaxed max-w-[280px] mx-auto">
+                        <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70 leading-relaxed max-w-[280px] mx-auto">
                             Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado secara cashless.
                         </p>
                     </div>
@@ -753,7 +753,7 @@ export default function MotionIslamic({ payload, audioController }) {
                                 );
                             })
                         ) : (
-                            <div className="bg-[#f4f2ec] rounded-2xl p-8 text-[#4A4A4A]/50 text-sm">Belum ada informasi rekening.</div>
+                            <div className="bg-[#f4f2ec] rounded-2xl p-8 text-[var(--theme-text,#4A4A4A)]/50 text-sm">Belum ada informasi rekening.</div>
                         )}
                     </div>
                 </section>
@@ -762,18 +762,18 @@ export default function MotionIslamic({ payload, audioController }) {
                 <section className="bg-gradient-to-b from-white to-[#f4f2ec] py-20 px-8 relative">
                     <div className="text-center mb-10 pg-reveal">
                         <h2 className={`font-serif text-4xl text-pg-accent font-bold uppercase tracking-widest mb-4`}>Kirim Ucapan</h2>
-                        <p className="text-sm text-[#4A4A4A]/70">Tuliskan doa & ucapan untuk kedua mempelai</p>
+                        <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70">Tuliskan doa & ucapan untuk kedua mempelai</p>
                     </div>
 
                     <div className="max-w-[300px] mx-auto">
                         <form onSubmit={submitWish} className="space-y-4 mb-10 pg-reveal" data-delay="1">
                             <div>
                                 <input type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
-                                    className="w-full bg-white border border-[#86968B]/20 rounded-xl px-4 py-3 text-sm text-[#4A4A4A] focus:outline-none focus:border-[#86968B] shadow-sm transition-colors" placeholder="Nama Anda" />
+                                    className="w-full bg-white border border-[#86968B]/20 rounded-xl px-4 py-3 text-sm text-[var(--theme-text,#4A4A4A)] focus:outline-none focus:border-[#86968B] shadow-sm transition-colors" placeholder="Nama Anda" />
                             </div>
                             <div>
                                 <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)}
-                                    className="w-full bg-white border border-[#86968B]/20 rounded-xl px-4 py-3 text-sm text-[#4A4A4A] focus:outline-none focus:border-[#86968B] shadow-sm transition-colors h-28 resize-none" placeholder="Berikan ucapan dan doa" />
+                                    className="w-full bg-white border border-[#86968B]/20 rounded-xl px-4 py-3 text-sm text-[var(--theme-text,#4A4A4A)] focus:outline-none focus:border-[#86968B] shadow-sm transition-colors h-28 resize-none" placeholder="Berikan ucapan dan doa" />
                             </div>
                             <button type="submit" disabled={submitting}
                                 className="bg-pg-accent hover:bg-[#1f2828] text-white w-full py-3.5 rounded-full text-xs tracking-widest uppercase font-bold shadow-lg disabled:opacity-50 transition-colors">
@@ -786,8 +786,8 @@ export default function MotionIslamic({ payload, audioController }) {
                                 {wishes.map((w, i) => (
                                     <div key={i} className="bg-white rounded-xl p-4 shadow-sm border border-black/5">
                                         <p className={`font-serif text-lg font-bold text-pg-accent mb-0 leading-none`}>{w.name}</p>
-                                        <p className="text-[10px] text-[#4A4A4A]/40 mb-2">{new Date(w.created_at).toLocaleDateString('id-ID')}</p>
-                                        <p className="text-xs text-[#4A4A4A]/80 leading-relaxed">{w.message}</p>
+                                        <p className="text-[10px] text-[var(--theme-text,#4A4A4A)]/40 mb-2">{new Date(w.created_at).toLocaleDateString('id-ID')}</p>
+                                        <p className="text-xs text-[var(--theme-text,#4A4A4A)]/80 leading-relaxed">{w.message}</p>
                                     </div>
                                 ))}
                             </div>
@@ -796,7 +796,7 @@ export default function MotionIslamic({ payload, audioController }) {
                 </section>
 
                 {/* ── FOOTER ── */}
-                <footer className="bg-[#2D3A3A] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                <footer className="bg-[var(--theme-accent,#2D3A3A)] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
@@ -806,7 +806,7 @@ export default function MotionIslamic({ payload, audioController }) {
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
                             <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : (
-                            <div className="w-full h-full bg-[#2D3A3A] opacity-40"></div>
+                            <div className="w-full h-full bg-[var(--theme-accent,#2D3A3A)] opacity-40"></div>
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#2D3A3A] via-[#2D3A3A]/60 to-transparent" />
                     </div>

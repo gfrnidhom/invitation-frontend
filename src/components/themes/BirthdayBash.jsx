@@ -80,10 +80,10 @@ export default function BirthdayBash({ payload, audioController }) {
           setIsOpened(true);
           audioController?.play();
         }}
-        overlayBg="bg-[#fdf4ff]" // party-50
+        overlayBg="bg-[var(--theme-bg,#fdf4ff)]" // party-50
         titleFont={displayFont.className}
         subtitleFont={bodyFont.className}
-        accentColor="text-[#d946ef]" // party-500
+        accentColor="text-[var(--theme-text,#d946ef)]" // party-500
         btnBg="bg-gradient-to-r from-[#d946ef] to-[#0ea5e9] text-white shadow-lg hover:opacity-90"
       />
 
@@ -116,7 +116,7 @@ export default function BirthdayBash({ payload, audioController }) {
         <div className="relative z-10 w-full flex flex-col items-center justify-center reveal">
           {guestName && (
             <>
-              <p className="font-sans text-sm uppercase tracking-[0.2em] text-[#d946ef]/80 mb-2">To our special guest:</p>
+              <p className="font-sans text-sm uppercase tracking-[0.2em] text-[var(--theme-text,#d946ef)]/80 mb-2">To our special guest:</p>
               <p className={`${displayFont.className} text-2xl text-[#c026d3] mb-8`}>{guestName}!</p>
             </>
           )}
@@ -148,7 +148,7 @@ export default function BirthdayBash({ payload, audioController }) {
         titleFont={bodyFont.className} 
         nameFont={displayFont.className}
         accentText="text-[#c026d3]"
-        subtitleText="text-[#0ea5e9]"
+        subtitleText="text-[var(--theme-accent,#0ea5e9)]"
         borderColor="border-[#fae8ff]"
       />
 
@@ -213,7 +213,7 @@ export default function BirthdayBash({ payload, audioController }) {
         invitation={invitation}
         sectionBg="bg-transparent"
         titleFont={displayFont.className}
-        accentText="text-[#d946ef]"
+        accentText="text-[var(--theme-text,#d946ef)]"
         borderColor="border-[#fae8ff]"
       />
 
@@ -224,11 +224,11 @@ export default function BirthdayBash({ payload, audioController }) {
         cardBg="bg-white"
         titleFont={bodyFont.className}
         nameFont={displayFont.className}
-        accentText="text-[#0ea5e9]"
+        accentText="text-[var(--theme-accent,#0ea5e9)]"
         btnBg="bg-gradient-to-r from-[#d946ef] to-[#0ea5e9]"
         btnHoverBg="hover:opacity-90"
         btnBorder="border-none shadow-md"
-        iconBg="bg-[#e0f2fe] text-[#0ea5e9]"
+        iconBg="bg-[#e0f2fe] text-[var(--theme-accent,#0ea5e9)]"
       />
 
       {/* Love Story Timeline */}
@@ -250,7 +250,7 @@ export default function BirthdayBash({ payload, audioController }) {
           invitation={invitation}
           sectionBg="bg-transparent"
           titleFont={displayFont.className}
-          accentText="text-[#d946ef]"
+          accentText="text-[var(--theme-text,#d946ef)]"
           cardBg="bg-white border-2 border-[#f5d0fe]"
           btnBg="bg-gradient-to-r from-[#d946ef] to-[#0ea5e9] text-white hover:opacity-90 shadow-md"
         />
@@ -271,7 +271,7 @@ export default function BirthdayBash({ payload, audioController }) {
             guestName={guestName}
             guestToken={guest?.token}
             btnClasses={`w-full bg-gradient-to-r from-[#d946ef] to-[#0ea5e9] text-white py-3 rounded-xl ${bodyFont.className} text-sm font-bold hover:opacity-90 transition-opacity shadow-md`}
-            inputClasses="w-full bg-white border-2 border-gray-100 rounded-xl px-4 py-3 text-sm text-gray-800 focus:border-[#0ea5e9] outline-none mb-3"
+            inputClasses="w-full bg-white border-2 border-gray-100 rounded-xl px-4 py-3 text-sm text-gray-800 focus:border-[var(--theme-accent,#0ea5e9)] outline-none mb-3"
             msgCardClasses="bg-[#fcfcfc] rounded-xl p-5 border border-gray-100 shadow-sm mb-3"
             nameFont="font-sans"
             msgFont={bodyFont.className}
@@ -319,8 +319,8 @@ export default function BirthdayBash({ payload, audioController }) {
       {/* Bottom Navigation */}
       <BottomNav 
         navBg="bg-white/95 border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]"
-        navActive="text-[#d946ef]"
-        navInactive="text-gray-400 hover:text-[#0ea5e9]"
+        navActive="text-[var(--theme-text,#d946ef)]"
+        navInactive="text-gray-400 hover:text-[var(--theme-accent,#0ea5e9)]"
         navBorder="border-none"
       />
 

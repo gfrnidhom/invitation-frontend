@@ -193,7 +193,7 @@ export default function MakrisLulu({ payload, audioController }) {
     const bridePhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.bride_photo);
 
     return (
-        <div className={`min-h-screen bg-[#061510] text-[#D5E5DF] font-sans ${isOpen ? 'overflow-visible' : 'h-[100dvh] overflow-hidden'} makris-lulu-theme`}>
+        <div className={`min-h-screen bg-[var(--theme-bg,#061510)] text-[var(--theme-text,#D5E5DF)] font-sans ${isOpen ? 'overflow-visible' : 'h-[100dvh] overflow-hidden'} makris-lulu-theme`}>
             <style dangerouslySetInnerHTML={{
                 __html: `
                 .makris-lulu-theme .pg-reveal { opacity: 0; transform: translateY(35px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -334,7 +334,7 @@ export default function MakrisLulu({ payload, audioController }) {
             <div className="pg-split-right relative min-h-screen shadow-2xl">
 
                 {/* ── COVER SECTION (Envelope) ── */}
-                <section className={`absolute top-0 inset-x-0 h-[100dvh] lg:h-screen z-[60] overflow-hidden flex flex-col transition-all duration-[1500ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? 'opacity-0 pointer-events-none scale-105 blur-2xl' : 'opacity-100 scale-100 blur-0'} bg-[#061510]`}>
+                <section className={`absolute top-0 inset-x-0 h-[100dvh] lg:h-screen z-[60] overflow-hidden flex flex-col transition-all duration-[1500ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? 'opacity-0 pointer-events-none scale-105 blur-2xl' : 'opacity-100 scale-100 blur-0'} bg-[var(--theme-bg,#061510)]`}>
                     {/* Video Background */}
                     <video className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 scale-102 -translate-y-[1%]" autoPlay muted loop playsInline poster="/themes/makris-lulu/emerald-bg.png">
                         <source src="/themes/makris-lulu/emerald-bg.mp4" type="video/mp4" />
@@ -346,15 +346,15 @@ export default function MakrisLulu({ payload, audioController }) {
                         {/* Top Typography - "The Wedding Of" */}
                         <div className="makris-cover-title text-center shrink-0 mb-2 sm:mb-4">
                             <p className={`font-sans text-[9px] sm:text-[10px] text-white/60 tracking-[0.3em] mb-1.5 sm:mb-2 font-semibold uppercase`}>The Wedding Of</p>
-                            <h1 className={`${greatVibes.className} text-[2.2rem] sm:text-5xl text-[#CFB53B] drop-shadow-lg leading-tight`}>
+                            <h1 className={`${greatVibes.className} text-[2.2rem] sm:text-5xl text-[var(--theme-accent,#CFB53B)] drop-shadow-lg leading-tight`}>
                                 {invitation?.groom_nickname || invitation?.groom_name?.split(' ')[0]} <span className="text-white/80 mx-1">&</span> {invitation?.bride_nickname || invitation?.bride_name?.split(' ')[0]}
                             </h1>
-                            <div className="w-12 sm:w-16 h-px bg-[#CFB53B]/40 mx-auto mt-2 sm:mt-3" />
+                            <div className="w-12 sm:w-16 h-px bg-[var(--theme-accent,#CFB53B)]/40 mx-auto mt-2 sm:mt-3" />
                         </div>
 
                         {/* Photo Frame - Elegant Rounded with Gold Border */}
                         <div className="relative mx-auto shrink-0 mb-1 sm:mb-2">
-                            <div className="makris-cover-frame w-[200px] h-[260px] sm:w-[220px] sm:h-[290px] rounded-t-[120px] rounded-b-[20px] overflow-hidden border-2 border-[#CFB53B]/50 shadow-[0_10px_40px_rgba(0,0,0,0.5)] relative">
+                            <div className="makris-cover-frame w-[200px] h-[260px] sm:w-[220px] sm:h-[290px] rounded-t-[120px] rounded-b-[20px] overflow-hidden border-2 border-[var(--theme-accent,#CFB53B)]/50 shadow-[0_10px_40px_rgba(0,0,0,0.5)] relative">
                                 {coverPhoto ? (
                                     <img src={coverPhoto} alt="Couple" className="w-full h-full object-cover" />
                                 ) : landingPhoto ? (
@@ -387,7 +387,7 @@ export default function MakrisLulu({ payload, audioController }) {
                 </section>
 
                 {/* ── MAIN CONTENT ── */}
-                <main className={`transition-all duration-[1000ms] w-full bg-[#061510] relative ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
+                <main className={`transition-all duration-[1000ms] w-full bg-[var(--theme-bg,#061510)] relative ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
 
                     {/* ── Section 0: Motion Hero (Video) ── */}
                     <section className="relative w-full h-screen overflow-hidden bg-black">
@@ -436,7 +436,7 @@ export default function MakrisLulu({ payload, audioController }) {
                     </section>
 
                     {/* ── Section 0.5: Cinematic Slideshow Cover Image ── */}
-                    <section className="relative w-full bg-[#061510] overflow-hidden pb-12">
+                    <section className="relative w-full bg-[var(--theme-bg,#061510)] overflow-hidden pb-12">
                         <div className="relative w-full h-[70vh] md:h-[80vh] pg-reveal overflow-hidden">
 
                             {/* Full Bleed Slideshow */}
@@ -465,14 +465,14 @@ export default function MakrisLulu({ payload, audioController }) {
                     <section className="py-20 px-8 text-center relative overflow-hidden bg-gradient-to-b from-[#061510] to-[#0A2219]">
                         <div className="relative z-10 pg-reveal">
                             <div className="flex justify-center items-center gap-3 mb-6">
-                                <h2 className={`font-serif text-4xl text-[#CFB53B] uppercase font-bold`}>{invitation?.groom_name?.charAt(0)}</h2>
+                                <h2 className={`font-serif text-4xl text-[var(--theme-accent,#CFB53B)] uppercase font-bold`}>{invitation?.groom_name?.charAt(0)}</h2>
                                 <span className={`${greatVibes.className} text-3xl text-white`}>&</span>
-                                <h2 className={`font-serif text-4xl text-[#CFB53B] uppercase font-bold`}>{invitation?.bride_name?.charAt(0)}</h2>
+                                <h2 className={`font-serif text-4xl text-[var(--theme-accent,#CFB53B)] uppercase font-bold`}>{invitation?.bride_name?.charAt(0)}</h2>
                             </div>
-                            <p className="text-sm leading-[2] text-[#D5E5DF]/70 italic max-w-[280px] mx-auto">
+                            <p className="text-sm leading-[2] text-[var(--theme-text,#D5E5DF)]/70 italic max-w-[280px] mx-auto">
                                 "{invitation?.quotes || 'Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.'}"
                             </p>
-                            <p className="text-xs text-[#CFB53B] mt-4 tracking-widest font-semibold uppercase">{invitation?.quotes_name || '- QS. Ar-Rum : 21 -'}</p>
+                            <p className="text-xs text-[var(--theme-accent,#CFB53B)] mt-4 tracking-widest font-semibold uppercase">{invitation?.quotes_name || '- QS. Ar-Rum : 21 -'}</p>
                         </div>
                     </section>
 
@@ -481,13 +481,13 @@ export default function MakrisLulu({ payload, audioController }) {
                         <div className="absolute inset-0 bg-[#0A2219]/90 backdrop-blur-[2px] grayscale" />
                         <div className="absolute inset-0 bg-gradient-to-b from-[#061510] via-transparent to-[#061510]" />
 
-                        <div className="relative z-10 w-full max-w-[360px] mx-auto border border-[#CFB53B]/30 bg-[#061510]/80 backdrop-blur-sm rounded-t-[250px] rounded-b-[250px] py-16 px-4 shadow-[0_0_50px_rgba(207,181,59,0.05)]">
+                        <div className="relative z-10 w-full max-w-[360px] mx-auto border border-[var(--theme-accent,#CFB53B)]/30 bg-[var(--theme-bg,#061510)]/80 backdrop-blur-sm rounded-t-[250px] rounded-b-[250px] py-16 px-4 shadow-[0_0_50px_rgba(207,181,59,0.05)]">
                             <div className="pg-reveal mb-12 mt-4">
                                 <img src={ASSETS.bouquet} alt="Bouquet" className="w-48 mx-auto mb-10 drop-shadow-xl hover:scale-105 transition-transform duration-700 opacity-60 mix-blend-screen invert hue-rotate-[160deg] brightness-125 saturate-50" />
-                                <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[#CFB53B] leading-none mb-1`}>
+                                <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[var(--theme-accent,#CFB53B)] leading-none mb-1`}>
                                     We Are
                                 </h2>
-                                <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[#CFB53B] leading-none mb-8`}>
+                                <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[var(--theme-accent,#CFB53B)] leading-none mb-8`}>
                                     Getting Married!
                                 </h2>
                                 <p className="text-[11px] leading-[1.8] text-white/70 max-w-[260px] mx-auto font-medium">
@@ -499,19 +499,19 @@ export default function MakrisLulu({ payload, audioController }) {
                                 <div className="relative w-56 mx-auto mb-10">
                                     <img src={ASSETS.couple1} alt="" className="absolute left-[-15%] -bottom-4 w-20 h-auto z-0 pointer-events-none drop-shadow-sm opacity-50 mix-blend-screen invert hue-rotate-[160deg]" />
 
-                                    <div className="w-56 h-80 mx-auto rounded-t-[200px] rounded-b-[200px] overflow-hidden shadow-2xl border border-[#CFB53B]/50 relative z-10">
+                                    <div className="w-56 h-80 mx-auto rounded-t-[200px] rounded-b-[200px] overflow-hidden shadow-2xl border border-[var(--theme-accent,#CFB53B)]/50 relative z-10">
                                         {bridePhoto ? <img src={bridePhoto} className="w-full h-full object-cover" alt="Bride" /> : <div className="w-full h-full bg-[#030e0a]" />}
                                     </div>
 
                                     <img src={ASSETS.couple2} alt="" className="absolute right-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl opacity-60 mix-blend-screen invert hue-rotate-[160deg]" />
                                 </div>
-                                <p className={`${greatVibes.className} text-[2.5rem] text-[#CFB53B] mb-1 tracking-wide drop-shadow-sm`}>{invitation?.bride_nickname || invitation?.bride_name?.split(' ')[0]}</p>
+                                <p className={`${greatVibes.className} text-[2.5rem] text-[var(--theme-accent,#CFB53B)] mb-1 tracking-wide drop-shadow-sm`}>{invitation?.bride_nickname || invitation?.bride_name?.split(' ')[0]}</p>
                                 <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-white mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
                                 <p className="text-[10px] text-white/50 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                     Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ''}dari Bapak {invitation?.bride_father || '...'} <br /> & Ibu {invitation?.bride_mother || '...'}
                                 </p>
                                 {invitation?.bride_instagram && (
-                                    <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[#CFB53B] text-black px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#b89f30] transition-all shadow-md">
+                                    <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[var(--theme-accent,#CFB53B)] text-black px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#b89f30] transition-all shadow-md">
                                         <svg className="w-3 h-3 no-grayscale" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
                                         @{invitation.bride_instagram}
                                     </a>
@@ -526,19 +526,19 @@ export default function MakrisLulu({ payload, audioController }) {
                                 <div className="relative w-56 mx-auto mb-10">
                                     <img src={ASSETS.couple2} alt="" className="absolute right-[-15%] -bottom-2 w-20 h-auto z-0 pointer-events-none drop-shadow-sm opacity-50 scale-x-[-1] mix-blend-screen invert hue-rotate-[160deg]" />
 
-                                    <div className="w-56 h-80 mx-auto rounded-t-[200px] rounded-b-[200px] overflow-hidden shadow-2xl border border-[#CFB53B]/50 relative z-10">
+                                    <div className="w-56 h-80 mx-auto rounded-t-[200px] rounded-b-[200px] overflow-hidden shadow-2xl border border-[var(--theme-accent,#CFB53B)]/50 relative z-10">
                                         {groomPhoto ? <img src={groomPhoto} className="w-full h-full object-cover" alt="Groom" /> : <div className="w-full h-full bg-[#030e0a]" />}
                                     </div>
 
                                     <img src={ASSETS.couple1} alt="" className="absolute left-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl scale-x-[-1] opacity-60 mix-blend-screen invert hue-rotate-[160deg]" />
                                 </div>
-                                <p className={`${greatVibes.className} text-[2.5rem] text-[#CFB53B] mb-1 tracking-wide`}>{invitation?.groom_nickname || invitation?.groom_name?.split(' ')[0]}</p>
+                                <p className={`${greatVibes.className} text-[2.5rem] text-[var(--theme-accent,#CFB53B)] mb-1 tracking-wide`}>{invitation?.groom_nickname || invitation?.groom_name?.split(' ')[0]}</p>
                                 <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-white mb-2`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
                                 <p className="text-[10px] text-white/50 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                     Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ''}dari Bapak {invitation?.groom_father || '...'} <br /> & Ibu {invitation?.groom_mother || '...'}
                                 </p>
                                 {invitation?.groom_instagram && (
-                                    <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[#CFB53B] text-black px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#b89f30] transition-all shadow-md">
+                                    <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[var(--theme-accent,#CFB53B)] text-black px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#b89f30] transition-all shadow-md">
                                         <svg className="w-3 h-3 no-grayscale" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
                                         @{invitation.groom_instagram}
                                     </a>
@@ -559,7 +559,7 @@ export default function MakrisLulu({ payload, audioController }) {
                         return (
                             <section className="py-16 px-8 text-center bg-[#071a14]">
                                 <div className="pg-reveal">
-                                    <p className="text-[10px] tracking-[0.3em] uppercase text-[#CFB53B] font-semibold mb-6">Turut Mengundang</p>
+                                    <p className="text-[10px] tracking-[0.3em] uppercase text-[var(--theme-accent,#CFB53B)] font-semibold mb-6">Turut Mengundang</p>
                                     <div className="w-10 h-px bg-white/20 mx-auto mb-8" />
                                     <div className="space-y-2">
                                         {tmItems.map((name, i) => (
@@ -589,7 +589,7 @@ export default function MakrisLulu({ payload, audioController }) {
                         {/* Content */}
                         <div className="relative z-10 text-center pg-reveal">
 
-                            <p className={`font-sans text-[10px] text-[#CFB53B] tracking-[0.5em] uppercase font-bold mb-3`}>Mark Your Calendar</p>
+                            <p className={`font-sans text-[10px] text-[var(--theme-accent,#CFB53B)] tracking-[0.5em] uppercase font-bold mb-3`}>Mark Your Calendar</p>
                             <h2 className={`font-serif text-5xl text-white font-bold uppercase tracking-[0.2em] mb-12 drop-shadow-lg`}>Save The Date</h2>
 
                             {/* Countdown Boxes with Glassmorphism */}
@@ -600,11 +600,11 @@ export default function MakrisLulu({ payload, audioController }) {
                                     { val: countdown.minutes, label: 'Menit' },
                                     { val: countdown.seconds, label: 'Detik' },
                                 ].map((item, i) => (
-                                    <div key={i} className="text-center bg-black/40 backdrop-blur-md py-4 rounded-lg shadow-[0_8px_32px_rgba(0,0,0,0.4)] border border-[#CFB53B]/30 relative overflow-hidden">
+                                    <div key={i} className="text-center bg-black/40 backdrop-blur-md py-4 rounded-lg shadow-[0_8px_32px_rgba(0,0,0,0.4)] border border-[var(--theme-accent,#CFB53B)]/30 relative overflow-hidden">
                                         {/* Subtle shine */}
                                         <div className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
                                         <p className={`font-serif text-3xl font-bold text-white leading-none relative z-10`}>{item.val}</p>
-                                        <p className="text-[9px] text-[#CFB53B] tracking-wider uppercase mt-1.5 font-semibold relative z-10">{item.label}</p>
+                                        <p className="text-[9px] text-[var(--theme-accent,#CFB53B)] tracking-wider uppercase mt-1.5 font-semibold relative z-10">{item.label}</p>
                                     </div>
                                 ))}
                             </div>
@@ -633,14 +633,14 @@ export default function MakrisLulu({ payload, audioController }) {
                                         <div key={idx} className={`relative pg-reveal mx-auto max-w-[340px]`} data-delay={`${(idx % 3) + 1}`}>
                                             {/* Vertical Date Accent (Floating) */}
                                             <div className={`absolute -left-4 top-12 z-20 flex flex-col items-center gap-1 transition-transform group-hover:-translate-y-2`}>
-                                                <span className={`font-serif vertical-text text-[10px] uppercase font-bold tracking-[0.4em] text-[#CFB53B]/70`}>
+                                                <span className={`font-serif vertical-text text-[10px] uppercase font-bold tracking-[0.4em] text-[var(--theme-accent,#CFB53B)]/70`}>
                                                     {dayName} . {monthName}
                                                 </span>
                                                 <div className={`w-px h-12 bg-white/20`} />
                                             </div>
 
                                             {/* Main Arch Card */}
-                                            <div className={`relative pg-arch-card overflow-hidden shadow-2xl ${isEven ? 'bg-[#1b4333] text-white bg-invert' : 'bg-[#030907] text-[#D5E5DF]'} border border-[#CFB53B]/20`}>
+                                            <div className={`relative pg-arch-card overflow-hidden shadow-2xl ${isEven ? 'bg-[#1b4333] text-white bg-invert' : 'bg-[#030907] text-[var(--theme-text,#D5E5DF)]'} border border-[var(--theme-accent,#CFB53B)]/20`}>
 
                                                 {/* Large Background Decorative Day Number */}
                                                 <div className="absolute top-10 right-[-20px] z-0 leading-none select-none pointer-events-none">
@@ -652,8 +652,8 @@ export default function MakrisLulu({ payload, audioController }) {
                                                 {/* Content Overlay */}
                                                 <div className="relative z-10 p-10 pt-20 flex flex-col items-center">
                                                     {/* Initials / Stamp */}
-                                                    <div className={`w-12 h-12 rounded-full border border-[#CFB53B]/50 flex items-center justify-center mb-8`}>
-                                                        <span className={`font-serif text-xs font-bold tracking-widest text-[#CFB53B]`}>
+                                                    <div className={`w-12 h-12 rounded-full border border-[var(--theme-accent,#CFB53B)]/50 flex items-center justify-center mb-8`}>
+                                                        <span className={`font-serif text-xs font-bold tracking-widest text-[var(--theme-accent,#CFB53B)]`}>
                                                             {invitation?.groom_name?.charAt(0)}{invitation?.bride_name?.charAt(0)}
                                                         </span>
                                                     </div>
@@ -682,11 +682,11 @@ export default function MakrisLulu({ payload, audioController }) {
                                                         </div>
 
                                                         <div className="flex flex-col items-center pt-4 gap-2">
-                                                            <div className={`w-6 h-6 rounded-full flex items-center justify-center border border-[#CFB53B]/40`}>
+                                                            <div className={`w-6 h-6 rounded-full flex items-center justify-center border border-[var(--theme-accent,#CFB53B)]/40`}>
                                                                 <svg className="w-3 h-3 no-grayscale" fill="currentColor" viewBox="0 0 384 512"><path d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"></path></svg>
                                                             </div>
                                                             <div className="space-y-1">
-                                                                <h4 className={`font-serif text-xl font-bold uppercase tracking-wider text-[#CFB53B]`}>{event.location}</h4>
+                                                                <h4 className={`font-serif text-xl font-bold uppercase tracking-wider text-[var(--theme-accent,#CFB53B)]`}>{event.location}</h4>
                                                                 <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
                                                                     {event.address || ''}
                                                                 </p>
@@ -697,7 +697,7 @@ export default function MakrisLulu({ payload, audioController }) {
                                                     {getMapUrl(event) && (
                                                         <MapLocationButton
                                                             item={event}
-                                                            className={`mt-10 px-10 py-3.5 rounded-full text-[10px] tracking-[0.3em] uppercase font-bold transition-all border ${isEven ? 'bg-[#CFB53B] text-black border-[#CFB53B]' : 'bg-[#061510] text-[#CFB53B] border-[#CFB53B]'} hover:scale-105 shadow-xl`}
+                                                            className={`mt-10 px-10 py-3.5 rounded-full text-[10px] tracking-[0.3em] uppercase font-bold transition-all border ${isEven ? 'bg-[var(--theme-accent,#CFB53B)] text-black border-[var(--theme-accent,#CFB53B)]' : 'bg-[var(--theme-bg,#061510)] text-[var(--theme-accent,#CFB53B)] border-[var(--theme-accent,#CFB53B)]'} hover:scale-105 shadow-xl`}
                                                             buttonText="View Map"
                                                         />
                                                     )}
@@ -728,15 +728,15 @@ export default function MakrisLulu({ payload, audioController }) {
 
                     {/* ── Section 4: Live Streaming ── */}
                     {(Boolean(invitation?.live_streaming_link?.trim()) || Boolean(invitation?.live_stream_url?.trim())) && (
-                        <section className="py-20 px-8 text-center bg-[#061510]">
+                        <section className="py-20 px-8 text-center bg-[var(--theme-bg,#061510)]">
                             <div className="pg-reveal">
-                                <h2 className={`font-serif text-4xl text-[#CFB53B] font-bold uppercase tracking-widest mb-6`}>Live Streaming</h2>
-                                <p className="text-sm leading-relaxed text-[#D5E5DF]/60 max-w-[280px] mx-auto mb-8">
+                                <h2 className={`font-serif text-4xl text-[var(--theme-accent,#CFB53B)] font-bold uppercase tracking-widest mb-6`}>Live Streaming</h2>
+                                <p className="text-sm leading-relaxed text-[var(--theme-text,#D5E5DF)]/60 max-w-[280px] mx-auto mb-8">
                                     Temui kami secara virtual untuk menyaksikan acara pernikahan kami melalui tautan di bawah ini:
                                 </p>
                                 <a href={invitation?.live_streaming_link?.trim() || invitation?.live_stream_url?.trim() || '#'} target="_blank" rel="noreferrer"
-                                    className="bg-[#1b4333] hover:bg-[#143226] text-[#D5E5DF] border border-[#CFB53B]/50 py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-flex items-center gap-2 shadow-md transition-colors">
-                                    <svg className="w-4 h-4 no-grayscale text-[#CFB53B]" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" /></svg>
+                                    className="bg-[#1b4333] hover:bg-[#143226] text-[var(--theme-text,#D5E5DF)] border border-[var(--theme-accent,#CFB53B)]/50 py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-flex items-center gap-2 shadow-md transition-colors">
+                                    <svg className="w-4 h-4 no-grayscale text-[var(--theme-accent,#CFB53B)]" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" /></svg>
                                     Tonton Live
                                 </a>
                             </div>
@@ -747,13 +747,13 @@ export default function MakrisLulu({ payload, audioController }) {
                     {photos && photos.length > 0 && (
                         <section id="gallery" className="bg-gradient-to-b from-[#061510] to-[#0A2219] py-20 px-8 relative">
                             <div className="text-center mb-12 pg-reveal">
-                                <h2 className={`font-serif text-4xl text-[#CFB53B] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
-                                <p className="text-sm text-[#D5E5DF]/50">Moments to remember</p>
+                                <h2 className={`font-serif text-4xl text-[var(--theme-accent,#CFB53B)] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
+                                <p className="text-sm text-[var(--theme-text,#D5E5DF)]/50">Moments to remember</p>
                             </div>
                             <div className="grid grid-cols-2 gap-2 max-w-[360px] mx-auto">
                                 {photos.map((img, i) => (
                                     <div key={i} onClick={() => setSelectedPhoto(((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(img))} className="aspect-square rounded-xl overflow-hidden pg-reveal relative group cursor-pointer" data-delay={`${(i % 3) + 1}`}>
-                                        <div className="absolute inset-0 bg-[#061510]/30 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none"></div>
+                                        <div className="absolute inset-0 bg-[var(--theme-bg,#061510)]/30 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none"></div>
                                         <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(img)} className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out scale-105 group-hover:scale-110 align-middle no-grayscale" alt={`Gallery ${i}`} loading="lazy" />
                                     </div>
                                 ))}
@@ -780,9 +780,9 @@ export default function MakrisLulu({ payload, audioController }) {
                         <section className="bg-black py-24 px-0 relative overflow-hidden">
                             {/* Section Header */}
                             <div className="text-center mb-20 px-8 pg-reveal">
-                                <p className="text-[10px] tracking-[0.5em] uppercase text-[#CFB53B] font-bold mb-4">Our Journey Together</p>
-                                <h2 className={`font-serif text-5xl text-[#D5E5DF] font-light uppercase tracking-[0.3em]`}>Love Story</h2>
-                                <div className="w-12 h-px bg-[#CFB53B]/50 mx-auto mt-6" />
+                                <p className="text-[10px] tracking-[0.5em] uppercase text-[var(--theme-accent,#CFB53B)] font-bold mb-4">Our Journey Together</p>
+                                <h2 className={`font-serif text-5xl text-[var(--theme-text,#D5E5DF)] font-light uppercase tracking-[0.3em]`}>Love Story</h2>
+                                <div className="w-12 h-px bg-[var(--theme-accent,#CFB53B)]/50 mx-auto mt-6" />
                             </div>
 
                             {/* Stories */}
@@ -795,7 +795,7 @@ export default function MakrisLulu({ payload, audioController }) {
                                         <div key={story.id || i} className="pg-reveal" data-delay={`${(i % 3) + 1}`}>
                                             {/* Full-Width Photo Strip */}
                                             {story.photo && (
-                                                <div className="relative w-full h-[50vh] overflow-hidden group border-y border-[#CFB53B]/20">
+                                                <div className="relative w-full h-[50vh] overflow-hidden group border-y border-[var(--theme-accent,#CFB53B)]/20">
                                                     <img
                                                         src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(story.photo)}
                                                         alt={story.title}
@@ -804,7 +804,7 @@ export default function MakrisLulu({ payload, audioController }) {
                                                     {/* Overlay with large chapter number */}
                                                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10" />
                                                     <div className={`absolute bottom-8 z-20 ${isOdd ? 'right-8 text-right' : 'left-8 text-left'}`}>
-                                                        <span className={`font-serif text-[100px] md:text-[140px] font-bold text-[#CFB53B]/20 leading-none block`}>
+                                                        <span className={`font-serif text-[100px] md:text-[140px] font-bold text-[var(--theme-accent,#CFB53B)]/20 leading-none block`}>
                                                             {chapterNum}
                                                         </span>
                                                     </div>
@@ -815,8 +815,8 @@ export default function MakrisLulu({ payload, audioController }) {
                                             <div className={`relative px-8 py-12 ${isOdd ? 'text-right' : 'text-left'} max-w-[400px] ${isOdd ? 'ml-auto' : 'mr-auto'}`}>
                                                 {/* Date Badge */}
                                                 <div className={`flex items-center gap-3 mb-6 ${isOdd ? 'justify-end' : 'justify-start'}`}>
-                                                    <div className={`h-px w-12 bg-[#CFB53B]/50 ${isOdd ? 'order-2' : ''}`} />
-                                                    <span className="text-[9px] tracking-[0.3em] uppercase text-[#CFB53B] font-bold">
+                                                    <div className={`h-px w-12 bg-[var(--theme-accent,#CFB53B)]/50 ${isOdd ? 'order-2' : ''}`} />
+                                                    <span className="text-[9px] tracking-[0.3em] uppercase text-[var(--theme-accent,#CFB53B)] font-bold">
                                                         {story.date ? new Date(story.date).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }) : `Chapter ${chapterNum}`}
                                                     </span>
                                                 </div>
@@ -824,7 +824,7 @@ export default function MakrisLulu({ payload, audioController }) {
                                                 <h4 className={`font-serif text-3xl font-light text-white uppercase tracking-widest mb-4 leading-tight`}>
                                                     {story.title}
                                                 </h4>
-                                                <p className="text-[11px] text-[#D5E5DF]/70 leading-[2.2] font-light">
+                                                <p className="text-[11px] text-[var(--theme-text,#D5E5DF)]/70 leading-[2.2] font-light">
                                                     {story.description}
                                                 </p>
                                             </div>
@@ -832,7 +832,7 @@ export default function MakrisLulu({ payload, audioController }) {
                                             {/* Separator Line */}
                                             {i < invitation.love_stories.length - 1 && (
                                                 <div className="flex items-center justify-center py-4">
-                                                    <div className="w-px h-16 bg-[#CFB53B]/20" />
+                                                    <div className="w-px h-16 bg-[var(--theme-accent,#CFB53B)]/20" />
                                                 </div>
                                             )}
                                         </div>
@@ -842,8 +842,8 @@ export default function MakrisLulu({ payload, audioController }) {
 
                             {/* Bottom Seal */}
                             <div className="text-center mt-16 pg-reveal">
-                                <div className="w-16 h-16 rounded-full border border-[#CFB53B]/40 flex items-center justify-center mx-auto bg-[#0A2219]">
-                                    <span className={`${greatVibes.className} text-2xl text-[#CFB53B]`}>&</span>
+                                <div className="w-16 h-16 rounded-full border border-[var(--theme-accent,#CFB53B)]/40 flex items-center justify-center mx-auto bg-[#0A2219]">
+                                    <span className={`${greatVibes.className} text-2xl text-[var(--theme-accent,#CFB53B)]`}>&</span>
                                 </div>
                             </div>
                         </section>
@@ -851,28 +851,28 @@ export default function MakrisLulu({ payload, audioController }) {
 
                     {/* ── Section 7: QR Checkin (VIP PASS STYLE) ── */}
                     {guest && (
-                        <section className="bg-gradient-to-b from-[#0A2219] to-[#061510] py-24 px-8 text-center relative border-y border-[#CFB53B]/20">
+                        <section className="bg-gradient-to-b from-[#0A2219] to-[#061510] py-24 px-8 text-center relative border-y border-[var(--theme-accent,#CFB53B)]/20">
                             <div className="pg-reveal relative z-10">
-                                <h2 className={`font-serif text-4xl text-[#CFB53B] font-bold uppercase tracking-widest mb-4 drop-shadow-sm`}>Access Pass</h2>
-                                <p className="text-xs text-[#D5E5DF]/50 leading-relaxed max-w-[260px] mx-auto mb-10 tracking-widest uppercase">
+                                <h2 className={`font-serif text-4xl text-[var(--theme-accent,#CFB53B)] font-bold uppercase tracking-widest mb-4 drop-shadow-sm`}>Access Pass</h2>
+                                <p className="text-xs text-[var(--theme-text,#D5E5DF)]/50 leading-relaxed max-w-[260px] mx-auto mb-10 tracking-widest uppercase">
                                     Please present this pass at the reception
                                 </p>
 
                                 <div className="relative mx-auto w-full max-w-[280px]">
                                     <div className="absolute -inset-1 bg-gradient-to-r from-[#061510] via-[#1b4333] to-[#061510] rounded-[2rem] blur opacity-50"></div>
 
-                                    <div className="relative bg-[#030907] rounded-[2rem] shadow-2xl border border-[#CFB53B]/30 flex flex-col overflow-hidden">
+                                    <div className="relative bg-[#030907] rounded-[2rem] shadow-2xl border border-[var(--theme-accent,#CFB53B)]/30 flex flex-col overflow-hidden">
                                         <div className="h-6 w-full bg-gradient-to-r from-[#061510] via-[#145C43] to-[#061510]"></div>
 
                                         <div className="p-8 pb-4">
                                             <div className="flex justify-between items-center mb-6">
-                                                <span className={`font-serif text-[#CFB53B] font-bold tracking-[0.2em] uppercase text-xs`}>VIP</span>
+                                                <span className={`font-serif text-[var(--theme-accent,#CFB53B)] font-bold tracking-[0.2em] uppercase text-xs`}>VIP</span>
                                                 <span className={`${greatVibes.className} text-white text-2xl`}>Admit One</span>
                                             </div>
 
-                                            <div className="bg-[#E5E5E5] p-3 rounded-2xl mx-auto shadow-[0_0_20px_rgba(207,181,59,0.2)] inline-block relative border border-[#CFB53B]">
-                                                <div className="absolute top-1/2 -left-3 w-6 h-6 bg-[#030907] rounded-full -translate-y-1/2 border-r border-[#CFB53B]/30"></div>
-                                                <div className="absolute top-1/2 -right-3 w-6 h-6 bg-[#030907] rounded-full -translate-y-1/2 border-l border-[#CFB53B]/30"></div>
+                                            <div className="bg-[#E5E5E5] p-3 rounded-2xl mx-auto shadow-[0_0_20px_rgba(207,181,59,0.2)] inline-block relative border border-[var(--theme-accent,#CFB53B)]">
+                                                <div className="absolute top-1/2 -left-3 w-6 h-6 bg-[#030907] rounded-full -translate-y-1/2 border-r border-[var(--theme-accent,#CFB53B)]/30"></div>
+                                                <div className="absolute top-1/2 -right-3 w-6 h-6 bg-[#030907] rounded-full -translate-y-1/2 border-l border-[var(--theme-accent,#CFB53B)]/30"></div>
 
                                                 {guest.qr_code ? (
                                                     <img src={guest.qr_code.startsWith('http') ? guest.qr_code : `${STORAGE_URL}/${guest.qr_code}`} alt="QR Code" className="w-[160px] h-[160px] object-contain relative z-10 mix-blend-multiply no-grayscale" />
@@ -886,14 +886,14 @@ export default function MakrisLulu({ payload, audioController }) {
                                         </div>
 
                                         <div className="w-full flex items-center px-4">
-                                            <div className="w-3 h-6 bg-[#0A2219] border-r-[2px] border-[#CFB53B]/30 rounded-r-full -ml-4"></div>
-                                            <div className="flex-1 border-t border-dashed border-[#CFB53B]/30"></div>
-                                            <div className="w-3 h-6 bg-[#0A2219] border-l-[2px] border-[#CFB53B]/30 rounded-l-full -mr-4"></div>
+                                            <div className="w-3 h-6 bg-[#0A2219] border-r-[2px] border-[var(--theme-accent,#CFB53B)]/30 rounded-r-full -ml-4"></div>
+                                            <div className="flex-1 border-t border-dashed border-[var(--theme-accent,#CFB53B)]/30"></div>
+                                            <div className="w-3 h-6 bg-[#0A2219] border-l-[2px] border-[var(--theme-accent,#CFB53B)]/30 rounded-l-full -mr-4"></div>
                                         </div>
 
                                         <div className="px-6 pt-4 pb-8">
-                                            <p className="text-[10px] text-[#CFB53B]/60 uppercase tracking-[0.3em] font-semibold mb-1">GUEST NAME</p>
-                                            <p className={`font-serif text-2xl font-bold text-[#CFB53B] uppercase tracking-wider truncate px-2 drop-shadow-sm`}>{guest.name}</p>
+                                            <p className="text-[10px] text-[var(--theme-accent,#CFB53B)]/60 uppercase tracking-[0.3em] font-semibold mb-1">GUEST NAME</p>
+                                            <p className={`font-serif text-2xl font-bold text-[var(--theme-accent,#CFB53B)] uppercase tracking-wider truncate px-2 drop-shadow-sm`}>{guest.name}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -902,11 +902,11 @@ export default function MakrisLulu({ payload, audioController }) {
                     )}
 
                     {/* ── Section 8: Wedding Gift ── */}
-                    <section id="gift" className="bg-[#061510] py-20 px-8 text-center relative overflow-hidden">
+                    <section id="gift" className="bg-[var(--theme-bg,#061510)] py-20 px-8 text-center relative overflow-hidden">
                         <div className="pg-reveal mb-12">
                             <img src={ASSETS.bouquet} alt="Bouquet" className="w-32 mx-auto mb-6 opacity-60 mix-blend-screen invert hue-rotate-[160deg] brightness-125 saturate-50" />
-                            <h2 className={`font-serif text-4xl text-[#CFB53B] font-bold uppercase tracking-widest mb-4`}>Wedding Gift</h2>
-                            <p className="text-sm text-[#D5E5DF]/70 leading-relaxed max-w-[280px] mx-auto">
+                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#CFB53B)] font-bold uppercase tracking-widest mb-4`}>Wedding Gift</h2>
+                            <p className="text-sm text-[var(--theme-text,#D5E5DF)]/70 leading-relaxed max-w-[280px] mx-auto">
                                 Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado secara cashless.
                             </p>
                         </div>
@@ -918,11 +918,11 @@ export default function MakrisLulu({ payload, audioController }) {
                                     const bankLogo = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(acc.bank?.logo);
                                     return (
                                         <div key={acc.id || i} className="pg-reveal" data-delay={`${(i % 3) + 1}`}>
-                                            <div className="relative w-full aspect-[1.586/1] rounded-2xl shadow-[0_10px_40px_rgba(207,181,59,0.15)] p-6 flex flex-col justify-between overflow-hidden bg-gradient-to-tr from-[#030907] via-[#0A2219] to-[#030907] border border-[#CFB53B]/30">
+                                            <div className="relative w-full aspect-[1.586/1] rounded-2xl shadow-[0_10px_40px_rgba(207,181,59,0.15)] p-6 flex flex-col justify-between overflow-hidden bg-gradient-to-tr from-[#030907] via-[#0A2219] to-[#030907] border border-[var(--theme-accent,#CFB53B)]/30">
 
                                                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/noise-lines.png')] opacity-10 pointer-events-none mix-blend-overlay"></div>
-                                                <div className="absolute -right-16 -top-16 w-48 h-48 bg-[#CFB53B]/10 rounded-full blur-3xl pointer-events-none"></div>
-                                                <div className="absolute -left-16 -bottom-16 w-48 h-48 bg-[#CFB53B]/10 rounded-full blur-3xl pointer-events-none"></div>
+                                                <div className="absolute -right-16 -top-16 w-48 h-48 bg-[var(--theme-accent,#CFB53B)]/10 rounded-full blur-3xl pointer-events-none"></div>
+                                                <div className="absolute -left-16 -bottom-16 w-48 h-48 bg-[var(--theme-accent,#CFB53B)]/10 rounded-full blur-3xl pointer-events-none"></div>
 
                                                 <div className="flex justify-between items-start relative z-10 w-full">
                                                     <svg className="w-10 h-8 text-white no-grayscale" viewBox="0 0 512 512" fill="currentColor">
@@ -932,7 +932,7 @@ export default function MakrisLulu({ payload, audioController }) {
                                                     {bankLogo ? (
                                                         <img src={bankLogo} alt={bankName} className="h-10 max-w-[160px] object-contain drop-shadow-md brightness-0 invert opacity-95" />
                                                     ) : (
-                                                        <span className={`font-serif text-2xl font-bold text-[#CFB53B] uppercase tracking-widest drop-shadow`}>{bankName}</span>
+                                                        <span className={`font-serif text-2xl font-bold text-[var(--theme-accent,#CFB53B)] uppercase tracking-widest drop-shadow`}>{bankName}</span>
                                                     )}
                                                 </div>
 
@@ -944,20 +944,20 @@ export default function MakrisLulu({ payload, audioController }) {
 
                                                 <div className="flex justify-between items-end relative z-10">
                                                     <div className="text-left w-full">
-                                                        <p className="text-[8px] text-[#CFB53B]/70 uppercase tracking-[0.2em] mb-1">Card Holder</p>
+                                                        <p className="text-[8px] text-[var(--theme-accent,#CFB53B)]/70 uppercase tracking-[0.2em] mb-1">Card Holder</p>
                                                         <p className={`font-sans text-sm text-white uppercase tracking-widest font-semibold drop-shadow truncate pr-2`}>{acc.account_holder}</p>
                                                     </div>
                                                     <div className="text-right flex-shrink-0">
                                                         <div className="flex -space-x-3 opacity-80">
-                                                            <div className="w-6 h-6 rounded-full bg-[#CFB53B]/50 mix-blend-screen"></div>
-                                                            <div className="w-6 h-6 rounded-full bg-[#CFB53B]/50 mix-blend-screen"></div>
+                                                            <div className="w-6 h-6 rounded-full bg-[var(--theme-accent,#CFB53B)]/50 mix-blend-screen"></div>
+                                                            <div className="w-6 h-6 rounded-full bg-[var(--theme-accent,#CFB53B)]/50 mix-blend-screen"></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <button onClick={() => { navigator.clipboard.writeText(acc.account_number); toast.success('Nomor rekening disalin!'); }}
-                                                className="mt-5 bg-[#CFB53B] hover:bg-[#b59e31] text-black w-full py-3.5 rounded-full text-[10px] uppercase font-bold tracking-[0.2em] transition-all shadow-xl flex items-center justify-center gap-2">
+                                                className="mt-5 bg-[var(--theme-accent,#CFB53B)] hover:bg-[#b59e31] text-black w-full py-3.5 rounded-full text-[10px] uppercase font-bold tracking-[0.2em] transition-all shadow-xl flex items-center justify-center gap-2">
                                                 <svg className="w-4 h-4 no-grayscale" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                                                 Salin Rekening {bankName}
                                             </button>
@@ -965,7 +965,7 @@ export default function MakrisLulu({ payload, audioController }) {
                                     );
                                 })
                             ) : (
-                                <div className="bg-[#030907] rounded-2xl p-8 text-[#D5E5DF]/30 text-sm border border-[#CFB53B]/10">Belum ada informasi rekening.</div>
+                                <div className="bg-[#030907] rounded-2xl p-8 text-[var(--theme-text,#D5E5DF)]/30 text-sm border border-[var(--theme-accent,#CFB53B)]/10">Belum ada informasi rekening.</div>
                             )}
                         </div>
                     </section>
@@ -973,22 +973,22 @@ export default function MakrisLulu({ payload, audioController }) {
                     {/* ── Section 9: Wishes ── */}
                     <section className="bg-gradient-to-b from-[#061510] to-[#0A2219] py-20 px-8 relative">
                         <div className="text-center mb-10 pg-reveal">
-                            <h2 className={`font-serif text-4xl text-[#CFB53B] font-bold uppercase tracking-widest mb-4`}>Kirim Ucapan</h2>
-                            <p className="text-sm text-[#D5E5DF]/70">Tuliskan doa & ucapan untuk kedua mempelai</p>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#CFB53B)] font-bold uppercase tracking-widest mb-4`}>Kirim Ucapan</h2>
+                            <p className="text-sm text-[var(--theme-text,#D5E5DF)]/70">Tuliskan doa & ucapan untuk kedua mempelai</p>
                         </div>
 
                         <div className="max-w-[300px] mx-auto">
                             <form onSubmit={submitWish} className="space-y-4 mb-10 pg-reveal" data-delay="1">
                                 <div>
                                     <input type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
-                                        className="w-full bg-[#030907] border border-[#CFB53B]/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#CFB53B] shadow-sm transition-colors" placeholder="Nama Anda" />
+                                        className="w-full bg-[#030907] border border-[var(--theme-accent,#CFB53B)]/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[var(--theme-accent,#CFB53B)] shadow-sm transition-colors" placeholder="Nama Anda" />
                                 </div>
                                 <div>
                                     <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)}
-                                        className="w-full bg-[#030907] border border-[#CFB53B]/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#CFB53B] shadow-sm transition-colors h-28 resize-none" placeholder="Berikan ucapan dan doa" />
+                                        className="w-full bg-[#030907] border border-[var(--theme-accent,#CFB53B)]/30 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[var(--theme-accent,#CFB53B)] shadow-sm transition-colors h-28 resize-none" placeholder="Berikan ucapan dan doa" />
                                 </div>
                                 <button type="submit" disabled={submitting}
-                                    className="bg-[#CFB53B] hover:bg-[#b59e31] text-black w-full py-3.5 rounded-full text-xs tracking-widest uppercase font-bold shadow-[0_0_20px_rgba(207,181,59,0.3)] disabled:opacity-50 transition-colors">
+                                    className="bg-[var(--theme-accent,#CFB53B)] hover:bg-[#b59e31] text-black w-full py-3.5 rounded-full text-xs tracking-widest uppercase font-bold shadow-[0_0_20px_rgba(207,181,59,0.3)] disabled:opacity-50 transition-colors">
                                     {submitting ? 'Mengirim...' : 'Kirim Ucapan'}
                                 </button>
                             </form>
@@ -996,8 +996,8 @@ export default function MakrisLulu({ payload, audioController }) {
                             {wishes.length > 0 && (
                                 <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 pg-reveal" data-delay="2">
                                     {wishes.map((w, i) => (
-                                        <div key={i} className="bg-[#030907]/80 rounded-xl p-4 shadow-sm border border-[#CFB53B]/20">
-                                            <p className={`font-serif text-lg font-bold text-[#CFB53B] mb-0 leading-none`}>{w.name}</p>
+                                        <div key={i} className="bg-[#030907]/80 rounded-xl p-4 shadow-sm border border-[var(--theme-accent,#CFB53B)]/20">
+                                            <p className={`font-serif text-lg font-bold text-[var(--theme-accent,#CFB53B)] mb-0 leading-none`}>{w.name}</p>
                                             <p className="text-[10px] text-white/30 mb-2">{new Date(w.created_at).toLocaleDateString('id-ID')}</p>
                                             <p className="text-xs text-white/80 leading-relaxed">{w.message}</p>
                                         </div>
@@ -1008,7 +1008,7 @@ export default function MakrisLulu({ payload, audioController }) {
                     </section>
 
                     {/* ── FOOTER ── */}
-                    <footer className="bg-[#061510] text-[#D5E5DF] min-h-[90vh] flex flex-col justify-end pb-24 px-8 text-center relative overflow-hidden">
+                    <footer className="bg-[var(--theme-bg,#061510)] text-[var(--theme-text,#D5E5DF)] min-h-[90vh] flex flex-col justify-end pb-24 px-8 text-center relative overflow-hidden">
                         {/* Background Image Layer */}
                         <div className="absolute inset-0 z-0">
                             {invitation?.footer_image ? (
@@ -1025,20 +1025,20 @@ export default function MakrisLulu({ payload, audioController }) {
 
                         {/* Content Layer */}
                         <div className="relative z-10 pt-10">
-                            <p className={`font-sans text-[10px] text-[#CFB53B] tracking-[0.3em] uppercase font-bold mb-4`}>
+                            <p className={`font-sans text-[10px] text-[var(--theme-accent,#CFB53B)] tracking-[0.3em] uppercase font-bold mb-4`}>
                                 Thank you for being part of our special day
                             </p>
-                            <h2 className={`${greatVibes.className} text-5xl mb-4 text-[#D5E5DF] drop-shadow-sm`}>
-                                {invitation?.groom_nickname || invitation?.groom_name?.split(' ')[0]} <span className="text-[#CFB53B] font-light mx-2">&</span> {invitation?.bride_nickname || invitation?.bride_name?.split(' ')[0]}
+                            <h2 className={`${greatVibes.className} text-5xl mb-4 text-[var(--theme-text,#D5E5DF)] drop-shadow-sm`}>
+                                {invitation?.groom_nickname || invitation?.groom_name?.split(' ')[0]} <span className="text-[var(--theme-accent,#CFB53B)] font-light mx-2">&</span> {invitation?.bride_nickname || invitation?.bride_name?.split(' ')[0]}
                             </h2>
 
                             {/* Branding */}
-                            <div className="border-t border-[#CFB53B]/20 pt-8 mt-12">
-                                <p className="text-[9px] text-[#D5E5DF]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
-                                <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-[#CFB53B]/80 hover:text-[#CFB53B] transition-colors">
+                            <div className="border-t border-[var(--theme-accent,#CFB53B)]/20 pt-8 mt-12">
+                                <p className="text-[9px] text-[var(--theme-text,#D5E5DF)]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                                <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-[var(--theme-accent,#CFB53B)]/80 hover:text-[var(--theme-accent,#CFB53B)] transition-colors">
                                     <span className={`font-serif text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
                                 </a>
-                                <p className="text-[8px] text-[#D5E5DF]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
+                                <p className="text-[8px] text-[var(--theme-text,#D5E5DF)]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                             </div>
                         </div>
                     </footer>

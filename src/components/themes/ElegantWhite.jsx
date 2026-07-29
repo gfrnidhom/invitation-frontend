@@ -70,7 +70,7 @@ export default function ElegantWhite({ payload, audioController }) {
   };
 
   return (
-    <div className={`min-h-screen bg-[#faf8f5] text-gray-800 antialiased ${sans.className}`}>
+    <div className={`min-h-screen bg-[var(--theme-bg,#faf8f5)] text-gray-800 antialiased ${sans.className}`}>
       
       <style jsx global>{`
         .fade-in { animation: fadeIn 1.2s ease-out forwards; }
@@ -89,16 +89,16 @@ export default function ElegantWhite({ payload, audioController }) {
           setIsOpened(true);
           audioController?.play();
         }}
-        overlayBg="bg-[#faf8f5]"
+        overlayBg="bg-[var(--theme-bg,#faf8f5)]"
         titleFont={serif.className}
         subtitleFont={sans.className}
-        accentColor="text-[#c9a96e]"
+        accentColor="text-[var(--theme-text,#c9a96e)]"
         btnBg="bg-[#a0824a] hover:bg-[#c9a96e]"
       />
 
       {/* Music Player */}
       {invitation.music_url && (
-        <MusicPlayer audioController={audioController} btnBg="bg-white" btnColor="text-[#a0824a]" btnBorder="border border-[#e8d5b7]" />
+        <MusicPlayer audioController={audioController} btnBg="bg-white" btnColor="text-[#a0824a]" btnBorder="border border-[var(--theme-accent,#e8d5b7)]" />
       )}
 
       {/* Hero Section */}
@@ -115,7 +115,7 @@ export default function ElegantWhite({ payload, audioController }) {
         <div className="relative z-10">
           {guestName && (
             <>
-              <p className={`fade-in text-sm tracking-[0.3em] uppercase text-[#c9a96e] mb-4`}>Dear</p>
+              <p className={`fade-in text-sm tracking-[0.3em] uppercase text-[var(--theme-text,#c9a96e)] mb-4`}>Dear</p>
               <p className={`fade-in ${serif.className} text-2xl text-[#a0824a] mb-10 italic`}>{guestName}</p>
             </>
           )}
@@ -126,7 +126,7 @@ export default function ElegantWhite({ payload, audioController }) {
             {invitation.groom_name}
           </h1>
           <div className="fade-in-delay my-4">
-            <svg className="w-8 h-8 mx-auto text-[#c9a96e]" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg>
+            <svg className="w-8 h-8 mx-auto text-[var(--theme-text,#c9a96e)]" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg>
           </div>
           <h1 className={`fade-in-delay ${serif.className} text-6xl md:text-8xl font-light text-gray-800 leading-tight drop-shadow-sm`}>
             {invitation.bride_name}
@@ -138,39 +138,39 @@ export default function ElegantWhite({ payload, audioController }) {
         </div>
 
         <div className="absolute bottom-10 animate-bounce z-10">
-          <svg className="w-6 h-6 text-[#c9a96e]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+          <svg className="w-6 h-6 text-[var(--theme-text,#c9a96e)]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
         </div>
       </section>
 
       {/* Couple Profile */}
       <CoupleProfile 
         invitation={invitation}
-        sectionBg="bg-[#faf8f5]"
+        sectionBg="bg-[var(--theme-bg,#faf8f5)]"
         titleFont={sans.className} 
         nameFont={serif.className}
-        accentText="text-[#c9a96e]"
-        borderColor="border-[#e8d5b7]/30"
+        accentText="text-[var(--theme-text,#c9a96e)]"
+        borderColor="border-[var(--theme-accent,#e8d5b7)]/30"
       />
 
       {/* Turut Mengundang */}
       <TurutMengundang 
         invitation={invitation}
-        sectionBg="bg-[#faf8f5]"
+        sectionBg="bg-[var(--theme-bg,#faf8f5)]"
         titleFont={serif.className}
         accentText="text-gray-700"
-        subtitleText="text-[#c9a96e]"
-        borderColor="border-[#e8d5b7]"
+        subtitleText="text-[var(--theme-text,#c9a96e)]"
+        borderColor="border-[var(--theme-accent,#e8d5b7)]"
       />
 
       {/* Story / Description */}
       {invitation.quotes && (
         <section className="px-6 py-20 max-w-2xl mx-auto text-center animate-on-scroll slide-up">
-          <p className="text-xs tracking-[0.4em] uppercase text-[#c9a96e] mb-6">Our Story</p>
+          <p className="text-xs tracking-[0.4em] uppercase text-[var(--theme-text,#c9a96e)] mb-6">Our Story</p>
           <div className="w-12 h-px bg-[#c9a96e] mx-auto mb-8"></div>
           <p className={`${serif.className} text-xl leading-relaxed text-gray-600 italic`}>
             &quot;{invitation.quotes}&quot;
           </p>
-          {invitation.quotes_name && <p className="text-xs tracking-widest text-[#c9a96e] uppercase mt-4">{invitation.quotes_name}</p>}
+          {invitation.quotes_name && <p className="text-xs tracking-widest text-[var(--theme-text,#c9a96e)] uppercase mt-4">{invitation.quotes_name}</p>}
         </section>
       )}
 
@@ -179,10 +179,10 @@ export default function ElegantWhite({ payload, audioController }) {
       <Events 
         invitation={invitation}
         sectionBg="bg-white"
-        cardBg="bg-[#faf8f5]"
+        cardBg="bg-[var(--theme-bg,#faf8f5)]"
         titleFont={sans.className}
         nameFont={serif.className}
-        accentText="text-[#c9a96e]"
+        accentText="text-[var(--theme-text,#c9a96e)]"
         btnBg="bg-[#a0824a]"
         btnHoverBg="hover:bg-[#c9a96e]"
       />
@@ -191,24 +191,24 @@ export default function ElegantWhite({ payload, audioController }) {
       {(invitation.loveStories || invitation.love_stories) && (invitation.loveStories || invitation.love_stories).length > 0 && (
         <LoveStory 
           invitation={invitation}
-          sectionBg="bg-[#faf8f5]"
+          sectionBg="bg-[var(--theme-bg,#faf8f5)]"
           titleFont={serif.className}
-          accentText="text-[#c9a96e]"
-          borderColor="border-[#e8d5b7]"
-          cardBg="bg-white border border-[#e8d5b7]/50"
+          accentText="text-[var(--theme-text,#c9a96e)]"
+          borderColor="border-[var(--theme-accent,#e8d5b7)]"
+          cardBg="bg-white border border-[var(--theme-accent,#e8d5b7)]/50"
         />
       )}
 
       {/* Countdown */}
-      <section className="px-6 py-20 bg-[#faf8f5] text-center">
-        <p className="text-xs tracking-[0.4em] uppercase text-[#c9a96e] mb-6">Counting Down</p>
+      <section className="px-6 py-20 bg-[var(--theme-bg,#faf8f5)] text-center">
+        <p className="text-xs tracking-[0.4em] uppercase text-[var(--theme-text,#c9a96e)] mb-6">Counting Down</p>
         <CountdownTimer 
           eventDate={invitation.event_date} 
           eventTime={invitation.event_time}
           numberFont={serif.className}
           labelFont={sans.className}
           textColor="text-gray-800"
-          accentColor="text-[#c9a96e]"
+          accentColor="text-[var(--theme-text,#c9a96e)]"
         />
       </section>
 
@@ -217,8 +217,8 @@ export default function ElegantWhite({ payload, audioController }) {
         invitation={invitation}
         sectionBg="bg-white"
         titleFont={serif.className}
-        accentText="text-[#c9a96e]"
-        borderColor="border-[#e8d5b7]"
+        accentText="text-[var(--theme-text,#c9a96e)]"
+        borderColor="border-[var(--theme-accent,#e8d5b7)]"
       />
 
       {/* Gift Accounts */}
@@ -226,10 +226,10 @@ export default function ElegantWhite({ payload, audioController }) {
       {(invitation.giftAccounts || invitation.gift_accounts) && (invitation.giftAccounts || invitation.gift_accounts).length > 0 && (
         <GiftAccounts variant="ElegantWhite" 
           invitation={invitation}
-          sectionBg="bg-[#faf8f5]"
+          sectionBg="bg-[var(--theme-bg,#faf8f5)]"
           titleFont={serif.className}
-          accentText="text-[#c9a96e]"
-          cardBg="bg-white border border-[#e8d5b7]/50"
+          accentText="text-[var(--theme-text,#c9a96e)]"
+          cardBg="bg-white border border-[var(--theme-accent,#e8d5b7)]/50"
           btnBg="bg-[#a0824a] hover:bg-[#c9a96e]"
         />
       )}
@@ -247,7 +247,7 @@ export default function ElegantWhite({ payload, audioController }) {
             guestToken={guest?.token}
             btnClasses="w-full bg-[#a0824a] text-white py-3 rounded-lg text-sm font-medium hover:bg-[#c9a96e] transition-colors tracking-wider"
             inputClasses="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm mb-3 bg-white outline-none"
-            msgCardClasses="bg-[#faf8f5] rounded-xl p-5"
+            msgCardClasses="bg-[var(--theme-bg,#faf8f5)] rounded-xl p-5"
             nameFont={sans.className}
             msgFont={serif.className}
           />
@@ -256,7 +256,7 @@ export default function ElegantWhite({ payload, audioController }) {
 
       {/* Footer */}
       {/* ── FOOTER ── */}
-                <footer className="bg-[#faf8f5] text-gray-800 pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                <footer className="bg-[var(--theme-bg,#faf8f5)] text-gray-800 pt-64 pb-24 px-8 text-center relative overflow-hidden">
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
@@ -266,7 +266,7 @@ export default function ElegantWhite({ payload, audioController }) {
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
                             <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : (
-                            <div className="w-full h-full bg-[#faf8f5] opacity-40"></div>
+                            <div className="w-full h-full bg-[var(--theme-bg,#faf8f5)] opacity-40"></div>
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#faf8f5] via-[#faf8f5]/60 to-transparent" />
                     </div>
@@ -295,8 +295,8 @@ export default function ElegantWhite({ payload, audioController }) {
       <BottomNav 
         navBg="bg-white/90"
         navActive="text-[#a0824a]"
-        navInactive="text-gray-400 hover:text-[#c9a96e]"
-        navBorder="border-[#e8d5b7]/50"
+        navInactive="text-gray-400 hover:text-[var(--theme-text,#c9a96e)]"
+        navBorder="border-[var(--theme-accent,#e8d5b7)]/50"
       />
 
     </div>

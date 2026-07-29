@@ -312,7 +312,7 @@ export default function AureliaLuxe({ payload, audioController }) {
                 {/* 5. OUR MOMENTS (GRID GALLERY) */}
                 <Gallery 
                     invitation={invitation}
-                    sectionBg="bg-[#333333]"
+                    sectionBg="bg-[var(--theme-bg,#333333)]"
                     titleFont={playfair.className}
                     titleSize="text-5xl md:text-6xl font-bold"
                     accentText="text-white"
@@ -323,7 +323,7 @@ export default function AureliaLuxe({ payload, audioController }) {
                 {/* 6. QUOTE CARD (OVERLAPPING BG) */}
                 <section className="relative h-40 bg-gray-50 flex items-center justify-center reveal">
                     {/* The dark bg from above continues half-way */}
-                    <div className="absolute top-0 left-0 w-full h-1/2 bg-[#333333]" />
+                    <div className="absolute top-0 left-0 w-full h-1/2 bg-[var(--theme-bg,#333333)]" />
                     
                     <div className="relative z-10 bg-white/95 backdrop-blur-sm px-10 py-12 md:py-16 md:px-20 max-w-3xl w-11/12 mx-auto text-center shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-gray-100">
                         <p className={`${playfair.className} text-xl md:text-3xl text-gray-900 font-bold italic leading-relaxed`}>
@@ -428,7 +428,7 @@ export default function AureliaLuxe({ payload, audioController }) {
                                <label className="block text-[9px] uppercase tracking-widest font-bold mb-2 text-white/70">Your Wish / Message</label>
                                <textarea className="w-full bg-white/10 border-b border-white/30 px-0 py-3 text-sm text-white placeholder-white/30 focus:outline-none focus:border-white transition-colors h-24 resize-none" placeholder="Write something beautiful..." value={wishInput} onChange={(e) => setWishInput(e.target.value)}></textarea>
                            </div>
-                           <button type="submit" disabled={submitting} className="self-end px-12 py-3 bg-white text-[#6B7280] text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-black hover:text-white transition-colors disabled:opacity-50">
+                           <button type="submit" disabled={submitting} className="self-end px-12 py-3 bg-white text-[var(--theme-text,#6B7280)] text-[10px] font-bold tracking-[0.2em] uppercase hover:bg-black hover:text-white transition-colors disabled:opacity-50">
                                {submitting ? 'MENGIRIM...' : 'SEND MESSAGE'}
                            </button>
                            </form>

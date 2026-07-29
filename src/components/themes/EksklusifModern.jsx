@@ -61,7 +61,7 @@ export default function EksklusifModern({ payload, audioController }) {
   }, []);
 
   return (
-    <div className={`min-h-screen bg-[#0a0a0a] text-gray-100 antialiased relative overflow-x-hidden selection:bg-[#d79e60] selection:text-[#0a0a0a] ${bodyFont.className}`}>
+    <div className={`min-h-screen bg-[#0a0a0a] text-gray-100 antialiased relative overflow-x-hidden selection:bg-[var(--theme-bg,#d79e60)] selection:text-[var(--theme-text,#0a0a0a)] ${bodyFont.className}`}>
       
       <style jsx global>{`
         .glass-panel { background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(225, 185, 132, 0.15); }
@@ -101,7 +101,7 @@ export default function EksklusifModern({ payload, audioController }) {
         <MusicPlayer 
           audioController={audioController} 
           btnBg="glass-panel shadow-[0_0_20px_rgba(215,158,96,0.2)]" 
-          btnColor="text-[#e1b984]" 
+          btnColor="text-[var(--theme-accent,#e1b984)]" 
           btnBorder="" 
         />
       )}
@@ -118,12 +118,12 @@ export default function EksklusifModern({ payload, audioController }) {
         <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center">
           {guestName && (
             <div className="mb-10 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-[#e1b984] mb-2">Exclusive Invitation For</p>
+              <p className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-[var(--theme-accent,#e1b984)] mb-2">Exclusive Invitation For</p>
               <p className={`${headingFont.className} text-xl text-[#edd5af] italic`}>{guestName}</p>
             </div>
           )}
 
-          <p className="text-xs text-[#e1b984] uppercase tracking-[0.5em] mb-6">The Wedding Celebration Of</p>
+          <p className="text-xs text-[var(--theme-accent,#e1b984)] uppercase tracking-[0.5em] mb-6">The Wedding Celebration Of</p>
           
           <div className="relative w-full">
             <h1 className={`${headingFont.className} text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-white leading-[1.1]`}>
@@ -150,7 +150,7 @@ export default function EksklusifModern({ payload, audioController }) {
         titleFont={bodyFont.className} 
         nameFont={`${headingFont.className} text-white`}
         textColor="text-gray-300"
-        headingColor="text-[#e1b984]" // luxe-400
+        headingColor="text-[var(--theme-accent,#e1b984)]" // luxe-400
         borderColor="border-none"
       />
 
@@ -184,14 +184,14 @@ export default function EksklusifModern({ payload, audioController }) {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className={`${headingFont.className} text-4xl md:text-5xl text-white mb-4`}>Event Details</h2>
-            <div className="w-12 h-px bg-[#d79e60] mx-auto"></div>
+            <div className="w-12 h-px bg-[var(--theme-bg,#d79e60)] mx-auto"></div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 relative z-10">
             {/* When Panel */}
             <div className="glass-panel p-10 md:p-12 rounded-2xl border-flair hover:-translate-y-2 transition-transform duration-500">
               <div className="w-12 h-12 rounded-full bg-[#6f432a]/30 flex items-center justify-center mb-8 border border-[#d79e60]/30">
-                <svg className="w-5 h-5 text-[#e1b984]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
+                <svg className="w-5 h-5 text-[var(--theme-accent,#e1b984)]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
               </div>
               <p className="text-xs text-[#d79e60] uppercase tracking-[0.3em] mb-2">When</p>
               <p className={`${headingFont.className} text-3xl text-white mb-2`}>
@@ -210,14 +210,14 @@ export default function EksklusifModern({ payload, audioController }) {
             {/* Where Panel */}
             <div className="glass-panel p-10 md:p-12 rounded-2xl border-flair hover:-translate-y-2 transition-transform duration-500">
               <div className="w-12 h-12 rounded-full bg-[#6f432a]/30 flex items-center justify-center mb-8 border border-[#d79e60]/30">
-                <svg className="w-5 h-5 text-[#e1b984]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
+                <svg className="w-5 h-5 text-[var(--theme-accent,#e1b984)]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
               </div>
               <p className="text-xs text-[#d79e60] uppercase tracking-[0.3em] mb-2">Where</p>
               <p className={`${headingFont.className} text-2xl text-white mb-4 leading-tight`}>{invitation.location}</p>
               {getMapUrl(invitation) && (
                 <MapLocationButton
                   item={invitation}
-                  className="inline-flex items-center gap-3 text-[#e1b984] hover:text-[#edd5af] transition-colors mt-4 group"
+                  className="inline-flex items-center gap-3 text-[var(--theme-accent,#e1b984)] hover:text-[#edd5af] transition-colors mt-4 group"
                   buttonText="Open Map"
                 >
                   <span className="text-sm uppercase tracking-wider font-medium">Open Map</span>
@@ -248,7 +248,7 @@ export default function EksklusifModern({ payload, audioController }) {
         invitation={invitation}
         sectionBg="bg-transparent"
         titleFont={headingFont.className}
-        accentText="text-[#e1b984]"
+        accentText="text-[var(--theme-accent,#e1b984)]"
         borderColor="border-[#d79e60]/20"
         imgClasses="shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5"
       />
@@ -264,7 +264,7 @@ export default function EksklusifModern({ payload, audioController }) {
         btnBg="bg-[#ab6535]"
         btnHoverBg="hover:bg-[#895130]"
         btnBorder="border-[#d79e60]/30"
-        iconBg="bg-[#6f432a]/30 text-[#e1b984]"
+        iconBg="bg-[#6f432a]/30 text-[var(--theme-accent,#e1b984)]"
       />
 
       {/* Love Story */}
@@ -273,7 +273,7 @@ export default function EksklusifModern({ payload, audioController }) {
           invitation={invitation}
           sectionBg="bg-[#0a0a0a]"
           titleFont={headingFont.className}
-          accentText="text-[#e1b984]"
+          accentText="text-[var(--theme-accent,#e1b984)]"
           borderColor="border-[#d79e60]/20"
           cardBg="glass-panel text-gray-300"
         />
@@ -286,7 +286,7 @@ export default function EksklusifModern({ payload, audioController }) {
           invitation={invitation}
           sectionBg="bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#141414] to-[#0a0a0a]"
           titleFont={headingFont.className}
-          accentText="text-[#e1b984]"
+          accentText="text-[var(--theme-accent,#e1b984)]"
           cardBg="glass-panel text-gray-300"
           btnBg="bg-white/10 hover:bg-white/20 border border-white/20 text-white"
         />
@@ -310,7 +310,7 @@ export default function EksklusifModern({ payload, audioController }) {
             invitation={invitation}
             guestName={guestName}
             guestToken={guest?.token}
-            btnClasses="w-full bg-white text-[#0a0a0a] py-4 rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-[#fbf5eb] transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+            btnClasses="w-full bg-white text-[var(--theme-text,#0a0a0a)] py-4 rounded-xl text-sm font-bold tracking-widest uppercase hover:bg-[#fbf5eb] transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]"
             inputClasses="w-full bg-[#141414]/80 border border-white/10 rounded-xl px-5 py-4 text-white text-sm focus:border-[#d79e60] outline-none transition-colors shadow-inner mb-4"
             msgCardClasses="glass-panel rounded-2xl p-6 border-l-2 border-l-[#d79e60] mb-4"
             nameClasses="text-[10px] text-gray-500 uppercase tracking-wider block mt-1"
@@ -359,7 +359,7 @@ export default function EksklusifModern({ payload, audioController }) {
       <BottomNav 
         navBg="bg-[#141414]/80 backdrop-blur-xl border-t border-white/5"
         navActive="text-[#d79e60]"
-        navInactive="text-gray-500 hover:text-[#e1b984]"
+        navInactive="text-gray-500 hover:text-[var(--theme-accent,#e1b984)]"
         navBorder="border-none"
       />
     </div>
