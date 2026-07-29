@@ -274,7 +274,7 @@ export default function BotanicalSage({ payload, audioController }) {
 
                     {guestName && (
                         <div className="sage-glass rounded-xl px-8 py-4 mb-8 max-w-xs mx-auto">
-                            <p className="text-[10px] text-[var(--theme-accent,#5f7364)] uppercase tracking-[0.3em] mb-1">Dear</p>
+                            <p className="text-[10px] text-[var(--theme-text,#5f7364)] uppercase tracking-[0.3em] mb-1">Dear</p>
                             <p className={`${playfair.className} text-lg font-bold olive-text`}>{guestName}</p>
                         </div>
                     )}
@@ -321,7 +321,7 @@ export default function BotanicalSage({ payload, audioController }) {
                     <LeafOrnament className="absolute -bottom-16 -left-10 w-40 md:w-56 opacity-15 rotate-12" flip />
 
                     <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
-                        <p className={`${greatVibes.className} text-2xl text-[var(--theme-accent,#5f7364)] mb-2`}>Together with their families</p>
+                        <p className={`${greatVibes.className} text-2xl text-[var(--theme-text,#5f7364)] mb-2`}>Together with their families</p>
                         <h2 className={`${playfair.className} text-5xl md:text-6xl olive-text font-bold mb-4`}>The Bride & Groom</h2>
                         <FloralDivider className="w-64 md:w-80 mx-auto mb-20" />
 
@@ -337,10 +337,10 @@ export default function BotanicalSage({ payload, audioController }) {
                                 <div className="text-center">
                                     <p className={`${playfair.className} text-3xl md:text-4xl olive-text font-bold mb-1`}>{invitation?.bride_name?.split(' ')[0] || invitation?.bride_name}</p>
                                     <h3 className="text-base font-semibold uppercase tracking-wider olive-text mb-1">{invitation?.bride_full_name || invitation?.bride_name}</h3>
-                                    <p className="text-xs text-[var(--theme-accent,#5f7364)] tracking-widest uppercase">The Bride</p>
-                                    {invitation?.bride_father && <p className="text-xs text-[var(--theme-accent,#5f7364)] mt-2">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari {invitation.bride_father} & {invitation.bride_mother}</p>}
+                                    <p className="text-xs text-[var(--theme-text,#5f7364)] tracking-widest uppercase">The Bride</p>
+                                    {invitation?.bride_father && <p className="text-xs text-[var(--theme-text,#5f7364)] mt-2">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari {invitation.bride_father} & {invitation.bride_mother}</p>}
                                     {invitation?.bride_instagram && (
-                                        <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-xs text-[var(--theme-accent,#5f7364)] hover:text-[#3a483e] transition-colors font-medium">
+                                        <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-xs text-[var(--theme-text,#5f7364)] hover:text-[#3a483e] transition-colors font-medium">
                                             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                             @{invitation.bride_instagram}
                                         </a>
@@ -365,10 +365,10 @@ export default function BotanicalSage({ payload, audioController }) {
                                 <div className="text-center">
                                     <p className={`${playfair.className} text-3xl md:text-4xl olive-text font-bold mb-1`}>{invitation?.groom_name?.split(' ')[0] || invitation?.groom_name}</p>
                                     <h3 className="text-base font-semibold uppercase tracking-wider olive-text mb-1">{invitation?.groom_full_name || invitation?.groom_name}</h3>
-                                    <p className="text-xs text-[var(--theme-accent,#5f7364)] tracking-widest uppercase">The Groom</p>
-                                    {invitation?.groom_father && <p className="text-xs text-[var(--theme-accent,#5f7364)] mt-2">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari {invitation.groom_father} & {invitation.groom_mother}</p>}
+                                    <p className="text-xs text-[var(--theme-text,#5f7364)] tracking-widest uppercase">The Groom</p>
+                                    {invitation?.groom_father && <p className="text-xs text-[var(--theme-text,#5f7364)] mt-2">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari {invitation.groom_father} & {invitation.groom_mother}</p>}
                                     {invitation?.groom_instagram && (
-                                        <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-xs text-[var(--theme-accent,#5f7364)] hover:text-[#3a483e] transition-colors font-medium">
+                                        <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 mt-3 text-xs text-[var(--theme-text,#5f7364)] hover:text-[#3a483e] transition-colors font-medium">
                                             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                             @{invitation.groom_instagram}
                                         </a>
@@ -404,7 +404,7 @@ export default function BotanicalSage({ payload, audioController }) {
                     if (tmItems.length === 0) return null;
                     return (
                         <section className="py-16 px-6 text-center bg-[#e8ede9] bs-reveal">
-                            <p className="text-[10px] text-[var(--theme-accent,#5f7364)] uppercase tracking-[0.3em] font-bold mb-6">Turut Mengundang</p>
+                            <p className="text-[10px] text-[var(--theme-text,#5f7364)] uppercase tracking-[0.3em] font-bold mb-6">Turut Mengundang</p>
                             <div className="w-12 h-px bg-[var(--theme-accent,#5f7364)]/30 mx-auto mb-8" />
                             <div className="space-y-2">
                                 {tmItems.map((name, i) => (
@@ -419,7 +419,7 @@ export default function BotanicalSage({ payload, audioController }) {
                 <section className="py-24 bg-[#e8ede9] text-center px-6 bs-reveal relative overflow-hidden">
                     <LeafOrnament className="absolute top-0 right-0 w-32 opacity-10 rotate-45" />
                     <div className="max-w-5xl mx-auto relative z-10">
-                        <p className={`${greatVibes.className} text-2xl text-[var(--theme-accent,#5f7364)] mb-2`}>Save the Date</p>
+                        <p className={`${greatVibes.className} text-2xl text-[var(--theme-text,#5f7364)] mb-2`}>Save the Date</p>
                         <h2 className={`${playfair.className} text-5xl md:text-6xl olive-text mb-4 font-bold`}>Wedding Day</h2>
                         <FloralDivider className="w-64 md:w-80 mx-auto mb-16" />
 
@@ -429,7 +429,7 @@ export default function BotanicalSage({ payload, audioController }) {
                                     <div key={idx} className="sage-glass rounded-2xl p-10 relative card-hover group">
                                         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#4a5d4e] to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-t-2xl" />
                                         <h3 className={`${playfair.className} text-3xl text-[#3a4d3e] font-bold mb-5`}>{event.name}</h3>
-                                        <div className="text-xs text-[var(--theme-accent,#5f7364)] font-medium tracking-widest uppercase space-y-2 mb-6 border-y border-[#cddbcf]/50 py-5">
+                                        <div className="text-xs text-[var(--theme-text,#5f7364)] font-medium tracking-widest uppercase space-y-2 mb-6 border-y border-[#cddbcf]/50 py-5">
                                             <p className="flex items-center justify-center gap-2">
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
                                                 {event.date ? new Date(event.date).toLocaleDateString('id-ID', {day: '2-digit', month: 'long', year: 'numeric'}) : ''}
@@ -457,7 +457,7 @@ export default function BotanicalSage({ payload, audioController }) {
                                     </div>
                                 ))
                             ) : (
-                                <div className="col-span-2 sage-glass rounded-2xl p-10 text-[var(--theme-accent,#5f7364)] text-sm">Agenda pernikahan belum ditambahkan.</div>
+                                <div className="col-span-2 sage-glass rounded-2xl p-10 text-[var(--theme-text,#5f7364)] text-sm">Agenda pernikahan belum ditambahkan.</div>
                             )}
                         </div>
                     </div>
@@ -484,7 +484,7 @@ export default function BotanicalSage({ payload, audioController }) {
                     titleFont={playfair.className}
                     titleSize="text-5xl md:text-6xl font-bold"
                     accentText="olive-text"
-                    subtitleText="text-[var(--theme-accent,#5f7364)]"
+                    subtitleText="text-[var(--theme-text,#5f7364)]"
                     borderColor="border-[#cddbcf]"
                 />
 
@@ -493,7 +493,7 @@ export default function BotanicalSage({ payload, audioController }) {
                     <LeafOrnament className="absolute -bottom-20 -right-10 w-48 opacity-10" />
                     <div className="max-w-4xl mx-auto relative z-10">
                         <div className="text-center mb-16">
-                            <p className={`${greatVibes.className} text-2xl text-[var(--theme-accent,#5f7364)] mb-2`}>Our Journey</p>
+                            <p className={`${greatVibes.className} text-2xl text-[var(--theme-text,#5f7364)] mb-2`}>Our Journey</p>
                             <h2 className={`${playfair.className} text-5xl md:text-6xl olive-text font-bold mb-4`}>Love Story</h2>
                             <FloralDivider className="w-56 mx-auto" />
                         </div>
@@ -506,11 +506,11 @@ export default function BotanicalSage({ payload, audioController }) {
                                         <div key={story.id || i} className={`relative mb-12 pl-12 md:pl-0 w-full flex ${isEven ? 'md:justify-start' : 'md:justify-end'} bs-reveal`}>
                                             <div className="absolute left-[11px] md:left-1/2 md:-translate-x-1/2 w-4 h-4 bg-[#4a5d4e] rounded-full z-10 mt-6 shadow-md shadow-[#4a5d4e]/30" />
                                             <div className={`w-full md:w-[45%] sage-glass p-8 rounded-2xl card-hover`}>
-                                                <p className="text-[10px] text-[var(--theme-accent,#5f7364)] uppercase tracking-widest font-bold mb-2">
+                                                <p className="text-[10px] text-[var(--theme-text,#5f7364)] uppercase tracking-widest font-bold mb-2">
                                                     {story.date ? new Date(story.date).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }).toUpperCase() : 'MEMORIES'}
                                                 </p>
                                                 <h3 className={`${playfair.className} text-2xl font-bold olive-text mb-4`}>{story.title}</h3>
-                                                <p className="text-sm text-[var(--theme-accent,#5f7364)] leading-relaxed">{story.description}</p>
+                                                <p className="text-sm text-[var(--theme-text,#5f7364)] leading-relaxed">{story.description}</p>
                                                 {story.photo && (
                                                     <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(story.photo)} alt="Memory" className="w-full h-44 object-cover mt-6 rounded-xl" />
                                                 )}
@@ -519,7 +519,7 @@ export default function BotanicalSage({ payload, audioController }) {
                                     );
                                 })
                             ) : (
-                                <div className="text-center text-sm text-[var(--theme-accent,#5f7364)] py-10">Belum ada cerita yang ditambahkan.</div>
+                                <div className="text-center text-sm text-[var(--theme-text,#5f7364)] py-10">Belum ada cerita yang ditambahkan.</div>
                             )}
                         </div>
                     </div>
@@ -539,17 +539,17 @@ export default function BotanicalSage({ payload, audioController }) {
                         <div className="w-full md:w-2/5 mb-10 md:mb-0 pr-0 md:pr-10 border-b md:border-b-0 md:border-r border-[#cddbcf]/40 pb-8 md:pb-0">
                             <WeddingRings className="w-16 h-10 mb-4 opacity-40" />
                             <h2 className={`${playfair.className} text-4xl md:text-5xl font-bold mb-2 olive-text`}>RSVP</h2>
-                            <p className="text-[10px] uppercase tracking-widest text-[var(--theme-accent,#5f7364)] mb-6">Or Send A Wish</p>
-                            <p className="text-sm text-[var(--theme-accent,#5f7364)] leading-relaxed max-w-xs">We would love to know if you can join us. Leave your wishes below.</p>
+                            <p className="text-[10px] uppercase tracking-widest text-[var(--theme-text,#5f7364)] mb-6">Or Send A Wish</p>
+                            <p className="text-sm text-[var(--theme-text,#5f7364)] leading-relaxed max-w-xs">We would love to know if you can join us. Leave your wishes below.</p>
                         </div>
                         <div className="w-full md:w-3/5 md:pl-10 flex flex-col gap-5">
                             <form onSubmit={async (e) => { e.preventDefault(); if(!guestNameInput.trim()||!wishInput.trim())return; setSubmitting(true); try{ const API_URL=process.env.NEXT_PUBLIC_API_URL||'https://app.digitvitation.my.id/api'; await fetch(`${API_URL}/invitations/${invitation.id}/guestbook`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:guestNameInput,message:wishInput})}); setWishes([{name:guestNameInput,message:wishInput,created_at:new Date().toISOString()},...wishes]); setWishInput(''); toast.success('Ucapan terkirim!'); }catch{toast.error('Gagal mengirim ucapan');}finally{setSubmitting(false);} }} className="flex flex-col gap-5">
                             <div>
-                                <label className="block text-[9px] uppercase tracking-widest font-bold mb-2 text-[var(--theme-accent,#5f7364)]">Your Name</label>
+                                <label className="block text-[9px] uppercase tracking-widest font-bold mb-2 text-[var(--theme-text,#5f7364)]">Your Name</label>
                                 <input type="text" className="w-full bg-white/70 border border-[#cddbcf] px-5 py-3.5 text-sm text-[var(--theme-text,#334036)] focus:outline-none focus:border-[#4a5d4e] focus:ring-2 focus:ring-[#4a5d4e]/10 transition-all rounded-xl" placeholder="Full Name..." value={guestNameInput} onChange={(e) => setGuestNameInput(e.target.value)} />
                             </div>
                             <div>
-                                <label className="block text-[9px] uppercase tracking-widest font-bold mb-2 text-[var(--theme-accent,#5f7364)]">Your Message</label>
+                                <label className="block text-[9px] uppercase tracking-widest font-bold mb-2 text-[var(--theme-text,#5f7364)]">Your Message</label>
                                 <textarea className="w-full bg-white/70 border border-[#cddbcf] px-5 py-3.5 text-sm text-[var(--theme-text,#334036)] focus:outline-none focus:border-[#4a5d4e] focus:ring-2 focus:ring-[#4a5d4e]/10 transition-all h-28 resize-none rounded-xl" placeholder="Write something beautiful..." value={wishInput} onChange={(e) => setWishInput(e.target.value)} />
                             </div>
                             <button type="submit" disabled={submitting} className="self-end sage-btn px-10 py-3.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase disabled:opacity-50">
@@ -567,7 +567,7 @@ export default function BotanicalSage({ payload, audioController }) {
                                             <div className="w-6 h-6 rounded-full bg-[#4a5d4e]/15 flex items-center justify-center">
                                                 <span className="olive-text text-[10px] font-bold">{m.name?.charAt(0)?.toUpperCase()}</span>
                                             </div>
-                                            <p className="text-xs text-[var(--theme-accent,#5f7364)]">{m.name}</p>
+                                            <p className="text-xs text-[var(--theme-text,#5f7364)]">{m.name}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -580,7 +580,7 @@ export default function BotanicalSage({ payload, audioController }) {
                 <section className="py-24 bg-[var(--theme-bg,#f0f4f0)] text-center px-6 bs-reveal relative overflow-hidden">
                     <LeafOrnament className="absolute top-0 left-0 w-36 opacity-8" flip />
                     <div className="max-w-5xl mx-auto relative z-10">
-                        <p className={`${greatVibes.className} text-2xl text-[var(--theme-accent,#5f7364)] mb-2`}>Wedding Gift</p>
+                        <p className={`${greatVibes.className} text-2xl text-[var(--theme-text,#5f7364)] mb-2`}>Wedding Gift</p>
                         <h2 className={`${playfair.className} text-4xl md:text-5xl olive-text font-bold mb-4`}>Send Your Gift</h2>
                         <FloralDivider className="w-56 mx-auto mb-16" />
 
@@ -590,13 +590,13 @@ export default function BotanicalSage({ payload, audioController }) {
                                 <GiftAtmCard key={acc.id || i} acc={acc} delayData={`${(i % 3) + 1}`} variant="BotanicalSage" />
                             ))
                             ) : (
-                                <div className="col-span-3 sage-glass rounded-2xl p-10 text-[var(--theme-accent,#5f7364)] text-sm">Belum ada informasi rekening yang ditambahkan.</div>
+                                <div className="col-span-3 sage-glass rounded-2xl p-10 text-[var(--theme-text,#5f7364)] text-sm">Belum ada informasi rekening yang ditambahkan.</div>
                             )}
                         </div>
 
                         {(invitation?.groom_address || invitation?.bride_address) && (
                             <div className="mt-10 sage-glass rounded-2xl p-8 max-w-2xl mx-auto text-center">
-                                <p className="text-[10px] text-[var(--theme-accent,#5f7364)] mb-3 uppercase tracking-widest font-bold">Kirim Kado Fisik</p>
+                                <p className="text-[10px] text-[var(--theme-text,#5f7364)] mb-3 uppercase tracking-widest font-bold">Kirim Kado Fisik</p>
                                 <p className="text-sm text-[#3a4d3e] font-medium leading-relaxed">{invitation.bride_address || invitation.groom_address}</p>
                             </div>
                         )}

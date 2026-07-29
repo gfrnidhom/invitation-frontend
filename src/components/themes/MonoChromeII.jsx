@@ -89,13 +89,13 @@ export default function MonoChromeII({ payload, audioController }) {
                     <div className="absolute inset-0 bg-gradient-to-b from-[#1f1915]/40 via-[#1f1915]/65 to-[#1f1915]/95"/>
                     <div className="relative z-10 text-center px-6 flex flex-col items-center">
                         <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#d4c5b3]/40 to-transparent mb-8"/>
-                        <p className={`${oswald.className} text-xs tracking-[.6em] uppercase text-[var(--theme-accent,#d4c5b3)]/50 mb-6`}>The Wedding Of</p>
+                        <p className={`${oswald.className} text-xs tracking-[.6em] uppercase text-[var(--theme-text,#d4c5b3)]/50 mb-6`}>The Wedding Of</p>
                         <h1 className={`${playfair.className} italic text-5xl md:text-7xl lg:text-8xl text-[var(--theme-text,#e8ddd0)] mb-2 font-medium`}>{invitation?.groom_name?.split(' ')[0]}</h1>
-                        <p className={`${playfair.className} italic text-4xl text-[var(--theme-accent,#d4c5b3)]/40 my-1`}>&</p>
+                        <p className={`${playfair.className} italic text-4xl text-[var(--theme-text,#d4c5b3)]/40 my-1`}>&</p>
                         <h1 className={`${playfair.className} italic text-5xl md:text-7xl lg:text-8xl text-[var(--theme-text,#e8ddd0)] mb-6 font-medium`}>{invitation?.bride_name?.split(' ')[0]}</h1>
-                        <p className="text-[10px] text-[var(--theme-accent,#d4c5b3)]/30 tracking-[.4em] uppercase mb-10">{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
+                        <p className="text-[10px] text-[var(--theme-text,#d4c5b3)]/30 tracking-[.4em] uppercase mb-10">{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
                         {guestName&&<div className="mb-8"><p className="text-[9px] text-[var(--theme-text,#e8ddd0)]/20 uppercase tracking-[.3em] mb-1">Kepada Yth.</p><p className={`${playfair.className} italic text-2xl sep`}>{guestName}</p></div>}
-                        <button onClick={ho} className={`${oswald.className} border border-[var(--theme-accent,#d4c5b3)]/30 px-10 py-4 text-[10px] tracking-[.4em] uppercase text-[var(--theme-accent,#d4c5b3)]/70 hover:bg-[var(--theme-accent,#d4c5b3)] hover:text-[var(--theme-button-text,#2c2)] transition-all duration-500`}>Buka Undangan</button>
+                        <button onClick={ho} className={`${oswald.className} border border-[var(--theme-accent,#d4c5b3)]/30 px-10 py-4 text-[10px] tracking-[.4em] uppercase text-[var(--theme-text,#d4c5b3)]/70 hover:bg-[var(--theme-accent,#d4c5b3)] hover:text-[var(--theme-button-text,#2c2)] transition-all duration-500`}>Buka Undangan</button>
                         <div className="w-24 h-px bg-gradient-to-r from-transparent via-[#d4c5b3]/40 to-transparent mt-8"/>
                     </div>
                 </div>
@@ -109,9 +109,9 @@ export default function MonoChromeII({ payload, audioController }) {
                         {cp&&<img src={cp} alt="Hero" className="absolute inset-0 w-full h-full object-cover opacity-40 sepia"/>}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#2c2420] via-[#2c2420]/50 to-transparent"/>
                         <div className="relative z-10">
-                            <p className={`${oswald.className} text-[10px] tracking-[.5em] uppercase text-[var(--theme-accent,#d4c5b3)]/40 mb-6`}>Our Wedding</p>
+                            <p className={`${oswald.className} text-[10px] tracking-[.5em] uppercase text-[var(--theme-text,#d4c5b3)]/40 mb-6`}>Our Wedding</p>
                             <h1 className={`${playfair.className} italic text-6xl md:text-7xl lg:text-8xl text-[var(--theme-text,#e8ddd0)] leading-[1.1] mb-3 font-medium`}>{invitation?.groom_name?.split(' ')[0]}</h1>
-                            <p className={`${playfair.className} italic text-3xl text-[var(--theme-accent,#d4c5b3)]/30 mb-3`}>&</p>
+                            <p className={`${playfair.className} italic text-3xl text-[var(--theme-text,#d4c5b3)]/30 mb-3`}>&</p>
                             <h1 className={`${playfair.className} italic text-6xl md:text-7xl lg:text-8xl text-[var(--theme-text,#e8ddd0)] leading-[1.1] mb-8 font-medium`}>{invitation?.bride_name?.split(' ')[0]}</h1>
                             {invitation?.quotes&&<p className="text-sm text-[var(--theme-text,#e8ddd0)]/30 leading-relaxed max-w-lg mb-10 italic font-light">"{invitation.description}"</p>}
                             {guestName&&<div className="mb-6"><p className="text-[9px] text-[var(--theme-text,#e8ddd0)]/15 tracking-[.3em] uppercase mb-1">Dear</p><p className={`${playfair.className} italic text-2xl sep`}>{guestName}</p></div>}
@@ -123,7 +123,7 @@ export default function MonoChromeII({ payload, audioController }) {
                     <div ref={rpRef} className="w-full lg:w-[30%] lg:h-screen lg:overflow-y-auto sh bg-[var(--theme-bg,#2c2420)]">
                         {/* Countdown */}
                         <section className="py-20 px-8 text-center m2-rv">
-                            <p className={`${oswald.className} text-[10px] tracking-[.5em] uppercase text-[var(--theme-accent,#d4c5b3)]/35 mb-4`}>Save The Date</p>
+                            <p className={`${oswald.className} text-[10px] tracking-[.5em] uppercase text-[var(--theme-text,#d4c5b3)]/35 mb-4`}>Save The Date</p>
                             <h2 className={`${playfair.className} italic text-3xl font-medium text-[var(--theme-text,#e8ddd0)] mb-2`}>{invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}</h2>
                             <p className="text-[10px] text-[var(--theme-text,#e8ddd0)]/20 tracking-[.3em] uppercase mb-10">{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
                             <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto">{[{v:cd.d,l:'Hari'},{v:cd.h,l:'Jam'},{v:cd.m,l:'Menit'},{v:cd.s,l:'Detik'}].map((it,i)=>(<div key={i} className="m2c rounded-2xl py-4 px-2"><p className={`${playfair.className} italic text-2xl sep`}>{it.v}</p><p className="text-[9px] uppercase tracking-widest text-[var(--theme-text,#e8ddd0)]/15 mt-1">{it.l}</p></div>))}</div>
@@ -133,7 +133,7 @@ export default function MonoChromeII({ payload, audioController }) {
                         <section className="px-8 pb-20 m2-rv">
                             <div className="m2cw rounded-3xl p-8 text-center">
                                 <p className={`${playfair.className} italic text-sm leading-relaxed text-[#2c2420]/55 mb-4`}>{invitation?.quotes||'"Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati dan dijadikannya kasih sayang di antara kamu."'}</p>
-                                <p className={`${oswald.className} text-[10px] text-[var(--theme-accent,#d4c5b3)] tracking-[.3em] uppercase`}>{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
+                                <p className={`${oswald.className} text-[10px] text-[var(--theme-text,#d4c5b3)] tracking-[.3em] uppercase`}>{invitation?.quotes_name || 'QS. Ar-Rum Ayat 21'}</p>
                             </div>
                         </section>
 
@@ -154,7 +154,7 @@ export default function MonoChromeII({ payload, audioController }) {
                                     </a>
                                 )}
                             </div>
-                            <div className="text-center my-5 m2-rv"><div className="w-px h-10 bg-[var(--theme-accent,#d4c5b3)]/15 mx-auto"/><span className={`${playfair.className} italic text-4xl text-[var(--theme-accent,#d4c5b3)]/20 my-2 block`}>&</span><div className="w-px h-10 bg-[var(--theme-accent,#d4c5b3)]/15 mx-auto"/></div>
+                            <div className="text-center my-5 m2-rv"><div className="w-px h-10 bg-[var(--theme-accent,#d4c5b3)]/15 mx-auto"/><span className={`${playfair.className} italic text-4xl text-[var(--theme-text,#d4c5b3)]/20 my-2 block`}>&</span><div className="w-px h-10 bg-[var(--theme-accent,#d4c5b3)]/15 mx-auto"/></div>
                             {/* Groom */}
                             <div className="text-center m2-rv" data-delay="2">
                                 {grP&&<div className="hex-frame w-44 h-52 mx-auto mb-6 bg-[var(--theme-accent,#d4c5b3)]/10"><img src={grP} alt="Groom" className="w-full h-full object-cover sepia hover:sepia-0 transition-all duration-700"/></div>}
@@ -222,7 +222,7 @@ export default function MonoChromeII({ payload, audioController }) {
 
                         {/* Footer */}
                         {/* ── FOOTER ── */}
-                <footer className="bg-[#1a1a1a] text-[var(--theme-accent,#d4c5b3)] pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                <footer className="bg-[#1a1a1a] text-[var(--theme-text,#d4c5b3)] pt-64 pb-24 px-8 text-center relative overflow-hidden">
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
@@ -242,17 +242,17 @@ export default function MonoChromeII({ payload, audioController }) {
                         <p className={`font-sans text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
                             Thank you for being part of our special day
                         </p>
-                        <h2 className={`font-serif text-5xl mb-4 text-[var(--theme-accent,#d4c5b3)] drop-shadow-sm`}>
+                        <h2 className={`font-serif text-5xl mb-4 text-[var(--theme-text,#d4c5b3)] drop-shadow-sm`}>
                             {invitation?.groom_name?.split(' ')[0]} <span className="text-black/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
                         </h2>
                         
                         {/* Branding */}
                         <div className="border-t border-[var(--theme-accent,#d4c5b3)]/10 pt-8 mt-12">
-                            <p className="text-[9px] text-[var(--theme-accent,#d4c5b3)]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
+                            <p className="text-[9px] text-[var(--theme-text,#d4c5b3)]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
                             <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-black/80 hover:text-black transition-colors">
                                 <span className={`font-serif text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
                             </a>
-                            <p className="text-[8px] text-[var(--theme-accent,#d4c5b3)]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
+                            <p className="text-[8px] text-[var(--theme-text,#d4c5b3)]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>
                     </div>
                 </footer>

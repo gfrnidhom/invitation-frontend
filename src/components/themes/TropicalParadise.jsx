@@ -118,7 +118,7 @@ export default function TropicalParadise({ payload, audioController }) {
         <div className="relative z-10 w-full flex flex-col items-center justify-center reveal">
           {guestName && (
             <>
-              <p className={`font-sans text-sm uppercase tracking-widest ${coverPhotoUrl ? 'text-white/80' : 'text-[var(--theme-accent,#0d9488)]'} mb-2`}>Aloha,</p>
+              <p className={`font-sans text-sm uppercase tracking-widest ${coverPhotoUrl ? 'text-white/80' : 'text-[var(--theme-text,#0d9488)]'} mb-2`}>Aloha,</p>
               <p className={`${displayFont.className} text-xl font-semibold ${coverPhotoUrl ? 'text-white' : 'text-[var(--theme-text,#0f766e)]'} mb-10`}>{guestName}</p>
             </>
           )}
@@ -161,7 +161,7 @@ export default function TropicalParadise({ payload, audioController }) {
         invitation={invitation}
         sectionBg="bg-[var(--theme-bg,#fffbf0)]"
         accentText="text-gray-700"
-        subtitleText="text-[var(--theme-accent,#0d9488)]"
+        subtitleText="text-[var(--theme-text,#0d9488)]"
         borderColor="border-[#2dd4bf]"
       />
 
@@ -172,7 +172,7 @@ export default function TropicalParadise({ payload, audioController }) {
           <p className="text-lg leading-relaxed text-gray-500">
             &quot;{invitation.quotes}&quot;
           </p>
-          {invitation.quotes_name && <p className="text-[10px] text-[var(--theme-accent,#0d9488)] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
+          {invitation.quotes_name && <p className="text-[10px] text-[var(--theme-text,#0d9488)] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
         </section>
       )}
 
@@ -239,7 +239,7 @@ export default function TropicalParadise({ payload, audioController }) {
         cardBg="bg-white"
         titleFont={bodyFont.className}
         nameFont={displayFont.className}
-        accentText="text-[var(--theme-accent,#0d9488)]"
+        accentText="text-[var(--theme-text,#0d9488)]"
         btnBg="bg-[#14b8a6]"
         btnHoverBg="hover:bg-[var(--theme-accent,#0d9488)]"
         btnBorder="border-[#2dd4bf]"

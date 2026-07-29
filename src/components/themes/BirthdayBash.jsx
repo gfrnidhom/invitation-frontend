@@ -148,7 +148,7 @@ export default function BirthdayBash({ payload, audioController }) {
         titleFont={bodyFont.className} 
         nameFont={displayFont.className}
         accentText="text-[#c026d3]"
-        subtitleText="text-[var(--theme-accent,#0ea5e9)]"
+        subtitleText="text-[var(--theme-text,#0ea5e9)]"
         borderColor="border-[#fae8ff]"
       />
 
@@ -224,11 +224,11 @@ export default function BirthdayBash({ payload, audioController }) {
         cardBg="bg-white"
         titleFont={bodyFont.className}
         nameFont={displayFont.className}
-        accentText="text-[var(--theme-accent,#0ea5e9)]"
+        accentText="text-[var(--theme-text,#0ea5e9)]"
         btnBg="bg-gradient-to-r from-[#d946ef] to-[#0ea5e9]"
         btnHoverBg="hover:opacity-90"
         btnBorder="border-none shadow-md"
-        iconBg="bg-[#e0f2fe] text-[var(--theme-accent,#0ea5e9)]"
+        iconBg="bg-[#e0f2fe] text-[var(--theme-text,#0ea5e9)]"
       />
 
       {/* Love Story Timeline */}
@@ -320,7 +320,7 @@ export default function BirthdayBash({ payload, audioController }) {
       <BottomNav 
         navBg="bg-white/95 border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]"
         navActive="text-[var(--theme-text,#d946ef)]"
-        navInactive="text-gray-400 hover:text-[var(--theme-accent,#0ea5e9)]"
+        navInactive="text-gray-400 hover:text-[var(--theme-text,#0ea5e9)]"
         navBorder="border-none"
       />
 

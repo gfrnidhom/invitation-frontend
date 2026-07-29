@@ -117,7 +117,7 @@ export default function RusticGarden({ payload, audioController }) {
           </h1>
           <div className="my-5 flex items-center justify-center gap-4 reveal">
             <div className="w-12 h-px bg-[var(--theme-accent,#8aab75)]"></div>
-            <svg className="w-6 h-6 text-[var(--theme-accent,#8aab75)]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg>
+            <svg className="w-6 h-6 text-[var(--theme-text,#8aab75)]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"/></svg>
             <div className="w-12 h-px bg-[var(--theme-accent,#8aab75)]"></div>
           </div>
           <h1 className={`${displayFont.className} text-5xl md:text-7xl font-semibold text-[var(--theme-text,#3e5233)] leading-tight reveal`}>
@@ -136,7 +136,7 @@ export default function RusticGarden({ payload, audioController }) {
         titleFont={bodyFont.className} 
         nameFont={displayFont.className}
         accentText="text-[var(--theme-text,#3e5233)]"
-        subtitleText="text-[var(--theme-accent,#8aab75)]"
+        subtitleText="text-[var(--theme-text,#8aab75)]"
         borderColor="border-[#e4eadf]"
       />
 
@@ -146,18 +146,18 @@ export default function RusticGarden({ payload, audioController }) {
         sectionBg="bg-[var(--theme-bg,#f5efe6)]"
         titleFont={displayFont.className}
         accentText="text-[var(--theme-text,#3e5233)]"
-        subtitleText="text-[var(--theme-accent,#8aab75)]"
+        subtitleText="text-[var(--theme-text,#8aab75)]"
         borderColor="border-[var(--theme-accent,#8aab75)]"
       />
 
       {/* Story / Description */}
       {invitation.quotes && (
         <section className="px-6 py-20 max-w-2xl mx-auto text-center reveal">
-          <svg className="w-10 h-10 mx-auto text-[var(--theme-accent,#8aab75)] mb-6" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+          <svg className="w-10 h-10 mx-auto text-[var(--theme-text,#8aab75)] mb-6" fill="none" stroke="currentColor" strokeWidth="1" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
           <p className={`${displayFont.className} text-xl italic leading-relaxed text-gray-600`}>
             &quot;{invitation.quotes}&quot;
           </p>
-          {invitation.quotes_name && <p className="text-[10px] text-[var(--theme-accent,#8aab75)] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
+          {invitation.quotes_name && <p className="text-[10px] text-[var(--theme-text,#8aab75)] tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
         </section>
       )}
 
@@ -170,7 +170,7 @@ export default function RusticGarden({ payload, audioController }) {
           <div className="bg-white rounded-3xl p-10 shadow-sm border border-[#e4eadf]">
             <div className="grid md:grid-cols-2 gap-10 divide-y md:divide-y-0 md:divide-x divide-[#e4eadf]">
               <div className="pb-6 md:pb-0 md:pr-10">
-                <svg className="w-8 h-8 mx-auto text-[var(--theme-accent,#8aab75)] mb-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
+                <svg className="w-8 h-8 mx-auto text-[var(--theme-text,#8aab75)] mb-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
                 <h3 className={`${displayFont.className} text-xl text-[var(--theme-text,#3e5233)] mb-2`}>Waktu</h3>
                 <p className="text-sm text-gray-500">
                   {new Date(invitation.event_date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
@@ -178,7 +178,7 @@ export default function RusticGarden({ payload, audioController }) {
                 {invitation.event_time && <p className="text-sm text-gray-500 mt-1">Pukul {invitation.event_time} WIB</p>}
               </div>
               <div className="pt-6 md:pt-0 md:pl-10">
-                <svg className="w-8 h-8 mx-auto text-[var(--theme-accent,#8aab75)] mb-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
+                <svg className="w-8 h-8 mx-auto text-[var(--theme-text,#8aab75)] mb-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
                 <h3 className={`${displayFont.className} text-xl text-[var(--theme-text,#3e5233)] mb-2`}>Lokasi</h3>
                 <p className="text-sm text-gray-500">{invitation.location}</p>
                 {getMapUrl(invitation) && (
@@ -318,7 +318,7 @@ export default function RusticGarden({ payload, audioController }) {
       <BottomNav 
         navBg="bg-[#f2f5f0]/95"
         navActive="text-[var(--theme-text,#3e5233)]"
-        navInactive="text-[var(--theme-accent,#8aab75)] hover:text-[#5e7a4c]"
+        navInactive="text-[var(--theme-text,#8aab75)] hover:text-[#5e7a4c]"
         navBorder="border-[#e4eadf]"
       />
 

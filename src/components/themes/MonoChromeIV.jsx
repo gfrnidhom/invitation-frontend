@@ -110,7 +110,7 @@ export default function MonoChromeIV({ payload, audioController }) {
                         <div className="relative z-10">
                             <p className={`${spaceGrotesk.className} text-[9px] tracking-[.5em] uppercase stl mb-6 font-medium`}>Our Wedding</p>
                             <h1 className={`${italiana.className} text-6xl md:text-7xl lg:text-8xl text-[var(--theme-text,#e4e4e7)] leading-[.85] mb-3`}>{invitation?.groom_name?.split(' ')[0]}</h1>
-                            <div className="flex items-center gap-3 mb-3"><div className="w-8 h-px bg-[var(--theme-accent,#a1a1aa)]/20"/><span className={`${italiana.className} text-2xl text-[var(--theme-accent,#a1a1aa)]/30`}>&</span></div>
+                            <div className="flex items-center gap-3 mb-3"><div className="w-8 h-px bg-[var(--theme-accent,#a1a1aa)]/20"/><span className={`${italiana.className} text-2xl text-[var(--theme-text,#a1a1aa)]/30`}>&</span></div>
                             <h1 className={`${italiana.className} text-6xl md:text-7xl lg:text-8xl text-[var(--theme-text,#e4e4e7)] leading-[.85] mb-8`}>{invitation?.bride_name?.split(' ')[0]}</h1>
                             {invitation?.quotes&&<p className="text-xs text-[var(--theme-text,#e4e4e7)]/25 leading-relaxed max-w-lg mb-10 font-light">"{invitation.description}"</p>}
                             {guestName&&<div className="mb-6 line-accent pl-5"><p className={`${spaceGrotesk.className} text-[8px] text-[var(--theme-text,#e4e4e7)]/12 tracking-[.3em] uppercase mb-1 font-medium`}>Dear</p><p className={`${italiana.className} text-2xl stl`}>{guestName}</p></div>}
@@ -194,7 +194,7 @@ export default function MonoChromeIV({ payload, audioController }) {
                             titleFont={italiana.className}
                             titleSize="text-3xl"
                             accentText="text-[var(--theme-text,#e4e4e7)]"
-                            subtitleText="text-[var(--theme-accent,#a1a1aa)]"
+                            subtitleText="text-[var(--theme-text,#a1a1aa)]"
                             borderColor="border-[var(--theme-accent,#a1a1aa)]/20"
                         />
 

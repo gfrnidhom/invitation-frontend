@@ -189,7 +189,7 @@ export default function SereneGarden({ payload, audioController }) {
             {invitation?.music_url && (
                 <button 
                     onClick={() => audioController?.toggle()}
-                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-[var(--theme-accent,#5a7360)]/20 flex items-center justify-center text-[var(--theme-accent,#5a7360)] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
+                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-[var(--theme-accent,#5a7360)]/20 flex items-center justify-center text-[var(--theme-text,#5a7360)] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
                 >
                     {audioController?.isPlaying ? (
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
@@ -544,7 +544,7 @@ export default function SereneGarden({ payload, audioController }) {
                 {invitation?.gallery && invitation.gallery.length > 0 && (
                     <section className="bg-white py-20 px-8 relative">
                         <div className="text-center mb-12 g1-reveal">
-                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#5a7360)] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-text,#5a7360)] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
                             <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70">Moments to remember</p>
                         </div>
                         <div className="grid grid-cols-2 gap-4 max-w-[300px] mx-auto">
@@ -562,7 +562,7 @@ export default function SereneGarden({ payload, audioController }) {
                     <section className="bg-gradient-to-b from-[#f4f7f4] to-[#FDFBF7] py-24 px-6 relative overflow-hidden">
                         <div className="text-center mb-16 g1-reveal">
                             <p className={`${greatVibes.className} text-2xl text-[#bd9a5f] mb-2`}>Our Journey</p>
-                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#5a7360)] font-bold uppercase tracking-widest`}>Love Story</h2>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-text,#5a7360)] font-bold uppercase tracking-widest`}>Love Story</h2>
                         </div>
                         
                         {/* Timeline */}
@@ -612,7 +612,7 @@ export default function SereneGarden({ payload, audioController }) {
                 {guest && (
                     <section className="bg-[var(--theme-bg,#FDFBF7)] py-20 px-8 text-center relative border-t border-b border-[var(--theme-accent,#5a7360)]/10">
                         <div className="g1-reveal">
-                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#5a7360)] font-bold uppercase tracking-widest mb-6`}>QR Check-in</h2>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-text,#5a7360)] font-bold uppercase tracking-widest mb-6`}>QR Check-in</h2>
                             <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70 leading-relaxed max-w-[280px] mx-auto mb-8">
                                 Tunjukkan QR Code ini pada saat registrasi di meja buku tamu
                             </p>
@@ -627,7 +627,7 @@ export default function SereneGarden({ payload, audioController }) {
                                 )}
                             </div>
                             <p className={`font-serif text-2xl font-bold mt-6 text-[#1a1a1a] drop-shadow-sm`}>{guest.name}</p>
-                            <p className="text-xs font-semibold text-[var(--theme-accent,#5a7360)] uppercase tracking-widest mt-1">E-Ticket Access</p>
+                            <p className="text-xs font-semibold text-[var(--theme-text,#5a7360)] uppercase tracking-widest mt-1">E-Ticket Access</p>
                         </div>
                     </section>
                 )}

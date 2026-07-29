@@ -182,7 +182,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                     .g1-split-right { margin-left: 70%; width: 30%; }
                 }
 
-                .motion-garden-premium-theme .text-green-accent { color: var(--theme-accent, #A57B52); }
+                .motion-garden-premium-theme .text-green-accent { color: var(--theme-text, #A57B52); }
                 .motion-garden-premium-theme .bg-green-accent { background-color: var(--theme-accent, #A57B52); border-color: var(--theme-accent, #A57B52); }
                 .motion-garden-premium-theme .border-green-accent { border-color: var(--theme-accent, #A57B52); }
                 
@@ -192,7 +192,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
             {invitation?.music_url && (
                 <button 
                     onClick={() => audioController?.toggle()}
-                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-[var(--theme-accent,#A57B52)]/20 flex items-center justify-center text-[var(--theme-accent,#A57B52)] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
+                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-[var(--theme-accent,#A57B52)]/20 flex items-center justify-center text-[var(--theme-text,#A57B52)] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
                 >
                     {audioController?.isPlaying ? (
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
@@ -550,7 +550,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                 {invitation?.gallery && invitation.gallery.length > 0 && (
                     <section className="bg-white py-20 px-8 relative">
                         <div className="text-center mb-12 g1-reveal">
-                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#A57B52)] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-text,#A57B52)] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
                             <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70">Moments to remember</p>
                         </div>
                         <div className="columns-2 gap-2 max-w-[360px] mx-auto">
@@ -569,7 +569,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                     <section className="bg-gradient-to-b from-[#f9f6f0] to-[#FDFBF7] py-24 px-6 relative overflow-hidden">
                         <div className="text-center mb-16 g1-reveal">
                             <p className={`${greatVibes.className} text-2xl text-[#bd9a5f] mb-2`}>Our Journey</p>
-                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#A57B52)] font-bold uppercase tracking-widest`}>Love Story</h2>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-text,#A57B52)] font-bold uppercase tracking-widest`}>Love Story</h2>
                         </div>
                         
                         {/* Timeline */}
@@ -620,7 +620,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                     <section className="bg-gradient-to-b from-[#FDFBF7] to-[#eaddce] py-24 px-8 text-center relative border-y border-[var(--theme-accent,#A57B52)]/20">
                         <div className="absolute inset-x-0 top-0 h-1/2 bg-[url('https://www.transparenttextures.com/patterns/noise-lines.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
                         <div className="g1-reveal relative z-10">
-                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#A57B52)] font-bold uppercase tracking-widest mb-4 drop-shadow-sm`}>Access Pass</h2>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-text,#A57B52)] font-bold uppercase tracking-widest mb-4 drop-shadow-sm`}>Access Pass</h2>
                             <p className="text-xs text-[var(--theme-text,#4A4A4A)]/70 leading-relaxed max-w-[260px] mx-auto mb-10 tracking-widest uppercase">
                                 Please present this pass at the reception
                             </p>
@@ -638,7 +638,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                     <div className="p-8 pb-4">
                                         {/* Logo / Header */}
                                         <div className="flex justify-between items-center mb-6">
-                                            <span className={`font-serif text-[var(--theme-accent,#A57B52)] font-bold tracking-[0.2em] uppercase text-xs`}>VIP</span>
+                                            <span className={`font-serif text-[var(--theme-text,#A57B52)] font-bold tracking-[0.2em] uppercase text-xs`}>VIP</span>
                                             <span className={`${greatVibes.className} text-[#f9e5b8] text-2xl`}>Admit One</span>
                                         </div>
                                         
@@ -668,7 +668,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                     
                                     {/* Footer Info */}
                                     <div className="px-6 pt-4 pb-8">
-                                        <p className="text-[10px] text-[var(--theme-accent,#A57B52)] uppercase tracking-[0.3em] font-semibold mb-1">GUEST NAME</p>
+                                        <p className="text-[10px] text-[var(--theme-text,#A57B52)] uppercase tracking-[0.3em] font-semibold mb-1">GUEST NAME</p>
                                         <p className={`font-serif text-2xl font-bold text-[#f9e5b8] uppercase tracking-wider truncate px-2`}>{guest.name}</p>
                                     </div>
                                 </div>

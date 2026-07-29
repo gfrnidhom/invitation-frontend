@@ -94,7 +94,7 @@ export default function RoyalGold({ payload, audioController }) {
         <MusicPlayer 
           audioController={audioController} 
           btnBg="bg-[var(--theme-accent,#c9a84c)]/20 backdrop-blur-sm" 
-          btnColor="text-[var(--theme-accent,#c9a84c)]" 
+          btnColor="text-[var(--theme-text,#c9a84c)]" 
           btnBorder="border border-[var(--theme-accent,#c9a84c)]/30" 
         />
       )}
@@ -117,12 +117,12 @@ export default function RoyalGold({ payload, audioController }) {
         <div className="relative z-10 w-full flex flex-col items-center justify-center">
           {guestName && (
             <>
-              <p className="text-sm text-[var(--theme-accent,#c9a84c)]/80 mb-2 uppercase tracking-widest text-[10px] reveal">Teruntuk Bapak/Ibu/Saudara/i</p>
+              <p className="text-sm text-[var(--theme-text,#c9a84c)]/80 mb-2 uppercase tracking-widest text-[10px] reveal">Teruntuk Bapak/Ibu/Saudara/i</p>
               <p className={`${displayFont.className} text-lg text-[#d4b96a] tracking-wider mb-12 reveal`}>{guestName}</p>
             </>
           )}
 
-          <p className={`${displayFont.className} text-[10px] tracking-[0.6em] uppercase text-[var(--theme-accent,#c9a84c)]/60 mb-8 reveal`}>
+          <p className={`${displayFont.className} text-[10px] tracking-[0.6em] uppercase text-[var(--theme-text,#c9a84c)]/60 mb-8 reveal`}>
             The Wedding Of
           </p>
 
@@ -131,7 +131,7 @@ export default function RoyalGold({ payload, audioController }) {
           </h1>
           <div className="my-6 flex items-center justify-center gap-6 reveal">
             <div className="w-20 h-px bg-gradient-to-r from-transparent to-[#c9a84c]/50"></div>
-            <span className={`${displayFont.className} text-2xl text-[var(--theme-accent,#c9a84c)]`}>&</span>
+            <span className={`${displayFont.className} text-2xl text-[var(--theme-text,#c9a84c)]`}>&</span>
             <div className="w-20 h-px bg-gradient-to-l from-transparent to-[#c9a84c]/50"></div>
           </div>
           <h1 className={`${displayFont.className} text-5xl md:text-8xl font-bold text-[#d4b96a] tracking-wider leading-tight shimmer reveal`}>
@@ -139,7 +139,7 @@ export default function RoyalGold({ payload, audioController }) {
           </h1>
 
           <div className="mt-14 py-3 px-8 border border-[var(--theme-accent,#c9a84c)]/20 rounded-full reveal">
-            <p className={`${displayFont.className} text-sm tracking-[0.3em] text-[var(--theme-accent,#c9a84c)]/80`}>
+            <p className={`${displayFont.className} text-sm tracking-[0.3em] text-[var(--theme-text,#c9a84c)]/80`}>
               {new Date(invitation.event_date).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}
             </p>
           </div>
@@ -153,7 +153,7 @@ export default function RoyalGold({ payload, audioController }) {
         titleFont={bodyFont.className} 
         nameFont={displayFont.className}
         accentText="text-[#d4b96a]"
-        subtitleText="text-[var(--theme-accent,#c9a84c)]/50"
+        subtitleText="text-[var(--theme-text,#c9a84c)]/50"
         borderColor="border-[var(--theme-accent,#c9a84c)]/10"
       />
 
@@ -163,7 +163,7 @@ export default function RoyalGold({ payload, audioController }) {
         sectionBg="bg-[var(--theme-bg,#0a0a0f)]"
         titleFont={bodyFont.className}
         accentText="text-[var(--theme-text,#e8d5a8)]"
-        subtitleText="text-[var(--theme-accent,#c9a84c)]/60"
+        subtitleText="text-[var(--theme-text,#c9a84c)]/60"
         borderColor="border-[var(--theme-accent,#c9a84c)]"
       />
 
@@ -174,7 +174,7 @@ export default function RoyalGold({ payload, audioController }) {
           <p className="text-xl italic leading-relaxed text-[var(--theme-text,#e8d5a8)]/70">
             &quot;{invitation.quotes}&quot;
           </p>
-          {invitation.quotes_name && <p className="text-[10px] text-[var(--theme-accent,#c9a84c)]/60 tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
+          {invitation.quotes_name && <p className="text-[10px] text-[var(--theme-text,#c9a84c)]/60 tracking-widest uppercase mt-4">{invitation.quotes_name}</p>}
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-[#c9a84c]/50 to-transparent mx-auto mt-8"></div>
         </section>
       )}
@@ -183,11 +183,11 @@ export default function RoyalGold({ payload, audioController }) {
       <div id="events"></div>
       <section className="px-6 py-20 reveal">
         <div className="max-w-3xl mx-auto text-center">
-          <p className={`${displayFont.className} text-[10px] tracking-[0.5em] uppercase text-[var(--theme-accent,#c9a84c)]/60 mb-10`}>Save The Date</p>
+          <p className={`${displayFont.className} text-[10px] tracking-[0.5em] uppercase text-[var(--theme-text,#c9a84c)]/60 mb-10`}>Save The Date</p>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-[#121218] rounded-2xl p-8 border border-[var(--theme-accent,#c9a84c)]/10">
-              <svg className="w-8 h-8 mx-auto text-[var(--theme-accent,#c9a84c)] mb-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
+              <svg className="w-8 h-8 mx-auto text-[var(--theme-text,#c9a84c)] mb-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg>
               <h3 className={`${displayFont.className} text-lg text-[#d4b96a] tracking-wider mb-3`}>Waktu</h3>
               <p className="text-[var(--theme-text,#e8d5a8)]/50 text-sm">
                 {new Date(invitation.event_date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
@@ -195,13 +195,13 @@ export default function RoyalGold({ payload, audioController }) {
               {invitation.event_time && <p className="text-[var(--theme-text,#e8d5a8)]/50 text-sm mt-1">{invitation.event_time} WIB</p>}
             </div>
             <div className="bg-[#121218] rounded-2xl p-8 border border-[var(--theme-accent,#c9a84c)]/10">
-              <svg className="w-8 h-8 mx-auto text-[var(--theme-accent,#c9a84c)] mb-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
+              <svg className="w-8 h-8 mx-auto text-[var(--theme-text,#c9a84c)] mb-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
               <h3 className={`${displayFont.className} text-lg text-[#d4b96a] tracking-wider mb-3`}>Lokasi</h3>
               <p className="text-[var(--theme-text,#e8d5a8)]/50 text-sm">{invitation.location}</p>
               {getMapUrl(invitation) && (
                 <MapLocationButton
                   item={invitation}
-                  className="inline-flex items-center gap-1 text-[var(--theme-accent,#c9a84c)] text-xs mt-3 hover:text-[#d4b96a] transition-colors w-fit mx-auto"
+                  className="inline-flex items-center gap-1 text-[var(--theme-text,#c9a84c)] text-xs mt-3 hover:text-[#d4b96a] transition-colors w-fit mx-auto"
                   buttonText="Buka Maps"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
@@ -245,7 +245,7 @@ export default function RoyalGold({ payload, audioController }) {
         btnBg="bg-[var(--theme-accent,#c9a84c)] text-[#0a0a0f]"
         btnHoverBg="hover:bg-[#d4b96a]"
         btnBorder="border-[var(--theme-accent,#c9a84c)]/20"
-        iconBg="text-[var(--theme-accent,#c9a84c)]"
+        iconBg="text-[var(--theme-text,#c9a84c)]"
       />
 
       {/* Love Story Timeline */}
@@ -337,7 +337,7 @@ export default function RoyalGold({ payload, audioController }) {
       <BottomNav 
         navBg="bg-[var(--theme-bg,#0a0a0f)]/95 border-t border-[var(--theme-accent,#c9a84c)]/20 shadow-[0_-4px_20px_rgba(201,168,76,0.1)]"
         navActive="text-[#d4b96a]"
-        navInactive="text-[var(--theme-accent,#c9a84c)]/40 hover:text-[var(--theme-accent,#c9a84c)]/70"
+        navInactive="text-[var(--theme-text,#c9a84c)]/40 hover:text-[var(--theme-text,#c9a84c)]/70"
         navBorder="border-none"
       />
 

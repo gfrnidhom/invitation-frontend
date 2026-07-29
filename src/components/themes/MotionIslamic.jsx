@@ -195,7 +195,7 @@ export default function MotionIslamic({ payload, audioController }) {
             {invitation?.music_url && (
                 <button 
                     onClick={() => audioController?.toggle()}
-                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-[#86968B]/20 flex items-center justify-center text-[var(--theme-accent,#2D3A3A)] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
+                    className={`fixed bottom-6 right-6 z-50 w-12 h-12 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-[#86968B]/20 flex items-center justify-center text-[var(--theme-text,#2D3A3A)] transition-all hover:scale-110 ${audioController?.isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}
                 >
                     {audioController?.isPlaying ? (
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
@@ -373,13 +373,13 @@ export default function MotionIslamic({ payload, audioController }) {
                     <div className="relative z-10 w-full max-w-[360px] mx-auto border-2 border-[#86968B] rounded-t-[250px] rounded-b-[250px] py-16 px-4">
                         <div className="pg-reveal mb-12 mt-4">
                             <img src={ASSETS.bouquet} alt="Bouquet" className="w-48 mx-auto mb-10 drop-shadow-xl hover:scale-105 transition-transform duration-700" />
-                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[var(--theme-accent,#2D3A3A)] leading-none mb-1`}>
+                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[var(--theme-text,#2D3A3A)] leading-none mb-1`}>
                                 We Are
                             </h2>
-                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[var(--theme-accent,#2D3A3A)] leading-none mb-8`}>
+                            <h2 className={`${greatVibes.className} text-[2.5rem] tracking-wide text-[var(--theme-text,#2D3A3A)] leading-none mb-8`}>
                                 Getting Married!
                             </h2>
-                            <p className="text-[11px] leading-[1.8] text-[var(--theme-accent,#2D3A3A)] max-w-[260px] mx-auto font-medium">
+                            <p className="text-[11px] leading-[1.8] text-[var(--theme-text,#2D3A3A)] max-w-[260px] mx-auto font-medium">
                                 Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami:
                             </p>
                         </div>
@@ -394,9 +394,9 @@ export default function MotionIslamic({ payload, audioController }) {
 
                                 <img src={ASSETS.couple2} alt="" className="absolute right-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl" />
                             </div>
-                            <p className={`${greatVibes.className} text-[2.5rem] text-[var(--theme-accent,#2D3A3A)] mb-1 tracking-wide`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[var(--theme-accent,#2D3A3A)] mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
-                            <p className="text-[10px] text-[var(--theme-accent,#2D3A3A)]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
+                            <p className={`${greatVibes.className} text-[2.5rem] text-[var(--theme-text,#2D3A3A)] mb-1 tracking-wide`}>{invitation?.bride_name?.split(' ')[0]}</p>
+                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[var(--theme-text,#2D3A3A)] mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
+                            <p className="text-[10px] text-[var(--theme-text,#2D3A3A)]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                 Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bapak {invitation?.bride_father || '...'} <br/> & Ibu {invitation?.bride_mother || '...'}
                             </p>
                             {invitation?.bride_instagram && (
@@ -408,7 +408,7 @@ export default function MotionIslamic({ payload, audioController }) {
                         </div>
 
                         <div className="flex justify-center my-10 pg-reveal">
-                            <span className={`${greatVibes.className} text-6xl text-[var(--theme-accent,#2D3A3A)] drop-shadow-sm`}>&</span>
+                            <span className={`${greatVibes.className} text-6xl text-[var(--theme-text,#2D3A3A)] drop-shadow-sm`}>&</span>
                         </div>
 
                         <div className="pg-reveal" data-delay="2" style={{ paddingBottom: '2rem' }}>
@@ -421,9 +421,9 @@ export default function MotionIslamic({ payload, audioController }) {
 
                                 <img src={ASSETS.couple1} alt="" className="absolute left-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl scale-x-[-1]" />
                             </div>
-                            <p className={`${greatVibes.className} text-[2.5rem] text-[var(--theme-accent,#2D3A3A)] mb-1 tracking-wide`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[var(--theme-accent,#2D3A3A)] mb-2`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
-                            <p className="text-[10px] text-[var(--theme-accent,#2D3A3A)]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
+                            <p className={`${greatVibes.className} text-[2.5rem] text-[var(--theme-text,#2D3A3A)] mb-1 tracking-wide`}>{invitation?.groom_name?.split(' ')[0]}</p>
+                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[var(--theme-text,#2D3A3A)] mb-2`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
+                            <p className="text-[10px] text-[var(--theme-text,#2D3A3A)]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                 Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bapak {invitation?.groom_father || '...'} <br/> & Ibu {invitation?.groom_mother || '...'}
                             </p>
                             {invitation?.groom_instagram && (
@@ -575,7 +575,7 @@ export default function MotionIslamic({ payload, audioController }) {
                 {invitation?.gallery && invitation.gallery.length > 0 && (
                     <section className="bg-white py-20 px-8 relative">
                         <div className="text-center mb-12 pg-reveal">
-                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#2D3A3A)] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-text,#2D3A3A)] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
                             <p className="text-sm text-[var(--theme-text,#4A4A4A)]/70">Moments to remember</p>
                         </div>
                         <div className="columns-2 gap-2 max-w-[360px] mx-auto">
@@ -594,7 +594,7 @@ export default function MotionIslamic({ payload, audioController }) {
                     <section className="bg-gradient-to-b from-[#f4f2ec] to-[#FDFBF7] py-24 px-6 relative overflow-hidden">
                         <div className="text-center mb-16 pg-reveal">
                             <p className={`${greatVibes.className} text-2xl text-[#86968B] mb-2`}>Our Journey</p>
-                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#2D3A3A)] font-bold uppercase tracking-widest`}>Love Story</h2>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-text,#2D3A3A)] font-bold uppercase tracking-widest`}>Love Story</h2>
                         </div>
                         
                         <div className="relative max-w-[340px] mx-auto">
@@ -622,7 +622,7 @@ export default function MotionIslamic({ payload, audioController }) {
                                                 </div>
                                             )}
                                             <div className="p-6 text-center">
-                                                <h4 className={`font-serif text-2xl font-bold text-[var(--theme-accent,#2D3A3A)] mb-3 leading-tight`}>{story.title}</h4>
+                                                <h4 className={`font-serif text-2xl font-bold text-[var(--theme-text,#2D3A3A)] mb-3 leading-tight`}>{story.title}</h4>
                                                 <p className="text-xs text-[var(--theme-text,#4A4A4A)]/70 leading-[1.9]">{story.description}</p>
                                             </div>
                                         </div>
@@ -641,7 +641,7 @@ export default function MotionIslamic({ payload, audioController }) {
                 {guest && (
                     <section className="bg-gradient-to-b from-[#FDFBF7] to-[#EBEDE7] py-24 px-8 text-center relative border-y border-[#86968B]/20">
                         <div className="pg-reveal relative z-10">
-                            <h2 className={`font-serif text-4xl text-[var(--theme-accent,#2D3A3A)] font-bold uppercase tracking-widest mb-4 drop-shadow-sm`}>Access Pass</h2>
+                            <h2 className={`font-serif text-4xl text-[var(--theme-text,#2D3A3A)] font-bold uppercase tracking-widest mb-4 drop-shadow-sm`}>Access Pass</h2>
                             <p className="text-xs text-[var(--theme-text,#4A4A4A)]/70 leading-relaxed max-w-[260px] mx-auto mb-10 tracking-widest uppercase">
                                 Please present this pass at the reception
                             </p>
