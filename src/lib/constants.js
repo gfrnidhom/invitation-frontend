@@ -21,14 +21,18 @@ export const APP_CONFIG = {
  * HELPER FUNCTIONS (otomatis menggunakan konfigurasi di atas)
  */
 
-// Mendapatkan URL lengkap untuk live undangan berdasarkan slug
 export const getInvitationUrl = (slug) => {
   if (!slug) return '#';
+  if (typeof window !== 'undefined') {
+    if (window.location.hostname !== APP_CONFIG.DOMAIN) {
+      return `${window.location.origin}/${slug}`;
+    }
+  }
   return `https://${APP_CONFIG.DOMAIN}/${slug}`;
 };
 
 // Mendapatkan URL lengkap untuk halaman preview tema berdasarkan slug tema
 export const getThemePreviewUrl = (slug) => {
   if (!slug) return '#';
-  return `/tema/${slug}`;
+  return `/invitation/preview/${slug}`;
 };
