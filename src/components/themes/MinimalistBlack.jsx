@@ -488,7 +488,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                                         <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)}
                                             className="w-full bg-gray-50 border border-gray-200 rounded-xl px-5 py-3.5 text-sm h-28 resize-none focus:outline-none focus:border-gray-400 transition-colors" placeholder="Tulis ucapan..." />
                                     </div>
-                                    <button type="submit" disabled={submitting} className={`${cinzel.className} w-full bg-[#1a1a1a] text-white py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-black transition-colors disabled:opacity-50`}>
+                                    <button type="submit" disabled={submitting} className={`${cinzel.className} w-full bg-[#1a1a1a] text-[var(--theme-button-text,#ffffff)] py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-black transition-colors disabled:opacity-50`}>
                                         {submitting ? 'Mengirim...' : 'Kirim Ucapan'}
                                     </button>
                                 </form>

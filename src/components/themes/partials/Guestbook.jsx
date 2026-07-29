@@ -62,7 +62,7 @@ export default function Guestbook({ invitation, guestName, guestToken, hideHeade
               <form onSubmit={submitGuestbook} className="mb-10 space-y-3">
                   <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Nama" required className="w-full border-2 border-gray-200 rounded-2xl px-5 py-3.5 text-sm font-body focus:border-gray-900 outline-none transition-colors" />
                   <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Tulis ucapan..." rows="3" required className="w-full border-2 border-gray-200 rounded-2xl px-5 py-3.5 text-sm font-body focus:border-gray-900 outline-none transition-colors resize-none"></textarea>
-                  <button type="submit" disabled={loading} className="w-full bg-gray-900 text-white py-3.5 rounded-2xl font-heading text-sm font-semibold hover:bg-gray-700 transition-colors disabled:opacity-50">
+                  <button type="submit" disabled={loading} className="w-full bg-gray-900 text-[var(--theme-button-text,#ffffff)] py-3.5 rounded-2xl font-heading text-sm font-semibold hover:bg-gray-700 transition-colors disabled:opacity-50">
                       {loading ? 'Mengirim...' : 'Kirim Ucapan'}
                   </button>
               </form>

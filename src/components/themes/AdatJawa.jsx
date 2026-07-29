@@ -302,7 +302,7 @@ export default function AdatJawa({ payload, audioController }) {
                             <p className={`font-serif text-2xl text-white font-bold mb-8 tracking-wider`}>{guestName}</p>
                         )}
 
-                        <button onClick={handleOpen} className="bg-[#D8B67D] hover:bg-[#c9a76f] text-[#0C0B0A] px-10 py-3.5 rounded text-[11px] font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-[0_0_20px_rgba(216,182,125,0.3)] inline-flex items-center gap-3 relative overflow-hidden group">
+                        <button onClick={handleOpen} className="bg-[#D8B67D] hover:bg-[#c9a76f] text-[var(--theme-button-text,#0C0)] px-10 py-3.5 rounded text-[11px] font-bold uppercase tracking-[0.2em] transition-all duration-300 shadow-[0_0_20px_rgba(216,182,125,0.3)] inline-flex items-center gap-3 relative overflow-hidden group">
                            <span className="relative z-10 flex items-center gap-3">
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" /></svg>
                                 Buka Undangan
@@ -621,7 +621,7 @@ export default function AdatJawa({ payload, audioController }) {
                             Saksikan momen sakral kami secara virtual melalui tautan siaran langsung berikut.
                         </p>
                         <a href={invitation?.live_streaming_link?.trim() || invitation?.live_stream_url?.trim() || '#'} target="_blank" rel="noreferrer"
-                            className="bg-[#D8B67D] text-[#0C0B0A] py-3 px-8 rounded-sm text-[10px] font-bold tracking-[0.2em] uppercase inline-flex items-center gap-2 transition-colors hover:bg-white">
+                            className="bg-[#D8B67D] text-[var(--theme-button-text,#0C0)] py-3 px-8 rounded-sm text-[10px] font-bold tracking-[0.2em] uppercase inline-flex items-center gap-2 transition-colors hover:bg-white">
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
                             Gabung Siaran
                         </a>

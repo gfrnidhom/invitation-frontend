@@ -95,7 +95,7 @@ export default function MonoChromeIV({ payload, audioController }) {
                         <h1 className={`${italiana.className} text-6xl md:text-8xl lg:text-[9rem] text-[var(--theme-text,#e4e4e7)] mb-6 leading-[.9]`}>{invitation?.bride_name?.split(' ')[0]}</h1>
                         <p className={`${spaceGrotesk.className} text-[10px] stl tracking-[.4em] uppercase mb-10 font-light`}>{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
                         {guestName&&<div className="mb-8"><p className={`${spaceGrotesk.className} text-[9px] text-[var(--theme-text,#e4e4e7)]/15 uppercase tracking-[.3em] mb-1 font-medium`}>Kepada Yth.</p><p className={`${italiana.className} text-2xl stl`}>{guestName}</p></div>}
-                        <button onClick={ho} className={`${spaceGrotesk.className} border border-[var(--theme-accent,#a1a1aa)]/25 px-10 py-4 text-[10px] tracking-[.4em] uppercase stl font-medium hover:bg-[#e4e4e7] hover:text-[#18181b] hover:border-[#e4e4e7] transition-all duration-500`}>Buka Undangan</button>
+                        <button onClick={ho} className={`${spaceGrotesk.className} border border-[var(--theme-accent,#a1a1aa)]/25 px-10 py-4 text-[10px] tracking-[.4em] uppercase stl font-medium hover:bg-[#e4e4e7] hover:text-[var(--theme-button-text,#181)] hover:border-[#e4e4e7] transition-all duration-500`}>Buka Undangan</button>
                     </div>
                 </div>
             </div>

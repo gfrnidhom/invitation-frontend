@@ -94,7 +94,7 @@ export default function MonoChromeV({ payload, audioController }) {
                         <h1 className={`${bodoni.className} italic text-6xl md:text-8xl lg:text-9xl text-[var(--theme-accent,#f2f2f7)] mb-6`}>{invitation?.bride_name?.split(' ')[0]}</h1>
                         <p className={`${montserrat.className} text-[9px] ch tracking-[.4em] uppercase mb-10 font-light`}>{ed.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
                         {guestName&&<div className="mb-8"><p className={`${montserrat.className} text-[8px] text-[var(--theme-text,#d1d1d6)]/15 uppercase tracking-[.3em] mb-1 font-medium`}>Kepada Yth.</p><p className={`${bodoni.className} italic text-2xl ch`}>{guestName}</p></div>}
-                        <button onClick={ho} className={`${cinzel.className} border border-[#d1d1d6]/15 px-12 py-4 text-[9px] tracking-[.4em] uppercase text-[var(--theme-text,#d1d1d6)]/60 hover:bg-[var(--theme-accent,#f2f2f7)] hover:text-[#1c1c1e] hover:border-[var(--theme-accent,#f2f2f7)] transition-all duration-500`}>Buka Undangan</button>
+                        <button onClick={ho} className={`${cinzel.className} border border-[#d1d1d6]/15 px-12 py-4 text-[9px] tracking-[.4em] uppercase text-[var(--theme-text,#d1d1d6)]/60 hover:bg-[var(--theme-accent,#f2f2f7)] hover:text-[var(--theme-button-text,#1c1)] hover:border-[var(--theme-accent,#f2f2f7)] transition-all duration-500`}>Buka Undangan</button>
                     </div>
                 </div>
             </div>

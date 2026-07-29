@@ -500,7 +500,7 @@ export default function MidnightGold({ payload, audioController }) {
                                         <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)}
                                             className="w-full bg-white/5 gold-border rounded-xl px-5 py-3.5 text-sm text-white h-28 resize-none focus:outline-none focus:border-[var(--theme-accent,#c9a84c)]/50 transition-colors placeholder-white/20" placeholder="Tulis ucapan..." />
                                     </div>
-                                    <button type="submit" disabled={submitting} className={`${playfair.className} w-full bg-[var(--theme-accent,#c9a84c)] text-[#0c1220] py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-[#d4b85c] transition-colors disabled:opacity-50`}>
+                                    <button type="submit" disabled={submitting} className={`${playfair.className} w-full bg-[var(--theme-accent,#c9a84c)] text-[var(--theme-button-text,#0c1)] py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-[#d4b85c] transition-colors disabled:opacity-50`}>
                                         {submitting ? 'Mengirim...' : 'Kirim Ucapan'}
                                     </button>
                                 </form>

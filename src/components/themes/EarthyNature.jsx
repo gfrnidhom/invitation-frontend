@@ -171,7 +171,7 @@ export default function EarthyNature({ payload, audioController }) {
                             </div>
                         )}
 
-                        <button onClick={handleOpen} className={`font-serif border border-[var(--theme-accent,#c67a5c)]/40 px-10 py-4 text-[10px] tracking-[0.3em] uppercase terracotta hover:bg-[var(--theme-accent,#c67a5c)] hover:text-[#2a1e15] transition-all duration-500`}>
+                        <button onClick={handleOpen} className={`font-serif border border-[var(--theme-accent,#c67a5c)]/40 px-10 py-4 text-[10px] tracking-[0.3em] uppercase terracotta hover:bg-[var(--theme-accent,#c67a5c)] hover:text-[var(--theme-button-text,#2a1)] transition-all duration-500`}>
                             Buka Undangan
                         </button>
                     </div>
@@ -374,7 +374,7 @@ export default function EarthyNature({ payload, audioController }) {
                                         <label className={`font-serif block text-[9px] tracking-[0.2em] uppercase text-[#3d2b1f]/40 mb-2 font-bold`}>Ucapan</label>
                                         <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)} className="w-full bg-[var(--theme-bg,#3d2b1f)]/5 border border-[#3d2b1f]/15 rounded-xl px-5 py-3.5 text-sm text-[#3d2b1f] h-28 resize-none focus:outline-none focus:border-[#8a9a5b]/50 transition-colors" placeholder="Tulis ucapan..." />
                                     </div>
-                                    <button type="submit" disabled={submitting} className={`font-serif w-full bg-[#8a9a5b] text-white py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-[#7a8a4b] transition-colors disabled:opacity-50`}>
+                                    <button type="submit" disabled={submitting} className={`font-serif w-full bg-[#8a9a5b] text-[var(--theme-button-text,#ffffff)] py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-[#7a8a4b] transition-colors disabled:opacity-50`}>
                                         {submitting ? 'Mengirim...' : 'Kirim Ucapan'}
                                     </button>
                                 </form>
