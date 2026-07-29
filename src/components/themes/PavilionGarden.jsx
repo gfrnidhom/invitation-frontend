@@ -157,14 +157,14 @@ export default function PavilionGarden({ payload, audioController }) {
     const coverPhoto = (() => {
         const cp = invitation?.cover_photo;
         if (!cp) return null;
-        return getPhoto(Array.isArray(cp) ? cp[0] : cp);
+        return ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(Array.isArray(cp) ? cp[0] : cp);
     })();
 
-    const groomPhoto = getPhoto(invitation?.groom_photo);
-    const bridePhoto = getPhoto(invitation?.bride_photo);
+    const groomPhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.groom_photo);
+    const bridePhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.bride_photo);
 
     return (
-        <div className={`min-h-screen bg-[#FDFBF7] text-[#4A4A4A] ${poppins.className} ${isOpen ? 'overflow-visible' : 'h-[100dvh] overflow-hidden'} pavilion-garden-theme`}>
+        <div className={`min-h-screen bg-[#FDFBF7] text-[#4A4A4A] font-sans ${isOpen ? 'overflow-visible' : 'h-[100dvh] overflow-hidden'} pavilion-garden-theme`}>
             <style dangerouslySetInnerHTML={{ __html: `
                 .pavilion-garden-theme .pg-reveal { opacity: 0; transform: translateY(35px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
                 .pavilion-garden-theme .pg-reveal.active { opacity: 1; transform: translateY(0); }
@@ -224,10 +224,10 @@ export default function PavilionGarden({ payload, audioController }) {
                 
                 <div className="absolute bottom-16 left-16 text-left text-white drop-shadow-lg z-10">
                     <p className={`${greatVibes.className} text-5xl mb-2 text-white/90`}>The Wedding of</p>
-                    <h1 className={`${cormorant.className} text-6xl font-bold uppercase tracking-wider mb-3`}>
+                    <h1 className={`font-serif text-6xl font-bold uppercase tracking-wider mb-3`}>
                         {invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}
                     </h1>
-                    <p className={`${poppins.className} text-sm font-medium tracking-widest capitalize text-white/80`}>
+                    <p className={`font-sans text-sm font-medium tracking-widest capitalize text-white/80`}>
                         {eventDate.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
                     </p>
                 </div>
@@ -257,7 +257,7 @@ export default function PavilionGarden({ payload, audioController }) {
                     {/* TOP: "The Wedding of" + Names */}
                     <div className="relative z-10 text-center px-8 w-full pt-14">
                         <p className={`${greatVibes.className} text-4xl text-white/95 mb-2 drop-shadow-lg`}>The Wedding of</p>
-                        <h1 className={`${cormorant.className} text-4xl font-bold text-white tracking-widest uppercase drop-shadow-lg`}>
+                        <h1 className={`font-serif text-4xl font-bold text-white tracking-widest uppercase drop-shadow-lg`}>
                             {invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}
                         </h1>
                     </div>
@@ -266,7 +266,7 @@ export default function PavilionGarden({ payload, audioController }) {
                     <div className="relative z-10 text-center px-8 w-full pb-14 mt-auto">
                         <p className={`${greatVibes.className} text-xl text-white/90 mb-1 drop-shadow`}>Kepada Yth:</p>
                         {guestName && (
-                            <p className={`${cormorant.className} text-2xl text-white font-bold drop-shadow-lg mb-6`}>{guestName}</p>
+                            <p className={`font-serif text-2xl text-white font-bold drop-shadow-lg mb-6`}>{guestName}</p>
                         )}
 
                         <button onClick={handleOpen} className="bg-[#6b8f71] hover:bg-[#5a7d60] text-white px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 shadow-xl inline-flex items-center gap-2.5 backdrop-blur-sm border border-white/20">
@@ -294,12 +294,12 @@ export default function PavilionGarden({ payload, audioController }) {
                     <div className={`absolute inset-0 bg-black/10 transition-opacity duration-1000 ${isOpen ? 'opacity-100' : 'opacity-0'}`} />
                     
                     <div className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none`}>
-                        <p className={`${cormorant.className} text-[10px] md:text-xs text-[#1a1a1a] tracking-[0.3em] uppercase mb-4 font-medium transition-all duration-1000 delay-300 ease-out ${showMotionText ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+                        <p className={`font-serif text-[10px] md:text-xs text-[#1a1a1a] tracking-[0.3em] uppercase mb-4 font-medium transition-all duration-1000 delay-300 ease-out ${showMotionText ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                             The Wedding Of
                         </p>
                         
                         <div className={`flex flex-col items-center gap-0 mb-6 transition-all duration-1000 delay-500 ease-out ${showMotionText ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'}`}>
-                            <h1 className={`${cormorant.className} text-3xl md:text-4xl text-[#1a1a1a] uppercase tracking-[0.2em] leading-none`}>
+                            <h1 className={`font-serif text-3xl md:text-4xl text-[#1a1a1a] uppercase tracking-[0.2em] leading-none`}>
                                 {invitation?.groom_name?.split(' ')[0]}
                             </h1>
                             
@@ -307,12 +307,12 @@ export default function PavilionGarden({ payload, audioController }) {
                                 &
                             </span>
                             
-                            <h1 className={`${cormorant.className} text-3xl md:text-4xl text-[#1a1a1a] uppercase tracking-[0.2em] leading-none`}>
+                            <h1 className={`font-serif text-3xl md:text-4xl text-[#1a1a1a] uppercase tracking-[0.2em] leading-none`}>
                                 {invitation?.bride_name?.split(' ')[0]}
                             </h1>
                         </div>
 
-                        <p className={`${cormorant.className} text-xs md:text-sm font-bold text-[#1a1a1a] tracking-[0.3em] mb-10 transition-all duration-1000 delay-700 ease-out ${showMotionText ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+                        <p className={`font-serif text-xs md:text-sm font-bold text-[#1a1a1a] tracking-[0.3em] mb-10 transition-all duration-1000 delay-700 ease-out ${showMotionText ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                             {`${String(eventDate.getDate()).padStart(2, '0')} . ${String(eventDate.getMonth() + 1).padStart(2, '0')} . ${String(eventDate.getFullYear()).slice(2)}`}
                         </p>
 
@@ -337,7 +337,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                 {coverPhoto ? (
                                     <img src={coverPhoto} alt="Cover" className="w-full h-full object-cover" />
                                 ) : photos.length > 0 ? (
-                                    <img src={getPhoto(photos[0])} alt="Gallery Cover" className="w-full h-full object-cover" />
+                                    <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(photos[0])} alt="Gallery Cover" className="w-full h-full object-cover" />
                                 ) : (
                                     <div className="w-full h-full bg-[#EBEDE7]" />
                                 )}
@@ -355,9 +355,9 @@ export default function PavilionGarden({ payload, audioController }) {
                 <section className="py-20 px-8 text-center relative overflow-hidden bg-gradient-to-b from-[#FDFBF7] to-[#f4f2ec]">
                     <div className="relative z-10 pg-reveal">
                         <div className="flex justify-center items-center gap-3 mb-6">
-                            <h2 className={`${cormorant.className} text-4xl text-pg-accent uppercase font-bold`}>{invitation?.groom_name?.charAt(0)}</h2>
+                            <h2 className={`font-serif text-4xl text-pg-accent uppercase font-bold`}>{invitation?.groom_name?.charAt(0)}</h2>
                             <span className={`${greatVibes.className} text-3xl text-pg-accent`}>&</span>
-                            <h2 className={`${cormorant.className} text-4xl text-pg-accent uppercase font-bold`}>{invitation?.bride_name?.charAt(0)}</h2>
+                            <h2 className={`font-serif text-4xl text-pg-accent uppercase font-bold`}>{invitation?.bride_name?.charAt(0)}</h2>
                         </div>
                         <p className="text-sm leading-[2] text-[#4A4A4A]/80 italic max-w-[280px] mx-auto">
                             "{invitation?.quotes || 'Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.'}"
@@ -395,7 +395,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                 <img src={ASSETS.couple2} alt="" className="absolute right-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl" />
                             </div>
                             <p className={`${greatVibes.className} text-[2.5rem] text-[#2D3A3A] mb-1 tracking-wide`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                            <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
+                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
                             <p className="text-[10px] text-[#2D3A3A]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                 Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bapak {invitation?.bride_father || '...'} <br/> & Ibu {invitation?.bride_mother || '...'}
                             </p>
@@ -422,7 +422,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                 <img src={ASSETS.couple1} alt="" className="absolute left-[-15%] -bottom-4 w-24 h-auto z-20 pointer-events-none drop-shadow-xl scale-x-[-1]" />
                             </div>
                             <p className={`${greatVibes.className} text-[2.5rem] text-[#2D3A3A] mb-1 tracking-wide`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                            <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
+                            <h3 className={`font-serif text-xl font-bold uppercase tracking-widest text-[#2D3A3A] mb-2`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
                             <p className="text-[10px] text-[#2D3A3A]/80 leading-[1.8] mb-4 font-medium uppercase tracking-widest">
                                 Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bapak {invitation?.groom_father || '...'} <br/> & Ibu {invitation?.groom_mother || '...'}
                             </p>
@@ -452,7 +452,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                 <div className="w-10 h-px bg-[#86968B]/30 mx-auto mb-8" />
                                 <div className="space-y-2">
                                     {tmItems.map((name, i) => (
-                                        <p key={i} className={`${cormorant.className} text-lg text-[#4A4A4A] font-medium`}>{name}</p>
+                                        <p key={i} className={`font-serif text-lg text-[#4A4A4A] font-medium`}>{name}</p>
                                     ))}
                                 </div>
                             </div>
@@ -464,7 +464,7 @@ export default function PavilionGarden({ payload, audioController }) {
                 <section className="py-20 px-8 text-center bg-gradient-to-b from-[#f4f2ec] to-white relative pb-32">
                     <div className="pg-reveal mb-12">
                         <img src={ASSETS.bouquet} alt="Bouquet" className="w-40 mx-auto mb-8 drop-shadow-xl opacity-80" />
-                        <h2 className={`${cormorant.className} text-4xl text-pg-accent font-bold uppercase tracking-widest mb-10`}>Save The Date</h2>
+                        <h2 className={`font-serif text-4xl text-pg-accent font-bold uppercase tracking-widest mb-10`}>Save The Date</h2>
                         
                         <div className="grid grid-cols-4 gap-2 mb-10 max-w-[300px] mx-auto">
                             {[
@@ -474,7 +474,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                 { val: countdown.seconds, label: 'Detik' },
                             ].map((item, i) => (
                                 <div key={i} className="text-center bg-white py-3 rounded-lg shadow-sm border border-black/5">
-                                    <p className={`${cormorant.className} text-2xl font-bold text-pg-accent leading-none`}>{item.val}</p>
+                                    <p className={`font-serif text-2xl font-bold text-pg-accent leading-none`}>{item.val}</p>
                                     <p className="text-[9px] text-[#4A4A4A]/60 tracking-wider uppercase mt-1">{item.label}</p>
                                 </div>
                             ))}
@@ -489,9 +489,9 @@ export default function PavilionGarden({ payload, audioController }) {
                         <div className="space-y-6">
                             {[...invitation.events].sort((a, b) => a.sort_order - b.sort_order).map((event, idx) => (
                                 <div key={idx} className="bg-white rounded-[40px] p-8 shadow-xl border border-[#86968B]/10 pg-reveal mx-auto text-center" data-delay={`${(idx % 3) + 1}`}>
-                                    <h3 className={`${cormorant.className} text-3xl font-bold text-pg-accent mb-6 leading-tight`}>{event.name.split(' ').map((word,i) => <React.Fragment key={i}>{word}<br/></React.Fragment>)}</h3>
+                                    <h3 className={`font-serif text-3xl font-bold text-pg-accent mb-6 leading-tight`}>{event.name.split(' ').map((word,i) => <React.Fragment key={i}>{word}<br/></React.Fragment>)}</h3>
                                     
-                                    <div className={`${cormorant.className} text-[#4A4A4A] font-bold text-lg mb-2 capitalize`}>
+                                    <div className={`font-serif text-[#4A4A4A] font-bold text-lg mb-2 capitalize`}>
                                         {event.date ? new Date(event.date).toLocaleDateString('id-ID', { weekday: 'long' }) : ''} <br/>
                                         <span className="text-2xl mt-1 block">{event.date ? new Date(event.date).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' }) : ''}</span>
                                     </div>
@@ -506,7 +506,7 @@ export default function PavilionGarden({ payload, audioController }) {
 
                                     <div className="space-y-1">
 
-                                        <h4 className={`${cormorant.className} text-xl font-bold text-[#4A4A4A] mb-2`}>{event.location}</h4>
+                                        <h4 className={`font-serif text-xl font-bold text-[#4A4A4A] mb-2`}>{event.location}</h4>
 
                                         <p className="text-[9px] leading-relaxed max-w-[200px] mx-auto opacity-70">
 
@@ -540,7 +540,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                 key={i}
                                 className={`absolute inset-0 transition-all duration-[2000ms] ease-in-out ${i === slideIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
                             >
-                                <img src={getPhoto(photo)} alt={`Slide ${i}`} className="w-full h-full object-cover" />
+                                <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(photo)} alt={`Slide ${i}`} className="w-full h-full object-cover" />
                             </div>
                         ))}
                         
@@ -552,7 +552,7 @@ export default function PavilionGarden({ payload, audioController }) {
                 {(Boolean(invitation?.live_streaming_link?.trim()) || Boolean(invitation?.live_stream_url?.trim())) && (
                 <section className="py-20 px-8 text-center bg-[#FDFBF7]">
                     <div className="pg-reveal">
-                        <h2 className={`${cormorant.className} text-4xl text-pg-accent font-bold uppercase tracking-widest mb-6`}>Live Streaming</h2>
+                        <h2 className={`font-serif text-4xl text-pg-accent font-bold uppercase tracking-widest mb-6`}>Live Streaming</h2>
                         <p className="text-sm leading-relaxed text-[#4A4A4A]/70 max-w-[280px] mx-auto mb-8">
                             Temui kami secara virtual untuk menyaksikan acara pernikahan kami melalui tautan di bawah ini:
                         </p>
@@ -569,14 +569,14 @@ export default function PavilionGarden({ payload, audioController }) {
                 {invitation?.gallery && invitation.gallery.length > 0 && (
                     <section className="bg-white py-20 px-8 relative">
                         <div className="text-center mb-12 pg-reveal">
-                            <h2 className={`${cormorant.className} text-4xl text-[#2D3A3A] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
+                            <h2 className={`font-serif text-4xl text-[#2D3A3A] font-bold uppercase tracking-widest mb-4`}>Gallery</h2>
                             <p className="text-sm text-[#4A4A4A]/70">Moments to remember</p>
                         </div>
                         <div className="columns-2 gap-2 max-w-[360px] mx-auto">
                             {invitation.gallery.map((img, i) => (
                                 <div key={i} className="break-inside-avoid mb-2 rounded-xl overflow-hidden pg-reveal relative group" data-delay={`${(i % 3) + 1}`}>
                                     <div className="absolute inset-0 bg-[#86968B]/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none"></div>
-                                    <img src={getPhoto(img)} className="w-full h-auto object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 align-middle" alt={`Gallery ${i}`} loading="lazy" />
+                                    <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(img)} className="w-full h-auto object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 align-middle" alt={`Gallery ${i}`} loading="lazy" />
                                 </div>
                             ))}
                         </div>
@@ -588,7 +588,7 @@ export default function PavilionGarden({ payload, audioController }) {
                     <section className="bg-gradient-to-b from-[#f4f2ec] to-[#FDFBF7] py-24 px-6 relative overflow-hidden">
                         <div className="text-center mb-16 pg-reveal">
                             <p className={`${greatVibes.className} text-2xl text-[#86968B] mb-2`}>Our Journey</p>
-                            <h2 className={`${cormorant.className} text-4xl text-[#2D3A3A] font-bold uppercase tracking-widest`}>Love Story</h2>
+                            <h2 className={`font-serif text-4xl text-[#2D3A3A] font-bold uppercase tracking-widest`}>Love Story</h2>
                         </div>
                         
                         <div className="relative max-w-[340px] mx-auto">
@@ -609,12 +609,12 @@ export default function PavilionGarden({ payload, audioController }) {
                                     <div className="bg-white/90 backdrop-blur-sm rounded-[1.5rem] overflow-hidden shadow-xl border border-[#86968B]/10 mx-2">
                                         {story.photo && (
                                             <div className="relative w-full h-48 overflow-hidden">
-                                                <img src={getPhoto(story.photo)} alt={story.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                                                <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(story.photo)} alt={story.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                                             </div>
                                         )}
                                         <div className="p-6 text-center">
-                                            <h4 className={`${cormorant.className} text-2xl font-bold text-[#2D3A3A] mb-3 leading-tight`}>{story.title}</h4>
+                                            <h4 className={`font-serif text-2xl font-bold text-[#2D3A3A] mb-3 leading-tight`}>{story.title}</h4>
                                             <p className="text-xs text-[#4A4A4A]/70 leading-[1.9]">{story.description}</p>
                                         </div>
                                     </div>
@@ -632,7 +632,7 @@ export default function PavilionGarden({ payload, audioController }) {
                 {guest && (
                     <section className="bg-gradient-to-b from-[#FDFBF7] to-[#EBEDE7] py-24 px-8 text-center relative border-y border-[#86968B]/20">
                         <div className="pg-reveal relative z-10">
-                            <h2 className={`${cormorant.className} text-4xl text-[#2D3A3A] font-bold uppercase tracking-widest mb-4 drop-shadow-sm`}>Access Pass</h2>
+                            <h2 className={`font-serif text-4xl text-[#2D3A3A] font-bold uppercase tracking-widest mb-4 drop-shadow-sm`}>Access Pass</h2>
                             <p className="text-xs text-[#4A4A4A]/70 leading-relaxed max-w-[260px] mx-auto mb-10 tracking-widest uppercase">
                                 Please present this pass at the reception
                             </p>
@@ -645,7 +645,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                     
                                     <div className="p-8 pb-4">
                                         <div className="flex justify-between items-center mb-6">
-                                            <span className={`${cormorant.className} text-[#86968B] font-bold tracking-[0.2em] uppercase text-xs`}>VIP</span>
+                                            <span className={`font-serif text-[#86968B] font-bold tracking-[0.2em] uppercase text-xs`}>VIP</span>
                                             <span className={`${greatVibes.className} text-[#DCD1BA] text-2xl`}>Admit One</span>
                                         </div>
                                         
@@ -672,7 +672,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                     
                                     <div className="px-6 pt-4 pb-8">
                                         <p className="text-[10px] text-[#86968B] uppercase tracking-[0.3em] font-semibold mb-1">GUEST NAME</p>
-                                        <p className={`${cormorant.className} text-2xl font-bold text-[#DCD1BA] uppercase tracking-wider truncate px-2`}>{guest.name}</p>
+                                        <p className={`font-serif text-2xl font-bold text-[#DCD1BA] uppercase tracking-wider truncate px-2`}>{guest.name}</p>
                                     </div>
                                 </div>
                             </div>
@@ -684,7 +684,7 @@ export default function PavilionGarden({ payload, audioController }) {
                 <section className="bg-white py-20 px-8 text-center relative overflow-hidden">
                     <div className="pg-reveal mb-12">
                         <img src={ASSETS.bouquet} alt="Bouquet" className="w-32 mx-auto mb-6 opacity-60" />
-                        <h2 className={`${cormorant.className} text-4xl text-pg-accent font-bold uppercase tracking-widest mb-4`}>Wedding Gift</h2>
+                        <h2 className={`font-serif text-4xl text-pg-accent font-bold uppercase tracking-widest mb-4`}>Wedding Gift</h2>
                         <p className="text-sm text-[#4A4A4A]/70 leading-relaxed max-w-[280px] mx-auto">
                             Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado secara cashless.
                         </p>
@@ -694,7 +694,7 @@ export default function PavilionGarden({ payload, audioController }) {
                         {invitation?.gift_accounts && invitation.gift_accounts.length > 0 ? (
                             invitation.gift_accounts.map((acc, i) => {
                                 const bankName = acc.bank?.name || acc.bank_name || 'Bank';
-                                const bankLogo = getPhoto(acc.bank?.logo);
+                                const bankLogo = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(acc.bank?.logo);
                                 return (
                                 <div key={acc.id || i} className="pg-reveal" data-delay={`${(i % 3) + 1}`}>
                                     <div className="relative w-full aspect-[1.586/1] rounded-2xl shadow-2xl p-6 flex flex-col justify-between overflow-hidden bg-gradient-to-tr from-[#2D3A3A] via-[#3d4d4d] to-[#2D3A3A] border border-[#86968B]/40">
@@ -711,12 +711,12 @@ export default function PavilionGarden({ payload, audioController }) {
                                             {bankLogo ? (
                                                 <img src={bankLogo} alt={bankName} className="h-10 max-w-[160px] object-contain drop-shadow-md brightness-0 invert opacity-95" />
                                             ) : (
-                                                <span className={`${cormorant.className} text-2xl font-bold text-white uppercase tracking-widest drop-shadow`}>{bankName}</span>
+                                                <span className={`font-serif text-2xl font-bold text-white uppercase tracking-widest drop-shadow`}>{bankName}</span>
                                             )}
                                         </div>
 
                                         <div className="relative z-10 text-left mt-4">
-                                            <p className={`${poppins.className} text-xl tracking-[0.25em] font-medium text-white drop-shadow-md whitespace-nowrap`}>
+                                            <p className={`font-sans text-xl tracking-[0.25em] font-medium text-white drop-shadow-md whitespace-nowrap`}>
                                                 {String(acc.account_number).match(/.{1,4}/g)?.join(' ') || acc.account_number}
                                             </p>
                                         </div>
@@ -724,7 +724,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                         <div className="flex justify-between items-end relative z-10">
                                             <div className="text-left w-full">
                                                 <p className="text-[8px] text-white/50 uppercase tracking-[0.2em] mb-1">Card Holder</p>
-                                                <p className={`${poppins.className} text-sm text-white uppercase tracking-widest font-semibold drop-shadow truncate pr-2`}>{acc.account_holder}</p>
+                                                <p className={`font-sans text-sm text-white uppercase tracking-widest font-semibold drop-shadow truncate pr-2`}>{acc.account_holder}</p>
                                             </div>
                                             <div className="text-right flex-shrink-0">
                                                 <div className="flex -space-x-3 opacity-80">
@@ -752,7 +752,7 @@ export default function PavilionGarden({ payload, audioController }) {
                 {/* ── Section 9: Wishes ── */}
                 <section className="bg-gradient-to-b from-white to-[#f4f2ec] py-20 px-8 relative">
                     <div className="text-center mb-10 pg-reveal">
-                        <h2 className={`${cormorant.className} text-4xl text-pg-accent font-bold uppercase tracking-widest mb-4`}>Kirim Ucapan</h2>
+                        <h2 className={`font-serif text-4xl text-pg-accent font-bold uppercase tracking-widest mb-4`}>Kirim Ucapan</h2>
                         <p className="text-sm text-[#4A4A4A]/70">Tuliskan doa & ucapan untuk kedua mempelai</p>
                     </div>
 
@@ -776,7 +776,7 @@ export default function PavilionGarden({ payload, audioController }) {
                             <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 pg-reveal" data-delay="2">
                                 {wishes.map((w, i) => (
                                     <div key={i} className="bg-white rounded-xl p-4 shadow-sm border border-black/5">
-                                        <p className={`${cormorant.className} text-lg font-bold text-pg-accent mb-0 leading-none`}>{w.name}</p>
+                                        <p className={`font-serif text-lg font-bold text-pg-accent mb-0 leading-none`}>{w.name}</p>
                                         <p className="text-[10px] text-[#4A4A4A]/40 mb-2">{new Date(w.created_at).toLocaleDateString('id-ID')}</p>
                                         <p className="text-xs text-[#4A4A4A]/80 leading-relaxed">{w.message}</p>
                                     </div>
@@ -791,7 +791,7 @@ export default function PavilionGarden({ payload, audioController }) {
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
-                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                            <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
                             <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
@@ -804,7 +804,7 @@ export default function PavilionGarden({ payload, audioController }) {
                     
                     {/* Content Layer */}
                     <div className="relative z-10 pt-10">
-                        <p className={`${poppins.className} text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                        <p className={`font-sans text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
                             Thank you for being part of our special day
                         </p>
                         <h2 className={`${greatVibes.className} text-5xl mb-4 text-white drop-shadow-sm`}>
@@ -815,7 +815,7 @@ export default function PavilionGarden({ payload, audioController }) {
                         <div className="border-t border-white/10 pt-8 mt-12">
                             <p className="text-[9px] text-white/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
                             <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-white/80 hover:text-white transition-colors">
-                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                                <span className={`font-serif text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
                             </a>
                             <p className="text-[8px] text-white/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>

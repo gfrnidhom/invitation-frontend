@@ -145,11 +145,11 @@ export default function MinimalistBlack({ payload, audioController }) {
     const coverPhoto = (() => {
         const cp = invitation?.cover_photo;
         if (!cp) return null;
-        return getPhoto(Array.isArray(cp) ? cp[0] : cp);
+        return ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(Array.isArray(cp) ? cp[0] : cp);
     })();
 
-    const groomPhoto = getPhoto(invitation?.groom_photo);
-    const bridePhoto = getPhoto(invitation?.bride_photo);
+    const groomPhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.groom_photo);
+    const bridePhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.bride_photo);
     const photos = invitation?.gallery?.length > 0 ? invitation.gallery.map(g => g.photo) : (invitation?.photos || []);
 
     return (
@@ -294,7 +294,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                                 <div className="flex gap-3 mb-10 overflow-x-auto scrollbar-hide">
                                     {photos.slice(0, 3).map((p, i) => (
                                         <div key={i} className="flex-none w-28 h-36 rounded-xl overflow-hidden">
-                                            <img src={getPhoto(p)} alt={`Preview ${i}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                                            <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(p)} alt={`Preview ${i}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
                                         </div>
                                     ))}
                                 </div>
@@ -445,7 +445,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                                         <p className="text-sm text-gray-600 leading-relaxed">{story.description}</p>
                                         {story.photo && (
                                             <div className="mt-6 rounded-xl overflow-hidden">
-                                                <img src={getPhoto(story.photo)} alt={story.title} className="w-full h-44 object-cover" />
+                                                <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(story.photo)} alt={story.title} className="w-full h-44 object-cover" />
                                             </div>
                                         )}
                                     </div>
@@ -531,7 +531,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
-                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                            <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
                             <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
@@ -555,7 +555,7 @@ export default function MinimalistBlack({ payload, audioController }) {
                         <div className="border-t border-white/10 pt-8 mt-12">
                             <p className="text-[9px] text-white/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
                             <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-white/80 hover:text-white transition-colors">
-                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                                <span className={`font-serif text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
                             </a>
                             <p className="text-[8px] text-white/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>

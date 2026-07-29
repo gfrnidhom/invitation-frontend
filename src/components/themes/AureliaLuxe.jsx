@@ -110,9 +110,9 @@ export default function AureliaLuxe({ payload, audioController }) {
     const yearNum = eventDate.toLocaleDateString('en-US', { year: '2-digit' });
     
     const photos = invitation?.photos || [];
-    const coverPhoto = getPhoto(invitation?.cover_photo) || getPhoto(photos[0]);
-    const groomPhoto = getPhoto(invitation?.groom_photo);
-    const bridePhoto = getPhoto(invitation?.bride_photo);
+    const coverPhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.cover_photo) || ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(photos[0]);
+    const groomPhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.groom_photo);
+    const bridePhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.bride_photo);
 
     return (
         <div className={`min-h-screen bg-white text-gray-900 ${inter.className} overflow-x-hidden relative modern-monochrome`}>
@@ -375,7 +375,7 @@ export default function AureliaLuxe({ payload, audioController }) {
                                    </div>
                                    <div className="w-full md:w-1/2">
                                        {story.photo ? (
-                                           <img src={getPhoto(story.photo)} alt={story.title} className="w-full h-80 object-cover filter grayscale contrast-125 hover:grayscale-0 transition-all duration-700" />
+                                           <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(story.photo)} alt={story.title} className="w-full h-80 object-cover filter grayscale contrast-125 hover:grayscale-0 transition-all duration-700" />
                                        ) : (
                                            <div className="w-full h-80 bg-gray-200 border border-gray-300" />
                                        )}
@@ -390,8 +390,8 @@ export default function AureliaLuxe({ payload, audioController }) {
                                     <p className="text-xs text-gray-500 leading-loose text-justify">It was a casual evening when our eyes first locked across a crowded room. Little did we know that simple moment would spark a lifelong journey of love, laughter, and endless conversations.</p>
                                 </div>
                                 <div className="w-full md:w-1/2">
-                                    {getPhoto(photos[1]) ? (
-                                        <img src={getPhoto(photos[1])} className="w-full h-80 object-cover filter grayscale contrast-125" alt="Story placeholder"/>
+                                    {((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(photos[1]) ? (
+                                        <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(photos[1])} className="w-full h-80 object-cover filter grayscale contrast-125" alt="Story placeholder"/>
                                     ) : (
                                         <div className="w-full h-80 bg-gray-200 border border-gray-300" />
                                     )}
@@ -500,7 +500,7 @@ export default function AureliaLuxe({ payload, audioController }) {
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
-                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                            <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
                             <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
@@ -513,10 +513,10 @@ export default function AureliaLuxe({ payload, audioController }) {
                     
                     {/* Content Layer */}
                     <div className="relative z-10 pt-10">
-                        <p className={`${poppins.className} text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                        <p className={`font-sans text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
                             Thank you for being part of our special day
                         </p>
-                        <h2 className={`${cormorant.className} text-5xl mb-4 text-gray-400 drop-shadow-sm`}>
+                        <h2 className={`font-serif text-5xl mb-4 text-gray-400 drop-shadow-sm`}>
                             {invitation?.groom_name?.split(' ')[0]} <span className="text-black/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
                         </h2>
                         
@@ -524,7 +524,7 @@ export default function AureliaLuxe({ payload, audioController }) {
                         <div className="border-t border-gray-400/10 pt-8 mt-12">
                             <p className="text-[9px] text-gray-400/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
                             <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-black/80 hover:text-black transition-colors">
-                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                                <span className={`font-serif text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
                             </a>
                             <p className="text-[8px] text-gray-400/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>

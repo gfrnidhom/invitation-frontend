@@ -232,7 +232,7 @@ export default function MonoChromeIII({ payload, audioController }) {
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
-                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                            <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
                             <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
@@ -248,7 +248,7 @@ export default function MonoChromeIII({ payload, audioController }) {
                         <p className={`${dmSans.className} text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
                             Thank you for being part of our special day
                         </p>
-                        <h2 className={`${cormorant.className} text-5xl mb-4 text-[#1a1a1a] drop-shadow-sm`}>
+                        <h2 className={`font-serif text-5xl mb-4 text-[#1a1a1a] drop-shadow-sm`}>
                             {invitation?.groom_name?.split(' ')[0]} <span className="text-black/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
                         </h2>
                         
@@ -256,7 +256,7 @@ export default function MonoChromeIII({ payload, audioController }) {
                         <div className="border-t border-[#1a1a1a]/10 pt-8 mt-12">
                             <p className="text-[9px] text-[#1a1a1a]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
                             <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-black/80 hover:text-black transition-colors">
-                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                                <span className={`font-serif text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
                             </a>
                             <p className="text-[8px] text-[#1a1a1a]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>

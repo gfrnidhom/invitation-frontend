@@ -144,11 +144,11 @@ export default function MinimalistNavy({ payload, audioController }) {
     const coverPhoto = (() => {
         const cp = invitation?.cover_photo;
         if (!cp) return null;
-        return getPhoto(Array.isArray(cp) ? cp[0] : cp);
+        return ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(Array.isArray(cp) ? cp[0] : cp);
     })();
 
-    const groomPhoto = getPhoto(invitation?.groom_photo);
-    const bridePhoto = getPhoto(invitation?.bride_photo);
+    const groomPhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.groom_photo);
+    const bridePhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.bride_photo);
     const photos = invitation?.gallery?.length > 0 ? invitation.gallery.map(g => g.photo) : (invitation?.photos || []);
 
     // Circular text for spinning animation
@@ -341,7 +341,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                             <div className="flex gap-3 mt-10 w-full overflow-x-auto pb-4 px-4 navy-scrollbar mn-reveal">
                                 {photos.slice(0, 4).map((p, i) => (
                                     <div key={i} className="flex-none w-28 h-36 rounded-xl overflow-hidden shadow-2xl">
-                                        <img src={getPhoto(p)} alt={`Photo ${i}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
+                                        <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(p)} alt={`Photo ${i}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
                                     </div>
                                 ))}
                             </div>
@@ -477,7 +477,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                                         <p className="text-sm text-white/50 leading-relaxed">{story.description}</p>
                                         {story.photo && (
                                             <div className="mt-6 rounded-xl overflow-hidden shadow-xl">
-                                                <img src={getPhoto(story.photo)} alt={story.title} className="w-full h-40 object-cover" />
+                                                <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(story.photo)} alt={story.title} className="w-full h-40 object-cover" />
                                             </div>
                                         )}
                                     </div>
@@ -559,7 +559,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
-                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                            <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
                             <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
@@ -572,7 +572,7 @@ export default function MinimalistNavy({ payload, audioController }) {
                     
                     {/* Content Layer */}
                     <div className="relative z-10 pt-10">
-                        <p className={`${poppins.className} text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                        <p className={`font-sans text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
                             Thank you for being part of our special day
                         </p>
                         <h2 className={`${greatVibes.className} text-5xl mb-4 text-white drop-shadow-sm`}>

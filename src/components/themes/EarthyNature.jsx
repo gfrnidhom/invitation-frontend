@@ -107,9 +107,9 @@ export default function EarthyNature({ payload, audioController }) {
         } catch { toast.error('Gagal mengirim ucapan'); } finally { setSubmitting(false); }
     };
 
-    const coverPhoto = (() => { const cp = invitation?.cover_photo; if (!cp) return null; return getPhoto(Array.isArray(cp) ? cp[0] : cp); })();
-    const groomPhoto = getPhoto(invitation?.groom_photo);
-    const bridePhoto = getPhoto(invitation?.bride_photo);
+    const coverPhoto = (() => { const cp = invitation?.cover_photo; if (!cp) return null; return ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(Array.isArray(cp) ? cp[0] : cp); })();
+    const groomPhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.groom_photo);
+    const bridePhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.bride_photo);
     const photos = invitation?.gallery?.length > 0 ? invitation.gallery.map(g => g.photo) : (invitation?.photos || []);
 
     return (
@@ -156,7 +156,7 @@ export default function EarthyNature({ payload, audioController }) {
                     <div className="relative z-10 text-center px-6 flex flex-col items-center">
                         {/* Leaf icon */}
                         <svg className="w-10 h-10 sage mb-6 opacity-60" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg>
-                        <p className={`${cormorant.className} text-[11px] tracking-[0.5em] uppercase text-[#c67a5c]/70 mb-4`}>The Wedding Of</p>
+                        <p className={`font-serif text-[11px] tracking-[0.5em] uppercase text-[#c67a5c]/70 mb-4`}>The Wedding Of</p>
                         <h1 className={`${sacramento.className} text-6xl md:text-8xl lg:text-9xl text-[#f5f1eb] mb-4`}>
                             {invitation?.groom_name?.split(' ')[0]} <span className="terracotta">&</span> {invitation?.bride_name?.split(' ')[0]}
                         </h1>
@@ -171,7 +171,7 @@ export default function EarthyNature({ payload, audioController }) {
                             </div>
                         )}
 
-                        <button onClick={handleOpen} className={`${cormorant.className} border border-[#c67a5c]/40 px-10 py-4 text-[10px] tracking-[0.3em] uppercase terracotta hover:bg-[#c67a5c] hover:text-[#2a1e15] transition-all duration-500`}>
+                        <button onClick={handleOpen} className={`font-serif border border-[#c67a5c]/40 px-10 py-4 text-[10px] tracking-[0.3em] uppercase terracotta hover:bg-[#c67a5c] hover:text-[#2a1e15] transition-all duration-500`}>
                             Buka Undangan
                         </button>
                     </div>
@@ -190,7 +190,7 @@ export default function EarthyNature({ payload, audioController }) {
 
                         <div className="relative z-10">
                             <svg className="w-8 h-8 sage mb-4 opacity-50" fill="currentColor" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg>
-                            <p className={`${cormorant.className} text-[10px] tracking-[0.4em] uppercase text-[#8a9a5b]/60 mb-6`}>Our Wedding</p>
+                            <p className={`font-serif text-[10px] tracking-[0.4em] uppercase text-[#8a9a5b]/60 mb-6`}>Our Wedding</p>
                             <h1 className={`${sacramento.className} text-6xl md:text-7xl lg:text-8xl text-[#f5f1eb] leading-[1.1] mb-8`}>
                                 {invitation?.groom_name?.split(' ')[0]} <span className="terracotta opacity-60">&</span> {invitation?.bride_name?.split(' ')[0]}
                             </h1>
@@ -216,8 +216,8 @@ export default function EarthyNature({ payload, audioController }) {
 
                         {/* Countdown */}
                         <section className="py-20 px-8 text-center en-reveal">
-                            <p className={`${cormorant.className} text-[10px] tracking-[0.4em] uppercase text-[#c67a5c]/50 mb-4`}>Save The Date</p>
-                            <h2 className={`${cormorant.className} text-3xl font-bold tracking-wider text-[#f5f1eb] mb-2`}>
+                            <p className={`font-serif text-[10px] tracking-[0.4em] uppercase text-[#c67a5c]/50 mb-4`}>Save The Date</p>
+                            <h2 className={`font-serif text-3xl font-bold tracking-wider text-[#f5f1eb] mb-2`}>
                                 {invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}
                             </h2>
                             <p className="text-xs text-[#f5f1eb]/30 mb-10">
@@ -226,7 +226,7 @@ export default function EarthyNature({ payload, audioController }) {
                             <div className="grid grid-cols-4 gap-3 max-w-sm mx-auto mb-12">
                                 {[{ val: countdown.days, label: 'Hari' }, { val: countdown.hours, label: 'Jam' }, { val: countdown.minutes, label: 'Menit' }, { val: countdown.seconds, label: 'Detik' }].map((item, i) => (
                                     <div key={i} className="earthy-card rounded-2xl py-4 px-2">
-                                        <p className={`${cormorant.className} text-2xl font-bold terracotta`}>{item.val}</p>
+                                        <p className={`font-serif text-2xl font-bold terracotta`}>{item.val}</p>
                                         <p className="text-[9px] uppercase tracking-widest text-[#f5f1eb]/20 mt-1">{item.label}</p>
                                     </div>
                                 ))}
@@ -247,7 +247,7 @@ export default function EarthyNature({ payload, audioController }) {
                         {/* BRIDE & GROOM — Circular overlapping */}
                         <section className="px-8 pb-20">
                             <div className="text-center mb-12 en-reveal">
-                                <h2 className={`${cormorant.className} text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Bride & Groom</h2>
+                                <h2 className={`font-serif text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Bride & Groom</h2>
                                 <p className="text-xs text-[#f5f1eb]/25 mt-2">Assalamualaikum Wr. Wb.</p>
                                 <p className="text-xs text-[#f5f1eb]/35 mt-3 max-w-md mx-auto leading-relaxed">Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:</p>
                             </div>
@@ -260,7 +260,7 @@ export default function EarthyNature({ payload, audioController }) {
                                     </div>
                                 )}
                                 <p className={`${sacramento.className} text-3xl text-[#c67a5c] mb-1`}>{invitation?.bride_name?.split(' ')[0]}</p>
-                                <h3 className={`${cormorant.className} text-xl font-bold tracking-wider text-[#3d2b1f] mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
+                                <h3 className={`font-serif text-xl font-bold tracking-wider text-[#3d2b1f] mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
                                 <p className="text-sm text-[#3d2b1f]/50">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari</p>
                                 <p className="text-sm text-[#3d2b1f]/70 font-medium">{invitation?.bride_father || 'Bapak'} & {invitation?.bride_mother || 'Ibu'}</p>
                                 {invitation?.bride_instagram && (
@@ -281,7 +281,7 @@ export default function EarthyNature({ payload, audioController }) {
                                     </div>
                                 )}
                                 <p className={`${sacramento.className} text-3xl text-[#c67a5c] mb-1`}>{invitation?.groom_name?.split(' ')[0]}</p>
-                                <h3 className={`${cormorant.className} text-xl font-bold tracking-wider text-[#3d2b1f] mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
+                                <h3 className={`font-serif text-xl font-bold tracking-wider text-[#3d2b1f] mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
                                 <p className="text-sm text-[#3d2b1f]/50">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari</p>
                                 <p className="text-sm text-[#3d2b1f]/70 font-medium">{invitation?.groom_father || 'Bapak'} & {invitation?.groom_mother || 'Ibu'}</p>
                                 {invitation?.groom_instagram && (
@@ -296,20 +296,20 @@ export default function EarthyNature({ payload, audioController }) {
                         {/* Events */}
                         <section className="px-8 pb-20">
                             <div className="text-center mb-12 en-reveal">
-                                <h2 className={`${cormorant.className} text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
+                                <h2 className={`font-serif text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
                                 <p className={`${sacramento.className} text-4xl terracotta -mt-1`}>Event</p>
                             </div>
                             {invitation?.events && invitation.events.length > 0 ? (
                                 [...invitation.events].sort((a,b) => (a.sort_order||0) - (b.sort_order||0)).map((event, idx) => (
                                     <div key={idx} className="cream-card rounded-3xl p-8 mb-6 text-center en-reveal" data-delay={`${idx+1}`}>
-                                        <h3 className={`${cormorant.className} text-xl font-bold tracking-[0.15em] uppercase text-[#3d2b1f] mb-4`}>{event.name}</h3>
+                                        <h3 className={`font-serif text-xl font-bold tracking-[0.15em] uppercase text-[#3d2b1f] mb-4`}>{event.name}</h3>
                                         <p className="text-sm text-[#3d2b1f]/50 mb-1">{event.date ? new Date(event.date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) : ''}</p>
                                         <p className="text-sm text-[#3d2b1f]/50 mb-3">Pukul : {event.time_start?.substring(0, 5) || 'TBA'} {event.time_end ? `- ${event.time_end.substring(0, 5)}` : '- Selesai'} WIB</p>
                                         {event.location && <p className="text-sm text-[#3d2b1f]/60 font-medium pt-3 border-t border-[#3d2b1f]/10">{event.location}</p>}
                                         {getMapUrl(event) && (
                                             <MapLocationButton
                                                 item={event}
-                                                className={`${cormorant.className} inline-flex items-center gap-2 border border-[#8a9a5b]/40 px-6 py-3 text-[10px] tracking-[0.2em] uppercase text-[#8a9a5b] hover:bg-[#8a9a5b] hover:text-white transition-all duration-500 mt-4 rounded-lg`}
+                                                className={`font-serif inline-flex items-center gap-2 border border-[#8a9a5b]/40 px-6 py-3 text-[10px] tracking-[0.2em] uppercase text-[#8a9a5b] hover:bg-[#8a9a5b] hover:text-white transition-all duration-500 mt-4 rounded-lg`}
                                                 buttonText="Lihat Lokasi"
                                             >
                                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>
@@ -320,7 +320,7 @@ export default function EarthyNature({ payload, audioController }) {
                                 ))
                             ) : (
                                 <div className="cream-card rounded-3xl p-10 text-center">
-                                    <h3 className={`${cormorant.className} text-xl font-bold tracking-wider text-[#3d2b1f] mb-2`}>Acara Pernikahan</h3>
+                                    <h3 className={`font-serif text-xl font-bold tracking-wider text-[#3d2b1f] mb-2`}>Acara Pernikahan</h3>
                                     <p className="text-sm text-[#3d2b1f]/40">{eventDate.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p>
                                 </div>
                             )}
@@ -330,14 +330,14 @@ export default function EarthyNature({ payload, audioController }) {
                         {invitation?.love_stories && invitation.love_stories.length > 0 && (
                             <section className="px-8 pb-20">
                                 <div className="text-center mb-12 en-reveal">
-                                    <h2 className={`${cormorant.className} text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Our</h2>
+                                    <h2 className={`font-serif text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Our</h2>
                                     <p className={`${sacramento.className} text-4xl terracotta -mt-1`}>Love Story</p>
                                 </div>
                                 {[...invitation.love_stories].sort((a,b) => (a.sort_order||0) - (b.sort_order||0)).map((story, i) => (
                                     <div key={story.id || i} className="cream-card rounded-3xl p-8 text-center mb-6 en-reveal" data-delay={`${i+1}`}>
-                                        <h3 className={`${cormorant.className} text-lg font-bold tracking-[0.15em] uppercase text-[#3d2b1f] mb-4`}>{story.title}</h3>
+                                        <h3 className={`font-serif text-lg font-bold tracking-[0.15em] uppercase text-[#3d2b1f] mb-4`}>{story.title}</h3>
                                         <p className="text-sm text-[#3d2b1f]/60 leading-relaxed">{story.description}</p>
-                                        {story.photo && <div className="mt-6 rounded-xl overflow-hidden"><img src={getPhoto(story.photo)} alt={story.title} className="w-full h-44 object-cover" /></div>}
+                                        {story.photo && <div className="mt-6 rounded-xl overflow-hidden"><img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(story.photo)} alt={story.title} className="w-full h-44 object-cover" /></div>}
                                     </div>
                                 ))}
                             </section>
@@ -361,20 +361,20 @@ export default function EarthyNature({ payload, audioController }) {
                         {/* Wishes */}
                         <section className="px-8 pb-20 en-reveal">
                             <div className="text-center mb-12">
-                                <h2 className={`${cormorant.className} text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
+                                <h2 className={`font-serif text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
                                 <p className={`${sacramento.className} text-4xl terracotta -mt-1`}>Wishes</p>
                             </div>
                             <div className="cream-card rounded-3xl p-8">
                                 <form onSubmit={submitWish} className="space-y-4">
                                     <div>
-                                        <label className={`${cormorant.className} block text-[9px] tracking-[0.2em] uppercase text-[#3d2b1f]/40 mb-2 font-bold`}>Nama</label>
+                                        <label className={`font-serif block text-[9px] tracking-[0.2em] uppercase text-[#3d2b1f]/40 mb-2 font-bold`}>Nama</label>
                                         <input type="text" value={nameInput} onChange={e => setNameInput(e.target.value)} className="w-full bg-[#3d2b1f]/5 border border-[#3d2b1f]/15 rounded-xl px-5 py-3.5 text-sm text-[#3d2b1f] focus:outline-none focus:border-[#8a9a5b]/50 transition-colors" placeholder="Nama Anda..." />
                                     </div>
                                     <div>
-                                        <label className={`${cormorant.className} block text-[9px] tracking-[0.2em] uppercase text-[#3d2b1f]/40 mb-2 font-bold`}>Ucapan</label>
+                                        <label className={`font-serif block text-[9px] tracking-[0.2em] uppercase text-[#3d2b1f]/40 mb-2 font-bold`}>Ucapan</label>
                                         <textarea value={messageInput} onChange={e => setMessageInput(e.target.value)} className="w-full bg-[#3d2b1f]/5 border border-[#3d2b1f]/15 rounded-xl px-5 py-3.5 text-sm text-[#3d2b1f] h-28 resize-none focus:outline-none focus:border-[#8a9a5b]/50 transition-colors" placeholder="Tulis ucapan..." />
                                     </div>
-                                    <button type="submit" disabled={submitting} className={`${cormorant.className} w-full bg-[#8a9a5b] text-white py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-[#7a8a4b] transition-colors disabled:opacity-50`}>
+                                    <button type="submit" disabled={submitting} className={`font-serif w-full bg-[#8a9a5b] text-white py-4 rounded-xl text-[10px] tracking-[0.2em] uppercase font-bold hover:bg-[#7a8a4b] transition-colors disabled:opacity-50`}>
                                         {submitting ? 'Mengirim...' : 'Kirim Ucapan'}
                                     </button>
                                 </form>
@@ -398,7 +398,7 @@ export default function EarthyNature({ payload, audioController }) {
                         {invitation?.gift_accounts && invitation.gift_accounts.length > 0 && (
                             <section className="px-8 pb-20 en-reveal">
                                 <div className="text-center mb-12">
-                                    <h2 className={`${cormorant.className} text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
+                                    <h2 className={`font-serif text-2xl font-bold tracking-[0.15em] uppercase text-[#f5f1eb]`}>Wedding</h2>
                                     <p className={`${sacramento.className} text-4xl terracotta -mt-1`}>Gift</p>
                                 </div>
                                 <div className="space-y-4">
@@ -415,7 +415,7 @@ export default function EarthyNature({ payload, audioController }) {
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
-                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                            <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
                             <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
@@ -428,10 +428,10 @@ export default function EarthyNature({ payload, audioController }) {
                     
                     {/* Content Layer */}
                     <div className="relative z-10 pt-10">
-                        <p className={`${poppins.className} text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                        <p className={`font-sans text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
                             Thank you for being part of our special day
                         </p>
-                        <h2 className={`${cormorant.className} text-5xl mb-4 text-[#c67a5c] drop-shadow-sm`}>
+                        <h2 className={`font-serif text-5xl mb-4 text-[#c67a5c] drop-shadow-sm`}>
                             {invitation?.groom_name?.split(' ')[0]} <span className="text-black/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
                         </h2>
                         
@@ -439,7 +439,7 @@ export default function EarthyNature({ payload, audioController }) {
                         <div className="border-t border-[#c67a5c]/10 pt-8 mt-12">
                             <p className="text-[9px] text-[#c67a5c]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
                             <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-black/80 hover:text-black transition-colors">
-                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                                <span className={`font-serif text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
                             </a>
                             <p className="text-[8px] text-[#c67a5c]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>

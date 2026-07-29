@@ -181,10 +181,10 @@ export default function BotanicalSage({ payload, audioController }) {
     }
     if (coverPhotosArray.length === 0 && invitation?.cover_photo) coverPhotosArray = [invitation.cover_photo];
 
-    const initialCover = getPhoto(coverPhotosArray[0]) || getPhoto(photos[0]);
+    const initialCover = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(coverPhotosArray[0]) || ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(photos[0]);
     const [activeCover, setActiveCover] = useState(initialCover);
-    const groomPhoto = getPhoto(invitation?.groom_photo);
-    const bridePhoto = getPhoto(invitation?.bride_photo);
+    const groomPhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.groom_photo);
+    const bridePhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.bride_photo);
 
     // Background video / live streaming URL
     const bgVideoUrl = invitation?.live_streaming_link || invitation?.background_video_url || null;
@@ -288,8 +288,8 @@ export default function BotanicalSage({ payload, audioController }) {
 
                     {/* Cover Photo Thumbnails */}
                     {(() => {
-                        let allPhotos = coverPhotosArray.map(p => getPhoto(p)).filter(Boolean);
-                        if (allPhotos.length < 3 && photos.length > 0) allPhotos = [...allPhotos, ...photos.map(p => getPhoto(p))].filter(Boolean);
+                        let allPhotos = coverPhotosArray.map(p => ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(p)).filter(Boolean);
+                        if (allPhotos.length < 3 && photos.length > 0) allPhotos = [...allPhotos, ...photos.map(p => ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(p))].filter(Boolean);
                         allPhotos = [...new Set(allPhotos)];
                         if (allPhotos.length > 1) {
                             return (
@@ -512,7 +512,7 @@ export default function BotanicalSage({ payload, audioController }) {
                                                 <h3 className={`${playfair.className} text-2xl font-bold olive-text mb-4`}>{story.title}</h3>
                                                 <p className="text-sm text-[#5f7364] leading-relaxed">{story.description}</p>
                                                 {story.photo && (
-                                                    <img src={getPhoto(story.photo)} alt="Memory" className="w-full h-44 object-cover mt-6 rounded-xl" />
+                                                    <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(story.photo)} alt="Memory" className="w-full h-44 object-cover mt-6 rounded-xl" />
                                                 )}
                                             </div>
                                         </div>
@@ -609,7 +609,7 @@ export default function BotanicalSage({ payload, audioController }) {
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
-                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                            <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
                             <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
@@ -622,7 +622,7 @@ export default function BotanicalSage({ payload, audioController }) {
                     
                     {/* Content Layer */}
                     <div className="relative z-10 pt-10">
-                        <p className={`${poppins.className} text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                        <p className={`font-sans text-[10px] text-white/50 tracking-[0.3em] uppercase font-bold mb-4`}>
                             Thank you for being part of our special day
                         </p>
                         <h2 className={`${greatVibes.className} text-5xl mb-4 text-white drop-shadow-sm`}>

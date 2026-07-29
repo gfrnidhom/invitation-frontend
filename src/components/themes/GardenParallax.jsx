@@ -158,9 +158,9 @@ export default function GardenParallax({ payload, audioController }) {
         setSubmitting(false);
     };
 
-    const coverPhoto = getPhoto(invitation?.cover_photo);
-    const groomPhoto = getPhoto(invitation?.groom_photo);
-    const bridePhoto = getPhoto(invitation?.bride_photo);
+    const coverPhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.cover_photo);
+    const groomPhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.groom_photo);
+    const bridePhoto = ((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation?.bride_photo);
     const photos = invitation?.gallery?.length > 0 ? invitation.gallery.map(g => g.photo) : (invitation?.photos || []);
 
     return (
@@ -210,7 +210,7 @@ export default function GardenParallax({ payload, audioController }) {
                 </div>
 
                 <div className="relative z-10 text-center px-8">
-                    <p className={`${cormorant.className} text-sm tracking-[0.4em] uppercase text-[#7f8c8d] mb-6`}>Wedding Invitation</p>
+                    <p className={`font-serif text-sm tracking-[0.4em] uppercase text-[#7f8c8d] mb-6`}>Wedding Invitation</p>
                     <h1 className={`${pinyon.className} text-6xl md:text-8xl text-[#2c3e50] mb-8`}>
                         {invitation?.groom_name?.split(' ')[0]} & {invitation?.bride_name?.split(' ')[0]}
                     </h1>
@@ -219,7 +219,7 @@ export default function GardenParallax({ payload, audioController }) {
                     {guestName && (
                         <div className="mb-12">
                             <p className="text-[10px] tracking-[0.2em] uppercase text-[#95a5a6] mb-3">Dear Special Guest</p>
-                            <p className={`${cormorant.className} text-3xl text-[#34495e]`}>{guestName}</p>
+                            <p className={`font-serif text-3xl text-[#34495e]`}>{guestName}</p>
                         </div>
                     )}
 
@@ -272,8 +272,8 @@ export default function GardenParallax({ payload, audioController }) {
                     {/* Intro Section */}
                     <section className="min-h-screen flex flex-col items-center justify-center p-8 text-center relative">
                         <div className="gp-reveal active">
-                            <p className={`${cormorant.className} text-xl italic text-[#7f8c8d] mb-4`}>The Wedding of</p>
-                            <h2 className={`${cormorant.className} text-4xl md:text-5xl lg:text-7xl font-light uppercase tracking-[0.1em] mb-8`}>
+                            <p className={`font-serif text-xl italic text-[#7f8c8d] mb-4`}>The Wedding of</p>
+                            <h2 className={`font-serif text-4xl md:text-5xl lg:text-7xl font-light uppercase tracking-[0.1em] mb-8`}>
                                 {invitation?.groom_name} <br/> <span className={`${pinyon.className} text-6xl normal-case tracking-normal lowercase block my-2`}>&</span> {invitation?.bride_name}
                             </h2>
                             <div className="w-px h-24 bg-gradient-to-b from-[#cbd5e0] to-transparent mx-auto" />
@@ -284,7 +284,7 @@ export default function GardenParallax({ payload, audioController }) {
                     <section className="py-24 px-8 text-center bg-white/30">
                         <div className="gp-reveal max-w-md mx-auto">
                             <span className="text-3xl text-[#cbd5e0]">“</span>
-                            <p className={`${cormorant.className} text-lg leading-relaxed text-[#5d6d7e] italic`}>
+                            <p className={`font-serif text-lg leading-relaxed text-[#5d6d7e] italic`}>
                                 {invitation?.quotes || 'Dan di antara tanda-tanda kekuasaan-Nya diciptakan-Nya untukmu pasangan hidup dari jenismu sendiri supaya kamu dapat ketenangan hati.'}
                             </p>
                             <p className="mt-4 text-[10px] tracking-[0.3em] uppercase text-[#95a5a6]">{invitation?.quotes_name || '( QS. Ar-Rum Ayat 21 )'}</p>
@@ -300,7 +300,7 @@ export default function GardenParallax({ payload, audioController }) {
                                     <img src={groomPhoto || ASSETS.hero} alt="" className="w-full h-full object-cover" />
                                 </div>
                                 <p className={`${pinyon.className} text-5xl mb-1`}>{invitation?.groom_name?.split(' ')[0] || invitation?.groom_name}</p>
-                                <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-wider text-[#2c3e50] mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
+                                <h3 className={`font-serif text-xl font-bold uppercase tracking-wider text-[#2c3e50] mb-3`}>{invitation?.groom_full_name || invitation?.groom_name}</h3>
                                 {invitation?.groom_father && <p className="text-xs text-[#7f8c8d] mb-1">Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bpk {invitation.groom_father} & Ibu {invitation.groom_mother}</p>}
                                 {invitation?.groom_instagram && (
                                     <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="text-[#cbd5e0] hover:text-[#5d6d7e] transition-colors mt-4">
@@ -319,7 +319,7 @@ export default function GardenParallax({ payload, audioController }) {
                                     <img src={bridePhoto || ASSETS.hero} alt="" className="w-full h-full object-cover" />
                                 </div>
                                 <p className={`${pinyon.className} text-5xl mb-1`}>{invitation?.bride_name?.split(' ')[0] || invitation?.bride_name}</p>
-                                <h3 className={`${cormorant.className} text-xl font-bold uppercase tracking-wider text-[#2c3e50] mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
+                                <h3 className={`font-serif text-xl font-bold uppercase tracking-wider text-[#2c3e50] mb-3`}>{invitation?.bride_full_name || invitation?.bride_name}</h3>
                                 {invitation?.bride_father && <p className="text-xs text-[#7f8c8d] mb-1">Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bpk {invitation.bride_father} & Ibu {invitation.bride_mother}</p>}
                                 {invitation?.bride_instagram && (
                                     <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="text-[#cbd5e0] hover:text-[#5d6d7e] transition-colors mt-4">
@@ -333,7 +333,7 @@ export default function GardenParallax({ payload, audioController }) {
                     {/* Countdown & Event */}
                     <section className="py-24 px-8 bg-gradient-to-b from-transparent via-[#fcfbf7] to-transparent">
                         <div className="text-center mb-16 gp-reveal">
-                            <h2 className={`${cormorant.className} text-3xl uppercase tracking-widest mb-10`}>Counting Down</h2>
+                            <h2 className={`font-serif text-3xl uppercase tracking-widest mb-10`}>Counting Down</h2>
                             <div className="grid grid-cols-4 gap-4 max-w-xs mx-auto">
                                 {[
                                     {v: countdown.days, l: 'Days'},
@@ -342,7 +342,7 @@ export default function GardenParallax({ payload, audioController }) {
                                     {v: countdown.seconds, l: 'Secs'},
                                 ].map((item, i) => (
                                     <div key={i} className="text-[#34495e]">
-                                        <p className={`${cormorant.className} text-3xl font-light`}>{item.v}</p>
+                                        <p className={`font-serif text-3xl font-light`}>{item.v}</p>
                                         <p className="text-[8px] uppercase tracking-widest mt-1 opacity-50">{item.l}</p>
                                     </div>
                                 ))}
@@ -353,7 +353,7 @@ export default function GardenParallax({ payload, audioController }) {
                         <div className="space-y-12">
                             {invitation?.events?.map((ev, i) => (
                                 <div key={i} className="garden-glass p-10 rounded-[40px] text-center gp-reveal max-w-sm mx-auto">
-                                    <h4 className={`${cormorant.className} text-2xl uppercase tracking-widest mb-6`}>{ev.name}</h4>
+                                    <h4 className={`font-serif text-2xl uppercase tracking-widest mb-6`}>{ev.name}</h4>
                                     <div className="space-y-3 text-xs tracking-widest text-[#7f8c8d] mb-8">
                                         <p>{ev.date ? new Date(ev.date).toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' }) : '-'}</p>
                                         <p>{ev.time_start} - {ev.time_end || 'Selesai'}</p>
@@ -391,8 +391,8 @@ export default function GardenParallax({ payload, audioController }) {
                     {/* Wedding Gift */}
                     <section className="py-24 px-8 text-center bg-white/50">
                         <div className="gp-reveal mb-16">
-                            <h3 className={`${cormorant.className} text-3xl uppercase tracking-widest mb-4`}>Wedding Gift</h3>
-                            <p className={`${cormorant.className} italic text-[#7f8c8d]`}>Your presence is enough, but if you wish to give...</p>
+                            <h3 className={`font-serif text-3xl uppercase tracking-widest mb-4`}>Wedding Gift</h3>
+                            <p className={`font-serif italic text-[#7f8c8d]`}>Your presence is enough, but if you wish to give...</p>
                         </div>
 
                         <div className="grid gap-6 max-w-xs mx-auto">
@@ -405,7 +405,7 @@ export default function GardenParallax({ payload, audioController }) {
                     {/* Wishes */}
                     <section className="py-24 px-8">
                         <div className="text-center mb-12 gp-reveal">
-                            <h3 className={`${cormorant.className} text-3xl uppercase tracking-widest`}>Send Wishes</h3>
+                            <h3 className={`font-serif text-3xl uppercase tracking-widest`}>Send Wishes</h3>
                         </div>
                         <div className="max-w-md mx-auto">
                              <form onSubmit={submitWish} className="space-y-6 gp-reveal">
@@ -434,7 +434,7 @@ export default function GardenParallax({ payload, audioController }) {
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
-                            <img src={getPhoto(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+                            <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(invitation.footer_image)} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof landingPhoto !== 'undefined' && landingPhoto ? (
                             <img src={landingPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
@@ -447,10 +447,10 @@ export default function GardenParallax({ payload, audioController }) {
                     
                     {/* Content Layer */}
                     <div className="relative z-10 pt-10">
-                        <p className={`${poppins.className} text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
+                        <p className={`font-sans text-[10px] text-black/50 tracking-[0.3em] uppercase font-bold mb-4`}>
                             Thank you for being part of our special day
                         </p>
-                        <h2 className={`${cormorant.className} text-5xl mb-4 text-[#95a5a6] drop-shadow-sm`}>
+                        <h2 className={`font-serif text-5xl mb-4 text-[#95a5a6] drop-shadow-sm`}>
                             {invitation?.groom_name?.split(' ')[0]} <span className="text-black/50 font-light mx-2">&</span> {invitation?.bride_name?.split(' ')[0]}
                         </h2>
                         
@@ -458,7 +458,7 @@ export default function GardenParallax({ payload, audioController }) {
                         <div className="border-t border-[#95a5a6]/10 pt-8 mt-12">
                             <p className="text-[9px] text-[#95a5a6]/40 tracking-[0.2em] uppercase mb-2">Digital Invitation by</p>
                             <a href="https://digitvitation.my.id" target="_blank" rel="noreferrer" className="inline-block text-black/80 hover:text-black transition-colors">
-                                <span className={`${cormorant.className} text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
+                                <span className={`font-serif text-lg font-bold tracking-wider uppercase`}>Digivitation</span>
                             </a>
                             <p className="text-[8px] text-[#95a5a6]/30 mt-2 tracking-wider">© {new Date().getFullYear()} Digivitation. All rights reserved.</p>
                         </div>
