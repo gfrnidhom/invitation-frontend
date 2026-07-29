@@ -203,7 +203,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
             )}
 
             {/* ══════════════════════ LEFT PANE (DESKTOP) ══════════════════════ */}
-            <div className="hidden lg:block g1-split-left bg-[var(--theme-accent,#9e7a4b)] relative overflow-hidden">
+            <div className="hidden lg:block g1-split-left bg-[var(--theme-bg,#9e7a4b)] relative overflow-hidden">
                 <div className="absolute inset-0">
                     {coverPhoto ? (
                         <img src={coverPhoto} alt="Cover" className="w-full h-full object-cover object-center" />
@@ -230,7 +230,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
             <div className="g1-split-right relative min-h-screen shadow-2xl">
                 
                 {/* ── COVER SECTION ── */}
-                <section className={`absolute top-0 inset-x-0 h-[100dvh] lg:h-screen z-[60] flex flex-col items-center justify-between py-16 transition-all duration-[1200ms] ease-in-out ${isOpen ? 'opacity-0 pointer-events-none -translate-y-full' : 'opacity-100 bg-[var(--theme-accent,#42382e)]'}`}>
+                <section className={`absolute top-0 inset-x-0 h-[100dvh] lg:h-screen z-[60] flex flex-col items-center justify-between py-16 transition-all duration-[1200ms] ease-in-out ${isOpen ? 'opacity-0 pointer-events-none -translate-y-full' : 'opacity-100 bg-[var(--theme-bg,#42382e)]'}`}>
                     <div className="absolute inset-0">
                         {landingPhoto ? (
                             <img src={landingPhoto} alt="Cover Right" className="w-full h-full object-cover" />
@@ -270,7 +270,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                 <main className={`transition-all duration-[1000ms] w-full bg-white relative ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
 
                 {/* ── Section 0: Motion Hero ── */}
-                <section className="relative w-full h-screen overflow-hidden bg-[var(--theme-accent,#2a2a2a)]">
+                <section className="relative w-full h-screen overflow-hidden bg-[var(--theme-bg,#2a2a2a)]">
                     <video 
                         ref={heroVideoRef}
                         className="absolute inset-0 w-full h-full object-cover"
