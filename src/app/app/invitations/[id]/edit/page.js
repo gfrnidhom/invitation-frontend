@@ -40,6 +40,7 @@ const tabGroups = [
     items: [
       { id: 'music', label: 'Musik & WA', icon: Music, desc: 'Musik latar dan template WhatsApp' },
       { id: 'streaming', label: 'Live Streaming', icon: Video, desc: 'Link live streaming dan video background' },
+      { id: 'color', label: 'Warna Tema', icon: Settings, desc: 'Atur warna kustom untuk tema' },
     ]
   }
 ];
@@ -224,7 +225,8 @@ export default function EditInvitationPage({ params }) {
           {activeTab === 'story' && <StoryTab invitationId={id} />}
           {activeTab === 'gift' && <GiftTab invitationId={id} />}
           {activeTab === 'music' && <MusicTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
-          {activeTab === 'streaming' && <StreamingTab invitation={invitation} onSave={saveInvitation} saving={saving} />}
+          { activeTab === 'streaming' && <StreamingTab invitation={invitation} onSave={saveInvitation} saving={saving} /> }
+          { activeTab === 'color' && <ColorTab invitation={invitation} onSave={saveInvitation} saving={saving} /> }
         </div>
       </div>
     </div>
@@ -1381,6 +1383,68 @@ function GiftTab({ invitationId }) {
           </div>
         ))}</div>
       )}
+    </div>
+  );
+}
+
+function ColorTab({ invitation, onSave, saving }) {
+  const [form, setForm] = useState({
+    theme_bg_color: invitation?.theme_bg_color || '',
+    theme_accent_color: invitation?.theme_accent_color || '',
+    theme_text_color: invitation?.theme_text_color || '',
+  });
+
+  const handleSave = () => {
+    const fd = new FormData();
+    Object.keys(form).forEach(key => fd.append(key, form[key]));
+    onSave(fd);
+  };
+
+  const handleClear = () => {
+    setForm({
+      theme_bg_color: '',
+      theme_accent_color: '',
+      theme_text_color: ''
+    });
+  };
+
+  return (
+    <div style={{ display: 'grid', gap: '20px', maxWidth: '600px' }}>
+      <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: '13px', color: '#64748b' }}>
+        <p style={{ margin: '0 0 8px 0', fontWeight: '600', color: '#1e293b' }}>🎨 Kustomisasi Warna Tema</p>
+        Kosongkan pilihan warna di bawah ini jika ingin menggunakan warna bawaan (default) dari tema yang Anda pilih.
+      </div>
+      
+      <div style={{ display: 'grid', gap: '16px' }}>
+        <div>
+          <label className="label">Latar Belakang (Background)</label>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <input type="color" className="input" style={{ width: '60px', padding: '2px', height: '40px', cursor: 'pointer' }} value={form.theme_bg_color || '#ffffff'} onChange={(e) => setForm({ ...form, theme_bg_color: e.target.value })} />
+            <input type="text" className="input" placeholder="Warna bawaan tema" value={form.theme_bg_color} onChange={(e) => setForm({ ...form, theme_bg_color: e.target.value })} style={{ flex: 1 }} />
+          </div>
+        </div>
+
+        <div>
+          <label className="label">Warna Aksen (Tombol, Ornamen, dll)</label>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <input type="color" className="input" style={{ width: '60px', padding: '2px', height: '40px', cursor: 'pointer' }} value={form.theme_accent_color || '#000000'} onChange={(e) => setForm({ ...form, theme_accent_color: e.target.value })} />
+            <input type="text" className="input" placeholder="Warna bawaan tema" value={form.theme_accent_color} onChange={(e) => setForm({ ...form, theme_accent_color: e.target.value })} style={{ flex: 1 }} />
+          </div>
+        </div>
+
+        <div>
+          <label className="label">Warna Teks Utama</label>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <input type="color" className="input" style={{ width: '60px', padding: '2px', height: '40px', cursor: 'pointer' }} value={form.theme_text_color || '#333333'} onChange={(e) => setForm({ ...form, theme_text_color: e.target.value })} />
+            <input type="text" className="input" placeholder="Warna bawaan tema" value={form.theme_text_color} onChange={(e) => setForm({ ...form, theme_text_color: e.target.value })} style={{ flex: 1 }} />
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', gap: '12px' }}>
+        <button className="btn btn-primary" onClick={handleSave} disabled={saving}><Save size={16} /> {saving ? 'Menyimpan...' : 'Simpan Pengaturan Warna'}</button>
+        <button className="btn btn-ghost" onClick={handleClear} disabled={saving}>Reset ke Bawaan</button>
+      </div>
     </div>
   );
 }

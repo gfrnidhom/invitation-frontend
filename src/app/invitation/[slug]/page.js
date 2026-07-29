@@ -258,6 +258,15 @@ export default function PublicInvitationViewer() {
         />
       )}
 
+      {/* ── CSS VARIABLES ── */}
+      <style>{`
+        :root {
+          ${invitation?.theme_bg_color ? `--theme-bg: ${invitation.theme_bg_color} !important;` : ''}
+          ${invitation?.theme_accent_color ? `--theme-accent: ${invitation.theme_accent_color} !important;` : ''}
+          ${invitation?.theme_text_color ? `--theme-text: ${invitation.theme_text_color} !important;` : ''}
+        }
+      `}</style>
+
       {renderTheme()}
     </>
   );
