@@ -697,7 +697,7 @@ export default function MakrisLulu({ payload, audioController }) {
                                                     {getMapUrl(event) && (
                                                         <MapLocationButton
                                                             item={event}
-                                                            className={`mt-10 px-10 py-3.5 rounded-full text-[10px] tracking-[0.3em] uppercase font-bold transition-all border ${isEven ? 'bg-[var(--theme-accent,#CFB53B)] text-black border-[var(--theme-accent,#CFB53B)]' : 'bg-[var(--theme-bg,#061510)] text-[var(--theme-text,#CFB53B)] border-[var(--theme-accent,#CFB53B)]'} hover:scale-105 shadow-xl`}
+                                                            className={`mt-10 px-10 py-3.5 rounded-full text-[10px] tracking-[0.3em] uppercase font-bold transition-all border ${isEven ? 'bg-[var(--theme-accent,#CFB53B)] text-[var(--theme-button-text,#000000)] border-[var(--theme-accent,#CFB53B)]' : 'bg-[var(--theme-bg,#061510)] text-[var(--theme-text,#CFB53B)] border-[var(--theme-accent,#CFB53B)]'} hover:scale-105 shadow-xl`}
                                                             buttonText="View Map"
                                                         />
                                                     )}

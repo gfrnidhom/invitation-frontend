@@ -495,7 +495,7 @@ export default function SereneGarden({ payload, audioController }) {
                                     {getMapUrl(event) && (
                                         <MapLocationButton
                                             item={event}
-                                            className="bg-green-accent hover:bg-[#465b4b] text-white py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-block shadow-md transition-colors"
+                                            className="bg-green-accent hover:bg-[#465b4b] text-[var(--theme-button-text,#ffffff)] py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-block shadow-md transition-colors"
                                             buttonText="Google Map"
                                         />
                                     )}

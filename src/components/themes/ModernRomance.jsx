@@ -279,7 +279,7 @@ export default function ModernRomance({ payload, audioController }) {
                 {getMapUrl(event) && (
                   <MapLocationButton
                     item={event}
-                    className="inline-block border border-[var(--theme-accent,#a3714b)] text-[var(--theme-text,#a3714b)] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[var(--theme-accent,#a3714b)] hover:text-white transition-colors"
+                    className="inline-block border border-[var(--theme-accent,#a3714b)] text-[var(--theme-text,#a3714b)] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[var(--theme-accent,#a3714b)] hover:text-[var(--theme-button-text,#ffffff)] transition-colors"
                     buttonText="Buka di Google Maps"
                   />
                 )}
@@ -294,7 +294,7 @@ export default function ModernRomance({ payload, audioController }) {
                 {getMapUrl(invitation) && (
                   <MapLocationButton
                     item={invitation}
-                    className="inline-block border border-[var(--theme-accent,#a3714b)] text-[var(--theme-text,#a3714b)] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[var(--theme-accent,#a3714b)] hover:text-white transition-colors"
+                    className="inline-block border border-[var(--theme-accent,#a3714b)] text-[var(--theme-text,#a3714b)] px-6 py-2.5 text-xs tracking-widest uppercase hover:bg-[var(--theme-accent,#a3714b)] hover:text-[var(--theme-button-text,#ffffff)] transition-colors"
                     buttonText="Buka di Maps"
                   />
                 )}

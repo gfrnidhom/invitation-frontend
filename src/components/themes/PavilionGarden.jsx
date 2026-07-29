@@ -522,7 +522,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                     {getMapUrl(event) && (
                                         <MapLocationButton
                                             item={event}
-                                            className="bg-pg-accent hover:bg-[#1f2828] text-white py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-block shadow-md transition-colors"
+                                            className="bg-pg-accent hover:bg-[#1f2828] text-[var(--theme-button-text,#ffffff)] py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-block shadow-md transition-colors"
                                             buttonText="Google Map"
                                         />
                                     )}

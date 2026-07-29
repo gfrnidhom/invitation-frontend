@@ -309,7 +309,7 @@ export default function EarthyNature({ payload, audioController }) {
                                         {getMapUrl(event) && (
                                             <MapLocationButton
                                                 item={event}
-                                                className={`font-serif inline-flex items-center gap-2 border border-[#8a9a5b]/40 px-6 py-3 text-[10px] tracking-[0.2em] uppercase text-[#8a9a5b] hover:bg-[#8a9a5b] hover:text-white transition-all duration-500 mt-4 rounded-lg`}
+                                                className={`font-serif inline-flex items-center gap-2 border border-[#8a9a5b]/40 px-6 py-3 text-[10px] tracking-[0.2em] uppercase text-[var(--theme-button-text,#8a9)] hover:bg-[#8a9a5b] hover:text-[var(--theme-button-text,#ffffff)] transition-all duration-500 mt-4 rounded-lg`}
                                                 buttonText="Lihat Lokasi"
                                             >
                                                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/></svg>

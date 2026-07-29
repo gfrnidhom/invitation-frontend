@@ -501,7 +501,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                     {getMapUrl(event) && (
                                         <MapLocationButton
                                             item={event}
-                                            className="bg-green-accent hover:opacity-80 text-white py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-block shadow-md transition-colors"
+                                            className="bg-green-accent hover:opacity-80 text-[var(--theme-button-text,#ffffff)] py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-block shadow-md transition-colors"
                                             buttonText="Google Map"
                                         />
                                     )}
