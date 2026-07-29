@@ -1391,6 +1391,7 @@ function ColorTab({ invitation, onSave, saving }) {
   const [form, setForm] = useState({
     theme_bg_color: invitation?.theme_bg_color || '',
     theme_accent_color: invitation?.theme_accent_color || '',
+    theme_button_text_color: invitation?.theme_button_text_color || '',
     theme_text_color: invitation?.theme_text_color || '',
   });
 
@@ -1404,6 +1405,7 @@ function ColorTab({ invitation, onSave, saving }) {
     setForm({
       theme_bg_color: '',
       theme_accent_color: '',
+      theme_button_text_color: '',
       theme_text_color: ''
     });
   };
@@ -1429,6 +1431,14 @@ function ColorTab({ invitation, onSave, saving }) {
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
             <input type="color" className="input" style={{ width: '60px', padding: '2px', height: '40px', cursor: 'pointer' }} value={form.theme_accent_color || '#000000'} onChange={(e) => setForm({ ...form, theme_accent_color: e.target.value })} />
             <input type="text" className="input" placeholder="Warna bawaan tema" value={form.theme_accent_color} onChange={(e) => setForm({ ...form, theme_accent_color: e.target.value })} style={{ flex: 1 }} />
+          </div>
+        </div>
+
+        <div>
+          <label className="label">Warna Teks Tombol (Opsional)</label>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <input type="color" className="input" style={{ width: '60px', padding: '2px', height: '40px', cursor: 'pointer' }} value={form.theme_button_text_color || '#ffffff'} onChange={(e) => setForm({ ...form, theme_button_text_color: e.target.value })} />
+            <input type="text" className="input" placeholder="Warna bawaan tema" value={form.theme_button_text_color} onChange={(e) => setForm({ ...form, theme_button_text_color: e.target.value })} style={{ flex: 1 }} />
           </div>
         </div>
 

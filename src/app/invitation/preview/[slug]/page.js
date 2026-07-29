@@ -186,6 +186,7 @@ export default function ThemePreviewPage() {
         :root {
           ${invitation?.theme_bg_color ? `--theme-bg: ${invitation.theme_bg_color} !important;` : ''}
           ${invitation?.theme_accent_color ? `--theme-accent: ${invitation.theme_accent_color} !important;` : ''}
+          ${invitation?.theme_button_text_color ? `--theme-button-text: ${invitation.theme_button_text_color} !important;` : ''}
           ${invitation?.theme_text_color ? `--theme-text: ${invitation.theme_text_color} !important;` : ''}
         }
       `}</style>
