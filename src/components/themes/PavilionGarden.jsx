@@ -400,7 +400,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                 Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bapak {invitation?.bride_father || '...'} <br/> & Ibu {invitation?.bride_mother || '...'}
                             </p>
                             {invitation?.bride_instagram && (
-                                <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[#86968B] text-white px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#6b7d70] transition-all shadow-md">
+                                <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[var(--theme-accent,#86968B)] text-white px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:opacity-80 transition-all shadow-md">
                                     <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                     @{invitation.bride_instagram}
                                 </a>
@@ -427,7 +427,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                 Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bapak {invitation?.groom_father || '...'} <br/> & Ibu {invitation?.groom_mother || '...'}
                             </p>
                             {invitation?.groom_instagram && (
-                                <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[#86968B] text-white px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#6b7d70] transition-all shadow-md">
+                                <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[var(--theme-accent,#86968B)] text-white px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:opacity-80 transition-all shadow-md">
                                     <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                     @{invitation.groom_instagram}
                                 </a>
@@ -449,7 +449,7 @@ export default function PavilionGarden({ payload, audioController }) {
                         <section className="py-16 px-8 text-center bg-[#f4f2ec]">
                             <div className="pg-reveal">
                                 <p className="text-[10px] tracking-[0.3em] uppercase text-pg-accent font-semibold mb-6">Turut Mengundang</p>
-                                <div className="w-10 h-px bg-[#86968B]/30 mx-auto mb-8" />
+                                <div className="w-10 h-px bg-[var(--theme-accent,#86968B)]/30 mx-auto mb-8" />
                                 <div className="space-y-2">
                                     {tmItems.map((name, i) => (
                                         <p key={i} className={`font-serif text-lg text-[var(--theme-text,#4A4A4A)] font-medium`}>{name}</p>
@@ -575,7 +575,7 @@ export default function PavilionGarden({ payload, audioController }) {
                         <div className="columns-2 gap-2 max-w-[360px] mx-auto">
                             {invitation.gallery.map((img, i) => (
                                 <div key={i} className="break-inside-avoid mb-2 rounded-xl overflow-hidden pg-reveal relative group" data-delay={`${(i % 3) + 1}`}>
-                                    <div className="absolute inset-0 bg-[#86968B]/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none"></div>
+                                    <div className="absolute inset-0 bg-[var(--theme-accent,#86968B)]/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none"></div>
                                     <img src={((img) => { let p = Array.isArray(img) ? img[0] : img; p = typeof p === 'object' && p !== null ? p.photo || p.url : p; if (typeof p !== 'string') return null; return (p.startsWith('http') || p.startsWith('/')) ? p : `${process.env.NEXT_PUBLIC_STORAGE_URL || 'https://digitvitation.my.id/storage'}/${p}`; })(img)} className="w-full h-auto object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 align-middle" alt={`Gallery ${i}`} loading="lazy" />
                                 </div>
                             ))}
@@ -597,7 +597,7 @@ export default function PavilionGarden({ payload, audioController }) {
                             {[...invitation.love_stories].sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)).map((story, i) => (
                                 <div key={story.id || i} className={`relative mb-16 last:mb-0 pg-reveal`} data-delay={`${(i % 3) + 1}`}>
                                     <div className="absolute left-1/2 -translate-x-1/2 top-0 z-10">
-                                        <div className="w-4 h-4 rounded-full bg-[#86968B] border-[3px] border-white shadow-lg" />
+                                        <div className="w-4 h-4 rounded-full bg-[var(--theme-accent,#86968B)] border-[3px] border-white shadow-lg" />
                                     </div>
                                     
                                     <div className="text-center mb-4 pt-8">
@@ -622,7 +622,7 @@ export default function PavilionGarden({ payload, audioController }) {
                             ))}
                             
                             <div className="absolute left-1/2 -translate-x-1/2 bottom-0">
-                                <div className="w-3 h-3 rounded-full bg-[#86968B]/50 border-2 border-white shadow" />
+                                <div className="w-3 h-3 rounded-full bg-[var(--theme-accent,#86968B)]/50 border-2 border-white shadow" />
                             </div>
                         </div>
                     </section>
@@ -700,7 +700,7 @@ export default function PavilionGarden({ payload, audioController }) {
                                     <div className="relative w-full aspect-[1.586/1] rounded-2xl shadow-2xl p-6 flex flex-col justify-between overflow-hidden bg-gradient-to-tr from-[#2D3A3A] via-[#3d4d4d] to-[#2D3A3A] border border-[#86968B]/40">
                                         
                                         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/noise-lines.png')] opacity-20 pointer-events-none mix-blend-overlay"></div>
-                                        <div className="absolute -right-16 -top-16 w-48 h-48 bg-[#86968B]/20 rounded-full blur-3xl pointer-events-none"></div>
+                                        <div className="absolute -right-16 -top-16 w-48 h-48 bg-[var(--theme-accent,#86968B)]/20 rounded-full blur-3xl pointer-events-none"></div>
                                         <div className="absolute -left-16 -bottom-16 w-48 h-48 bg-[#DCD1BA]/20 rounded-full blur-3xl pointer-events-none"></div>
 
                                         <div className="flex justify-between items-start relative z-10 w-full">

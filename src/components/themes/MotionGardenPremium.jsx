@@ -182,9 +182,9 @@ export default function MotionGardenPremium({ payload, audioController }) {
                     .g1-split-right { margin-left: 70%; width: 30%; }
                 }
 
-                .motion-garden-premium-theme .text-green-accent { color: #A57B52; }
-                .motion-garden-premium-theme .bg-green-accent { background-color: #A57B52; border-color: #A57B52; }
-                .motion-garden-premium-theme .border-green-accent { border-color: #A57B52; }
+                .motion-garden-premium-theme .text-green-accent { color: var(--theme-accent, #A57B52); }
+                .motion-garden-premium-theme .bg-green-accent { background-color: var(--theme-accent, #A57B52); border-color: var(--theme-accent, #A57B52); }
+                .motion-garden-premium-theme .border-green-accent { border-color: var(--theme-accent, #A57B52); }
                 
                 .motion-garden-premium-theme .g1-glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.5); }
             `}} />
@@ -259,7 +259,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                             </div>
                         )}
 
-                        <button onClick={handleOpen} className="bg-[var(--theme-accent,#bda57b)] hover:bg-[#a68f68] text-[#2a2a2a] px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 shadow-xl inline-flex items-center gap-2">
+                        <button onClick={handleOpen} className="bg-[var(--theme-accent,#bda57b)] hover:opacity-80 text-[#2a2a2a] px-8 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 shadow-xl inline-flex items-center gap-2">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
                             Buka Undangan
                         </button>
@@ -378,7 +378,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                 Putri {invitation?.bride_child_order ? `${invitation.bride_child_order} ` : ""}dari Bapak {invitation?.bride_father || '...'} <br/> & Ibu {invitation?.bride_mother || '...'}
                             </p>
                             {invitation?.bride_instagram && (
-                                <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[#bd9a5f] text-white px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#a88647] transition-all shadow-md">
+                                <a href={`https://instagram.com/${invitation.bride_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[var(--theme-accent,#bd9a5f)] text-white px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:opacity-80 transition-all shadow-md">
                                     <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                     @{invitation.bride_instagram}
                                 </a>
@@ -405,7 +405,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                 Putra {invitation?.groom_child_order ? `${invitation.groom_child_order} ` : ""}dari Bapak {invitation?.groom_father || '...'} <br/> & Ibu {invitation?.groom_mother || '...'}
                             </p>
                             {invitation?.groom_instagram && (
-                                <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[#bd9a5f] text-white px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:bg-[#a88647] transition-all shadow-md">
+                                <a href={`https://instagram.com/${invitation.groom_instagram}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 bg-[var(--theme-accent,#bd9a5f)] text-white px-4 py-1.5 rounded-full text-[10px] tracking-wider uppercase font-semibold hover:opacity-80 transition-all shadow-md">
                                     <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                                     @{invitation.groom_instagram}
                                 </a>
@@ -424,7 +424,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                     tmItems = tmItems.filter(t => t && String(t).trim() !== '');
                     if (tmItems.length === 0) return null;
                     return (
-                        <section className="py-16 px-8 text-center bg-[#f9f6f0]">
+                        <section className="py-16 px-8 text-center bg-[var(--theme-bg,#f9f6f0)]">
                             <div className="g1-reveal">
                                 <p className="text-[10px] tracking-[0.3em] uppercase text-green-accent font-semibold mb-6">Turut Mengundang</p>
                                 <div className="w-10 h-px bg-green-accent/30 mx-auto mb-8" />
@@ -501,7 +501,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                     {getMapUrl(event) && (
                                         <MapLocationButton
                                             item={event}
-                                            className="bg-green-accent hover:bg-[#465b4b] text-white py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-block shadow-md transition-colors"
+                                            className="bg-green-accent hover:opacity-80 text-white py-3 px-8 rounded-full text-xs tracking-widest uppercase inline-block shadow-md transition-colors"
                                             buttonText="Google Map"
                                         />
                                     )}
@@ -581,7 +581,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                 <div key={story.id || i} className={`relative mb-16 last:mb-0 g1-reveal`} data-delay={`${(i % 3) + 1}`}>
                                     {/* Dot Connector */}
                                     <div className="absolute left-1/2 -translate-x-1/2 top-0 z-10">
-                                        <div className="w-4 h-4 rounded-full bg-[#bd9a5f] border-[3px] border-white shadow-lg" />
+                                        <div className="w-4 h-4 rounded-full bg-[var(--theme-accent,#bd9a5f)] border-[3px] border-white shadow-lg" />
                                     </div>
                                     
                                     {/* Date Badge */}
@@ -609,7 +609,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                             
                             {/* End dot */}
                             <div className="absolute left-1/2 -translate-x-1/2 bottom-0">
-                                <div className="w-3 h-3 rounded-full bg-[#bd9a5f]/50 border-2 border-white shadow" />
+                                <div className="w-3 h-3 rounded-full bg-[var(--theme-accent,#bd9a5f)]/50 border-2 border-white shadow" />
                             </div>
                         </div>
                     </section>
@@ -630,7 +630,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                 <div className="absolute -inset-1 bg-gradient-to-r from-[#bd9a5f] via-[#f9e5b8] to-[#bd9a5f] rounded-[2rem] blur opacity-40"></div>
                                 
                                 {/* VIP Pass Card */}
-                                <div className="relative bg-[#1a1411] rounded-[2rem] shadow-2xl border flex flex-col overflow-hidden" style={{ borderColor: 'rgba(189, 154, 95, 0.4)' }}>
+                                <div className="relative bg-[var(--theme-text,#1a1411)] rounded-[2rem] shadow-2xl border flex flex-col overflow-hidden" style={{ borderColor: 'rgba(189, 154, 95, 0.4)' }}>
                                     
                                     {/* Gold Top Border */}
                                     <div className="h-6 w-full bg-gradient-to-r from-[#bd9a5f] via-[#eaddce] to-[#bd9a5f]"></div>
@@ -645,8 +645,8 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                         {/* QR Container */}
                                         <div className="bg-white p-3 rounded-2xl mx-auto shadow-[0_0_20px_rgba(189,154,95,0.15)] inline-block relative">
                                             {/* Cutout notches */}
-                                            <div className="absolute top-1/2 -left-3 w-6 h-6 bg-[#1a1411] rounded-full -translate-y-1/2"></div>
-                                            <div className="absolute top-1/2 -right-3 w-6 h-6 bg-[#1a1411] rounded-full -translate-y-1/2"></div>
+                                            <div className="absolute top-1/2 -left-3 w-6 h-6 bg-[var(--theme-text,#1a1411)] rounded-full -translate-y-1/2"></div>
+                                            <div className="absolute top-1/2 -right-3 w-6 h-6 bg-[var(--theme-text,#1a1411)] rounded-full -translate-y-1/2"></div>
                                             
                                             {guest.qr_code ? (
                                                 <img src={guest.qr_code.startsWith('http') ? guest.qr_code : `${STORAGE_URL}/${guest.qr_code}`} alt="QR Code" className="w-[160px] h-[160px] object-contain relative z-10 mix-blend-multiply" />
@@ -699,8 +699,8 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                         
                                         {/* Background pattern & glow */}
                                         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/noise-lines.png')] opacity-20 pointer-events-none mix-blend-overlay"></div>
-                                        <div className="absolute -right-16 -top-16 w-48 h-48 bg-[#bd9a5f]/20 rounded-full blur-3xl pointer-events-none"></div>
-                                        <div className="absolute -left-16 -bottom-16 w-48 h-48 bg-[#bd9a5f]/20 rounded-full blur-3xl pointer-events-none"></div>
+                                        <div className="absolute -right-16 -top-16 w-48 h-48 bg-[var(--theme-accent,#bd9a5f)]/20 rounded-full blur-3xl pointer-events-none"></div>
+                                        <div className="absolute -left-16 -bottom-16 w-48 h-48 bg-[var(--theme-accent,#bd9a5f)]/20 rounded-full blur-3xl pointer-events-none"></div>
 
                                         {/* Card Top: Chip & Bank Info */}
                                         <div className="flex justify-between items-start relative z-10 w-full">
@@ -750,7 +750,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                 );
                             })
                         ) : (
-                            <div className="bg-[#f9f6f0] rounded-2xl p-8 text-[var(--theme-text,#4A4A4A)]/50 text-sm">Belum ada informasi rekening.</div>
+                            <div className="bg-[var(--theme-bg,#f9f6f0)] rounded-2xl p-8 text-[var(--theme-text,#4A4A4A)]/50 text-sm">Belum ada informasi rekening.</div>
                         )}
                     </div>
                 </section>
@@ -773,7 +773,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                                     className="w-full bg-white border border-green-accent/20 rounded-xl px-4 py-3 text-sm text-[var(--theme-text,#4A4A4A)] focus:outline-none focus:border-green-accent shadow-sm transition-colors h-28 resize-none" placeholder="Berikan ucapan dan doa" />
                             </div>
                             <button type="submit" disabled={submitting}
-                                className="bg-green-accent hover:bg-[#465b4b] text-white w-full py-3.5 rounded-full text-xs tracking-widest uppercase font-bold shadow-lg disabled:opacity-50 transition-colors">
+                                className="bg-green-accent hover:opacity-80 text-white w-full py-3.5 rounded-full text-xs tracking-widest uppercase font-bold shadow-lg disabled:opacity-50 transition-colors">
                                 {submitting ? 'Mengirim...' : 'Kirim Ucapan'}
                             </button>
                         </form>
@@ -794,7 +794,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                 </section>
 
                 {/* ── FOOTER ── */}
-                <footer className="bg-[#2a2119] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
+                <footer className="bg-[var(--theme-text,#2a2119)] text-white pt-64 pb-24 px-8 text-center relative overflow-hidden">
                     {/* Background Image Layer */}
                     <div className="absolute inset-0 z-0">
                         {invitation?.footer_image ? (
@@ -804,7 +804,7 @@ export default function MotionGardenPremium({ payload, audioController }) {
                         ) : typeof coverPhoto !== 'undefined' && coverPhoto ? (
                             <img src={coverPhoto} alt="Footer BG" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
                         ) : (
-                            <div className="w-full h-full bg-[#2a2119] opacity-40"></div>
+                            <div className="w-full h-full bg-[var(--theme-text,#2a2119)] opacity-40"></div>
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#2a2119] via-[#2a2119]/60 to-transparent" />
                     </div>
