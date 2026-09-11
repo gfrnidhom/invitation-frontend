@@ -2,7 +2,7 @@
 
 import { useState, useEffect, use, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Plus, Search, Trash2, UserCheck, Users, MessageCircle, Clock, CheckCircle, XCircle, FileText, Save, Upload, Download, QrCode, X, Printer, Copy, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Plus, Search, Trash2, UserCheck, Users, MessageCircle, Clock, CheckCircle, XCircle, FileText, Save, Upload, Download, QrCode, X, Printer, Copy, ChevronLeft, ChevronRight, Edit } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import toast from 'react-hot-toast';
 import { confirmAction } from '@/lib/toast-confirm';
@@ -549,7 +549,7 @@ export default function GuestsPage({ params }) {
                             </a>
                           )}
                           <button onClick={() => handleEditClick(guest)} style={{ background: '#dbeafe', color: '#1d4ed8', border: 'none', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} title="Edit">
-                            <FileText size={16} />
+                            <Edit size={16} />
                           </button>
                           <button onClick={() => handleDelete(guest.id)} style={{ background: '#fee2e2', color: '#b91c1c', border: 'none', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }} title="Hapus">
                             <Trash2 size={16} />
