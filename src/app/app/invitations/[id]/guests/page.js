@@ -564,22 +564,58 @@ export default function GuestsPage({ params }) {
 
             {/* Pagination Controls */}
             {lastPage > 1 && (
-              <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', justifyContent: 'center' }}>
-                  <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage <= 1} style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '8px', color: '#475569', cursor: currentPage <= 1 ? 'not-allowed' : 'pointer', opacity: currentPage <= 1 ? 0.5 : 1 }}>
-                    <ChevronLeft size={16} />
+              <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#fff', padding: '8px', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+                  <button 
+                    onClick={() => handlePageChange(currentPage - 1)} 
+                    disabled={currentPage <= 1} 
+                    style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', borderRadius: '8px', color: '#64748b', cursor: currentPage <= 1 ? 'not-allowed' : 'pointer', opacity: currentPage <= 1 ? 0.4 : 1, transition: 'all 0.2s' }}
+                    onMouseOver={(e) => { if (currentPage > 1) { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#0f172a'; } }}
+                    onMouseOut={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#64748b'; }}
+                  >
+                    <ChevronLeft size={20} />
                   </button>
+                  
+                  <div style={{ width: '1px', height: '24px', background: '#e2e8f0', margin: '0 4px' }}></div>
+
                   {getPageNumbers().map(page => (
-                    <button key={page} onClick={() => handlePageChange(page)} style={{ minWidth: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: currentPage === page ? '#6366f1' : '#fff', border: `1px solid ${currentPage === page ? '#6366f1' : '#cbd5e1'}`, borderRadius: '8px', color: currentPage === page ? '#fff' : '#475569', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }}>
+                    <button 
+                      key={page} 
+                      onClick={() => handlePageChange(page)} 
+                      style={{ 
+                        minWidth: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                        background: currentPage === page ? '#0f172a' : 'transparent', 
+                        border: 'none', 
+                        borderRadius: '8px', 
+                        color: currentPage === page ? '#fff' : '#64748b', 
+                        fontWeight: currentPage === page ? '600' : '500', 
+                        fontSize: '14px',
+                        cursor: 'pointer', 
+                        transition: 'all 0.2s' 
+                      }}
+                      onMouseOver={(e) => { if (currentPage !== page) { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#0f172a'; } }}
+                      onMouseOut={(e) => { if (currentPage !== page) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#64748b'; } }}
+                    >
                       {page}
                     </button>
                   ))}
-                  <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage >= lastPage} style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', border: '1px solid #cbd5e1', borderRadius: '8px', color: '#475569', cursor: currentPage >= lastPage ? 'not-allowed' : 'pointer', opacity: currentPage >= lastPage ? 0.5 : 1 }}>
-                    <ChevronRight size={16} />
+
+                  <div style={{ width: '1px', height: '24px', background: '#e2e8f0', margin: '0 4px' }}></div>
+
+                  <button 
+                    onClick={() => handlePageChange(currentPage + 1)} 
+                    disabled={currentPage >= lastPage} 
+                    style={{ width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', borderRadius: '8px', color: '#64748b', cursor: currentPage >= lastPage ? 'not-allowed' : 'pointer', opacity: currentPage >= lastPage ? 0.4 : 1, transition: 'all 0.2s' }}
+                    onMouseOver={(e) => { if (currentPage < lastPage) { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#0f172a'; } }}
+                    onMouseOut={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#64748b'; }}
+                  >
+                    <ChevronRight size={20} />
                   </button>
                 </div>
-                <div style={{ fontSize: '13px', color: '#64748b', fontWeight: '500' }}>
-                  Halaman {currentPage} dari {lastPage} • Total {totalGuests} tamu
+                <div style={{ fontSize: '14px', color: '#64748b', fontWeight: '500' }}>
+                  Menampilkan <span style={{ color: '#0f172a', fontWeight: '700' }}>{guestList.length}</span> dari <span style={{ color: '#0f172a', fontWeight: '700' }}>{totalGuests}</span> tamu 
+                  <span style={{ margin: '0 8px', color: '#cbd5e1' }}>|</span> 
+                  Halaman <span style={{ color: '#0f172a', fontWeight: '600' }}>{currentPage}</span> dari {lastPage}
                 </div>
               </div>
             )}
