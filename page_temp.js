@@ -25,7 +25,6 @@ export default function GuestsPage({ params }) {
   const [lastPage, setLastPage] = useState(1);
   const [totalGuests, setTotalGuests] = useState(0);
   const [perPage, setPerPage] = useState(15);
-  const [categoryFilter, setCategoryFilter] = useState('');
   const [summaryStats, setSummaryStats] = useState({ total: 0, confirmed: 0, declined: 0, pending: 0 });
 
   const [showImportModal, setShowImportModal] = useState(false);
@@ -36,20 +35,20 @@ export default function GuestsPage({ params }) {
   const fileInputRef = useRef(null);
   const [dragOver, setDragOver] = useState(false);
 
-  const fetchGuests = async (page = 1, searchQuery = search, limit = perPage, cat = categoryFilter) => {
+  const fetchGuests = async (page = 1, searchQuery = search) => {
     try {
-      const res = await guests.list(id, page, searchQuery, limit, cat);
+      const res = await guests.list(id, page, searchQuery);
       setGuestList(res.data || []);
       if (res.meta) {
         setCurrentPage(res.meta.current_page || page);
         setLastPage(res.meta.last_page || 1);
         setTotalGuests(res.meta.total || 0);
-        setPerPage(res.meta.per_page || limit);
+        setPerPage(res.meta.per_page || 15);
       } else if (res.last_page) {
         setCurrentPage(res.current_page || page);
         setLastPage(res.last_page || 1);
         setTotalGuests(res.total || 0);
-        setPerPage(res.per_page || limit);
+        setPerPage(res.per_page || 15);
       }
       if (res.stats) {
         setSummaryStats(res.stats);
@@ -61,7 +60,7 @@ export default function GuestsPage({ params }) {
 
   useEffect(() => { 
     Promise.all([
-      fetchGuests(1, '', 15, ''),
+      fetchGuests(1, ''),
       invitations.get(id).then((res) => setInvitation(res.data || res)).catch(() => {})
     ]).finally(() => setLoading(false)); 
   }, [id]);
@@ -69,16 +68,16 @@ export default function GuestsPage({ params }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (!loading) {
-        fetchGuests(1, search, perPage, categoryFilter);
+        fetchGuests(1, search);
       }
     }, 300);
     return () => clearTimeout(timer);
-  }, [search, perPage, categoryFilter, loading]);
+  }, [search, loading]);
 
   const handlePageChange = (page) => {
     if (page < 1 || page > lastPage) return;
     setCurrentPage(page);
-    fetchGuests(page, search, perPage, categoryFilter);
+    fetchGuests(page, search);
   };
 
   const handleSave = async () => { 
@@ -454,40 +453,10 @@ export default function GuestsPage({ params }) {
           })}
         </div>
 
-        {/* Filters and Search Container */}
-        <div style={{ display: 'flex', gap: '16px', marginBottom: '20px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div className="search-container" style={{ margin: 0, flex: '1 1 300px', minWidth: '250px', position: 'relative' }}>
-            <Search size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
-            <input className="input" placeholder="Cari nama tamu..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ paddingLeft: '44px', width: '100%', height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
-          </div>
-          
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <select 
-              className="input" 
-              value={categoryFilter} 
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              style={{ height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: '#fff', padding: '0 16px', minWidth: '150px' }}
-            >
-              <option value="">Semua Kategori</option>
-              <option value="Keluarga">Keluarga</option>
-              <option value="Teman">Teman</option>
-              <option value="Teman VIP">Teman VIP</option>
-              <option value="Rekan Kerja">Rekan Kerja</option>
-              <option value="Lainnya">Lainnya</option>
-            </select>
-
-            <select 
-              className="input" 
-              value={perPage} 
-              onChange={(e) => setPerPage(Number(e.target.value))}
-              style={{ height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: '#fff', padding: '0 16px', width: '100px' }}
-            >
-              <option value={15}>15 / hal</option>
-              <option value={30}>30 / hal</option>
-              <option value={50}>50 / hal</option>
-              <option value={100}>100 / hal</option>
-            </select>
-          </div>
+        {/* Search Input Container */}
+        <div className="search-container">
+          <Search size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+          <input className="input" placeholder="Cari nama tamu..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ paddingLeft: '44px', width: '100%', height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
         </div>
 
         {/* Scrollable Data Table Wrapper */}

@@ -99,9 +99,10 @@ export const invitations = {
 
 // ── Guests ──
 export const guests = {
-  list: (invitationId, page = 1, search = '') => {
-    let url = `/invitations/${invitationId}/guests?page=${page}`;
+  list: (invitationId, page = 1, search = '', perPage = 15, category = '') => {
+    let url = `/invitations/${invitationId}/guests?page=${page}&per_page=${perPage}`;
     if (search) url += `&search=${encodeURIComponent(search)}`;
+    if (category) url += `&category=${encodeURIComponent(category)}`;
     return request(url);
   },
   get: (invitationId, guestId) => request(`/invitations/${invitationId}/guests/${guestId}`),
