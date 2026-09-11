@@ -459,18 +459,18 @@ export default function GuestsPage({ params }) {
         </div>
 
         {/* Filters and Search Container */}
-        <div style={{ display: 'flex', gap: '16px', marginBottom: '20px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div className="search-container" style={{ margin: 0, flex: '1 1 300px', minWidth: '250px', position: 'relative' }}>
+        <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', flexDirection: 'row', flexWrap: 'wrap' }}>
+          <div className="search-container" style={{ margin: 0, flex: '1 1 250px', position: 'relative' }}>
             <Search size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
-            <input className="input" placeholder="Cari nama tamu..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ paddingLeft: '44px', width: '100%', height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
+            <input className="input" placeholder="Cari nama tamu..." value={search} onChange={(e) => setSearch(e.target.value)} style={{ paddingLeft: '44px', width: '100%', height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: '#fff' }} />
           </div>
           
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'nowrap', overflowX: 'auto', paddingBottom: '4px' }}>
             <select 
               className="input" 
               value={categoryFilter} 
               onChange={(e) => setCategoryFilter(e.target.value)}
-              style={{ height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: '#fff', padding: '0 16px', minWidth: '150px' }}
+              style={{ height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: '#fff', padding: '0 32px 0 16px', minWidth: '160px', flexShrink: 0, cursor: 'pointer' }}
             >
               <option value="">Semua Kategori</option>
               {categories.map((cat, i) => (
@@ -482,7 +482,7 @@ export default function GuestsPage({ params }) {
               className="input" 
               value={perPage} 
               onChange={(e) => setPerPage(Number(e.target.value))}
-              style={{ height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: '#fff', padding: '0 16px', width: '100px' }}
+              style={{ height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: '#fff', padding: '0 32px 0 16px', width: '120px', flexShrink: 0, cursor: 'pointer' }}
             >
               <option value={15}>15 / hal</option>
               <option value={30}>30 / hal</option>
