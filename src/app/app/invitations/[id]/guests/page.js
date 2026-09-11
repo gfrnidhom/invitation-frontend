@@ -27,6 +27,7 @@ export default function GuestsPage({ params }) {
   const [perPage, setPerPage] = useState(15);
   const [categoryFilter, setCategoryFilter] = useState('');
   const [summaryStats, setSummaryStats] = useState({ total: 0, confirmed: 0, declined: 0, pending: 0 });
+  const [categories, setCategories] = useState([]);
 
   const [showImportModal, setShowImportModal] = useState(false);
   const [importFile, setImportFile] = useState(null);
@@ -53,6 +54,9 @@ export default function GuestsPage({ params }) {
       }
       if (res.stats) {
         setSummaryStats(res.stats);
+      }
+      if (res.categories) {
+        setCategories(res.categories);
       }
     } catch {
       setGuestList([]);
@@ -469,11 +473,9 @@ export default function GuestsPage({ params }) {
               style={{ height: '46px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: '#fff', padding: '0 16px', minWidth: '150px' }}
             >
               <option value="">Semua Kategori</option>
-              <option value="Keluarga">Keluarga</option>
-              <option value="Teman">Teman</option>
-              <option value="Teman VIP">Teman VIP</option>
-              <option value="Rekan Kerja">Rekan Kerja</option>
-              <option value="Lainnya">Lainnya</option>
+              {categories.map((cat, i) => (
+                <option key={i} value={cat}>{cat}</option>
+              ))}
             </select>
 
             <select 
