@@ -215,14 +215,15 @@ export default function GuestsPage({ params }) {
     setImporting(true);
     setImportResult(null);
     try {
-      const headers = ['name', 'phone', 'email'];
+      const headers = ['name', 'phone', 'email', 'category'];
       let csvContent = headers.join(',') + '\n';
       
       importPreview.forEach(row => {
         const name = row['name'] || row['Nama'] || row['NAMA'] || '';
         const phone = row['phone'] || row['Phone'] || row['No Telepon'] || row['telepon'] || row['no_telp'] || '';
         const email = row['email'] || row['Email'] || row['EMAIL'] || '';
-        csvContent += `"${String(name).replace(/"/g, '""')}","${String(phone).replace(/"/g, '""')}","${String(email).replace(/"/g, '""')}"\n`;
+        const category = row['category'] || row['Category'] || row['Kategori'] || row['Grup'] || row['Group'] || '';
+        csvContent += `"${String(name).replace(/"/g, '""')}","${String(phone).replace(/"/g, '""')}","${String(email).replace(/"/g, '""')}","${String(category).replace(/"/g, '""')}"\n`;
       });
 
       const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -246,8 +247,8 @@ export default function GuestsPage({ params }) {
 
   const downloadTemplate = () => {
     const ws = XLSX.utils.json_to_sheet([
-      { name: 'Budi Santoso', phone: '081234567890', email: 'budi@email.com' },
-      { name: 'Siti Rahma', phone: '089876543210', email: 'siti@email.com' },
+      { name: 'Budi Santoso', phone: '081234567890', email: 'budi@email.com', category: 'Keluarga' },
+      { name: 'Siti Rahma', phone: '089876543210', email: 'siti@email.com', category: 'Teman VIP' },
     ]);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Template_Tamu");
@@ -725,6 +726,7 @@ export default function GuestsPage({ params }) {
                         <th style={{ padding: '10px 14px', borderBottom: '1px solid #e2e8f0', textAlign: 'left', fontWeight: '600', color: '#475569', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Nama</th>
                         <th style={{ padding: '10px 14px', borderBottom: '1px solid #e2e8f0', textAlign: 'left', fontWeight: '600', color: '#475569', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Telepon</th>
                         <th style={{ padding: '10px 14px', borderBottom: '1px solid #e2e8f0', textAlign: 'left', fontWeight: '600', color: '#475569', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</th>
+                        <th style={{ padding: '10px 14px', borderBottom: '1px solid #e2e8f0', textAlign: 'left', fontWeight: '600', color: '#475569', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Kategori</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -734,6 +736,7 @@ export default function GuestsPage({ params }) {
                           <td style={{ padding: '8px 14px', borderBottom: '1px solid #f1f5f9', fontWeight: '500', color: '#1e293b' }}>{row.name || row.Nama || row.NAMA || '-'}</td>
                           <td style={{ padding: '8px 14px', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{row.phone || row.Phone || row['No Telepon'] || row.telepon || '-'}</td>
                           <td style={{ padding: '8px 14px', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{row.email || row.Email || row.EMAIL || '-'}</td>
+                          <td style={{ padding: '8px 14px', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{row.category || row.Category || row.Kategori || row.Grup || row.Group || '-'}</td>
                         </tr>
                       ))}
                     </tbody>
