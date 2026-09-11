@@ -16,7 +16,7 @@ export default function GuestsPage({ params }) {
   const [invitation, setInvitation] = useState(null);
   const [search, setSearch] = useState(''); const [showModal, setShowModal] = useState(false);
   const [selectedQr, setSelectedQr] = useState(null);
-  const [form, setForm] = useState({ name: '', phone: '', email: '', address: '', group: '' }); 
+  const [form, setForm] = useState({ name: '', phone: '', email: '', address: '', category: '' }); 
   const [saving, setSaving] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
@@ -93,7 +93,7 @@ export default function GuestsPage({ params }) {
         await fetchGuests(currentPage, search);
         toast.success('Tamu berhasil ditambahkan'); 
       }
-      setForm({ name: '', phone: '', email: '', address: '', group: '' }); 
+      setForm({ name: '', phone: '', email: '', address: '', category: '' }); 
       setEditingId(null);
       setShowModal(false); 
     } catch { 
@@ -104,7 +104,7 @@ export default function GuestsPage({ params }) {
   };
 
   const handleEditClick = (guest) => {
-    setForm({ name: guest.name || '', phone: guest.phone || '', email: guest.email || '', address: guest.address || '', group: guest.group || '' });
+    setForm({ name: guest.name || '', phone: guest.phone || '', email: guest.email || '', address: guest.address || '', category: guest.category || '' });
     setEditingId(guest.id);
     setShowModal(true);
   };
@@ -421,7 +421,7 @@ export default function GuestsPage({ params }) {
             <button className="btn btn-secondary" onClick={() => { setShowImportModal(true); setImportPreview([]); setImportFile(null); setImportResult(null); }}>
               <Upload size={16} /> Import Excel
             </button>
-            <button className="btn btn-primary" onClick={() => { setForm({ name: '', phone: '', email: '', address: '', group: '' }); setEditingId(null); setShowModal(true); }}>
+            <button className="btn btn-primary" onClick={() => { setForm({ name: '', phone: '', email: '', address: '', category: '' }); setEditingId(null); setShowModal(true); }}>
               <Plus size={16} /> Tambah Tamu
             </button>
           </div>
@@ -484,7 +484,7 @@ export default function GuestsPage({ params }) {
                       <td style={{ padding: '16px 20px' }}>
                         <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>{guest.name}</div>
                         <div style={{ fontSize: '13px', color: '#64748b', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: '6px', fontWeight: '500' }}>{guest.group || 'Umum'}</span>
+                          <span style={{ background: '#f1f5f9', padding: '2px 8px', borderRadius: '6px', fontWeight: '500' }}>{guest.category || 'Umum'}</span>
                           {guest.qr_code && (
                             <button onClick={() => setSelectedQr(guest)} style={{ background: '#f3e8ff', color: '#7c3aed', border: '1px solid #ddd6fe', padding: '2px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: '700', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', transition: 'all 0.2s' }}>
                               <QrCode size={12} /> QR Code
@@ -564,7 +564,7 @@ export default function GuestsPage({ params }) {
               <div><label className="label">Telepon (WhatsApp)</label><input className="input" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="08xxx / 628xxx" /></div>
               <div><label className="label">Email</label><input className="input" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
               <div><label className="label">Alamat</label><input className="input" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} /></div>
-              <div><label className="label">Grup</label><input className="input" value={form.group} onChange={(e) => setForm({ ...form, group: e.target.value })} placeholder="Keluarga, Teman, VIP" /></div>
+              <div><label className="label">Kategori / Grup</label><input className="input" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} placeholder="Keluarga, Teman, VIP" /></div>
             </div>
             <div style={{ display: 'flex', gap: '12px', marginTop: '24px', justifyContent: 'flex-end' }}>
               <button className="btn btn-ghost" onClick={() => setShowModal(false)}>Batal</button>
